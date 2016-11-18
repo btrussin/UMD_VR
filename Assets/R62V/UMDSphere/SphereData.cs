@@ -16,12 +16,14 @@ public class SphereData : MonoBehaviour {
     CMJSONLoader cmLoader;
     public GameObject sphere;
 
-    Material ringMaterial;
-    Material curveMaterial;
+    public Material ringMaterial;
+    public Material curveMaterial;
 
     List<GameObject> ringList = new List<GameObject>();
 
-    Dictionary<string, MovieObject > movieObjectMap = new Dictionary<string, MovieObject>();
+    Dictionary<string, MovieObject> movieObjectMap = new Dictionary<string, MovieObject>();
+
+    Dictionary<string, Color> ringColorMap = new Dictionary<string, Color>();
 
     List<GameObject> movieConnectionList = new List<GameObject>();
 
@@ -45,15 +47,20 @@ public class SphereData : MonoBehaviour {
 
     bool activeScale = false;
     bool activeMove = false;
+ 
+    int prevNumRingsActive = 0;
+
+    List<GameObject> activeRings = new List<GameObject>();
 
     // Use this for initialization
     void Start () {
         cmLoader = this.gameObject.GetComponent<CMJSONLoader>();
         cmLoader.LoadData();
         //ringMaterial = new Material(Shader.Find("Sprites/Default"));
-        ringMaterial = new Material(Shader.Find("UI/Default Font"));
-        //curveMaterial = new Material(Shader.Find("Particles/Additive"));
-        curveMaterial = new Material(Shader.Find("UI/Default Font"));
+        //ringMaterial = new Material(Shader.Find("Standard"));
+        ringMaterial = new Material(Shader.Find("Sprites/Default"));
+        //curveMaterial = new Material(Shader.Find("Standard"));
+        curveMaterial = new Material(Shader.Find("Sprites/Default"));
 
         baseRingColor = new Color(0.5f, 0.5f, 0.5f);
 
@@ -71,6 +78,28 @@ public class SphereData : MonoBehaviour {
         //CreateRingsForStudio();
         //CreateRingsForYear();
 
+    }
+
+    public List<GameObject> getRingsInCollision(Vector3 pos, float maxDist)
+    {
+        List<GameObject> list = new List<GameObject>();
+        float scale = gameObject.transform.localScale.x * 0.5f;
+        scale *= scale;
+
+        foreach (GameObject ring in ringList)
+        {
+
+            Vector3 v = pos - ring.transform.position;
+            
+            float dist = Mathf.Abs(Vector3.Dot(ring.transform.forward, v));
+
+            if (dist < maxDist && v.sqrMagnitude < scale)
+            {
+                list.Add(ring);
+            }
+            
+        }
+        return list;
     }
 
     public void grabSphereWithObject(GameObject obj)
@@ -291,21 +320,26 @@ public class SphereData : MonoBehaviour {
 
         GameObject ring = new GameObject();
         ring.name = "Ring: " + name;
+
+        ringColorMap.Add(ring.name, baseColor);
+
+        ring.AddComponent<MeshCollider>();
+
         GameObject ringLines = new GameObject();
         ringLines.name = "RingLines: " + name;
 
         ringLines.transform.SetParent(ring.transform);
+
+        //MovieDBUtils.addMeshFilter(ring, ringMaterial);
+
 
         ringLines.AddComponent<LineRenderer>();
         LineRenderer rend = ringLines.GetComponent<LineRenderer>();
         rend.SetWidth(0.005f, 0.005f);
         rend.SetVertexCount(numSegments+1);
         rend.material = ringMaterial;
-        //rend.material.color = new Color(0.3f, 0.3f, 0.3f);
         rend.material.color = baseColor * baseRingColor;
         rend.useWorldSpace = false;
-
-
 
         Vector3[] arr = new Vector3[numSegments + 1];
         Vector3 baseVec = Vector3.right * 0.5f;
@@ -318,6 +352,7 @@ public class SphereData : MonoBehaviour {
 
         rend.transform.SetParent(ring.transform);
         rend.SetPositions(arr);
+        
 
         GameObject ringLabel = new GameObject();
         ringLabel.name = "RingLabel: " + name;
@@ -426,6 +461,19 @@ public class SphereData : MonoBehaviour {
 	void Update () {
         updateScale();
         updateMove();
+
+        if( activeRings.Count > 0 )
+        {
+            prevNumRingsActive = activeRings.Count;
+            highlightActiveRings();
+        }
+        else if ( prevNumRingsActive > 0)
+        {
+            unhighlightAllRings();
+            prevNumRingsActive = 0;
+        }
+
+
     }
 
 
@@ -676,6 +724,85 @@ public class SphereData : MonoBehaviour {
     {
         foreach (GameObject gObj in movieConnectionList) Destroy(gObj);
         movieConnectionList.Clear();
+    }
+
+    public void addActiveRings(List<GameObject> list)
+    {
+        activeRings.AddRange(list);
+    }
+
+    void unhighlightAllRings()
+    {
+        LineRenderer rnd = null;
+        Color color;
+        foreach (GameObject ring in ringList)
+        {
+
+            for (int i = 0; i < ring.transform.childCount; i++)
+            {
+                rnd = ring.transform.GetChild(i).GetComponent<LineRenderer>();
+                if (rnd)
+                {
+                    if (ringColorMap.TryGetValue(ring.name, out color))
+                    {
+                        rnd.material.color = color * baseRingColor;
+                        break;
+                    }
+                }
+
+            }
+        }
+    }
+
+    void dimAllRings()
+    {
+        LineRenderer rnd = null;
+        Color color;
+        Color dimColor = baseRingColor * 0.25f;
+        foreach (GameObject ring in ringList)
+        {
+
+            for (int i = 0; i < ring.transform.childCount; i++)
+            {
+                rnd = ring.transform.GetChild(i).GetComponent<LineRenderer>();
+                if (rnd)
+                {
+                    if (ringColorMap.TryGetValue(ring.name, out color))
+                    {
+                        rnd.material.color = color * dimColor;
+                        break;
+                    }
+                }
+
+            }
+        }
+    }
+
+    void highlightActiveRings()
+    {
+        dimAllRings();
+
+        LineRenderer rnd = null;
+        Color color;
+
+        foreach (GameObject ring in activeRings)
+        {
+
+            for (int i = 0; i < ring.transform.childCount; i++)
+            {
+                rnd = ring.transform.GetChild(i).GetComponent<LineRenderer>();
+                if (rnd)
+                {
+                    if (ringColorMap.TryGetValue(ring.name, out color))
+                    {
+                        rnd.material.color = color * baseRingColor;
+                        break;
+                    }
+                }
+            }
+        }
+
+        activeRings.Clear();
     }
 
 }

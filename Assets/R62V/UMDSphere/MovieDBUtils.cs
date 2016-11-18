@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MovieDBUtils : MonoBehaviour {
 
@@ -86,7 +87,6 @@ public class MovieDBUtils : MonoBehaviour {
         Vector3 A0 = basePts[0] * -1.0f + basePts[1] * 3.0f + basePts[2] * -3.0f + basePts[3];
         Vector3 B0 = basePts[0] * 3.0f + basePts[1] * -6.0f + basePts[2] * 3.0f;
         Vector3 C0 = basePts[0] * -3.0f + basePts[1] * 3.0f;
-        Vector3 D0 = basePts[0];
 
         //      A1            B1               C1
         // t^2(3A0h) + t(3A0h^2+2B0h) + (A0h^3+B0h^2+C0h)
@@ -125,5 +125,94 @@ public class MovieDBUtils : MonoBehaviour {
         }
 
         return pts;
+    }
+
+
+
+    public static void addMeshFilter(GameObject g, Material mat)
+    {
+
+        int numSegments = 60;
+        Quaternion quat = Quaternion.Euler(new Vector3(0.0f, 0.0f, 360.0f / numSegments));
+
+
+        List<Vector3> verts = new List<Vector3>();
+        List<Vector3> normals = new List<Vector3>();
+
+
+        Vector3 baseVec;
+
+        Vector3 vOffset = new Vector3(0.0f, 0.0f, 0.0025f);
+
+        Vector3 v1;
+        Vector3 v2;
+        Vector3 n1;
+
+        for (int j = 0; j < 2; j++)
+        {
+            baseVec = Vector3.right * 0.5f;
+            for (int i = 0; i <= numSegments; i++)
+            {
+                v1 = baseVec - vOffset;
+                v2 = v1 + vOffset;
+                n1 = baseVec;
+                n1.Normalize();
+                verts.Add(v1);
+                verts.Add(v2);
+                if (j == 1) n1 = n1 * -1.0f;
+                normals.Add(n1);
+                normals.Add(n1);
+                baseVec = quat * baseVec;
+            }
+        }
+
+        int[] tris = new int[numSegments * 12];
+
+        int idx = 0;
+        for (int j = 0; j < 2; j++)
+        {
+            for (int i = 0; i < numSegments; i++)
+            {
+                int baseIdx = i * 2;
+                if (j == 1)
+                {
+                    baseIdx += (numSegments + 1) * 2;
+                    tris[idx++] = baseIdx;
+                    tris[idx++] = baseIdx + 1;
+                    tris[idx++] = baseIdx + 3;
+
+                    tris[idx++] = baseIdx;
+                    tris[idx++] = baseIdx + 3;
+                    tris[idx++] = baseIdx + 2;
+                }
+                else
+                {
+                    tris[idx++] = baseIdx;
+                    tris[idx++] = baseIdx + 3;
+                    tris[idx++] = baseIdx + 1;
+
+                    tris[idx++] = baseIdx;
+                    tris[idx++] = baseIdx + 2;
+                    tris[idx++] = baseIdx + 3;
+                }
+
+
+            }
+        }
+
+        g.AddComponent<MeshFilter>();
+        g.AddComponent<MeshRenderer>();
+
+
+        MeshRenderer rend = g.GetComponent<MeshRenderer>();
+        rend.material = mat;
+
+        Mesh m = g.GetComponent<MeshFilter>().mesh;
+        m.SetVertices(verts);
+        m.SetNormals(normals);
+        m.SetTriangles(tris, 0);
+
+
+
     }
 }

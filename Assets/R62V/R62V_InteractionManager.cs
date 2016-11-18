@@ -39,8 +39,6 @@ public class R62V_InteractionManager : MonoBehaviour {
     Quaternion baseQuat;
     Vector3 baseOffset;
 
-    float prevModeSwapTime = 0.0f;
-
     InterfaceActionState currActionState = InterfaceActionState.SelectObject;
     InterfaceSelectState currInterfaceState = InterfaceSelectState.Universe;
 

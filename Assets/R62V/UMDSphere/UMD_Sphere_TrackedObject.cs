@@ -24,7 +24,8 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     List<GameObject> connectionList = new List<GameObject>();
 
-    Dictionary<string, List<GameObject>> connectionMap = new Dictionary<string, List<GameObject>>();
+    Dictionary<string, List<GameObject>> connectionGameObjectMap = new Dictionary<string, List<GameObject>>();
+    Dictionary<string, MovieObject> connectionMovieObjectMap = new Dictionary<string, MovieObject>();
 
     CVRSystem vrSystem;
 
@@ -32,6 +33,11 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     VRControllerState_t prevState;
 
     bool touchingDataSphere = false;
+
+    GameObject currRingInCollision = null;
+    Quaternion currRingBaseRotation;
+
+    List<GameObject> ringsInCollision;
 
     // Use this for initialization
     void Start()
@@ -61,6 +67,9 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         sphereCollider.center = new Vector3(0.0f, 0.0f, 0.03f);
 
         handleStateChanges();
+
+        ringsInCollision = sphereData.getRingsInCollision(currPosition + (currForwardVec - currUpVec) * (0.03f + sphereCollider.radius) , sphereCollider.radius);
+        if (ringsInCollision.Count > 0) sphereData.addActiveRings(ringsInCollision);
     }
 
     void handleStateChanges()
@@ -89,7 +98,24 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 sphereData.releaseSphereWithObject(gameObject);
             }
 
+
             prevState = state;
+        }
+
+
+        if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) != 0 && ringsInCollision.Count > 0)
+        {
+            Quaternion addRotation = Quaternion.Euler(0.0f, 0.0f, state.rAxis0.y);
+            Quaternion origRot;
+
+            foreach (GameObject g in ringsInCollision)
+            {
+                origRot = g.transform.localRotation;
+
+                g.transform.localRotation = origRot * addRotation;
+            }
+
+            UpdateConnections();
         }
     }
 
@@ -108,11 +134,18 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
             List<GameObject> objList;
 
-            if (!connectionMap.TryGetValue(key, out objList))
+            if (!connectionGameObjectMap.TryGetValue(key, out objList))
             {
                 objList = sphereData.connectMoviesByActors(mo.cmData);
-                connectionMap.Add(key, objList);
+                connectionGameObjectMap.Add(key, objList);
+                connectionMovieObjectMap.Add(key, mo);
             }
+        }
+        else if (obj.name.Contains("Ring:"))
+        {
+            currRingInCollision = obj;
+
+            Debug.Log("Touched a ring");
         }
     }
 
@@ -134,11 +167,42 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
             List<GameObject> objList;
 
-            if (connectionMap.TryGetValue(key, out objList))
+            if (connectionGameObjectMap.TryGetValue(key, out objList))
             {
                 foreach (GameObject gObj in objList) Destroy(gObj);
                 objList.Clear();
-                connectionMap.Remove(key);
+                connectionGameObjectMap.Remove(key);
+                connectionMovieObjectMap.Remove(key);
+            }
+        }
+        else if (obj.name.Contains("Ring:"))
+        {
+            currRingInCollision = null;
+
+            Debug.Log("Released a ring");
+        }
+    }
+
+    void UpdateConnections()
+    {
+      
+        Dictionary<string, MovieObject>.KeyCollection keys = connectionMovieObjectMap.Keys;
+
+        if (keys.Count < 1) return;
+
+        List<GameObject> objList;
+        MovieObject mo;
+        foreach ( string key in keys )
+        {
+            connectionMovieObjectMap.TryGetValue(key, out mo);
+
+            if (connectionGameObjectMap.TryGetValue(key, out objList))
+            {
+                foreach (GameObject gObj in objList) Destroy(gObj);
+                objList.Clear();
+                objList = sphereData.connectMoviesByActors(mo.cmData);
+                connectionGameObjectMap.Remove(key);
+                connectionGameObjectMap.Add(key, objList);
             }
         }
     }
