@@ -22,9 +22,8 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     Material ptMatOrig;
     Material ptMatAlt;
 
-    List<GameObject> connectionList = new List<GameObject>();
+    //List<GameObject> connectionList = new List<GameObject>();
 
-    Dictionary<string, List<GameObject>> connectionGameObjectMap = new Dictionary<string, List<GameObject>>();
     Dictionary<string, MovieObject> connectionMovieObjectMap = new Dictionary<string, MovieObject>();
 
     CVRSystem vrSystem;
@@ -98,12 +97,25 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 sphereData.releaseSphereWithObject(gameObject);
             }
 
+            if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
+                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
+            {
+                // toggle connections with all movied
+                MovieConnectionManager connMan;
+                foreach (MovieObject m in connectionMovieObjectMap.Values)
+                {
+                    connMan = m.gameObject.GetComponent<MovieConnectionManager>();
+                    connMan.toggleKeepConnections();
+                }
+
+            }
+
 
             prevState = state;
         }
 
 
-        if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) != 0 && ringsInCollision.Count > 0)
+        if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) != 0)
         {
             Quaternion addRotation = Quaternion.Euler(0.0f, 0.0f, state.rAxis0.y);
             Quaternion origRot;
@@ -117,6 +129,8 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             }
 
             UpdateConnections();
+
+            sphereData.updateAllKeptConnections();
         }
     }
 
@@ -133,14 +147,8 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
             string key = MovieDBUtils.getMovieDataKey(mo.cmData);
 
-            List<GameObject> objList;
-
-            if (!connectionGameObjectMap.TryGetValue(key, out objList))
-            {
-                objList = sphereData.connectMoviesByActors(mo.cmData);
-                connectionGameObjectMap.Add(key, objList);
-                connectionMovieObjectMap.Add(key, mo);
-            }
+            sphereData.connectMoviesByActors(mo.cmData);
+            connectionMovieObjectMap.Add(key, mo);
         }
         else if (obj.name.Contains("Ring:"))
         {
@@ -160,21 +168,19 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         GameObject obj = col.gameObject;
         if (obj.name.Contains("MovieNode:"))
         {
-            Renderer rend = obj.GetComponent<Renderer>();
-            rend.material = ptMatOrig;
-
             MovieObject mo = obj.GetComponent<MovieObject>();
             string key = MovieDBUtils.getMovieDataKey(mo.cmData);
 
-            List<GameObject> objList;
+            MovieConnectionManager connMan = mo.gameObject.GetComponent<MovieConnectionManager>();
 
-            if (connectionGameObjectMap.TryGetValue(key, out objList))
+            if (!connMan.getKeepConnections())
             {
-                foreach (GameObject gObj in objList) Destroy(gObj);
-                objList.Clear();
-                connectionGameObjectMap.Remove(key);
-                connectionMovieObjectMap.Remove(key);
+                Renderer rend = obj.GetComponent<Renderer>();
+                rend.material = ptMatOrig;
             }
+            
+            connMan.tryToClearAllConnections();
+            connectionMovieObjectMap.Remove(key);
         }
         else if (obj.name.Contains("Ring:"))
         {
@@ -190,20 +196,14 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         Dictionary<string, MovieObject>.KeyCollection keys = connectionMovieObjectMap.Keys;
 
         if (keys.Count < 1) return;
-
-        List<GameObject> objList;
         MovieObject mo;
         foreach ( string key in keys )
         {
-            connectionMovieObjectMap.TryGetValue(key, out mo);
-
-            if (connectionGameObjectMap.TryGetValue(key, out objList))
+            if( connectionMovieObjectMap.TryGetValue(key, out mo) )
             {
-                foreach (GameObject gObj in objList) Destroy(gObj);
-                objList.Clear();
-                objList = sphereData.connectMoviesByActors(mo.cmData);
-                connectionGameObjectMap.Remove(key);
-                connectionGameObjectMap.Add(key, objList);
+                MovieConnectionManager connMan = mo.gameObject.GetComponent<MovieConnectionManager>();
+                connMan.forceClearAllConnections();
+                sphereData.connectMoviesByActors(mo.cmData);
             }
         }
     }

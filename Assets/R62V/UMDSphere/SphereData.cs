@@ -310,6 +310,22 @@ public class SphereData : MonoBehaviour {
             }
             
         }
+
+        updateAllKeptConnections();
+    }
+
+    public void updateAllKeptConnections()
+    {
+        MovieConnectionManager connMan;
+        foreach ( MovieObject m in movieObjectMap.Values )
+        {
+            connMan = m.gameObject.GetComponent<MovieConnectionManager>();
+            if( connMan.getKeepConnections() && connMan.hasConnections() )
+            {
+                connMan.forceClearAllConnections();
+                connectMoviesByActors(m.cmData);
+            }
+        }
     }
 
     GameObject getRing(string name, List<CMData> list, Color baseColor, int idx = 0)
@@ -428,6 +444,7 @@ public class SphereData : MonoBehaviour {
             point.transform.position = itemOffset * (Vector3.right * 0.5f);
 
             point.AddComponent<MovieObject>();
+            point.AddComponent<MovieConnectionManager>();
 
             MovieObject mo = point.GetComponent<MovieObject>();
             mo.ring = ring;
@@ -692,10 +709,13 @@ public class SphereData : MonoBehaviour {
 
         rend.SetPositions(pts);
 
+        MovieConnectionManager connMan = moFrom.gameObject.GetComponent<MovieConnectionManager>();
+        connMan.addConnection(connCurve);
+
         return connCurve;
     }
 
-    public List<GameObject> connectMoviesByActors(CMData cmData, bool track = true)
+    public void connectMoviesByActors(CMData cmData, bool track = true)
     {
         string mainKey = MovieDBUtils.getMovieDataKey(cmData);
 
@@ -720,8 +740,6 @@ public class SphereData : MonoBehaviour {
                 trackList.Add(connectMovies(fMo.cmData, tMo.cmData, Color.red));
             }
         }
-
-        return trackList;
     }
 
     public void clearAllConnections()
