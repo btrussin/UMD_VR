@@ -323,12 +323,16 @@ public class SphereData : MonoBehaviour {
 
         ringColorMap.Add(ring.name, baseColor);
 
-        ring.AddComponent<MeshCollider>();
+        GameObject innerRotationObj = new GameObject();
+        innerRotationObj.name = "innerRotataion";
+        innerRotationObj.transform.SetParent(ring.transform);
+
+        innerRotationObj.AddComponent<MeshCollider>();
 
         GameObject ringLines = new GameObject();
         ringLines.name = "RingLines: " + name;
 
-        ringLines.transform.SetParent(ring.transform);
+        ringLines.transform.SetParent(innerRotationObj.transform);
 
         //MovieDBUtils.addMeshFilter(ring, ringMaterial);
 
@@ -350,13 +354,13 @@ public class SphereData : MonoBehaviour {
             baseVec = quat * baseVec;
         }
 
-        rend.transform.SetParent(ring.transform);
+        rend.transform.SetParent(innerRotationObj.transform);
         rend.SetPositions(arr);
         
 
         GameObject ringLabel = new GameObject();
         ringLabel.name = "RingLabel: " + name;
-        ringLabel.transform.SetParent(ring.transform);
+        ringLabel.transform.SetParent(innerRotationObj.transform);
         ringLabel.AddComponent<MeshRenderer>();
         ringLabel.AddComponent<TextMesh>();
         ringLabel.AddComponent<CameraOrientedText3D>();
@@ -399,7 +403,7 @@ public class SphereData : MonoBehaviour {
             movieKey = MovieDBUtils.getMovieDataKey(data);
             GameObject itemLabel = new GameObject();
             itemLabel.name = "MovieLabel: " + movieKey;
-            itemLabel.transform.SetParent(ring.transform);
+            itemLabel.transform.SetParent(innerRotationObj.transform);
             itemLabel.AddComponent<MeshRenderer>();
             itemLabel.AddComponent<TextMesh>();
             itemLabel.AddComponent<CameraOrientedText3D>();
@@ -420,7 +424,7 @@ public class SphereData : MonoBehaviour {
 
             GameObject point = (GameObject)Instantiate(ptPrefab);
             point.name = "MovieNode: " + movieKey;
-            point.transform.SetParent(ring.transform);
+            point.transform.SetParent(innerRotationObj.transform);
             point.transform.position = itemOffset * (Vector3.right * 0.5f);
 
             point.AddComponent<MovieObject>();
@@ -735,12 +739,15 @@ public class SphereData : MonoBehaviour {
     {
         LineRenderer rnd = null;
         Color color;
+        GameObject innerRot;
         foreach (GameObject ring in ringList)
         {
 
-            for (int i = 0; i < ring.transform.childCount; i++)
+            innerRot = ring.transform.GetChild(0).gameObject;
+
+            for (int i = 0; i < innerRot.transform.childCount; i++)
             {
-                rnd = ring.transform.GetChild(i).GetComponent<LineRenderer>();
+                rnd = innerRot.transform.GetChild(i).GetComponent<LineRenderer>();
                 if (rnd)
                 {
                     if (ringColorMap.TryGetValue(ring.name, out color))
@@ -759,12 +766,13 @@ public class SphereData : MonoBehaviour {
         LineRenderer rnd = null;
         Color color;
         Color dimColor = baseRingColor * 0.25f;
+        GameObject innerRot;
         foreach (GameObject ring in ringList)
         {
-
-            for (int i = 0; i < ring.transform.childCount; i++)
+            innerRot = ring.transform.GetChild(0).gameObject;
+            for (int i = 0; i < innerRot.transform.childCount; i++)
             {
-                rnd = ring.transform.GetChild(i).GetComponent<LineRenderer>();
+                rnd = innerRot.transform.GetChild(i).GetComponent<LineRenderer>();
                 if (rnd)
                 {
                     if (ringColorMap.TryGetValue(ring.name, out color))
@@ -784,13 +792,13 @@ public class SphereData : MonoBehaviour {
 
         LineRenderer rnd = null;
         Color color;
-
+        GameObject innerRot;
         foreach (GameObject ring in activeRings)
         {
-
-            for (int i = 0; i < ring.transform.childCount; i++)
+            innerRot = ring.transform.GetChild(0).gameObject;
+            for (int i = 0; i < innerRot.transform.childCount; i++)
             {
-                rnd = ring.transform.GetChild(i).GetComponent<LineRenderer>();
+                rnd = innerRot.transform.GetChild(i).GetComponent<LineRenderer>();
                 if (rnd)
                 {
                     if (ringColorMap.TryGetValue(ring.name, out color))

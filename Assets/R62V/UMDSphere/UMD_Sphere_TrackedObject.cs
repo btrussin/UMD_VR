@@ -68,7 +68,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         handleStateChanges();
 
-        ringsInCollision = sphereData.getRingsInCollision(currPosition + (currForwardVec - currUpVec) * (0.03f + sphereCollider.radius) , sphereCollider.radius);
+        ringsInCollision = sphereData.getRingsInCollision(currPosition + (currForwardVec - currUpVec) * (0.03f + sphereCollider.radius) , sphereCollider.radius*2.0f);
         if (ringsInCollision.Count > 0) sphereData.addActiveRings(ringsInCollision);
     }
 
@@ -107,12 +107,13 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         {
             Quaternion addRotation = Quaternion.Euler(0.0f, 0.0f, state.rAxis0.y);
             Quaternion origRot;
-
+            GameObject innerRot;
             foreach (GameObject g in ringsInCollision)
             {
-                origRot = g.transform.localRotation;
+                innerRot = g.transform.GetChild(0).gameObject;
+                origRot = innerRot.transform.localRotation;
 
-                g.transform.localRotation = origRot * addRotation;
+                innerRot.transform.localRotation = origRot * addRotation;
             }
 
             UpdateConnections();

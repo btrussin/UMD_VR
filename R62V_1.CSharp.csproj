@@ -73,6 +73,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\R62V\R62V_InteractionManager.cs" />
+    <Compile Include="Assets\R62V\RingMesh.cs" />
     <Compile Include="Assets\R62V\UMDSphere\CMJSONLoader.cs" />
     <Compile Include="Assets\R62V\UMDSphere\CameraOrientedText3D.cs" />
     <Compile Include="Assets\R62V\UMDSphere\MovieDBUtils.cs" />
