@@ -79,6 +79,7 @@
     <Compile Include="Assets\R62V\UMDSphere\MovieConnectionManager.cs" />
     <Compile Include="Assets\R62V\UMDSphere\MovieDBUtils.cs" />
     <Compile Include="Assets\R62V\UMDSphere\MovieObject.cs" />
+    <Compile Include="Assets\R62V\UMDSphere\NodeState.cs" />
     <Compile Include="Assets\R62V\UMDSphere\RingState.cs" />
     <Compile Include="Assets\R62V\UMDSphere\SphereData.cs" />
     <Compile Include="Assets\R62V\UMDSphere\UMD_Sphere_TrackedObject.cs" />

@@ -74,8 +74,8 @@ public class SphereData : MonoBehaviour {
 
         //CreateRingsForDistributor();
         //CreateRingsForGrouping();
-        CreateRingsForComic();
-        //CreateRingsForPublisher();
+        //CreateRingsForComic();
+        CreateRingsForPublisher();
         //CreateRingsForStudio();
         //CreateRingsForYear();
 
@@ -336,6 +336,10 @@ public class SphereData : MonoBehaviour {
 
         GameObject ring = new GameObject();
         ring.name = "Ring: " + name;
+        ring.AddComponent<RingState>();
+
+        RingState ringState = ring.GetComponent<RingState>();
+        ringState.setRingColor(baseColor);
 
         ringColorMap.Add(ring.name, baseColor);
 
@@ -346,7 +350,7 @@ public class SphereData : MonoBehaviour {
         innerRotationObj.AddComponent<MeshCollider>();
 
         GameObject ringLines = new GameObject();
-        ringLines.name = "RingLines: " + name;
+        ringLines.name = "RingLines";
 
         ringLines.transform.SetParent(innerRotationObj.transform);
 
@@ -358,7 +362,7 @@ public class SphereData : MonoBehaviour {
         rend.SetWidth(0.005f, 0.005f);
         rend.SetVertexCount(numSegments+1);
         rend.material = ringMaterial;
-        rend.material.color = baseColor * baseRingColor;
+        //rend.material.color = baseColor * baseRingColor;
         rend.useWorldSpace = false;
 
         Vector3[] arr = new Vector3[numSegments + 1];
@@ -375,7 +379,7 @@ public class SphereData : MonoBehaviour {
         
 
         GameObject ringLabel = new GameObject();
-        ringLabel.name = "RingLabel: " + name;
+        ringLabel.name = "RingLabel";
         ringLabel.transform.SetParent(innerRotationObj.transform);
         ringLabel.AddComponent<MeshRenderer>();
         ringLabel.AddComponent<TextMesh>();
@@ -384,7 +388,7 @@ public class SphereData : MonoBehaviour {
         ringText.anchor = TextAnchor.UpperCenter;
         ringText.alignment = TextAlignment.Center;
         ringText.text = name;
-        ringText.color = baseColor;
+        //ringText.color = baseColor;
         ringText.characterSize = 0.1f;
         ringText.fontSize = 100;
         ringText.offsetZ = -2.0f;
@@ -417,9 +421,14 @@ public class SphereData : MonoBehaviour {
         foreach (CMData data in list)
         {
             movieKey = MovieDBUtils.getMovieDataKey(data);
+
+            GameObject movieNodeObj = new GameObject();
+            movieNodeObj.name = movieKey;
+            movieNodeObj.transform.SetParent(innerRotationObj.transform);
+
             GameObject itemLabel = new GameObject();
             itemLabel.name = "MovieLabel: " + movieKey;
-            itemLabel.transform.SetParent(innerRotationObj.transform);
+            itemLabel.transform.SetParent(movieNodeObj.transform);
             itemLabel.AddComponent<MeshRenderer>();
             itemLabel.AddComponent<TextMesh>();
             itemLabel.AddComponent<CameraOrientedText3D>();
@@ -440,7 +449,7 @@ public class SphereData : MonoBehaviour {
 
             GameObject point = (GameObject)Instantiate(ptPrefab);
             point.name = "MovieNode: " + movieKey;
-            point.transform.SetParent(innerRotationObj.transform);
+            point.transform.SetParent(movieNodeObj.transform);
             point.transform.position = itemOffset * (Vector3.right * 0.5f);
 
             point.AddComponent<MovieObject>();
@@ -466,7 +475,7 @@ public class SphereData : MonoBehaviour {
             count += 1.0f;
         }
 
-
+        ringState.updateColor();
 
         return ring;
     }
