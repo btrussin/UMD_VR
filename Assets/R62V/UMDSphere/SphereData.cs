@@ -74,7 +74,8 @@ public class SphereData : MonoBehaviour {
 
         //CreateRingsForDistributor();
         //CreateRingsForGrouping();
-        CreateRingsForPublisher();
+        CreateRingsForComic();
+        //CreateRingsForPublisher();
         //CreateRingsForStudio();
         //CreateRingsForYear();
 
@@ -237,7 +238,6 @@ public class SphereData : MonoBehaviour {
             ring.transform.SetParent(this.transform);
         }
 
-        //setRingLayout(ringList, centerGrpPosition, sphereLayout, capsule);
         setRingLayout(ringList, centerGrpPosition, sphereLayout);
 
     }
@@ -540,6 +540,14 @@ public class SphereData : MonoBehaviour {
         CreateRings(vals, lists);
     }
 
+    void CreateRingsForComic()
+    {
+        string[] vals = cmLoader.getAllComics();
+        List<CMData>[] lists = new List<CMData>[vals.Length];
+        for (int i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForComic(vals[i]);
+        CreateRings(vals, lists);
+    }
+
     void CreateRingsForDistributor()
     {
         string[] vals = cmLoader.getAllDistributors();
@@ -783,7 +791,10 @@ public class SphereData : MonoBehaviour {
     {
         LineRenderer rnd = null;
         Color color;
-        Color dimColor = baseRingColor * 0.25f;
+
+        float perc = 0.3f;
+
+        Color dimColor = baseRingColor * (1.0f - perc);
         GameObject innerRot;
         foreach (GameObject ring in ringList)
         {
