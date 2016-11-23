@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class MovieConnectionManager : MonoBehaviour {
 
     List<GameObject> connectionList = new List<GameObject>();
-    bool keepConnections = false;
+    Dictionary<string, RingState> activeRingMap = new Dictionary<string, RingState>();
 
 	// Use this for initialization
 	void Start () {
@@ -17,33 +17,38 @@ public class MovieConnectionManager : MonoBehaviour {
 	
 	}
 
-    public void addConnection(GameObject g)
+    public void addConnection(GameObject g, MovieObject from, MovieObject to )
     {
         connectionList.Add(g);
+
+        string key = MovieDBUtils.getMovieDataKey(from.cmData);
+        RingState rs;
+
+        if (!activeRingMap.ContainsKey(key))
+        {
+            rs = from.ring.GetComponent<RingState>();
+            rs.addConnection();
+            activeRingMap.Add(key, rs);
+        }
+
+        key = MovieDBUtils.getMovieDataKey(to.cmData);
+
+        if (!activeRingMap.ContainsKey(key))
+        {
+            rs = to.ring.GetComponent<RingState>();
+            rs.addConnection();
+            activeRingMap.Add(key, rs);
+        }
     }
-
-    public void tryToClearAllConnections()
-    {
-        if (keepConnections) return;
-
-        forceClearAllConnections();
-    }
-
+   
     public void forceClearAllConnections()
     {
         foreach (GameObject gObj in connectionList) { Destroy(gObj); }
 
+        foreach (RingState rs in activeRingMap.Values) rs.removeConnection();
+
         connectionList.Clear();
-    }
-
-    public void toggleKeepConnections()
-    {
-        keepConnections = !keepConnections;
-    }
-
-    public bool getKeepConnections()
-    {
-        return keepConnections;
+        activeRingMap.Clear();
     }
 
     public bool hasConnections()

@@ -19,9 +19,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     SphereCollider sphereCollider;
 
-    Material ptMatOrig;
-    Material ptMatAlt;
-
     //List<GameObject> connectionList = new List<GameObject>();
 
     Dictionary<string, MovieObject> connectionMovieObjectMap = new Dictionary<string, MovieObject>();
@@ -45,9 +42,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         sphereCollider = gameObject.GetComponent<SphereCollider>();
         sphereCollider.transform.SetParent(gameObject.transform);
-
-        ptMatOrig = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/PointMaterial.mat");
-        ptMatAlt = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/PointMaterialAlt.mat");
 
         sphereData = dataObj.GetComponent<SphereData>();
     }
@@ -98,14 +92,16 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             }
 
             if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
-                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
+                prevState.rAxis1.x < 1.0f && state.rAxis1.x == 1.0f )
+
+                //(prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
             {
                 // toggle connections with all movied
                 MovieConnectionManager connMan;
                 foreach (MovieObject m in connectionMovieObjectMap.Values)
                 {
-                    connMan = m.gameObject.GetComponent<MovieConnectionManager>();
-                    connMan.toggleKeepConnections();
+                    m.nodeState.toggleSelected();
+                    m.nodeState.updateColor();
                 }
 
             }
@@ -137,24 +133,26 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     void OnCollisionEnter(Collision col)
     {
         GameObject obj = col.gameObject;
-        if (obj.name.Contains("MovieNode:"))
+        if (obj.name.Contains("MovieNode"))
         {
-            
-            Renderer rend = obj.GetComponent<Renderer>();
-            rend.material = ptMatAlt;
+            MovieObject mo = obj.transform.parent.gameObject.GetComponent<MovieObject>();
 
-            MovieObject mo = obj.GetComponent<MovieObject>();
+            NodeState ns = mo.nodeState;
+            ns.addCollision();
+            ns.updateColor();
 
             string key = MovieDBUtils.getMovieDataKey(mo.cmData);
 
-            sphereData.connectMoviesByActors(mo.cmData);
+            if ( !ns.getIsSelected() )
+            {
+                sphereData.connectMoviesByActors(mo.cmData);
+            }
+
             connectionMovieObjectMap.Add(key, mo);
         }
         else if (obj.name.Contains("Ring:"))
         {
             currRingInCollision = obj;
-
-            Debug.Log("Touched a ring");
         }
     }
 
@@ -166,20 +164,19 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     void OnCollisionExit(Collision col)
     {
         GameObject obj = col.gameObject;
-        if (obj.name.Contains("MovieNode:"))
+        if (obj.name.Contains("MovieNode"))
         {
-            MovieObject mo = obj.GetComponent<MovieObject>();
+            MovieObject mo = obj.transform.parent.gameObject.GetComponent<MovieObject>();
             string key = MovieDBUtils.getMovieDataKey(mo.cmData);
 
-            MovieConnectionManager connMan = mo.gameObject.GetComponent<MovieConnectionManager>();
+            mo.nodeState.removeCollision();
+            mo.nodeState.updateColor();
 
-            if (!connMan.getKeepConnections())
+            if( !mo.nodeState.getIsSelected() )
             {
-                Renderer rend = obj.GetComponent<Renderer>();
-                rend.material = ptMatOrig;
+                mo.connManager.forceClearAllConnections();
             }
-            
-            connMan.tryToClearAllConnections();
+
             connectionMovieObjectMap.Remove(key);
         }
         else if (obj.name.Contains("Ring:"))
@@ -201,8 +198,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         {
             if( connectionMovieObjectMap.TryGetValue(key, out mo) )
             {
-                MovieConnectionManager connMan = mo.gameObject.GetComponent<MovieConnectionManager>();
-                connMan.forceClearAllConnections();
+                mo.connManager.forceClearAllConnections();
                 sphereData.connectMoviesByActors(mo.cmData);
             }
         }

@@ -9,17 +9,6 @@ public class MovieObject : MonoBehaviour
     public GameObject label;
     public GameObject point;
     public Color color;
-
-
-    /*
-    // Use this for initialization
-    void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-    */
+    public NodeState nodeState;
+    public MovieConnectionManager connManager;
 }

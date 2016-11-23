@@ -257,6 +257,7 @@ public class SphereData : MonoBehaviour {
                 ring.transform.localRotation = rotation;
                 ring.transform.localPosition = centerGrpPosition;
                 i += 1.0f;
+                ring.GetComponent<RingState>().updateColor();
             }
 
         }
@@ -307,6 +308,8 @@ public class SphereData : MonoBehaviour {
                 ring.transform.localPosition = (centerGrpPosition + currOffset);
                 currOffset += offsetInc;
 
+                ring.GetComponent<RingState>().updateColor();
+
             }
             
         }
@@ -317,10 +320,12 @@ public class SphereData : MonoBehaviour {
     public void updateAllKeptConnections()
     {
         MovieConnectionManager connMan;
+        NodeState ns;
         foreach ( MovieObject m in movieObjectMap.Values )
         {
-            connMan = m.gameObject.GetComponent<MovieConnectionManager>();
-            if( connMan.getKeepConnections() && connMan.hasConnections() )
+            connMan = m.connManager;
+            ns = m.nodeState;
+            if( ns.getIsSelected() && connMan.hasConnections() )
             {
                 connMan.forceClearAllConnections();
                 connectMoviesByActors(m.cmData);
@@ -336,10 +341,6 @@ public class SphereData : MonoBehaviour {
 
         GameObject ring = new GameObject();
         ring.name = "Ring: " + name;
-        ring.AddComponent<RingState>();
-
-        RingState ringState = ring.GetComponent<RingState>();
-        ringState.setRingColor(baseColor);
 
         ringColorMap.Add(ring.name, baseColor);
 
@@ -423,11 +424,12 @@ public class SphereData : MonoBehaviour {
             movieKey = MovieDBUtils.getMovieDataKey(data);
 
             GameObject movieNodeObj = new GameObject();
-            movieNodeObj.name = movieKey;
+            movieNodeObj.name = "Movie: " + movieKey;
             movieNodeObj.transform.SetParent(innerRotationObj.transform);
+            movieNodeObj.AddComponent<MovieObject>();
 
             GameObject itemLabel = new GameObject();
-            itemLabel.name = "MovieLabel: " + movieKey;
+            itemLabel.name = "MovieLabel";
             itemLabel.transform.SetParent(movieNodeObj.transform);
             itemLabel.AddComponent<MeshRenderer>();
             itemLabel.AddComponent<TextMesh>();
@@ -448,19 +450,21 @@ public class SphereData : MonoBehaviour {
 
 
             GameObject point = (GameObject)Instantiate(ptPrefab);
-            point.name = "MovieNode: " + movieKey;
+            point.name = "MovieNode";
             point.transform.SetParent(movieNodeObj.transform);
             point.transform.position = itemOffset * (Vector3.right * 0.5f);
 
-            point.AddComponent<MovieObject>();
             point.AddComponent<MovieConnectionManager>();
 
-            MovieObject mo = point.GetComponent<MovieObject>();
+            MovieConnectionManager connMan = point.GetComponent<MovieConnectionManager>();
+
+            MovieObject mo = movieNodeObj.GetComponent<MovieObject>();
             mo.ring = ring;
             mo.cmData = data;
             mo.label = itemLabel;
             mo.point = point;
             mo.color = baseColor;
+            mo.connManager = connMan;
 
             if (movieObjectMap.ContainsKey(movieKey))
             {
@@ -469,11 +473,19 @@ public class SphereData : MonoBehaviour {
             else movieObjectMap.Add(movieKey, mo);
 
 
-            
-            
+            movieNodeObj.AddComponent<NodeState>();
+            NodeState ns = movieNodeObj.GetComponent<NodeState>();
+
+            mo.nodeState = ns;
 
             count += 1.0f;
         }
+
+
+
+        ring.AddComponent<RingState>();
+        RingState ringState = ring.GetComponent<RingState>();
+        ringState.setRingColor(baseColor);
 
         ringState.updateColor();
 
@@ -726,8 +738,7 @@ public class SphereData : MonoBehaviour {
 
         rend.SetPositions(pts);
 
-        MovieConnectionManager connMan = moFrom.gameObject.GetComponent<MovieConnectionManager>();
-        connMan.addConnection(connCurve);
+        moFrom.connManager.addConnection(connCurve, moFrom, moTo);
 
         return connCurve;
     }
@@ -772,55 +783,23 @@ public class SphereData : MonoBehaviour {
 
     void unhighlightAllRings()
     {
-        LineRenderer rnd = null;
-        Color color;
-        GameObject innerRot;
+        RingState rs;
         foreach (GameObject ring in ringList)
         {
-
-            innerRot = ring.transform.GetChild(0).gameObject;
-
-            for (int i = 0; i < innerRot.transform.childCount; i++)
-            {
-                rnd = innerRot.transform.GetChild(i).GetComponent<LineRenderer>();
-                if (rnd)
-                {
-                    if (ringColorMap.TryGetValue(ring.name, out color))
-                    {
-                        rnd.material.color = color * baseRingColor;
-                        break;
-                    }
-                }
-
-            }
+            rs = ring.GetComponent<RingState>();
+            rs.updateColor();
+            
         }
     }
 
     void dimAllRings()
     {
-        LineRenderer rnd = null;
-        Color color;
-
-        float perc = 0.3f;
-
-        Color dimColor = baseRingColor * (1.0f - perc);
-        GameObject innerRot;
+        RingState rs;
         foreach (GameObject ring in ringList)
         {
-            innerRot = ring.transform.GetChild(0).gameObject;
-            for (int i = 0; i < innerRot.transform.childCount; i++)
-            {
-                rnd = innerRot.transform.GetChild(i).GetComponent<LineRenderer>();
-                if (rnd)
-                {
-                    if (ringColorMap.TryGetValue(ring.name, out color))
-                    {
-                        rnd.material.color = color * dimColor;
-                        break;
-                    }
-                }
-
-            }
+            rs = ring.GetComponent<RingState>();
+            rs.setDimmed();
+            rs.updateColor();
         }
     }
 
@@ -828,24 +807,13 @@ public class SphereData : MonoBehaviour {
     {
         dimAllRings();
 
-        LineRenderer rnd = null;
-        Color color;
-        GameObject innerRot;
+        RingState rs;
         foreach (GameObject ring in activeRings)
         {
-            innerRot = ring.transform.GetChild(0).gameObject;
-            for (int i = 0; i < innerRot.transform.childCount; i++)
-            {
-                rnd = innerRot.transform.GetChild(i).GetComponent<LineRenderer>();
-                if (rnd)
-                {
-                    if (ringColorMap.TryGetValue(ring.name, out color))
-                    {
-                        rnd.material.color = color * baseRingColor;
-                        break;
-                    }
-                }
-            }
+            rs = ring.GetComponent<RingState>();
+            rs.setHighlighted();
+            rs.updateColor();
+
         }
 
         activeRings.Clear();

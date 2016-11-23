@@ -7,35 +7,34 @@ public class RingState : MonoBehaviour {
     {
         NONE,
         SELECTED,
-        IN_CONTACT
+        HIGHLIGHTED,
+        DIMMED
     }
 
     RingColorState currColorState = RingColorState.NONE;
 
     Color ringColor;
 
-    float nonHighlightDimPercent = 60.0f;
-    float nonSelectedDimPercent = 30.0f;
+    float highlightAmt = 0.95f;
+    float selectedAmt = 0.75f;
+    float noneAmt = 0.5f;
+    float dimAmt = 0.35f;
 
-    float nonHighlightAmt;
-    float nonSelectedAmt;
+    int connectionCount = 0;
+
 
     LineRenderer lRend = null;
     TextMesh tMesh = null;
 
+    bool valuesNotSet = true;
+
+    bool doHighlight = false;
+    bool doDim = false;
+
     // Use this for initialization
     void Start () {
 
-        nonHighlightAmt = 1.0f - nonHighlightDimPercent * 0.01f;
-        nonSelectedAmt = 1.0f - nonSelectedDimPercent * 0.01f;
 
-        Transform subTransform = gameObject.transform.GetChild(0);
-
-        GameObject lines = subTransform.FindChild("RingLines").gameObject;
-        GameObject label = subTransform.FindChild("RingLabel").gameObject;
-
-        lRend = lines.GetComponent<LineRenderer>();
-        tMesh = label.GetComponent<TextMesh>();
     }
 	
 	// Update is called once per frame
@@ -43,12 +42,61 @@ public class RingState : MonoBehaviour {
 	
 	}
 
+    
     public void updateColor()
     {
-        lRend.material.color = ringColor;
+        if( valuesNotSet )
+        {
+            Transform subTransform = gameObject.transform.GetChild(0);
 
+            GameObject lines = subTransform.FindChild("RingLines").gameObject;
+            GameObject label = subTransform.FindChild("RingLabel").gameObject;
+
+            lRend = lines.GetComponent<LineRenderer>();
+            tMesh = label.GetComponent<TextMesh>();
+
+            valuesNotSet = false;
+        }
+
+        if( doHighlight )
+        {
+            lRend.material.color = ringColor * highlightAmt;
+            doHighlight = false;
+        }
+        else if (connectionCount > 0)
+        {
+            lRend.material.color = ringColor * selectedAmt;
+
+        }
+        else if (doDim)
+        {
+            lRend.material.color = ringColor * dimAmt;
+            doDim = false;
+        }
+        else
+        {
+            lRend.material.color = ringColor * noneAmt;
+        }
+
+       
         tMesh.color = ringColor;
 
+    }
+
+    public void addConnection()
+    {
+        connectionCount++;
+    }
+
+    public void removeConnection()
+    {
+        connectionCount--;
+        if (connectionCount < 0) connectionCount = 0;
+    }
+
+    public bool isSelected()
+    {
+        return false;
     }
 
     public void setColorState(RingColorState state)
@@ -61,15 +109,13 @@ public class RingState : MonoBehaviour {
         ringColor = new Color(c.r, c.g, c.b) ;
     }
 
-    public void setSelected(bool selected)
+    public void setHighlighted()
     {
-        if (selected) lRend.material.color = ringColor;
-        else lRend.material.color = ringColor * nonSelectedAmt;
+        doHighlight = true;
     }
 
-    public void setHighlighted(bool highlighted)
+    public void setDimmed()
     {
-        if (highlighted) lRend.material.color = ringColor;
-        else lRend.material.color = ringColor * nonHighlightAmt;
+        doDim = true;
     }
 }
