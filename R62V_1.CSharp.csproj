@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Assets\R62V\RingMesh.cs" />
     <Compile Include="Assets\R62V\UMDSphere\CMJSONLoader.cs" />
+    <Compile Include="Assets\R62V\UMDSphere\CameraOrientedPlane.cs" />
     <Compile Include="Assets\R62V\UMDSphere\CameraOrientedText3D.cs" />
     <Compile Include="Assets\R62V\UMDSphere\MovieConnectionManager.cs" />
     <Compile Include="Assets\R62V\UMDSphere\MovieDBUtils.cs" />

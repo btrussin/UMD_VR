@@ -423,6 +423,8 @@ public class SphereData : MonoBehaviour {
         {
             movieKey = MovieDBUtils.getMovieDataKey(data);
 
+            Quaternion itemOffset = randQuat * Quaternion.Euler(new Vector3(0.0f, 0.0f, factor * count));
+
             GameObject movieNodeObj = new GameObject();
             movieNodeObj.name = "Movie: " + movieKey;
             movieNodeObj.transform.SetParent(innerRotationObj.transform);
@@ -441,18 +443,23 @@ public class SphereData : MonoBehaviour {
             itemText.text = data.movie;
             itemText.color = baseColor * baseRingColor;
             itemLabel.transform.localScale = new Vector3(itemScale, itemScale, itemScale);
+            itemLabel.transform.localPosition = itemOffset * new Vector3(0.05f, 0.0f, 0.0f);
             itemText.characterSize = 0.1f;
             itemText.fontSize = 100;
             itemText.offsetZ = -1.0f;
-
-            Quaternion itemOffset = randQuat * Quaternion.Euler(new Vector3(0.0f, 0.0f, factor * count));
-            itemLabel.transform.position = itemOffset * (Vector3.right * 0.5f);
 
 
             GameObject point = (GameObject)Instantiate(ptPrefab);
             point.name = "MovieNode";
             point.transform.SetParent(movieNodeObj.transform);
-            point.transform.position = itemOffset * (Vector3.right * 0.5f);
+            point.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+
+
+
+            
+            movieNodeObj.transform.position = itemOffset * (Vector3.right * 0.5f);
+
+
 
             point.AddComponent<MovieConnectionManager>();
 

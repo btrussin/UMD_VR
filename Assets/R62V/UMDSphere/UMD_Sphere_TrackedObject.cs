@@ -93,11 +93,8 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
             if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
                 prevState.rAxis1.x < 1.0f && state.rAxis1.x == 1.0f )
-
-                //(prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
             {
                 // toggle connections with all movied
-                MovieConnectionManager connMan;
                 foreach (MovieObject m in connectionMovieObjectMap.Values)
                 {
                     m.nodeState.toggleSelected();
