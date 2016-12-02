@@ -19,6 +19,10 @@ public class NodeState : MonoBehaviour {
     Material ptMatSelected;
     Material ptMatCollision;
 
+    Material boxMaterial;
+    Material checkMaterial;
+    Material closeMaterial;
+
     GameObject nodeMenu;
 
     static List<GameObject> menus = new List<GameObject>();
@@ -28,8 +32,12 @@ public class NodeState : MonoBehaviour {
         isSelected = false;
 
         ptMatOrig = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/PointMaterial.mat");
-        ptMatSelected = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/PointMaterialSelected.mat");
-        ptMatCollision = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/PointMaterialCollision.mat");
+        ptMatSelected = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/PointMaterialRed.mat");
+        ptMatCollision = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/PointMaterialYellow.mat");
+
+        boxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/box_mat.mat");
+        checkMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/check_mat.mat");
+        closeMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/close_mat.mat");
     }
 	
 	// Update is called once per frame
@@ -96,9 +104,14 @@ public class NodeState : MonoBehaviour {
         if (isSelected) bringUpMenu();
         else if (nodeMenu != null)
         {
-            GameObject.Destroy(nodeMenu);
-            nodeMenu = null;   
+            destroyMenu();  
         }
+    }
+
+    public void destroyMenu()
+    {
+        GameObject.Destroy(nodeMenu);
+        nodeMenu = null;
     }
 
     public void bringUpMenu()
@@ -117,6 +130,8 @@ public class NodeState : MonoBehaviour {
         nodeMenu.name = "Menu: " + mKey;
         nodeMenu.transform.SetParent(gameObject.transform);
 
+        nodeMenu.AddComponent<CameraOrientedText3D>();
+
         List<GameObject> textObjects = new List<GameObject>();
 
        
@@ -124,32 +139,34 @@ public class NodeState : MonoBehaviour {
 
         TextAnchor roleAnchor = TextAnchor.UpperLeft;
 
+        float yOffsetPerLine = 0.02f;
+
         Vector3 offset = Vector3.zero;
+        offset.y = -0.02f;
+        offset.x = 0.04f;
 
-        int txtIdx = 3;
+        textObjects.Add(addText(nodeMenu, "Movie: " + mKey, roleAlign, roleAnchor, offset));
+        offset.y -= yOffsetPerLine;
+        textObjects.Add(addText(nodeMenu, "Distributor: " + data.distributor, roleAlign, roleAnchor, offset));
+        offset.y -= yOffsetPerLine;
+        textObjects.Add(addText(nodeMenu, "Comic: " + data.comic, roleAlign, roleAnchor, offset));
+        offset.y -= yOffsetPerLine;
+        offset.y -= yOffsetPerLine;
 
-        textObjects.Add(addText(nodeMenu, "Actors (Roles)", txtIdx++, roleAlign, roleAnchor, offset));
-        textObjects.Add(addText(nodeMenu, "______________", txtIdx++, roleAlign, roleAnchor, offset));
+        offset.x = 0.01f;
+        textObjects.Add(addText(nodeMenu, "Actors (Roles)", roleAlign, roleAnchor, offset));
+        offset.y -= yOffsetPerLine/4.0f;
+        textObjects.Add(addText(nodeMenu, "______________", roleAlign, roleAnchor, offset));
+        offset.y -= yOffsetPerLine;
+
+        float firstBoxY = offset.y;
+        offset.x = 0.04f;
         for ( int i = 0; i < data.roles.Length; i++ )
         {
-            textObjects.Add(addText(nodeMenu, data.roles[i].actor + " (" + data.roles[i].name + ")", txtIdx++, roleAlign, roleAnchor, offset));
+            textObjects.Add(addText(nodeMenu, data.roles[i].actor + " (" + data.roles[i].name + ")", roleAlign, roleAnchor, offset));
+            offset.y -= yOffsetPerLine;
         }
 
- 
-        float maxMidX = float.MinValue;
-
-        foreach (GameObject obj in textObjects)
-        {
-            MeshRenderer rend = obj.GetComponent<MeshRenderer>();
-            float tx = rend.bounds.center.x;
-            if (tx > maxMidX) maxMidX = tx;
-        }
-
-        offset.x = 0.02f;
-
-        textObjects.Add(addText(nodeMenu, "Movie: " + mKey, 0, roleAlign, roleAnchor, offset));
-        textObjects.Add(addText(nodeMenu, "Distributor: " + data.distributor, 1, roleAlign, roleAnchor, offset));
-        textObjects.Add(addText(nodeMenu, "Comic: " + data.comic, 2, roleAlign, roleAnchor, offset));
 
 
         float minX = float.MaxValue;
@@ -172,24 +189,59 @@ public class NodeState : MonoBehaviour {
         }
 
 
-     
+        int menuLayerMask = LayerMask.NameToLayer("Menus");
 
         GameObject ptPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/R62V/UMDSphere/MenuPlane.prefab");
         GameObject plane = (GameObject)Instantiate(ptPrefab);
 
-        float xDim = (maxX - minX);
-        float yDim = (maxY - minY);
+        float xDim = (maxX - minX) + 0.1f;
+        float yDim = (maxY - minY) + 0.04f;
 
 
-
-
-        plane.transform.localScale = new Vector3(xDim + 0.1f, yDim + 0.04f, 1.0f);
-        plane.transform.localPosition = new Vector3(-0.02f, 0.02f, 0.0f);
+        plane.transform.localScale = new Vector3(xDim, yDim, 1.0f);
+        plane.transform.localPosition = new Vector3(xDim*0.5f, yDim * -0.5f, 0.0f);
 
         plane.transform.SetParent(nodeMenu.transform);
 
 
+        GameObject quad1 = GameObject.CreatePrimitive(PrimitiveType.Quad);
+        quad1.name = "Close: " + mKey;
+        quad1.layer = menuLayerMask;
+        quad1.transform.SetParent(nodeMenu.transform);
+        MeshRenderer qrend = quad1.GetComponent<MeshRenderer>();
+        qrend.material = closeMaterial;
+        quad1.transform.localScale = new Vector3(0.02f, 0.02f, 1.0f);
+        quad1.transform.localPosition = new Vector3(xDim-0.01f, -0.01f, 0.0f);
 
+        quad1.AddComponent<NodeMenuHandler>();
+        quad1.GetComponent<NodeMenuHandler>().nodeState = this;
+        quad1.GetComponent<NodeMenuHandler>().handlerType = NodeMenuHandler.NodeMenuHandlerType.CloseMenu;
+
+        offset = Vector3.zero;
+        offset.y = firstBoxY - 0.005f;
+        offset.x = 0.02f;
+
+        for (int i = 0; i < data.roles.Length; i++)
+        {
+            GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            quad.name = "Toggle: " + data.roles[i].actor;
+            quad.layer = menuLayerMask;
+            quad.transform.SetParent(nodeMenu.transform);
+            MeshRenderer rend = quad.GetComponent<MeshRenderer>();
+            rend.material = checkMaterial;
+            rend.transform.localScale = new Vector3(0.02f, 0.02f, 1.0f);
+            rend.transform.localPosition = offset;
+
+            quad.AddComponent<NodeMenuHandler>();
+            NodeMenuHandler menuHandler = quad.GetComponent<NodeMenuHandler>();
+            menuHandler.nodeState = this;
+            menuHandler.handlerType = NodeMenuHandler.NodeMenuHandlerType.ToggleActor;
+            menuHandler.role = data.roles[i];
+
+            menuHandler.UpdateMaterial();
+
+            offset.y -= yOffsetPerLine;
+        }
 
 
 
@@ -209,26 +261,23 @@ public class NodeState : MonoBehaviour {
 
     }
 
-    static GameObject addText(GameObject obj, string text, int lineNum, TextAlignment alignment, TextAnchor anchor, Vector3 offset)
+    static GameObject addText(GameObject obj, string text, TextAlignment alignment, TextAnchor anchor, Vector3 offset)
     {
         GameObject textObj = new GameObject();
         textObj.transform.SetParent(obj.transform);
         textObj.AddComponent<MeshRenderer>();
         textObj.AddComponent<TextMesh>();
-        textObj.AddComponent<CameraOrientedText3D>();
         TextMesh ringText = textObj.GetComponent<TextMesh>();
         ringText.anchor = anchor;
         ringText.alignment = alignment;
         ringText.text = text;
         ringText.characterSize = 0.03f;
         ringText.fontSize = 100;
-        //ringText.offsetZ = -2.0f;
 
         float scale = 0.03f;
         textObj.transform.localScale = new Vector3(scale, scale, scale);
-        textObj.transform.localPosition = Vector3.down * (lineNum * 0.03f) + offset;
+        textObj.transform.localPosition = offset;
 
-        textObj.AddComponent<CameraOrientedText3D>();
         return textObj;
     }
 

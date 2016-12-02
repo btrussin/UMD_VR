@@ -764,6 +764,7 @@ public class SphereData : MonoBehaviour {
 
         for (int i = 0; i < fMo.cmData.roles.Length; i++)
         {
+            if (!fMo.cmData.roles[i].active) continue;
             List<CMData> list = cmLoader.getCMDataForActor(fMo.cmData.roles[i].actor);
 
             foreach (CMData data in list)

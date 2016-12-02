@@ -35,6 +35,13 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     List<GameObject> ringsInCollision;
 
+    GameObject beam;
+    GameObject activeBeamInterceptObj = null;
+
+    bool useBeam = false;
+
+    int menusLayerMask; 
+
     // Use this for initialization
     void Start()
     {
@@ -44,6 +51,18 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         sphereCollider.transform.SetParent(gameObject.transform);
 
         sphereData = dataObj.GetComponent<SphereData>();
+
+        beam = new GameObject();
+        beam.AddComponent<LineRenderer>();
+        LineRenderer lineRend = beam.GetComponent<LineRenderer>();
+        lineRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        lineRend.receiveShadows = false;
+        lineRend.motionVectors = false;
+        lineRend.material = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/BeamMaterial.mat");
+        lineRend.SetWidth(0.003f, 0.003f);
+        beam.SetActive(false);
+
+        menusLayerMask = 1 << LayerMask.NameToLayer("Menus");
     }
 
     // Update is called once per frame
@@ -63,6 +82,43 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         ringsInCollision = sphereData.getRingsInCollision(currPosition + (currForwardVec - currUpVec) * (0.03f + sphereCollider.radius) , sphereCollider.radius*2.0f);
         if (ringsInCollision.Count > 0) sphereData.addActiveRings(ringsInCollision);
+
+        if (useBeam) projectBeam();
+    }
+
+    void projectBeam()
+    {
+        LineRenderer lineRend = beam.GetComponent<LineRenderer>();
+        Vector3 end = deviceRay.GetPoint(10.0f);
+
+        lineRend.SetPosition(0, deviceRay.origin);
+        lineRend.SetPosition(1, end);
+
+        RaycastHit hitInfo;
+
+        if (Physics.Raycast(deviceRay.origin, deviceRay.direction, out hitInfo, 30.0f, menusLayerMask))
+        {
+            activeBeamInterceptObj = hitInfo.collider.gameObject;
+        }
+        else
+        {
+            activeBeamInterceptObj = null;
+        }
+    }
+
+    void triggerActiverBeamObject()
+    {
+        if( activeBeamInterceptObj != null )
+        {
+            NodeMenuHandler menuHandler = activeBeamInterceptObj.GetComponent<NodeMenuHandler>();
+            if(menuHandler != null )
+            {
+                menuHandler.handleTrigger();
+                sphereData.updateAllKeptConnections();
+            }
+
+            activeBeamInterceptObj = null;
+        }
     }
 
     void handleStateChanges()
@@ -92,8 +148,28 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             }
 
             if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
+               (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
+            {
+                // activate bean
+                beam.SetActive(true);
+                useBeam = true;
+            }
+
+            else if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0 &&
+               (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0)
+            {
+                // deactivate bean
+                beam.SetActive(false);
+                useBeam = false;
+                activeBeamInterceptObj = null;
+            }
+
+            if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
                 prevState.rAxis1.x < 1.0f && state.rAxis1.x == 1.0f )
             {
+
+                triggerActiverBeamObject();
+
                 // toggle connections with all movied
                 foreach (MovieObject m in connectionMovieObjectMap.Values)
                 {

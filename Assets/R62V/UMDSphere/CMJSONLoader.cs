@@ -308,4 +308,5 @@ public class CMRole
     public string role;
     public string actor;
     public string name;
+    public bool active = true;
 }
