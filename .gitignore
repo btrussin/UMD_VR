@@ -2,3 +2,7 @@ Library/
 Temp/
 .vs/
 *.meta
+*.asset
+*.csproj
+*.sln
+ProjectSettings/
