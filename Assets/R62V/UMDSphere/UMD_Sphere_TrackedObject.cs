@@ -40,7 +40,9 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     bool useBeam = false;
 
-    int menusLayerMask; 
+    int menusLayerMask;
+
+    float currRayAngle = 30.0f;
 
     // Use this for initialization
     void Start()
@@ -74,7 +76,10 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         currForwardVec = transform.forward;
         currRotation = transform.rotation;
         deviceRay.origin = currPosition;
-        deviceRay.direction = currForwardVec;
+
+        Quaternion rayRotation = Quaternion.AngleAxis(currRayAngle, currRightVec);
+
+        deviceRay.direction = rayRotation * currForwardVec;
 
         sphereCollider.center = new Vector3(0.0f, 0.0f, 0.03f);
 
@@ -88,22 +93,26 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     void projectBeam()
     {
-        LineRenderer lineRend = beam.GetComponent<LineRenderer>();
-        Vector3 end = deviceRay.GetPoint(10.0f);
-
-        lineRend.SetPosition(0, deviceRay.origin);
-        lineRend.SetPosition(1, end);
+        float beamDist = 10.0f;
+        
 
         RaycastHit hitInfo;
 
         if (Physics.Raycast(deviceRay.origin, deviceRay.direction, out hitInfo, 30.0f, menusLayerMask))
         {
             activeBeamInterceptObj = hitInfo.collider.gameObject;
+            beamDist = hitInfo.distance;
         }
         else
         {
             activeBeamInterceptObj = null;
         }
+
+        LineRenderer lineRend = beam.GetComponent<LineRenderer>();
+        Vector3 end = deviceRay.GetPoint(beamDist);
+
+        lineRend.SetPosition(0, deviceRay.origin);
+        lineRend.SetPosition(1, end);
     }
 
     void triggerActiverBeamObject()
@@ -113,7 +122,11 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             NodeMenuHandler menuHandler = activeBeamInterceptObj.GetComponent<NodeMenuHandler>();
             if(menuHandler != null )
             {
+
                 menuHandler.handleTrigger();
+
+                MovieObject mo = activeBeamInterceptObj.transform.parent.transform.parent.gameObject.GetComponent<MovieObject>();
+                sphereData.connectMoviesByActors(mo.cmData);
                 sphereData.updateAllKeptConnections();
             }
 
@@ -153,6 +166,8 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 // activate bean
                 beam.SetActive(true);
                 useBeam = true;
+
+                showTrackpadArrows();
             }
 
             else if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0 &&
@@ -162,6 +177,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 beam.SetActive(false);
                 useBeam = false;
                 activeBeamInterceptObj = null;
+                hideTrackpadArrows();
             }
 
             if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
@@ -200,6 +216,18 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             UpdateConnections();
 
             sphereData.updateAllKeptConnections();
+
+            if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 )
+            {
+
+                if (state.rAxis0.y > 0.0f) currRayAngle += 1.0f;
+                else if (state.rAxis0.y < 0.0f) currRayAngle -= 1.0f;
+
+                if (currRayAngle > 90.0f) currRayAngle = 90.0f;
+                else if (currRayAngle < 0.0f) currRayAngle = 0.0f;
+
+            }
+
         }
     }
 
@@ -273,6 +301,36 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             {
                 mo.connManager.forceClearAllConnections();
                 sphereData.connectMoviesByActors(mo.cmData);
+            }
+        }
+    }
+
+    void showTrackpadArrows()
+    {
+        int numChildren = gameObject.transform.childCount;
+        GameObject obj;
+        for( int i = 0; i < numChildren; i++ )
+        {
+            obj = gameObject.transform.GetChild(i).gameObject;
+            if ( obj.name.CompareTo("trackpadArrows") == 0 )
+            {
+                obj.SetActive(true);
+                break;
+            }
+        }
+    }
+
+    void hideTrackpadArrows()
+    {
+        int numChildren = gameObject.transform.childCount;
+        GameObject obj;
+        for (int i = 0; i < numChildren; i++)
+        {
+            obj = gameObject.transform.GetChild(i).gameObject;
+            if (obj.name.CompareTo("trackpadArrows") == 0)
+            {
+                obj.SetActive(false);
+                break;
             }
         }
     }

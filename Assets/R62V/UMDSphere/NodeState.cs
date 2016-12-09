@@ -210,8 +210,8 @@ public class NodeState : MonoBehaviour {
         quad1.transform.SetParent(nodeMenu.transform);
         MeshRenderer qrend = quad1.GetComponent<MeshRenderer>();
         qrend.material = closeMaterial;
-        quad1.transform.localScale = new Vector3(0.02f, 0.02f, 1.0f);
-        quad1.transform.localPosition = new Vector3(xDim-0.01f, -0.01f, 0.0f);
+        quad1.transform.localScale = new Vector3(0.04f, 0.04f, 1.0f);
+        quad1.transform.localPosition = new Vector3(xDim-0.02f, -0.02f, 0.0f);
 
         quad1.AddComponent<NodeMenuHandler>();
         quad1.GetComponent<NodeMenuHandler>().nodeState = this;

@@ -764,6 +764,9 @@ public class SphereData : MonoBehaviour {
 
         for (int i = 0; i < fMo.cmData.roles.Length; i++)
         {
+            if (fMo.cmData.roles[i].active) Debug.Log("Connect by " + fMo.cmData.roles[i].actor);
+            else Debug.Log("Not Connect by " + fMo.cmData.roles[i].actor);
+
             if (!fMo.cmData.roles[i].active) continue;
             List<CMData> list = cmLoader.getCMDataForActor(fMo.cmData.roles[i].actor);
 
