@@ -717,18 +717,30 @@ public class SphereData : MonoBehaviour {
         foreach(GameObject gObj in list ) trackMovieConnection(gObj);
     }
 
-    public void connectMoviesAndTrack(CMData from, CMData to, Color c)
+    public void connectMoviesAndTrack(CMData from, CMData to)
     {
-        trackMovieConnection(connectMovies(from, to, c));
+        trackMovieConnection(connectMovies(from, to));
     }
 
-    public GameObject connectMovies(CMData from, CMData to, Color c)
+    public GameObject connectMovies(CMData from, CMData to, float width = 0.005f)
     {
         MovieObject moFrom;
         MovieObject moTo;
 
         movieObjectMap.TryGetValue(MovieDBUtils.getMovieDataKey(from), out moFrom);
         movieObjectMap.TryGetValue(MovieDBUtils.getMovieDataKey(to), out moTo);
+
+        ColorHSL fColHSL = new ColorHSL(moFrom.color);
+        ColorHSL tColHSL = new ColorHSL(moTo.color);
+        //fColHSL.s *= width * 100.0f;
+        //tColHSL.s = fColHSL.s;
+        //fColHSL.s *= width / 0.005f;
+        //tColHSL.s = fColHSL.s;
+
+        //fColHSL.l *= width * 100.0f;
+        //tColHSL.l = fColHSL.l;
+        fColHSL.l *= width / 0.005f;
+        tColHSL.l = fColHSL.l;
 
         Vector3[] basePts = new Vector3[4];
 
@@ -747,8 +759,9 @@ public class SphereData : MonoBehaviour {
 
         connCurve.AddComponent<LineRenderer>();
         LineRenderer rend = connCurve.GetComponent<LineRenderer>();
-        rend.SetWidth(0.005f, 0.005f);
-        rend.SetColors(moFrom.color, moTo.color);
+        rend.SetWidth(width, width);
+        //rend.SetColors(moFrom.color, moTo.color);
+        rend.SetColors(fColHSL.getRGBColor(), tColHSL.getRGBColor());
         rend.SetVertexCount(curveLOD);
         rend.material = curveMaterial;
         rend.material.color = new Color(0.3f, 0.3f, 0.3f);
@@ -778,13 +791,15 @@ public class SphereData : MonoBehaviour {
             if (!fMo.cmData.roles[i].active) continue;
             List<CMData> list = cmLoader.getCMDataForActor(fMo.cmData.roles[i].actor);
 
+            float width = 0.001f * Mathf.Max(Mathf.Min(list.Count - 1, 5), 1.0f);
+
             foreach (CMData data in list)
             {
                 tKey = MovieDBUtils.getMovieDataKey(data);
                 if (mainKey.Equals(tKey)) continue;
 
                 movieObjectMap.TryGetValue(tKey, out tMo);
-                trackList.Add(connectMovies(fMo.cmData, tMo.cmData, Color.red));
+                trackList.Add(connectMovies(fMo.cmData, tMo.cmData, width));
             }
         }
     }

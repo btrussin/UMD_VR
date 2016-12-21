@@ -2,17 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class MovieDBUtils : MonoBehaviour {
+public class MovieDBUtils {
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    private static Color[] palette = null;
+    private static ColorHSL[] paletteHSL = null;
 
     public static Color[] randomizeColorPalette(Color[] orig, int seed = 44356)
     {
@@ -40,36 +33,54 @@ public class MovieDBUtils : MonoBehaviour {
 
     public static Color[] getColorPalette()
     {
-        Color[] palette = new Color[24];
+        if (palette == null)
+        {
+            palette = new Color[24];
 
-        int i = 0;
-        palette[i++] = new Color32(102, 255, 255, 255);
-        palette[i++] = new Color32(153, 255, 102, 255);
-        palette[i++] = new Color32( 81, 194,   1, 255);
-        palette[i++] = new Color32( 60, 208, 112, 255);
-        palette[i++] = new Color32(133, 187, 101, 255);
-        palette[i++] = new Color32(126, 145,  86, 255);
-        palette[i++] = new Color32( 33, 171, 205, 255);
-        palette[i++] = new Color32(  0, 134, 167, 255);
-        palette[i++] = new Color32(153, 204, 255, 255);
-        palette[i++] = new Color32(255,   0, 255, 255);
-        palette[i++] = new Color32(188, 108, 172, 255);
-        palette[i++] = new Color32(153, 102, 204, 255);
-        palette[i++] = new Color32(153, 153, 255, 255);
-        palette[i++] = new Color32(153, 102, 255, 255);
-        palette[i++] = new Color32(255,   0, 153, 255);
-        palette[i++] = new Color32(255, 151,   0, 255);
-        palette[i++] = new Color32(255, 204, 153, 255);
-        palette[i++] = new Color32(191, 106,  31, 255);
-        palette[i++] = new Color32(255, 128,   0, 255);
-        palette[i++] = new Color32(185, 150, 133, 255);
-        palette[i++] = new Color32(255, 255, 153, 255);
-        palette[i++] = new Color32(167, 139,   0, 255);
-        palette[i++] = new Color32(226, 182,  49, 255);
-        palette[i++] = new Color32(255, 255,  51, 255);
-
+            int i = 0;
+            palette[i++] = new Color32(102, 255, 255, 255);
+            palette[i++] = new Color32(153, 255, 102, 255);
+            palette[i++] = new Color32(81, 194, 1, 255);
+            palette[i++] = new Color32(60, 208, 112, 255);
+            palette[i++] = new Color32(133, 187, 101, 255);
+            palette[i++] = new Color32(126, 145, 86, 255);
+            palette[i++] = new Color32(33, 171, 205, 255);
+            palette[i++] = new Color32(0, 134, 167, 255);
+            palette[i++] = new Color32(153, 204, 255, 255);
+            palette[i++] = new Color32(255, 0, 255, 255);
+            palette[i++] = new Color32(188, 108, 172, 255);
+            palette[i++] = new Color32(153, 102, 204, 255);
+            palette[i++] = new Color32(153, 153, 255, 255);
+            palette[i++] = new Color32(153, 102, 255, 255);
+            palette[i++] = new Color32(255, 0, 153, 255);
+            palette[i++] = new Color32(255, 151, 0, 255);
+            palette[i++] = new Color32(255, 204, 153, 255);
+            palette[i++] = new Color32(191, 106, 31, 255);
+            palette[i++] = new Color32(255, 128, 0, 255);
+            palette[i++] = new Color32(185, 150, 133, 255);
+            palette[i++] = new Color32(255, 255, 153, 255);
+            palette[i++] = new Color32(167, 139, 0, 255);
+            palette[i++] = new Color32(226, 182, 49, 255);
+            palette[i++] = new Color32(255, 255, 51, 255);
+        }
 
         return palette;
+    }
+
+    public static ColorHSL[] getColorPaletteHSL()
+    {
+        if (paletteHSL == null)
+        {
+            paletteHSL = new ColorHSL[24];
+            Color[] tmpP = getColorPalette();
+
+            for( int i = 0; i < tmpP.Length; i++ )
+            {
+                paletteHSL[i] = new ColorHSL(tmpP[i]);
+            }
+        }
+
+        return paletteHSL;
     }
 
     public static string getMovieDataKey(CMData data)
@@ -77,6 +88,7 @@ public class MovieDBUtils : MonoBehaviour {
         return data.movie + "(" + data.year + ")";
     }
 
+    // use forward-differencing to calculate bezier points
     public static Vector3[] getBezierPoints(Vector3[] basePts, int size)
     {
         float h = 1.0f / (float)(size - 1);
