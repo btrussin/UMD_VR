@@ -253,6 +253,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             ns.addCollision();
             ns.updateColor();
 
+
             string key = MovieDBUtils.getMovieDataKey(mo.cmData);
 
             if ( !ns.getIsSelected() )

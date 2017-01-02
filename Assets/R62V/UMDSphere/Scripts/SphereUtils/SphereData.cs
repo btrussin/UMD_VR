@@ -77,7 +77,6 @@ public class SphereData : MonoBehaviour {
     void Start () {
         cmLoader = this.gameObject.GetComponent<CMJSONLoader>();
         cmLoader.LoadData();
-        //ringMaterial = new Material(Shader.Find("Sprites/Default"));
         //ringMaterial = new Material(Shader.Find("Standard"));
         ringMaterial = new Material(Shader.Find("Sprites/Default"));
         //curveMaterial = new Material(Shader.Find("Standard"));

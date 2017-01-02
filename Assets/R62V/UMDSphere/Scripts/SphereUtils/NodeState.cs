@@ -26,10 +26,14 @@ public class NodeState : MonoBehaviour {
     GameObject nodeMenu;
 
     static List<GameObject> menus = new List<GameObject>();
-	static uint currentLevel;
 
-	float animationTime = 1.5f;
+    uint currentLevel;
+    float animationTime = 1.5f;
 	const int MAX_LEVEL = 2;
+
+    Transform referenceLine;
+    Vector3 startLoc;
+    Vector3 endLoc;
 
     void Start () {
         isSelected = false;
@@ -103,10 +107,11 @@ public class NodeState : MonoBehaviour {
     {
         isSelected = !isSelected;
 
-		if (isSelected && currentLevel == MAX_LEVEL) bringUpMenu();
+        if (isSelected && currentLevel == MAX_LEVEL) bringUpMenu();
+        else if (isSelected) expand();
         else if (nodeMenu != null)
         {
-            destroyMenu();  
+            destroyMenu();
         }
     }
 
@@ -265,7 +270,7 @@ public class NodeState : MonoBehaviour {
 
     }
 
-    static GameObject addText(GameObject obj, string text, TextAlignment alignment, TextAnchor anchor, Vector3 offset)
+    public static GameObject addText(GameObject obj, string text, TextAlignment alignment, TextAnchor anchor, Vector3 offset)
     {
         GameObject textObj = new GameObject();
         textObj.transform.SetParent(obj.transform);
@@ -300,6 +305,7 @@ public class NodeState : MonoBehaviour {
 		summonRing ();
 
 		currentLevel++;
+        Debug.Log("Current Level: " + currentLevel);
 	}
 
 	public void contract() {
@@ -309,19 +315,47 @@ public class NodeState : MonoBehaviour {
 	}
 
 	private void summonRing() {	
-		StartCoroutine (ExpandRingAnimation(animationTime));
+        //TODO: May have to add boolean to not spam coroutines to be called
+		 StartCoroutine (ExpandRingAnimation(animationTime));
 	}
 
 	private IEnumerator ExpandRingAnimation(float secondsToComplete) {
+        float t = 0f;
 
+        referenceLine = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
+        referenceLine.GetComponent<Renderer>().material = new Material(Shader.Find("Standard"));
+        referenceLine.GetComponent<LineRenderer>().material.color = MovieDBUtils.getColorPalette()[1];
+        referenceLine.parent = transform;
+
+        while (t < 1.0f)
+        {
+            transform.localPosition = Vector3.Lerp(startLoc, endLoc, t);
+            transform.localScale = Vector3.Lerp(Vector3.one * .015f, Vector3.one * .5f, t / 1f);
+            t += Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+    }
+
+	private void destroyRing() {
+        //TODO: May have to add boolean to not spam coroutines to be called
+        StartCoroutine(DiminishRingAnimation(animationTime));
 	}
 
-	private void destroyRing() {	
-		StartCoroutine (DiminishRing(animationTime));
-	}
+	private IEnumerator DiminishRingAnimation(float secondsToComplete) {
+        float t = 0f;
 
-	private IEnumerator DiminishRing(float secondsToComplete) {
+        while (t < 1.0f)
+        {
+            transform.localPosition = Vector3.Lerp(endLoc, startLoc, t);
+            transform.localScale = Vector3.Lerp(Vector3.one * .015f, Vector3.one * .5f, t / 1f);
+            t += Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+        }
 
-	}
+        if (referenceLine)
+            Destroy(referenceLine.gameObject);
+        referenceLine = null;
+    }
 
 }

@@ -11,4 +11,5 @@ public class MovieObject : MonoBehaviour
     public Color color;
     public NodeState nodeState;
     public MovieConnectionManager connManager;
+    public int currentLevel;
 }
