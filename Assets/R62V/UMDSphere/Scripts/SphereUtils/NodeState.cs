@@ -26,6 +26,10 @@ public class NodeState : MonoBehaviour {
     GameObject nodeMenu;
 
     static List<GameObject> menus = new List<GameObject>();
+	static uint currentLevel;
+
+	float animationTime = 1.5f;
+	const int MAX_LEVEL = 2;
 
     void Start () {
         isSelected = false;
@@ -99,7 +103,7 @@ public class NodeState : MonoBehaviour {
     {
         isSelected = !isSelected;
 
-        if (isSelected) bringUpMenu();
+		if (isSelected && currentLevel == MAX_LEVEL) bringUpMenu();
         else if (nodeMenu != null)
         {
             destroyMenu();  
@@ -290,4 +294,34 @@ public class NodeState : MonoBehaviour {
     {
         return isSelected;
     }
+
+	/*--------Mike - Level Expansion------*/
+	public void expand() {
+		summonRing ();
+
+		currentLevel++;
+	}
+
+	public void contract() {
+		destroyRing ();
+
+		currentLevel--;
+	}
+
+	private void summonRing() {	
+		StartCoroutine (ExpandRingAnimation(animationTime));
+	}
+
+	private IEnumerator ExpandRingAnimation(float secondsToComplete) {
+
+	}
+
+	private void destroyRing() {	
+		StartCoroutine (DiminishRing(animationTime));
+	}
+
+	private IEnumerator DiminishRing(float secondsToComplete) {
+
+	}
+
 }

@@ -22,7 +22,6 @@ public class RingState : MonoBehaviour {
 
     int connectionCount = 0;
 
-
     LineRenderer lRend = null;
     TextMesh tMesh = null;
 
@@ -116,4 +115,5 @@ public class RingState : MonoBehaviour {
     {
         doDim = true;
     }
+
 }
