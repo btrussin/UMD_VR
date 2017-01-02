@@ -4,7 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 
 //TODO: Use for SphereData in customizing the type of data on the ring
-public class SphereState : MonoBehaviour {
+public class SphereState : BaseState
+{
 
     //TODO: Need to Derive from some variation of SphereState
 
@@ -12,9 +13,8 @@ public class SphereState : MonoBehaviour {
     Material checkMaterial;
     Material closeMaterial;
 
-    public void bringUpMenu()
+    public override void bringUpMenu()
     {
-        GameObject nodeMenu = new GameObject();
         nodeMenu.name = "Create spheres by:";
         nodeMenu.transform.SetParent(gameObject.transform);
 
@@ -33,19 +33,19 @@ public class SphereState : MonoBehaviour {
         offset.y = -0.02f;
         offset.x = 0.04f;
 
-        textObjects.Add(NodeState.addText(nodeMenu, "Distributor", roleAlign, roleAnchor, offset));
+        textObjects.Add(addText(nodeMenu, "Distributor", roleAlign, roleAnchor, offset));
         offset.y -= yOffsetPerLine;
-        textObjects.Add(NodeState.addText(nodeMenu, "Grouping", roleAlign, roleAnchor, offset));
+        textObjects.Add(addText(nodeMenu, "Grouping", roleAlign, roleAnchor, offset));
         offset.y -= yOffsetPerLine;
-        textObjects.Add(NodeState.addText(nodeMenu, "Comic", roleAlign, roleAnchor, offset));
+        textObjects.Add(addText(nodeMenu, "Comic", roleAlign, roleAnchor, offset));
         offset.y -= yOffsetPerLine;
 
         offset.x = 0.01f;
-        textObjects.Add(NodeState.addText(nodeMenu, "Publisher", roleAlign, roleAnchor, offset));
+        textObjects.Add(addText(nodeMenu, "Publisher", roleAlign, roleAnchor, offset));
         offset.y -= yOffsetPerLine / 4.0f;
-        textObjects.Add(NodeState.addText(nodeMenu, "Studio", roleAlign, roleAnchor, offset));
+        textObjects.Add(addText(nodeMenu, "Studio", roleAlign, roleAnchor, offset));
         offset.y -= yOffsetPerLine;
-        textObjects.Add(NodeState.addText(nodeMenu, "Year", roleAlign, roleAnchor, offset));
+        textObjects.Add(addText(nodeMenu, "Year", roleAlign, roleAnchor, offset));
         offset.y -= yOffsetPerLine;
 
         float firstBoxY = offset.y;
@@ -94,39 +94,13 @@ public class SphereState : MonoBehaviour {
         quad1.transform.localScale = new Vector3(0.04f, 0.04f, 1.0f);
         quad1.transform.localPosition = new Vector3(xDim - 0.02f, -0.02f, 0.0f);
 
-        quad1.AddComponent<NodeMenuHandler>();
+        quad1.AddComponent<SphereMenuHandler>();
         //quad1.GetComponent<NodeMenuHandler>().nodeState = this;
-        quad1.GetComponent<NodeMenuHandler>().handlerType = NodeMenuHandler.NodeMenuHandlerType.CloseMenu;
+        quad1.GetComponent<SphereMenuHandler>().handlerType = NodeMenuHandler.NodeMenuHandlerType.CloseMenu;
 
         offset = Vector3.zero;
         offset.y = firstBoxY - 0.005f;
         offset.x = 0.02f;
-
-        /*for (int i = 0; i < data.roles.Length; i++)
-        {
-            GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
-            quad.name = "Toggle: " + data.roles[i].actor;
-            quad.layer = menuLayerMask;
-            quad.transform.SetParent(nodeMenu.transform);
-            MeshRenderer rend = quad.GetComponent<MeshRenderer>();
-            rend.material = checkMaterial;
-            rend.transform.localScale = new Vector3(0.02f, 0.02f, 1.0f);
-            rend.transform.localPosition = offset;
-
-            quad.AddComponent<NodeMenuHandler>();
-            NodeMenuHandler menuHandler = quad.GetComponent<NodeMenuHandler>();
-            menuHandler.nodeState = this;
-            menuHandler.handlerType = NodeMenuHandler.NodeMenuHandlerType.ToggleActor;
-            menuHandler.role = data.roles[i];
-            menuHandler.boxMaterial = boxMaterial;
-            menuHandler.checkMaterial = checkMaterial;
-
-            menuHandler.UpdateMaterial();
-
-            offset.y -= yOffsetPerLine;
-        }
-        */
-
 
         Vector3 ringCenter = gameObject.transform.parent.transform.position;
         Vector3 nodePosition = gameObject.transform.position;

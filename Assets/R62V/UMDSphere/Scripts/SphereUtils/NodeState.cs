@@ -3,11 +3,10 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 
-public class NodeState : MonoBehaviour {
+public class NodeState : BaseState
+{
 
     int collisionCount = 0;
-
-    bool isSelected;
 
     Renderer nodeRend = null;
     TextMesh tMesh = null;
@@ -23,8 +22,6 @@ public class NodeState : MonoBehaviour {
     Material checkMaterial;
     Material closeMaterial;
 
-    GameObject nodeMenu;
-
     static List<GameObject> menus = new List<GameObject>();
 
     uint currentLevel;
@@ -36,8 +33,6 @@ public class NodeState : MonoBehaviour {
     Vector3 endLoc;
 
     void Start () {
-        isSelected = false;
-
         ptMatOrig = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/PointMaterial.mat");
         ptMatSelected = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/PointMaterialRed.mat");
         ptMatCollision = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/PointMaterialYellow.mat");
@@ -103,25 +98,7 @@ public class NodeState : MonoBehaviour {
         }
     }
 
-    public void toggleSelected()
-    {
-        isSelected = !isSelected;
-
-        if (isSelected && currentLevel == MAX_LEVEL) bringUpMenu();
-        else if (isSelected) expand();
-        else if (nodeMenu != null)
-        {
-            destroyMenu();
-        }
-    }
-
-    public void destroyMenu()
-    {
-        GameObject.Destroy(nodeMenu);
-        nodeMenu = null;
-    }
-
-    public void bringUpMenu()
+    public override void bringUpMenu()
     {
         // clear out all other menus that may be present
         foreach (GameObject obj in menus) GameObject.Destroy(obj);
@@ -264,43 +241,9 @@ public class NodeState : MonoBehaviour {
 
         menus.Add(nodeMenu);
 
-
-        
-
-
     }
 
-    public static GameObject addText(GameObject obj, string text, TextAlignment alignment, TextAnchor anchor, Vector3 offset)
-    {
-        GameObject textObj = new GameObject();
-        textObj.transform.SetParent(obj.transform);
-        textObj.AddComponent<MeshRenderer>();
-        textObj.AddComponent<TextMesh>();
-        TextMesh ringText = textObj.GetComponent<TextMesh>();
-        ringText.anchor = anchor;
-        ringText.alignment = alignment;
-        ringText.text = text;
-        ringText.characterSize = 0.03f;
-        ringText.fontSize = 100;
-
-        float scale = 0.03f;
-        textObj.transform.localScale = new Vector3(scale, scale, scale);
-        textObj.transform.localPosition = offset;
-
-        return textObj;
-    }
-
-    public void setSelected(bool selected)
-    {
-        isSelected = selected;
-    }
-
-    public bool getIsSelected()
-    {
-        return isSelected;
-    }
-
-	/*--------Mike - Level Expansion------*/
+	/*--------Mike - Level Expansion In Progress------*/
 	public void expand() {
 		summonRing ();
 
