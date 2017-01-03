@@ -3,9 +3,27 @@ using System.Collections;
 
 public class BaseMenuHandler : MonoBehaviour {
 
-    public enum NodeMenuHandlerType
+    public Material boxMaterial;
+    public Material checkMaterial;
+
+    public BaseState baseState;
+
+    public enum BaseMenuHandlerType
     {
-        CloseMenu
+        CloseMenu,
+        ToggleOption
     }
-    //Figure out how to add an ENUM at runtime
+
+    public BaseMenuHandlerType handlerType;
+   
+    public virtual void handleTrigger()
+    {
+
+    }
+
+    public virtual void UpdateMaterial()
+    {
+
+    }
+
 }

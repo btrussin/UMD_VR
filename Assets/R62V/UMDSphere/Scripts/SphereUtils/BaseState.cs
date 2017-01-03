@@ -1,28 +1,55 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEditor;
 
 //And class which needs menu will extend from this class.
 //Reason for needing more than one class is that a menu for the node
 //isn't the same as a menu that is on startup.
 public class BaseState : MonoBehaviour {
 
+    public Material ptMatOrig;
+    public Material ptMatSelected;
+    public Material ptMatCollision;
+
+    public Material boxMaterial;
+    public Material checkMaterial;
+    public Material closeMaterial;
+
     protected bool isSelected;
-    protected GameObject nodeMenu;
+    protected GameObject menu;
+
+    protected int collisionCount = 0;
+    protected MovieConnectionManager connManager = null;
+    protected Renderer nodeRend = null;
+    protected TextMesh tMesh = null;
+    protected bool valuesNotSet = true;
+
+
+    void Start()
+    {
+        ptMatOrig = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/PointMaterial.mat");
+        ptMatSelected = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/PointMaterialRed.mat");
+        ptMatCollision = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/PointMaterialYellow.mat");
+
+        boxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
+        checkMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
+        closeMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/close_mat.mat");
+    }
 
     public void destroyMenu()
     {
-        GameObject.Destroy(nodeMenu);
-        nodeMenu = null;
+        GameObject.Destroy(menu);
+        menu = null;
     }
 
-    //TODO: May need to make this 
+    //TODO: May need to make this virtual
     public void toggleSelected()
     {
         isSelected = !isSelected;
 
         if (isSelected) bringUpMenu();
 
-        else if (nodeMenu != null)
+        else if (menu != null)
         {
             destroyMenu();
         }
@@ -56,6 +83,32 @@ public class BaseState : MonoBehaviour {
         textObj.transform.localPosition = offset;
 
         return textObj;
+    }
+
+    public int getConnectionCount()
+    {
+        return collisionCount;
+    }
+
+    public void addCollision()
+    {
+        collisionCount++;
+    }
+
+    public void removeCollision()
+    {
+        collisionCount--;
+        if (collisionCount < 0) collisionCount = 0;
+
+        if (collisionCount == 0)
+        {
+            if (!isSelected) connManager.forceClearAllConnections();
+        }
+    }
+
+    public virtual void updateColor()
+    {
+ 
     }
 
     public virtual void bringUpMenu()

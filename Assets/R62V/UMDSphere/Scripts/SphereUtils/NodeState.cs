@@ -2,25 +2,10 @@
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class NodeState : BaseState
 {
-
-    int collisionCount = 0;
-
-    Renderer nodeRend = null;
-    TextMesh tMesh = null;
-    MovieConnectionManager connManager = null;
-
-    bool valuesNotSet = true;
-
-    Material ptMatOrig;
-    Material ptMatSelected;
-    Material ptMatCollision;
-
-    Material boxMaterial;
-    Material checkMaterial;
-    Material closeMaterial;
 
     static List<GameObject> menus = new List<GameObject>();
 
@@ -32,21 +17,11 @@ public class NodeState : BaseState
     Vector3 startLoc;
     Vector3 endLoc;
 
-    void Start () {
-        ptMatOrig = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/PointMaterial.mat");
-        ptMatSelected = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/PointMaterialRed.mat");
-        ptMatCollision = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/PointMaterialYellow.mat");
-
-        boxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
-        checkMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
-        closeMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/close_mat.mat");
-    }
-
 	void Update () {
 	
 	}
 
-    public void updateColor()
+    public override void updateColor()
     {
         if (valuesNotSet)
         {
@@ -77,27 +52,6 @@ public class NodeState : BaseState
 
     }
 
-    public int getConnectionCount()
-    {
-        return collisionCount;
-    }
-
-    public void addCollision()
-    {
-        collisionCount++;
-    }
-
-    public void removeCollision()
-    {
-        collisionCount--;
-        if (collisionCount < 0) collisionCount = 0;
-
-        if( collisionCount == 0 )
-        {
-            if( !isSelected ) connManager.forceClearAllConnections();
-        }
-    }
-
     public override void bringUpMenu()
     {
         // clear out all other menus that may be present
@@ -105,16 +59,15 @@ public class NodeState : BaseState
 
         menus.Clear();
 
-
         CMData data = gameObject.GetComponent<MovieObject>().cmData;
 
         string mKey = MovieDBUtils.getMovieDataKey(data);
 
-        nodeMenu = new GameObject();
-        nodeMenu.name = "Menu: " + mKey;
-        nodeMenu.transform.SetParent(gameObject.transform);
+        menu = new GameObject();
+        menu.name = "Menu: " + mKey;
+        menu.transform.SetParent(gameObject.transform);
 
-        nodeMenu.AddComponent<CameraOrientedText3D>();
+        menu.AddComponent<CameraOrientedText3D>();
 
         List<GameObject> textObjects = new List<GameObject>();
 
@@ -129,25 +82,25 @@ public class NodeState : BaseState
         offset.y = -0.02f;
         offset.x = 0.04f;
 
-        textObjects.Add(addText(nodeMenu, "Movie: " + mKey, roleAlign, roleAnchor, offset));
+        textObjects.Add(addText(menu, "Movie: " + mKey, roleAlign, roleAnchor, offset));
         offset.y -= yOffsetPerLine;
-        textObjects.Add(addText(nodeMenu, "Distributor: " + data.distributor, roleAlign, roleAnchor, offset));
+        textObjects.Add(addText(menu, "Distributor: " + data.distributor, roleAlign, roleAnchor, offset));
         offset.y -= yOffsetPerLine;
-        textObjects.Add(addText(nodeMenu, "Comic: " + data.comic, roleAlign, roleAnchor, offset));
+        textObjects.Add(addText(menu, "Comic: " + data.comic, roleAlign, roleAnchor, offset));
         offset.y -= yOffsetPerLine;
         offset.y -= yOffsetPerLine;
 
         offset.x = 0.01f;
-        textObjects.Add(addText(nodeMenu, "Actors (Roles)", roleAlign, roleAnchor, offset));
+        textObjects.Add(addText(menu, "Actors (Roles)", roleAlign, roleAnchor, offset));
         offset.y -= yOffsetPerLine/4.0f;
-        textObjects.Add(addText(nodeMenu, "______________", roleAlign, roleAnchor, offset));
+        textObjects.Add(addText(menu, "______________", roleAlign, roleAnchor, offset));
         offset.y -= yOffsetPerLine;
 
         float firstBoxY = offset.y;
         offset.x = 0.04f;
         for ( int i = 0; i < data.roles.Length; i++ )
         {
-            textObjects.Add(addText(nodeMenu, data.roles[i].actor + " (" + data.roles[i].name + ")", roleAlign, roleAnchor, offset));
+            textObjects.Add(addText(menu, data.roles[i].actor + " (" + data.roles[i].name + ")", roleAlign, roleAnchor, offset));
             offset.y -= yOffsetPerLine;
         }
 
@@ -185,21 +138,21 @@ public class NodeState : BaseState
         plane.transform.localScale = new Vector3(xDim, yDim, 1.0f);
         plane.transform.localPosition = new Vector3(xDim*0.5f, yDim * -0.5f, 0.0f);
 
-        plane.transform.SetParent(nodeMenu.transform);
+        plane.transform.SetParent(menu.transform);
 
 
         GameObject quad1 = GameObject.CreatePrimitive(PrimitiveType.Quad);
         quad1.name = "Close: " + mKey;
         quad1.layer = menuLayerMask;
-        quad1.transform.SetParent(nodeMenu.transform);
+        quad1.transform.SetParent(menu.transform);
         MeshRenderer qrend = quad1.GetComponent<MeshRenderer>();
         qrend.material = closeMaterial;
         quad1.transform.localScale = new Vector3(0.04f, 0.04f, 1.0f);
         quad1.transform.localPosition = new Vector3(xDim-0.02f, -0.02f, 0.0f);
 
         quad1.AddComponent<NodeMenuHandler>();
-        quad1.GetComponent<NodeMenuHandler>().nodeState = this;
-        quad1.GetComponent<NodeMenuHandler>().handlerType = NodeMenuHandler.NodeMenuHandlerType.CloseMenu;
+        quad1.GetComponent<NodeMenuHandler>().baseState = this;
+        quad1.GetComponent<NodeMenuHandler>().handlerType = BaseMenuHandler.BaseMenuHandlerType.CloseMenu;
 
         offset = Vector3.zero;
         offset.y = firstBoxY - 0.005f;
@@ -210,7 +163,7 @@ public class NodeState : BaseState
             GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
             quad.name = "Toggle: " + data.roles[i].actor;
             quad.layer = menuLayerMask;
-            quad.transform.SetParent(nodeMenu.transform);
+            quad.transform.SetParent(menu.transform);
             MeshRenderer rend = quad.GetComponent<MeshRenderer>();
             rend.material = checkMaterial;
             rend.transform.localScale = new Vector3(0.02f, 0.02f, 1.0f);
@@ -218,8 +171,8 @@ public class NodeState : BaseState
 
             quad.AddComponent<NodeMenuHandler>();
             NodeMenuHandler menuHandler = quad.GetComponent<NodeMenuHandler>();
-            menuHandler.nodeState = this;
-            menuHandler.handlerType = NodeMenuHandler.NodeMenuHandlerType.ToggleActor;
+            menuHandler.baseState = this;
+            menuHandler.handlerType = NodeMenuHandler.BaseMenuHandlerType.ToggleOption;
             menuHandler.role = data.roles[i];
             menuHandler.boxMaterial = boxMaterial;
             menuHandler.checkMaterial = checkMaterial;
@@ -235,11 +188,11 @@ public class NodeState : BaseState
         Vector3 nodePosition = gameObject.transform.position;
         Vector3 dir = nodePosition - ringCenter;
         dir.Normalize();
-        nodeMenu.transform.position = nodePosition + dir * 0.2f;
+        menu.transform.position = nodePosition + dir * 0.2f;
 
-        nodeMenu.AddComponent<CameraOrientedText3D>();
+        menu.AddComponent<CameraOrientedText3D>();
 
-        menus.Add(nodeMenu);
+        menus.Add(menu);
 
     }
 

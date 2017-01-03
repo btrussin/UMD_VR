@@ -2,19 +2,7 @@
 using UnityEditor;
 using System.Collections;
 
-public class NodeMenuHandler : MonoBehaviour {
-
-    public enum NodeMenuHandlerType
-    {
-        CloseMenu,
-        ToggleActor
-    }
-
-    public NodeState nodeState;
-    public NodeMenuHandlerType handlerType;
-
-    public Material boxMaterial;
-    public Material checkMaterial;
+public class NodeMenuHandler : BaseMenuHandler {
 
     public CMRole role;
 
@@ -27,7 +15,7 @@ public class NodeMenuHandler : MonoBehaviour {
 	
 	}
 
-    public void UpdateMaterial()
+    public override void UpdateMaterial()
     {
         MeshRenderer rend = gameObject.GetComponent<MeshRenderer>();
 
@@ -41,14 +29,14 @@ public class NodeMenuHandler : MonoBehaviour {
         }
     }
 
-    public void handleTrigger()
+    public override void handleTrigger()
     {
         switch(handlerType)
         {
-            case NodeMenuHandlerType.CloseMenu:
-                nodeState.destroyMenu();
+            case BaseMenuHandlerType.CloseMenu:
+                baseState.destroyMenu();
                 break;
-            case NodeMenuHandlerType.ToggleActor:
+            case BaseMenuHandlerType.ToggleOption:
                 role.active = !role.active;
                 UpdateMaterial();
                 break;
@@ -57,8 +45,4 @@ public class NodeMenuHandler : MonoBehaviour {
         }
     }
 
-    public void closeMenu()
-    {
-        nodeState.destroyMenu();
-    }
 }

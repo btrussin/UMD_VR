@@ -1,10 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SphereMenuHandler : MonoBehaviour {
+public class SphereMenuHandler : BaseMenuHandler {
 
-	// Use this for initialization
-	void Start () {
+    public enum RingLayoutState
+    {
+        Distributor,
+        Grouping,
+        Comic,
+        Publisher,
+        Studio,
+        Year
+    }
+
+    public RingLayoutState ringLayoutState = RingLayoutState.Publisher;
+
+    // Use this for initialization
+    void Start () {
 	
 	}
 	
@@ -12,4 +24,35 @@ public class SphereMenuHandler : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    public override void handleTrigger()
+    {
+        switch (handlerType)
+        {
+            case BaseMenuHandlerType.CloseMenu:
+                baseState.destroyMenu();
+                break;
+            /*case BaseMenuHandlerType.ToggleOption:
+                type.active = !type.active;
+                UpdateMaterial();
+                break;*/
+            default:
+                break;
+        }
+    }
+
+    public override void UpdateMaterial()
+    {
+        MeshRenderer rend = gameObject.GetComponent<MeshRenderer>();
+
+        if (ringLayoutState == RingLayoutState.Publisher)
+        {
+            rend.material = checkMaterial;
+        }
+        else
+        {
+            rend.material = boxMaterial;
+        }
+    }
+
 }

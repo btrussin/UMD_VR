@@ -18,15 +18,6 @@ public class SphereData : MonoBehaviour {
         Column_Z
     }
 
-	public enum RingLayoutState {
-		Distributor,
-		Grouping,
-		Comic,
-		Publisher,
-		Studio,
-		Year
-	}
-
     CMJSONLoader cmLoader;
 
     [Header("Object Path Strings", order = 1)]
@@ -52,7 +43,6 @@ public class SphereData : MonoBehaviour {
     int curveLOD = 100;
 
     SphereLayout sphereLayout = SphereLayout.Sphere;
-	RingLayoutState ringLayoutState = RingLayoutState.Publisher;
 
     Vector3 centerGrpPosition;
 

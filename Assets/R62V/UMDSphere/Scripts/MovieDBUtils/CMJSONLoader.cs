@@ -310,3 +310,10 @@ public class CMRole
     public string name;
     public bool active = true;
 }
+
+[System.Serializable]
+public class CMType
+{
+    public uint type;
+    public bool active = true;
+}

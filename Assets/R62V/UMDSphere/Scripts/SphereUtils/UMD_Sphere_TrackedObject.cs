@@ -66,6 +66,12 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         beam.SetActive(false);
 
         menusLayerMask = 1 << LayerMask.NameToLayer("Menus");
+
+        //TODO: Test for changing menu options on start. Don't actually want to do it like this.
+        if (this.name == "Controller (left)")
+        {
+            this.gameObject.AddComponent<ControllerState>();
+        }
     }
 
     void Update()
@@ -195,6 +201,11 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             {
 
                 triggerActiverBeamObject();
+
+                if (this.name == "Controller (left)")
+                {
+                    this.gameObject.GetComponent<ControllerState>().toggleSelected();
+                }
 
                 // toggle connections with all movies
                 foreach (MovieObject m in connectionMovieObjectMap.Values)
