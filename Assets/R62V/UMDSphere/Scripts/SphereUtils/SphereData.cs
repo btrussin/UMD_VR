@@ -85,12 +85,12 @@ public class SphereData : MonoBehaviour {
 
 		//TODO: have menu here for choosing what layout to have
 
-        //CreateRingsForDistributor();
+        /*//CreateRingsForDistributor();
         //CreateRingsForGrouping();
         //CreateRingsForComic();
         CreateRingsForPublisher();
         //CreateRingsForStudio();
-        //CreateRingsForYear();
+        //CreateRingsForYear();*/
 
     }
 
@@ -540,6 +540,8 @@ public class SphereData : MonoBehaviour {
 
     public void CreateRingsForYear()
     {
+        ClearRings();
+
         int[] years = cmLoader.getAllYears();
         string[] vals = new string[years.Length];
         List<CMData>[] lists = new List<CMData>[years.Length];
@@ -553,6 +555,8 @@ public class SphereData : MonoBehaviour {
 
     public void CreateRingsForPublisher()
     {
+        ClearRings();
+
         string[] vals = cmLoader.getAllPublishers();
         List<CMData>[] lists = new List<CMData>[vals.Length];
         for (int i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForPublisher(vals[i]);
@@ -561,6 +565,8 @@ public class SphereData : MonoBehaviour {
 
     public void CreateRingsForGrouping()
     {
+        ClearRings();
+
         string[] vals = cmLoader.getAllGroupings();
         List<CMData>[] lists = new List<CMData>[vals.Length];
         for (int i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForGrouping(vals[i]);
@@ -569,6 +575,8 @@ public class SphereData : MonoBehaviour {
 
     public void CreateRingsForComic()
     {
+        ClearRings();
+
         string[] vals = cmLoader.getAllComics();
         List<CMData>[] lists = new List<CMData>[vals.Length];
         for (int i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForComic(vals[i]);
@@ -577,6 +585,8 @@ public class SphereData : MonoBehaviour {
 
     public void CreateRingsForDistributor()
     {
+        ClearRings();
+
         string[] vals = cmLoader.getAllDistributors();
         List<CMData>[] lists = new List<CMData>[vals.Length];
         for (int i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForDistributor(vals[i]);
@@ -586,10 +596,35 @@ public class SphereData : MonoBehaviour {
 
     public void CreateRingsForStudio()
     {
+        ClearRings();
+
         string[] vals = cmLoader.getAllStudios();
         List<CMData>[] lists = new List<CMData>[vals.Length];
         for (int i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForStudio(vals[i]);
         CreateRings(vals, lists);
+    }
+
+    public void ClearRings()
+    {
+
+        MovieConnectionManager connMan;
+
+        foreach (MovieObject m in movieObjectMap.Values)
+        {
+            connMan = m.connManager;
+            connMan.forceClearAllConnections();
+        }
+
+        for (int ring = 0; ring < ringList.Count; ring++)
+        {
+            Destroy(ringList[ring]);
+        }
+
+        ringList.Clear();
+        ringColorMap.Clear();
+        movieObjectMap.Clear();
+        activeRings.Clear();
+        movieConnectionList.Clear();
     }
 
     void OrderIntoFourGroups(string[] vals, List<CMData>[] lists)

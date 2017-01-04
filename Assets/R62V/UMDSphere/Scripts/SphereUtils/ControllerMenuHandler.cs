@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class SphereMenuHandler : BaseMenuHandler {
+public class ControllerMenuHandler : BaseMenuHandler {
 
     public enum RingLayoutState
     {
@@ -31,11 +31,8 @@ public class SphereMenuHandler : BaseMenuHandler {
         {
             case BaseMenuHandlerType.CloseMenu:
                 baseState.destroyMenu();
-                Debug.Log("Destroy function call");
                 break;
             case BaseMenuHandlerType.ToggleOption:
-                Debug.Log("AGH");
-                //type.active = !type.active;
                 SetNewMaterialCallback();
                 break;
             default:
@@ -47,7 +44,7 @@ public class SphereMenuHandler : BaseMenuHandler {
     {
         MeshRenderer rend = gameObject.GetComponent<MeshRenderer>();
 
-        if (rend.material.name.StartsWith("check_mat"))
+        if (rend.material.name.StartsWith("box_mat")) //TODO: How can I check the material a better way?
         {
             if (ringLayoutState == RingLayoutState.Publisher)
             {
@@ -73,9 +70,12 @@ public class SphereMenuHandler : BaseMenuHandler {
             {
                 FindObjectOfType<SphereData>().CreateRingsForGrouping();
             }
-        }
 
-        rend.material = (rend.material.name.StartsWith("check_mat")) ? boxMaterial : checkMaterial; //TODO: How can I check the material a better way?
+            rend.material = checkMaterial;
+        } else {
+            rend.material = boxMaterial;
+            FindObjectOfType<SphereData>().ClearRings();
+        }
 
         ClearOtherCategories();
 
@@ -83,7 +83,13 @@ public class SphereMenuHandler : BaseMenuHandler {
 
     private void ClearOtherCategories()
     {
-
+        for (int layerInd = 0; layerInd < SphereData.NUM_LAYOUTS; layerInd++)
+        {
+            if ((RingLayoutState) layerInd != ringLayoutState)
+            {
+                GameObject.Find("Toggle Option: " + ((RingLayoutState)layerInd).ToString()).GetComponent<Renderer>().material = boxMaterial; 
+            }
+        }
     }
 
     public override void UpdateMaterial()

@@ -68,7 +68,12 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         menusLayerMask = 1 << LayerMask.NameToLayer("Menus");
 
-        this.transform.FindChild("Model").gameObject.AddComponent<ControllerState>(); //add for both controllers
+
+        if (this.transform.name == "Controller (left)")
+        {
+            this.transform.FindChild("Model").gameObject.AddComponent<ControllerState>(); //add for both controllers
+        }
+
     }
 
     void Update()
@@ -142,13 +147,10 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 sphereData.updateAllKeptConnections();
             }
 
-
-            Debug.Log(activeBeamInterceptObj.name);
-
-            SphereMenuHandler sphereMenuHandler = activeBeamInterceptObj.GetComponent<SphereMenuHandler>();
-            if (sphereMenuHandler != null)
+            ControllerMenuHandler controllerMenuHandler = activeBeamInterceptObj.GetComponent<ControllerMenuHandler>();
+            if (controllerMenuHandler != null)
             {
-                sphereMenuHandler.handleTrigger();
+                controllerMenuHandler.handleTrigger();
             }
 
             activeBeamInterceptObj = null;
@@ -199,6 +201,12 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 useBeam = false;
                 activeBeamInterceptObj = null;
                 if (ringsInCollision.Count == 0) hideTrackpadArrows();
+
+
+                if (this.transform.FindChild("Model").GetComponent<ControllerState>() != null)
+                {
+                    this.transform.FindChild("Model").GetComponent<ControllerState>().toggleSelected();
+                }
             }
 
             if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
@@ -206,11 +214,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             {
 
                 triggerActiverBeamObject();
-
-                if (this.transform.FindChild("Model").GetComponent<ControllerState>() != null)
-                {
-                    this.transform.FindChild("Model").GetComponent<ControllerState>().toggleSelected();
-                }
 
                 // toggle connections with all movies
                 foreach (MovieObject m in connectionMovieObjectMap.Values)
@@ -306,7 +309,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
             connectionMovieObjectMap.Remove(key);
         }
-        
     }
 
     void UpdateConnections()

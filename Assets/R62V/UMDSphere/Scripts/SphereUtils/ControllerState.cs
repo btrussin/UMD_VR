@@ -115,9 +115,9 @@ public class ControllerState : BaseState
         quad1.transform.localScale = new Vector3(0.04f, 0.04f, 1.0f);
         quad1.transform.localPosition = new Vector3(xDim - 0.02f, -0.02f, 0.0f);
 
-        quad1.AddComponent<SphereMenuHandler>();
-        quad1.GetComponent<SphereMenuHandler>().baseState = this;
-        quad1.GetComponent<SphereMenuHandler>().handlerType = BaseMenuHandler.BaseMenuHandlerType.CloseMenu;
+        quad1.AddComponent<ControllerMenuHandler>();
+        quad1.GetComponent<ControllerMenuHandler>().baseState = this;
+        quad1.GetComponent<ControllerMenuHandler>().handlerType = BaseMenuHandler.BaseMenuHandlerType.CloseMenu;
 
         offset = Vector3.zero;
         offset.y = firstBoxY - 0.005f;
@@ -125,7 +125,7 @@ public class ControllerState : BaseState
 
         for (int layoutInd = 0; layoutInd < SphereData.NUM_LAYOUTS; layoutInd++)
         {
-            SphereMenuHandler.RingLayoutState ringlayoutState = (SphereMenuHandler.RingLayoutState) layoutInd;
+            ControllerMenuHandler.RingLayoutState ringlayoutState = (ControllerMenuHandler.RingLayoutState) layoutInd;
 
             GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
             Destroy(quad.GetComponent<MeshCollider>());
@@ -139,8 +139,8 @@ public class ControllerState : BaseState
             rend.transform.localScale = new Vector3(0.02f, 0.02f, 1.0f);
             rend.transform.localPosition = offset;
 
-            quad.AddComponent<SphereMenuHandler>();
-            SphereMenuHandler menuHandler = quad.GetComponent<SphereMenuHandler>();
+            quad.AddComponent<ControllerMenuHandler>();
+            ControllerMenuHandler menuHandler = quad.GetComponent<ControllerMenuHandler>();
             menuHandler.baseState = this;
             menuHandler.handlerType = NodeMenuHandler.BaseMenuHandlerType.ToggleOption;
             menuHandler.ringLayoutState = ringlayoutState;
