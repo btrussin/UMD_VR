@@ -40,6 +40,7 @@ public class BaseState : MonoBehaviour {
     {
         GameObject.Destroy(menu);
         menu = null;
+        setSelected(false);
     }
 
     //TODO: May need to make this virtual

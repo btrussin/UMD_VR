@@ -72,6 +72,8 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         if (this.transform.name == "Controller (left)")
         {
             this.transform.FindChild("Model").gameObject.AddComponent<ControllerState>(); //add for both controllers
+
+            this.transform.FindChild("Model").gameObject.GetComponent<ControllerState>().toggleSelected();
         }
 
     }

@@ -156,7 +156,7 @@ public class ControllerState : BaseState
         Vector3 userPosition = GameObject.Find("Camera (eye)").transform.position;
         Vector3 dir = controllerPosition - userPosition;
         dir.Normalize();
-        menu.transform.position = userPosition + dir;
+        menu.transform.position = userPosition + dir * 0.8f;
 
         menu.AddComponent<CameraOrientedText3D>();
     }
