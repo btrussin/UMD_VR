@@ -104,8 +104,6 @@ public class NodeState : BaseState
             offset.y -= yOffsetPerLine;
         }
 
-
-
         float minX = float.MaxValue;
         float minY = float.MaxValue;
 
@@ -139,7 +137,6 @@ public class NodeState : BaseState
         plane.transform.localPosition = new Vector3(xDim*0.5f, yDim * -0.5f, 0.0f);
 
         plane.transform.SetParent(menu.transform);
-
 
         GameObject quad1 = GameObject.CreatePrimitive(PrimitiveType.Quad);
         quad1.name = "Close: " + mKey;
@@ -181,8 +178,6 @@ public class NodeState : BaseState
 
             offset.y -= yOffsetPerLine;
         }
-
-
 
         Vector3 ringCenter = gameObject.transform.parent.transform.position;
         Vector3 nodePosition = gameObject.transform.position;

@@ -104,6 +104,9 @@ public class ControllerState : BaseState
 
 
         GameObject quad1 = GameObject.CreatePrimitive(PrimitiveType.Quad);
+        Destroy(quad1.GetComponent<MeshCollider>());
+        quad1.AddComponent<BoxCollider>();
+
         quad1.name = "Close";
         quad1.layer = menuLayerMask;
         quad1.transform.SetParent(menu.transform);
@@ -120,10 +123,15 @@ public class ControllerState : BaseState
         offset.y = firstBoxY - 0.005f;
         offset.x = 0.02f;
 
-        for (int i = 0; i < 6; i++)
+        for (int layoutInd = 0; layoutInd < SphereData.NUM_LAYOUTS; layoutInd++)
         {
+            SphereMenuHandler.RingLayoutState ringlayoutState = (SphereMenuHandler.RingLayoutState) layoutInd;
+
             GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
-            quad.name = "Toggle Option: " + (i + 1);
+            Destroy(quad.GetComponent<MeshCollider>());
+            quad.AddComponent<BoxCollider>();
+
+            quad.name = "Toggle Option: " + ringlayoutState;
             quad.layer = menuLayerMask;
             quad.transform.SetParent(menu.transform);
             MeshRenderer rend = quad.GetComponent<MeshRenderer>();
@@ -135,7 +143,7 @@ public class ControllerState : BaseState
             SphereMenuHandler menuHandler = quad.GetComponent<SphereMenuHandler>();
             menuHandler.baseState = this;
             menuHandler.handlerType = NodeMenuHandler.BaseMenuHandlerType.ToggleOption;
-            menuHandler.ringLayoutState = (SphereMenuHandler.RingLayoutState)i;
+            menuHandler.ringLayoutState = ringlayoutState;
             menuHandler.boxMaterial = boxMaterial;
             menuHandler.checkMaterial = checkMaterial;
 

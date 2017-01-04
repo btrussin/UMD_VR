@@ -10,6 +10,8 @@ using System.Collections.Generic;
 /// </summary>
 public class SphereData : MonoBehaviour {
 
+    public static int NUM_LAYOUTS = 6; //update the layouts
+
     public enum SphereLayout
     {
         Sphere,

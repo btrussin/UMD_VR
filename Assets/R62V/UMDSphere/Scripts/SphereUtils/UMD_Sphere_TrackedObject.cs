@@ -108,15 +108,11 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     {
         float beamDist = 10.0f;
 
-        RaycastHit hitInfo, aiya;
-
-        Debug.Log(Physics.Raycast(deviceRay.origin, deviceRay.direction, out aiya, 30.0f, menusLayerMask)) ;
-        Debug.Log(aiya.collider == null ? "FALSE" : "Very True with Object Hit as: " + aiya.collider.gameObject.name);
+        RaycastHit hitInfo;
 
         if (Physics.Raycast(deviceRay.origin, deviceRay.direction, out hitInfo, 30.0f, menusLayerMask))
         {
             activeBeamInterceptObj = hitInfo.collider.gameObject;
-            Debug.Log("Seriously?");
             beamDist = hitInfo.distance;
         }
         else
@@ -272,7 +268,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             NodeState ns = mo.nodeState;
             ns.addCollision();
             ns.updateColor();
-
 
             string key = MovieDBUtils.getMovieDataKey(mo.cmData);
 
