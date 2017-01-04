@@ -31,6 +31,7 @@ public class SphereMenuHandler : BaseMenuHandler {
         {
             case BaseMenuHandlerType.CloseMenu:
                 baseState.destroyMenu();
+                Debug.Log("Destroy function call");
                 break;
             /*case BaseMenuHandlerType.ToggleOption:
                 type.active = !type.active;

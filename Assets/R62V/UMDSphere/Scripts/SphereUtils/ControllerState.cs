@@ -26,12 +26,7 @@ public class ControllerState : BaseState
         {
             nodeRend.material = ptMatSelected;
         }
-        else if (collisionCount > 0)
-        {
-            nodeRend.material = ptMatCollision;
-        }
-        else
-        {
+        else {
             nodeRend.material = ptMatOrig;
         }
 
@@ -42,6 +37,8 @@ public class ControllerState : BaseState
         menu = new GameObject();
         menu.name = "Sphere Type Menu";
         menu.transform.SetParent(gameObject.transform);
+
+        menu.AddComponent<CameraOrientedText3D>();
 
         List<GameObject> textObjects = new List<GameObject>();
 
@@ -123,7 +120,7 @@ public class ControllerState : BaseState
         offset.y = firstBoxY - 0.005f;
         offset.x = 0.02f;
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 6; i++)
         {
             GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
             quad.name = "Toggle Option: " + (i + 1);

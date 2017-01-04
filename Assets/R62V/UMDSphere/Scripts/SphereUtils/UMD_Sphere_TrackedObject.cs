@@ -3,6 +3,7 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using Valve.VR;
+using System;
 
 public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 {
@@ -67,11 +68,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         menusLayerMask = 1 << LayerMask.NameToLayer("Menus");
 
-        //TODO: Test for changing menu options on start. Don't actually want to do it like this.
-        if (this.name == "Controller (left)")
-        {
-            this.gameObject.AddComponent<ControllerState>();
-        }
+        this.transform.FindChild("Model").gameObject.AddComponent<ControllerState>(); //add for both controllers
     }
 
     void Update()
@@ -110,13 +107,16 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     void projectBeam()
     {
         float beamDist = 10.0f;
-        
 
-        RaycastHit hitInfo;
+        RaycastHit hitInfo, aiya;
+
+        Debug.Log(Physics.Raycast(deviceRay.origin, deviceRay.direction, out aiya, 30.0f, menusLayerMask)) ;
+        Debug.Log(aiya.collider == null ? "FALSE" : "Very True with Object Hit as: " + aiya.collider.gameObject.name);
 
         if (Physics.Raycast(deviceRay.origin, deviceRay.direction, out hitInfo, 30.0f, menusLayerMask))
         {
             activeBeamInterceptObj = hitInfo.collider.gameObject;
+            Debug.Log("Seriously?");
             beamDist = hitInfo.distance;
         }
         else
@@ -144,6 +144,15 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 MovieObject mo = activeBeamInterceptObj.transform.parent.transform.parent.gameObject.GetComponent<MovieObject>();
                 sphereData.connectMoviesByActors(mo.cmData);
                 sphereData.updateAllKeptConnections();
+            }
+
+
+            Debug.Log(activeBeamInterceptObj.name);
+
+            SphereMenuHandler sphereMenuHandler = activeBeamInterceptObj.GetComponent<SphereMenuHandler>();
+            if (sphereMenuHandler != null)
+            {
+                sphereMenuHandler.handleTrigger();
             }
 
             activeBeamInterceptObj = null;
@@ -202,9 +211,9 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
                 triggerActiverBeamObject();
 
-                if (this.name == "Controller (left)")
+                if (this.transform.FindChild("Model").GetComponent<ControllerState>() != null)
                 {
-                    this.gameObject.GetComponent<ControllerState>().toggleSelected();
+                    this.transform.FindChild("Model").GetComponent<ControllerState>().toggleSelected();
                 }
 
                 // toggle connections with all movies
@@ -214,8 +223,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                     m.nodeState.updateColor();
                 }
 
-            }
-
+            } 
 
             prevState = state;
         }
@@ -251,6 +259,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             }
 
         }
+
     }
 
     void OnCollisionEnter(Collision col)
@@ -273,8 +282,10 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             }
 
             connectionMovieObjectMap.Add(key, mo);
+        } else
+        {
+
         }
-        
     }
 
     void OnCollisionStay(Collision col)
