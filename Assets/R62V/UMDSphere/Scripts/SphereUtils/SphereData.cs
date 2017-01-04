@@ -538,21 +538,7 @@ public class SphereData : MonoBehaviour {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    void CreateRingsForYear()
+    public void CreateRingsForYear()
     {
         int[] years = cmLoader.getAllYears();
         string[] vals = new string[years.Length];
@@ -565,7 +551,7 @@ public class SphereData : MonoBehaviour {
         CreateRings(vals, lists);
     }
 
-    void CreateRingsForPublisher()
+    public void CreateRingsForPublisher()
     {
         string[] vals = cmLoader.getAllPublishers();
         List<CMData>[] lists = new List<CMData>[vals.Length];
@@ -573,7 +559,7 @@ public class SphereData : MonoBehaviour {
         CreateRings(vals, lists);
     }
 
-    void CreateRingsForGrouping()
+    public void CreateRingsForGrouping()
     {
         string[] vals = cmLoader.getAllGroupings();
         List<CMData>[] lists = new List<CMData>[vals.Length];
@@ -581,7 +567,7 @@ public class SphereData : MonoBehaviour {
         CreateRings(vals, lists);
     }
 
-    void CreateRingsForComic()
+    public void CreateRingsForComic()
     {
         string[] vals = cmLoader.getAllComics();
         List<CMData>[] lists = new List<CMData>[vals.Length];
@@ -589,7 +575,7 @@ public class SphereData : MonoBehaviour {
         CreateRings(vals, lists);
     }
 
-    void CreateRingsForDistributor()
+    public void CreateRingsForDistributor()
     {
         string[] vals = cmLoader.getAllDistributors();
         List<CMData>[] lists = new List<CMData>[vals.Length];
@@ -598,7 +584,7 @@ public class SphereData : MonoBehaviour {
     }
 
 
-    void CreateRingsForStudio()
+    public void CreateRingsForStudio()
     {
         string[] vals = cmLoader.getAllStudios();
         List<CMData>[] lists = new List<CMData>[vals.Length];

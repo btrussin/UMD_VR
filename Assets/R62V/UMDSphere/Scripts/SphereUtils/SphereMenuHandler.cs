@@ -46,31 +46,43 @@ public class SphereMenuHandler : BaseMenuHandler {
     private void SetNewMaterialCallback()
     {
         MeshRenderer rend = gameObject.GetComponent<MeshRenderer>();
-        Debug.Log(rend.material);
 
-        if (ringLayoutState == RingLayoutState.Publisher)
+        if (rend.material.name.StartsWith("check_mat"))
         {
-            rend.material = (rend.material == checkMaterial) ? boxMaterial : checkMaterial;
-        } else if (ringLayoutState == RingLayoutState.Studio)
-        {
-            rend.material = (rend.material == checkMaterial) ? boxMaterial : checkMaterial;
+            if (ringLayoutState == RingLayoutState.Publisher)
+            {
+                FindObjectOfType<SphereData>().CreateRingsForPublisher();
+            }
+            else if (ringLayoutState == RingLayoutState.Studio)
+            {
+                FindObjectOfType<SphereData>().CreateRingsForStudio();
+            }
+            else if (ringLayoutState == RingLayoutState.Year)
+            {
+                FindObjectOfType<SphereData>().CreateRingsForYear();
+            }
+            else if (ringLayoutState == RingLayoutState.Comic)
+            {
+                FindObjectOfType<SphereData>().CreateRingsForComic();
+            }
+            else if (ringLayoutState == RingLayoutState.Distributor)
+            {
+                FindObjectOfType<SphereData>().CreateRingsForDistributor();
+            }
+            else if (ringLayoutState == RingLayoutState.Grouping)
+            {
+                FindObjectOfType<SphereData>().CreateRingsForGrouping();
+            }
         }
-        else if (ringLayoutState == RingLayoutState.Year)
-        {
-            rend.material = (rend.material == checkMaterial) ? boxMaterial : checkMaterial;
-        }
-        else if (ringLayoutState == RingLayoutState.Comic)
-        {
-            rend.material = (rend.material == checkMaterial) ? boxMaterial : checkMaterial;
-        }
-        else if (ringLayoutState == RingLayoutState.Distributor)
-        {
-            rend.material = (rend.material == checkMaterial) ? boxMaterial : checkMaterial;
-        }
-        else if (ringLayoutState == RingLayoutState.Grouping)
-        {
-            rend.material = (rend.material == checkMaterial) ? boxMaterial : checkMaterial;
-        }
+
+        rend.material = (rend.material.name.StartsWith("check_mat")) ? boxMaterial : checkMaterial; //TODO: How can I check the material a better way?
+
+        ClearOtherCategories();
+
+    }
+
+    private void ClearOtherCategories()
+    {
 
     }
 
@@ -81,6 +93,7 @@ public class SphereMenuHandler : BaseMenuHandler {
         if (ringLayoutState == RingLayoutState.Publisher)
         {
             rend.material = checkMaterial;
+            FindObjectOfType<SphereData>().CreateRingsForPublisher(); //TODO: How to handle when there is a possibility of multiple spheres?
         } else
         {
             rend.material = boxMaterial;
