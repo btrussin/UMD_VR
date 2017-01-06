@@ -39,6 +39,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     GameObject activeBeamInterceptObj = null;
 
     bool useBeam = false;
+    bool spawnedMenu = false;
 
     int menusLayerMask;
 
@@ -46,6 +47,19 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     bool trackpadArrowsAreActive = false;
     int prevNumRingsInCollision = 0;
+
+    void Awake()
+    {
+
+        if (this.transform.name == "Controller (left)")
+        {
+            this.transform.FindChild("Model").gameObject.AddComponent<ControllerState>(); //add for left controller for now
+        }
+        else
+        {
+            spawnedMenu = true;
+        }
+    }
 
     void Start()
     {
@@ -68,17 +82,9 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         menusLayerMask = 1 << LayerMask.NameToLayer("Menus");
 
-
-        if (this.transform.name == "Controller (left)")
-        {
-            this.transform.FindChild("Model").gameObject.AddComponent<ControllerState>(); //add for both controllers
-
-            this.transform.FindChild("Model").gameObject.GetComponent<ControllerState>().toggleSelected();
-        }
-
     }
 
-    void Update()
+        void Update()
     {
         currPosition = transform.position;
         currRightVec = transform.right;
@@ -92,6 +98,12 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         deviceRay.direction = rayRotation * currForwardVec;
 
         sphereCollider.center = new Vector3(0.0f, 0.0f, 0.03f);
+
+
+        if (!spawnedMenu && GameObject.Find("Controller (left)") != null)
+        {
+            setupControllerMenu();
+        }
 
         handleStateChanges();
 
@@ -109,6 +121,14 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         prevNumRingsInCollision = ringsInCollision.Count;
 
         if (useBeam) projectBeam();
+
+    }
+
+    void setupControllerMenu()
+    {
+        this.transform.FindChild("Model").gameObject.GetComponent<ControllerState>().toggleSelected();
+
+        spawnedMenu = true;
     }
 
     void projectBeam()

@@ -32,13 +32,17 @@ public class ControllerState : BaseState
 
     }
 
+    void Update()
+    {
+        if (menu != null && !menu.activeSelf)
+            menu.SetActive(true);
+    }
+
     public override void bringUpMenu()
     {
         menu = new GameObject();
         menu.name = "Sphere Type Menu";
         menu.transform.SetParent(gameObject.transform);
-
-        menu.AddComponent<CameraOrientedText3D>();
 
         List<GameObject> textObjects = new List<GameObject>();
 
@@ -153,12 +157,10 @@ public class ControllerState : BaseState
         }
 
         Vector3 controllerPosition = transform.position;
-        Vector3 userPosition = GameObject.Find("Camera (eye)").transform.position;
-        Vector3 dir = controllerPosition - userPosition;
-        dir.Normalize();
-        menu.transform.position = userPosition + dir * 0.8f;
+        menu.transform.localPosition = Vector3.zero + new Vector3(-0.071f, 0.106f, 0.104f);
+        menu.transform.localRotation = Quaternion.Euler(30, 0, 0);
+        menu.SetActive(true);
 
-        menu.AddComponent<CameraOrientedText3D>();
     }
 
 }

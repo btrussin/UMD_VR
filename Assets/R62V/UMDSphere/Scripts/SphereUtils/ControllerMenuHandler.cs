@@ -96,14 +96,7 @@ public class ControllerMenuHandler : BaseMenuHandler {
     {
         MeshRenderer rend = gameObject.GetComponent<MeshRenderer>();
 
-        if (ringLayoutState == RingLayoutState.Publisher)
-        {
-            rend.material = checkMaterial;
-            FindObjectOfType<SphereData>().CreateRingsForPublisher(); //TODO: How to handle when there is a possibility of multiple spheres?
-        } else
-        {
-            rend.material = boxMaterial;
-        }
+        rend.material = boxMaterial;
     }
 
 }
