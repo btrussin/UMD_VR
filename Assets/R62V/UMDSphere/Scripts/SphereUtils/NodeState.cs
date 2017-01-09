@@ -9,11 +9,11 @@ public class NodeState : BaseState
 
     static List<GameObject> menus = new List<GameObject>();
 
-    uint currentLevel;
+    uint _currentLevel;
     float animationTime = 1.5f;
 	const int MAX_LEVEL = 2;
 
-    Transform referenceLine;
+    Transform _referenceLine;
     Vector3 startLoc;
     Vector3 endLoc;
 
@@ -192,20 +192,20 @@ public class NodeState : BaseState
     }
 
 	/*--------Mike - Level Expansion In Progress------*/
-	public void expand() {
-		summonRing ();
+	public void Expand() {
+		SummonRing ();
 
-		currentLevel++;
-        Debug.Log("Current Level: " + currentLevel);
+		_currentLevel++;
+        Debug.Log("Current Level: " + _currentLevel);
 	}
 
-	public void contract() {
-		destroyRing ();
+	public void Contract() {
+		DestroyRing ();
 
-		currentLevel--;
+		_currentLevel--;
 	}
 
-	private void summonRing() {	
+	private void SummonRing() {	
         //TODO: May have to add boolean to not spam coroutines to be called
 		 StartCoroutine (ExpandRingAnimation(animationTime));
 	}
@@ -213,10 +213,10 @@ public class NodeState : BaseState
 	private IEnumerator ExpandRingAnimation(float secondsToComplete) {
         float t = 0f;
 
-        referenceLine = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
-        referenceLine.GetComponent<Renderer>().material = new Material(Shader.Find("Standard"));
-        referenceLine.GetComponent<LineRenderer>().material.color = MovieDBUtils.getColorPalette()[1];
-        referenceLine.parent = transform;
+        _referenceLine = GameObject.CreatePrimitive(PrimitiveType.Cube).transform;
+        _referenceLine.GetComponent<Renderer>().material = new Material(Shader.Find("Standard"));
+        _referenceLine.GetComponent<LineRenderer>().material.color = MovieDBUtils.getColorPalette()[1];
+        _referenceLine.parent = transform;
 
         while (t < 1.0f)
         {
@@ -228,7 +228,7 @@ public class NodeState : BaseState
 
     }
 
-	private void destroyRing() {
+	private void DestroyRing() {
         //TODO: May have to add boolean to not spam coroutines to be called
         StartCoroutine(DiminishRingAnimation(animationTime));
 	}
@@ -244,9 +244,9 @@ public class NodeState : BaseState
             yield return new WaitForFixedUpdate();
         }
 
-        if (referenceLine)
-            Destroy(referenceLine.gameObject);
-        referenceLine = null;
+        if (_referenceLine)
+            Destroy(_referenceLine.gameObject);
+        _referenceLine = null;
     }
 
 }

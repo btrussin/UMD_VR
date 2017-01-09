@@ -7,46 +7,45 @@ using System;
 
 public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 {
-    public GameObject dataObj;
+    public GameObject DataObj;
 
-    SphereData sphereData;
+    SphereData _sphereData;
 
-    public Ray deviceRay;
-    public Vector3 currPosition;
-    public Vector3 currRightVec;
-    public Vector3 currUpVec;
-    public Vector3 currForwardVec;
-    public Quaternion currRotation;
+    public Ray DeviceRay;
+    public Vector3 CurrPosition;
+    public Vector3 CurrRightVec;
+    public Vector3 CurrUpVec;
+    public Vector3 CurrForwardVec;
+    public Quaternion CurrRotation;
 
-    public GameObject trackpadArrowObject;
+    public GameObject TrackpadArrowObject;
 
-    SphereCollider sphereCollider;
+    SphereCollider _sphereCollider;
 
     //List<GameObject> connectionList = new List<GameObject>();
 
-    Dictionary<string, MovieObject> connectionMovieObjectMap = new Dictionary<string, MovieObject>();
+    readonly Dictionary<string, MovieObject> _connectionMovieObjectMap = new Dictionary<string, MovieObject>();
 
-    CVRSystem vrSystem;
+    CVRSystem _vrSystem;
 
-    VRControllerState_t state;
-    VRControllerState_t prevState;
+    VRControllerState_t _state;
+    VRControllerState_t _prevState;
 
-    Quaternion currRingBaseRotation;
+    Quaternion _currRingBaseRotation;
 
-    List<GameObject> ringsInCollision;
+    List<GameObject> _ringsInCollision;
 
-    GameObject beam;
-    GameObject activeBeamInterceptObj = null;
+    GameObject _beam;
+    GameObject _activeBeamInterceptObj = null;
 
-    bool useBeam = false;
-    bool spawnedMenu = false;
+    bool _useBeam = false;
+    bool _spawnedMenu = false;
 
-    int menusLayerMask;
+    int _menusLayerMask;
 
-    float currRayAngle = 30.0f;
+    float _currRayAngle = 30.0f;
 
-    bool trackpadArrowsAreActive = false;
-    int prevNumRingsInCollision = 0;
+    int _prevNumRingsInCollision = 0;
 
     void Awake()
     {
@@ -57,205 +56,224 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         }
         else
         {
-            spawnedMenu = true;
+            _spawnedMenu = true;
         }
     }
 
     void Start()
     {
-        vrSystem = OpenVR.System;
+        _vrSystem = OpenVR.System;
 
-        sphereCollider = gameObject.GetComponent<SphereCollider>();
-        sphereCollider.transform.SetParent(gameObject.transform);
+        _sphereCollider = gameObject.GetComponent<SphereCollider>();
+        _sphereCollider.transform.SetParent(gameObject.transform);
 
-        sphereData = dataObj.GetComponent<SphereData>();
+        _sphereData = DataObj.GetComponent<SphereData>();
 
-        beam = new GameObject();
-        beam.AddComponent<LineRenderer>();
-        LineRenderer lineRend = beam.GetComponent<LineRenderer>();
+        _beam = new GameObject();
+        _beam.AddComponent<LineRenderer>();
+        LineRenderer lineRend = _beam.GetComponent<LineRenderer>();
         lineRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
         lineRend.receiveShadows = false;
         lineRend.motionVectors = false;
         lineRend.material = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/BeamMaterial.mat");
         lineRend.SetWidth(0.003f, 0.003f);
-        beam.SetActive(false);
+        _beam.SetActive(false);
 
-        menusLayerMask = 1 << LayerMask.NameToLayer("Menus");
+        _menusLayerMask = 1 << LayerMask.NameToLayer("Menus");
 
     }
 
-        void Update()
+    void Update()
     {
-        currPosition = transform.position;
-        currRightVec = transform.right;
-        currUpVec = transform.up;
-        currForwardVec = transform.forward;
-        currRotation = transform.rotation;
-        deviceRay.origin = currPosition;
+        CurrPosition = transform.position;
+        CurrRightVec = transform.right;
+        CurrUpVec = transform.up;
+        CurrForwardVec = transform.forward;
+        CurrRotation = transform.rotation;
+        DeviceRay.origin = CurrPosition;
 
-        Quaternion rayRotation = Quaternion.AngleAxis(currRayAngle, currRightVec);
+        Quaternion rayRotation = Quaternion.AngleAxis(_currRayAngle, CurrRightVec);
 
-        deviceRay.direction = rayRotation * currForwardVec;
+        DeviceRay.direction = rayRotation * CurrForwardVec;
 
-        sphereCollider.center = new Vector3(0.0f, 0.0f, 0.03f);
+        _sphereCollider.center = new Vector3(0.0f, 0.0f, 0.03f);
 
-
-        if (!spawnedMenu && GameObject.Find("Controller (left)") != null)
+        if (!_spawnedMenu && GameObject.Find("Controller (left)") != null)
         {
-            setupControllerMenu();
+            SetupControllerMenu();
         }
 
-        handleStateChanges();
+        HandleStateChanges();
 
-        ringsInCollision = sphereData.getRingsInCollision(currPosition + (currForwardVec - currUpVec) * (0.03f + sphereCollider.radius) , sphereCollider.radius*2.0f);
-        if (ringsInCollision.Count > 0)
+        _ringsInCollision = _sphereData.GetRingsInCollision(CurrPosition + (CurrForwardVec - CurrUpVec) * (0.03f + _sphereCollider.radius) , _sphereCollider.radius*2.0f);
+        if (_ringsInCollision.Count > 0)
         {
-            sphereData.addActiveRings(ringsInCollision);
-            if (prevNumRingsInCollision == 0) showTrackpadArrows();
+            //TODO Spawn a Red Animation Circle In The Center of the Controller
+            SpawnRedCircle();
+            _useBeam = false;
+            _sphereData.AddActiveRings(_ringsInCollision);
+            if (_prevNumRingsInCollision == 0) showTrackpadArrows();
         }
-        else if (prevNumRingsInCollision > 0 && (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
+        else if (_prevNumRingsInCollision > 0 && (_prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
         {
             hideTrackpadArrows();
         }
 
-        prevNumRingsInCollision = ringsInCollision.Count;
+        _prevNumRingsInCollision = _ringsInCollision.Count;
 
-        if (useBeam) projectBeam();
-
+        if (_useBeam) ProjectBeam();
+        else
+        {
+            _beam.SetActive(false);
+            _activeBeamInterceptObj = null;
+        }
     }
 
-    void setupControllerMenu()
+    private void SpawnRedCircle()
+    {
+        //TODO To be used to tell users when one is hovering over a datapoint
+    }
+
+    void SetupControllerMenu()
     {
         this.transform.FindChild("Model").gameObject.GetComponent<ControllerState>().toggleSelected();
 
-        spawnedMenu = true;
+        _spawnedMenu = true;
     }
 
-    void projectBeam()
+    void ProjectBeam()
     {
         float beamDist = 10.0f;
 
         RaycastHit hitInfo;
 
-        if (Physics.Raycast(deviceRay.origin, deviceRay.direction, out hitInfo, 30.0f, menusLayerMask))
+        if (Physics.Raycast(DeviceRay.origin, DeviceRay.direction, out hitInfo, 30.0f, _menusLayerMask))
         {
-            activeBeamInterceptObj = hitInfo.collider.gameObject;
+            _activeBeamInterceptObj = hitInfo.collider.gameObject;
             beamDist = hitInfo.distance;
         }
         else
         {
-            activeBeamInterceptObj = null;
+            _activeBeamInterceptObj = null;
         }
 
-        LineRenderer lineRend = beam.GetComponent<LineRenderer>();
-        Vector3 end = deviceRay.GetPoint(beamDist);
+        LineRenderer lineRend = _beam.GetComponent<LineRenderer>();
+        Vector3 end = DeviceRay.GetPoint(beamDist);
 
-        lineRend.SetPosition(0, deviceRay.origin);
+        lineRend.SetPosition(0, DeviceRay.origin);
         lineRend.SetPosition(1, end);
     }
 
-    void triggerActiverBeamObject()
+    void TriggerActiverBeamObject()
     {
-        if( activeBeamInterceptObj != null )
+        if( _activeBeamInterceptObj != null )
         {
-            NodeMenuHandler menuHandler = activeBeamInterceptObj.GetComponent<NodeMenuHandler>();
+            NodeMenuHandler menuHandler = _activeBeamInterceptObj.GetComponent<NodeMenuHandler>();
             if(menuHandler != null )
             {
 
                 menuHandler.handleTrigger();
 
-                MovieObject mo = activeBeamInterceptObj.transform.parent.transform.parent.gameObject.GetComponent<MovieObject>();
-                sphereData.connectMoviesByActors(mo.cmData);
-                sphereData.updateAllKeptConnections();
+                MovieObject mo = _activeBeamInterceptObj.transform.parent.transform.parent.gameObject.GetComponent<MovieObject>();
+                _sphereData.ConnectMoviesByActors(mo.cmData);
+                _sphereData.UpdateAllKeptConnections();
             }
 
-            ControllerMenuHandler controllerMenuHandler = activeBeamInterceptObj.GetComponent<ControllerMenuHandler>();
+            ControllerMenuHandler controllerMenuHandler = _activeBeamInterceptObj.GetComponent<ControllerMenuHandler>();
             if (controllerMenuHandler != null)
             {
                 controllerMenuHandler.handleTrigger();
             }
 
-            activeBeamInterceptObj = null;
+            _activeBeamInterceptObj = null;
         }
     }
 
-    void handleStateChanges()
+    void HandleStateChanges()
     {
-        bool stateIsValid = vrSystem.GetControllerState((uint)index, ref state);
+        bool stateIsValid = _vrSystem.GetControllerState((uint)index, ref _state);
 
         if (!stateIsValid) Debug.Log("Invalid State for Idx: " + index);
 
-        if (stateIsValid && state.GetHashCode() != prevState.GetHashCode())
+        if (stateIsValid && _state.GetHashCode() != _prevState.GetHashCode())
         {
 
-            if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.ApplicationMenu) != 0 &&
-                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.ApplicationMenu) == 0)
+            if ((_state.ulButtonPressed & SteamVR_Controller.ButtonMask.ApplicationMenu) != 0 &&
+                (_prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.ApplicationMenu) == 0)
             {
-                sphereData.toggleMainLayout();
+                _sphereData.ToggleMainLayout();
             }
 
-            if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) != 0 &&
-                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) == 0 )
+            if ((_state.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) != 0 &&
+                (_prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) == 0 )
             {
-                sphereData.grabSphereWithObject(gameObject);
+                _sphereData.GrabSphereWithObject(gameObject);
             }
-            else if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) == 0 &&
-                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) != 0 )
+            else if ((_state.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) == 0 &&
+                (_prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) != 0 )
             {
-                sphereData.releaseSphereWithObject(gameObject);
+                _sphereData.ReleaseSphereWithObject(gameObject);
             }
 
-            if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
-               (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
+            if ((_state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
+               (_prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
             {
                 // activate bean
-                beam.SetActive(true);
-                useBeam = true;
+                _beam.SetActive(true);
+                _useBeam = true;
 
                 showTrackpadArrows();
             }
 
-            else if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0 &&
-               (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0)
+            else if ((_state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0 &&
+               (_prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0)
             {
                 // deactivate bean
-                beam.SetActive(false);
-                useBeam = false;
-                activeBeamInterceptObj = null;
-                if (ringsInCollision.Count == 0) hideTrackpadArrows();
-
-
-                if (this.transform.FindChild("Model").GetComponent<ControllerState>() != null)
+                _beam.SetActive(false);
+                _useBeam = false;
+                _activeBeamInterceptObj = null;
+                if (_ringsInCollision.Count == 0)
+                {
+                    hideTrackpadArrows();
+                }
+                if (this.transform.FindChild("Model").GetComponent<ControllerState>() != null &&
+                    !this.transform.FindChild("Model").GetComponent<ControllerState>().getIsSelected())
                 {
                     this.transform.FindChild("Model").GetComponent<ControllerState>().toggleSelected();
                 }
             }
 
-            if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
-                prevState.rAxis1.x < 1.0f && state.rAxis1.x == 1.0f )
+            if ((_state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
+                _prevState.rAxis1.x < 1.0f && _state.rAxis1.x == 1.0f )
             {
 
-                triggerActiverBeamObject();
+                TriggerActiverBeamObject();
 
                 // toggle connections with all movies
-                foreach (MovieObject m in connectionMovieObjectMap.Values)
+                foreach (MovieObject m in _connectionMovieObjectMap.Values)
                 {
                     m.nodeState.toggleSelected();
                     m.nodeState.updateColor();
+
+                    if (this.transform.FindChild("Model").GetComponent<ControllerState>() != null &&
+                        this.transform.FindChild("Model").GetComponent<ControllerState>().getIsSelected())
+                    {
+                        this.transform.FindChild("Model").GetComponent<ControllerState>().toggleSelected();
+                    }
                 }
 
             } 
 
-            prevState = state;
+            _prevState = _state;
         }
 
 
-        if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) != 0)
+        if ((_state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) != 0)
         {
-            Quaternion addRotation = Quaternion.Euler(0.0f, 0.0f, state.rAxis0.y);
+            Quaternion addRotation = Quaternion.Euler(0.0f, 0.0f, _state.rAxis0.y);
             Quaternion origRot;
             GameObject innerRot;
-            foreach (GameObject g in ringsInCollision)
+            foreach (GameObject g in _ringsInCollision)
             {
                 innerRot = g.transform.GetChild(0).gameObject;
                 origRot = innerRot.transform.localRotation;
@@ -265,17 +283,17 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
             UpdateConnections();
 
-            sphereData.updateAllKeptConnections();
+            _sphereData.UpdateAllKeptConnections();
 
             // update the beam ray direction
-            if (ringsInCollision.Count == 0 && (state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 )
+            if (_ringsInCollision.Count == 0 && (_state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 )
             {
-                if (state.rAxis0.y > 0.0f) currRayAngle -= 1.0f;
-                else if (state.rAxis0.y < 0.0f) currRayAngle += 1.0f;
+                if (_state.rAxis0.y > 0.0f) _currRayAngle -= 1.0f;
+                else if (_state.rAxis0.y < 0.0f) _currRayAngle += 1.0f;
 
                 // keep within the bounds of 0 and 90 degrees
-                if (currRayAngle > 90.0f) currRayAngle = 90.0f;
-                else if (currRayAngle < 0.0f) currRayAngle = 0.0f;
+                if (_currRayAngle > 90.0f) _currRayAngle = 90.0f;
+                else if (_currRayAngle < 0.0f) _currRayAngle = 0.0f;
 
             }
 
@@ -298,10 +316,10 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
             if ( !ns.getIsSelected() )
             {
-                sphereData.connectMoviesByActors(mo.cmData);
+                _sphereData.ConnectMoviesByActors(mo.cmData);
             }
 
-            connectionMovieObjectMap.Add(key, mo);
+            _connectionMovieObjectMap.Add(key, mo);
         } else
         {
 
@@ -326,38 +344,37 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
             if( !mo.nodeState.getIsSelected() )
             {
-                mo.connManager.forceClearAllConnections();
+                mo.connManager.ForceClearAllConnections();
             }
 
-            connectionMovieObjectMap.Remove(key);
+            _connectionMovieObjectMap.Remove(key);
         }
     }
 
     void UpdateConnections()
     {
-      
-        Dictionary<string, MovieObject>.KeyCollection keys = connectionMovieObjectMap.Keys;
+        Dictionary<string, MovieObject>.KeyCollection keys = _connectionMovieObjectMap.Keys;
 
         if (keys.Count < 1) return;
         MovieObject mo;
         foreach ( string key in keys )
         {
-            if( connectionMovieObjectMap.TryGetValue(key, out mo) )
+            if( _connectionMovieObjectMap.TryGetValue(key, out mo) )
             {
-                mo.connManager.forceClearAllConnections();
-                sphereData.connectMoviesByActors(mo.cmData);
+                mo.connManager.ForceClearAllConnections();
+                _sphereData.ConnectMoviesByActors(mo.cmData);
             }
         }
     }
 
     void showTrackpadArrows()
     {
-        trackpadArrowObject.SetActive(true);
+        TrackpadArrowObject.SetActive(true);
     }
 
     void hideTrackpadArrows()
     {
-        trackpadArrowObject.SetActive(false);
+        TrackpadArrowObject.SetActive(false);
     }
 
     

@@ -44,7 +44,7 @@ public class ControllerMenuHandler : BaseMenuHandler {
     {
         MeshRenderer rend = gameObject.GetComponent<MeshRenderer>();
 
-        if (rend.material.name.StartsWith("box_mat")) //TODO: How can I check the material a better way?
+        if (rend.material.name.StartsWith("box_mat"))
         {
             if (ringLayoutState == RingLayoutState.Publisher)
             {
@@ -97,6 +97,15 @@ public class ControllerMenuHandler : BaseMenuHandler {
         MeshRenderer rend = gameObject.GetComponent<MeshRenderer>();
 
         rend.material = boxMaterial;
+
+        string sphereName = FindObjectOfType<SphereData>().gameObject.name;
+
+        if (sphereName != "DataObject" && sphereName == "DataObject: " + ringLayoutState.ToString())
+        {
+                    GameObject.Find("Toggle Option: " + ringLayoutState.ToString())
+                        .GetComponent<Renderer>()
+                        .material = checkMaterial;
+        }
     }
 
 }

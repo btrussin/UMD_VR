@@ -3,7 +3,7 @@ using System.Collections;
 
 public class RingState : MonoBehaviour {
 
-    public enum RingColorState
+    /*public enum RingColorState
     {
         NONE,
         SELECTED,
@@ -11,24 +11,24 @@ public class RingState : MonoBehaviour {
         DIMMED
     }
 
-    RingColorState currColorState = RingColorState.NONE;
+    RingColorState currColorState = RingColorState.NONE;*/
 
-    Color ringColor;
+    Color _ringColor;
 
     float highlightAmt = 0.95f;
     float selectedAmt = 0.75f;
     float noneAmt = 0.5f;
     float dimAmt = 0.35f;
 
-    int connectionCount = 0;
+    int _connectionCount = 0;
 
-    LineRenderer lRend = null;
-    TextMesh tMesh = null;
+    LineRenderer _lRend = null;
+    TextMesh _tMesh = null;
 
-    bool valuesNotSet = true;
+    bool _valuesNotSet = true;
 
-    bool doHighlight = false;
-    bool doDim = false;
+    bool _doHighlight = false;
+    bool _doDim = false;
 
     void Start () {
 
@@ -40,80 +40,80 @@ public class RingState : MonoBehaviour {
 	}
 
     
-    public void updateColor()
+    public void UpdateColor()
     {
-        if( valuesNotSet )
+        if( _valuesNotSet )
         {
             Transform subTransform = gameObject.transform.GetChild(0);
 
             GameObject lines = subTransform.FindChild("RingLines").gameObject;
             GameObject label = subTransform.FindChild("RingLabel").gameObject;
 
-            lRend = lines.GetComponent<LineRenderer>();
-            tMesh = label.GetComponent<TextMesh>();
+            _lRend = lines.GetComponent<LineRenderer>();
+            _tMesh = label.GetComponent<TextMesh>();
 
-            valuesNotSet = false;
+            _valuesNotSet = false;
         }
 
-        if( doHighlight )
+        if( _doHighlight )
         {
-            lRend.material.color = ringColor * highlightAmt;
-            doHighlight = false;
+            _lRend.material.color = _ringColor * highlightAmt;
+            _doHighlight = false;
         }
-        else if (connectionCount > 0)
+        else if (_connectionCount > 0)
         {
-            lRend.material.color = ringColor * selectedAmt;
+            _lRend.material.color = _ringColor * selectedAmt;
 
         }
-        else if (doDim)
+        else if (_doDim)
         {
-            lRend.material.color = ringColor * dimAmt;
-            doDim = false;
+            _lRend.material.color = _ringColor * dimAmt;
+            _doDim = false;
         }
         else
         {
-            lRend.material.color = ringColor * noneAmt;
+            _lRend.material.color = _ringColor * noneAmt;
         }
 
        
-        tMesh.color = ringColor;
+        _tMesh.color = _ringColor;
 
     }
 
-    public void addConnection()
+    public void AddConnection()
     {
-        connectionCount++;
+        _connectionCount++;
     }
 
-    public void removeConnection()
+    public void RemoveConnection()
     {
-        connectionCount--;
-        if (connectionCount < 0) connectionCount = 0;
+        _connectionCount--;
+        if (_connectionCount < 0) _connectionCount = 0;
     }
 
-    public bool isSelected()
+    public bool IsSelected()
     {
         return false;
     }
 
-    public void setColorState(RingColorState state)
+    /*public void setColorState(RingColorState state)
     {
         currColorState = state;
+    }*/
+
+    public void SetRingColor(Color c)
+    {
+        _ringColor = new Color(c.r, c.g, c.b) ;
     }
 
-    public void setRingColor(Color c)
+    public void SetHighlighted()
     {
-        ringColor = new Color(c.r, c.g, c.b) ;
+        _doHighlight = true;
     }
 
-    public void setHighlighted()
+    public void SetDimmed()
     {
-        doHighlight = true;
-    }
-
-    public void setDimmed()
-    {
-        doDim = true;
+        _doDim = true;
     }
 
 }

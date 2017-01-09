@@ -1,143 +1,127 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
 using UnityEditor;
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine;
 
 //TODO: Need to find a way to group the data and expand into rings.
 
 /// <summary>
-/// 
 /// </summary>
-public class SphereData : MonoBehaviour {
-
-    public static int NUM_LAYOUTS = 6; //update the layouts
-
+public class SphereData : MonoBehaviour
+{
     public enum SphereLayout
     {
         Sphere,
-        Column_X,
-        Column_Y,
-        Column_Z
+        ColumnX,
+        ColumnY,
+        ColumnZ
     }
 
-    CMJSONLoader cmLoader;
+    public static int NUM_LAYOUTS = 6; //update the layouts
+    private UMD_Sphere_TrackedObject activeGrabObject;
+    private bool activeMove;
 
-    [Header("Object Path Strings", order = 1)]
-    public string pointPrefabPath = "Assets/R62V/UMDSphere/Prefabs/PointPrefab.prefab"; //Set by default. May be changed in the editor.
+    private readonly List<GameObject> activeRings = new List<GameObject>();
 
-    [Header("Data Object", order = 2)]
-    public GameObject sphere;
+    private bool activeScale;
 
-    [Header("Materials", order = 3)]
-    public Material ringMaterial;
-    public Material curveMaterial;
+    private Color baseRingColor;
 
-    List<GameObject> ringList = new List<GameObject>();
+    private Vector3 centerGrpPosition;
 
-    Dictionary<string, MovieObject> movieObjectMap = new Dictionary<string, MovieObject>();
+    private CMJSONLoader cmLoader;
 
-    Dictionary<string, Color> ringColorMap = new Dictionary<string, Color>();
+    private readonly int curveLOD = 100;
 
-    List<GameObject> movieConnectionList = new List<GameObject>();
+    private UMD_Sphere_TrackedObject grabObject1;
+    private UMD_Sphere_TrackedObject grabObject2;
+    private float initialDist;
 
-    Color baseRingColor;
+    private Quaternion initialRotation;
 
-    int curveLOD = 100;
+    private Vector3 initialScale;
+    private Vector3 inititalOffset;
 
-    SphereLayout sphereLayout = SphereLayout.Sphere;
+    private readonly List<GameObject> movieConnectionList = new List<GameObject>();
 
-    Vector3 centerGrpPosition;
+    private readonly Dictionary<string, MovieObject> movieObjectMap = new Dictionary<string, MovieObject>();
 
-    UMD_Sphere_TrackedObject grabObject1;
-    UMD_Sphere_TrackedObject grabObject2;
-    UMD_Sphere_TrackedObject activeGrabObject;
+    [Header("Object Path Strings", order = 1)] public string pointPrefabPath =
+        "Assets/R62V/UMDSphere/Prefabs/PointPrefab.prefab"; //Set by default. May be changed in the editor.
 
-    Vector3 initialScale;
-    float initialDist;
+    private int prevNumRingsActive;
 
-    Quaternion initialRotation;
-    Vector3 inititalOffset;
+    private readonly Dictionary<string, Color> ringColorMap = new Dictionary<string, Color>();
 
-    bool activeScale = false;
-    bool activeMove = false;
- 
-    int prevNumRingsActive = 0;
+    private readonly List<GameObject> ringList = new List<GameObject>();
 
-    List<GameObject> activeRings = new List<GameObject>();
+    [Header("Materials", order = 2)]
+    public Material RingMaterial;
+    public Material CurveMaterial;
+
+    [Header("Data Object", order = 3)] public GameObject Sphere;
+
+    private SphereLayout sphereLayout = SphereLayout.Sphere;
 
     // Use this for initialization
-    void Start () {
-        cmLoader = this.gameObject.GetComponent<CMJSONLoader>();
+    private void Start()
+    {
+        cmLoader = gameObject.GetComponent<CMJSONLoader>();
         cmLoader.LoadData();
         //ringMaterial = new Material(Shader.Find("Standard"));
-        ringMaterial = new Material(Shader.Find("Sprites/Default"));
+        RingMaterial = new Material(Shader.Find("Sprites/Default"));
         //curveMaterial = new Material(Shader.Find("Standard"));
-        curveMaterial = new Material(Shader.Find("Sprites/Default"));
+        CurveMaterial = new Material(Shader.Find("Sprites/Default"));
 
         baseRingColor = new Color(0.5f, 0.5f, 0.5f);
 
         centerGrpPosition = new Vector3(0.0f, 0.0f, 0.0f);
 
-        this.transform.Translate(new Vector3(0.0f, 1.0f, 0.0f));
+        transform.Translate(new Vector3(0.0f, 1.0f, 0.0f));
 
         grabObject1 = null;
         grabObject2 = null;
-
-		//TODO: have menu here for choosing what layout to have
-
-        /*//CreateRingsForDistributor();
-        //CreateRingsForGrouping();
-        //CreateRingsForComic();
-        CreateRingsForPublisher();
-        //CreateRingsForStudio();
-        //CreateRingsForYear();*/
-
     }
 
-    public List<GameObject> getRingsInCollision(Vector3 pos, float maxDist)
+    public List<GameObject> GetRingsInCollision(Vector3 pos, float maxDist)
     {
-        List<GameObject> list = new List<GameObject>();
-        float scale = gameObject.transform.localScale.x * 0.5f;
+        var list = new List<GameObject>();
+        var scale = gameObject.transform.localScale.x * 0.5f;
         scale *= scale;
 
-        foreach (GameObject ring in ringList)
+        foreach (var ring in ringList)
         {
+            var v = pos - ring.transform.position;
 
-            Vector3 v = pos - ring.transform.position;
-            
-            float dist = Mathf.Abs(Vector3.Dot(ring.transform.forward, v));
+            var dist = Mathf.Abs(Vector3.Dot(ring.transform.forward, v));
 
             if (dist < maxDist && v.sqrMagnitude < scale)
-            {
                 list.Add(ring);
-            }
-            
         }
         return list;
     }
 
-    public void grabSphereWithObject(GameObject obj)
+    public void GrabSphereWithObject(GameObject obj)
     {
-        UMD_Sphere_TrackedObject usto = obj.GetComponent<UMD_Sphere_TrackedObject>();
+        var usto = obj.GetComponent<UMD_Sphere_TrackedObject>();
 
-        
+
         if (grabObject1 == usto || grabObject2 == usto) return;
 
-        if (grabObject1 == null )
+        if (grabObject1 == null)
         {
             grabObject1 = usto;
             activeGrabObject = grabObject1;
         }
-        else if (grabObject2 == null )
+        else if (grabObject2 == null)
         {
             grabObject2 = usto;
             activeGrabObject = grabObject2;
         }
 
-        if( grabObject1 != null && grabObject2 != null )
+        if (grabObject1 != null && grabObject2 != null)
         {
             initialScale = gameObject.transform.localScale;
-            Vector3 tVec = grabObject1.currPosition - grabObject2.currPosition;
+            Vector3 tVec = grabObject1.CurrPosition - grabObject2.CurrPosition;
             initialDist = tVec.magnitude;
             activeScale = true;
             activeMove = false;
@@ -145,23 +129,22 @@ public class SphereData : MonoBehaviour {
         else
         {
             //initialRotation = Quaternion.Inverse(gameObject.transform.rotation) * activeGrabObject.currRotation;
-            initialRotation = Quaternion.Inverse(activeGrabObject.currRotation) * gameObject.transform.rotation;
-            Vector3 tmpVec = gameObject.transform.position - activeGrabObject.currPosition;
+            initialRotation = Quaternion.Inverse(activeGrabObject.CurrRotation) * gameObject.transform.rotation;
+            var tmpVec = gameObject.transform.position - activeGrabObject.CurrPosition;
 
             inititalOffset.Set(
-                Vector3.Dot(activeGrabObject.currUpVec, tmpVec),
-                Vector3.Dot(activeGrabObject.currRightVec, tmpVec),
-                Vector3.Dot(activeGrabObject.currForwardVec, tmpVec)
-                );
+                Vector3.Dot(activeGrabObject.CurrUpVec, tmpVec),
+                Vector3.Dot(activeGrabObject.CurrRightVec, tmpVec),
+                Vector3.Dot(activeGrabObject.CurrForwardVec, tmpVec)
+            );
             activeMove = true;
             activeScale = false;
         }
-        
     }
 
-    public void releaseSphereWithObject(GameObject obj)
+    public void ReleaseSphereWithObject(GameObject obj)
     {
-        UMD_Sphere_TrackedObject usto = obj.GetComponent<UMD_Sphere_TrackedObject>();
+        var usto = obj.GetComponent<UMD_Sphere_TrackedObject>();
 
         if (usto == null) return;
 
@@ -172,198 +155,184 @@ public class SphereData : MonoBehaviour {
 
             if (grabObject2 == null) activeMove = false;
         }
-        
+
         else if (grabObject2 == usto)
         {
             grabObject2 = null;
             activeScale = false;
-            if( grabObject1 == null ) activeMove = false;
-            
+            if (grabObject1 == null) activeMove = false;
         }
-
-        
-        
     }
 
-    void updateMove()
+    private void UpdateMove()
     {
-        if( activeMove)
+        if (activeMove)
         {
-            gameObject.transform.rotation = activeGrabObject.currRotation * initialRotation;
+            gameObject.transform.rotation = activeGrabObject.CurrRotation * initialRotation;
 
-            gameObject.transform.position = activeGrabObject.deviceRay.origin +
-                inititalOffset.x * activeGrabObject.currUpVec +
-                inititalOffset.y * activeGrabObject.currRightVec +
-                inititalOffset.z * activeGrabObject.currForwardVec;
+            gameObject.transform.position = activeGrabObject.DeviceRay.origin +
+                                            inititalOffset.x * activeGrabObject.CurrUpVec +
+                                            inititalOffset.y * activeGrabObject.CurrRightVec +
+                                            inititalOffset.z * activeGrabObject.CurrForwardVec;
         }
     }
 
-    void updateScale()
+    private void UpdateScale()
     {
         if (activeScale)
         {
-            Vector3 tVec = grabObject1.currPosition - grabObject2.currPosition;
-           
-            float scale = tVec.magnitude / initialDist;
+            Vector3 tVec = grabObject1.CurrPosition - grabObject2.CurrPosition;
+
+            var scale = tVec.magnitude / initialDist;
 
             gameObject.transform.localScale = initialScale * scale;
-
         }
     }
 
-    public void toggleMainLayout()
+    public void ToggleMainLayout()
     {
-
-        switch(sphereLayout)
+        switch (sphereLayout)
         {
             case SphereLayout.Sphere:
-                sphereLayout = SphereLayout.Column_X;
+                sphereLayout = SphereLayout.ColumnX;
                 break;
-            case SphereLayout.Column_X:
-                sphereLayout = SphereLayout.Column_Y;
+            case SphereLayout.ColumnX:
+                sphereLayout = SphereLayout.ColumnY;
                 break;
-            case SphereLayout.Column_Y:
-                sphereLayout = SphereLayout.Column_Z;
+            case SphereLayout.ColumnY:
+                sphereLayout = SphereLayout.ColumnZ;
                 break;
-            case SphereLayout.Column_Z:
+            case SphereLayout.ColumnZ:
                 sphereLayout = SphereLayout.Sphere;
                 break;
         }
 
-        setRingLayout(ringList, centerGrpPosition, sphereLayout);
+        SetRingLayout(ringList, centerGrpPosition, sphereLayout);
     }
 
-    void CreateRings(string[] vals, List<CMData>[] lists)
+    private void CreateRings(string[] vals, List<CMData>[] lists)
     {
-        Color[] palette = MovieDBUtils.getColorPalette();
+        var palette = MovieDBUtils.getColorPalette();
         palette = MovieDBUtils.randomizeColorPalette(palette);
 
         Random.InitState(97);
 
         SortBySize(vals, lists, 0, vals.Length - 1);
         OrderIntoFourGroups(vals, lists);
-  
-        for (int i = 0; i < vals.Length; i++)
+
+        for (var i = 0; i < vals.Length; i++)
         {
-            GameObject ring = getRing(vals[i], lists[i], palette[i% palette.Length], i);
+            var ring = getRing(vals[i], lists[i], palette[i % palette.Length], i);
             ringList.Add(ring);
 
-            ring.transform.SetParent(this.transform);
+            ring.transform.SetParent(transform);
         }
 
-        setRingLayout(ringList, centerGrpPosition, sphereLayout);
-
+        SetRingLayout(ringList, centerGrpPosition, sphereLayout);
     }
 
-    void setRingLayout(List<GameObject> list, Vector3 centerGrpPosition, SphereLayout layout)
+    private void SetRingLayout(List<GameObject> list, Vector3 centerGrpPosition, SphereLayout layout)
     {
-        float numRings = (float)list.Count;
+        float numRings = list.Count;
 
-        if (layout == SphereLayout.Sphere )
+        if (layout == SphereLayout.Sphere)
         {
             Quaternion rotation;
-           
-            float i = 0.0f;
-            foreach (GameObject ring in list)
+
+            var i = 0.0f;
+            foreach (var ring in list)
             {
                 rotation = Quaternion.Euler(new Vector3(0.0f, 180.0f * i / numRings, 0.0f));
                 ring.transform.localRotation = rotation;
                 ring.transform.localPosition = centerGrpPosition;
                 i += 1.0f;
-                ring.GetComponent<RingState>().updateColor();
+                ring.GetComponent<RingState>().UpdateColor();
             }
-
         }
         else
         {
-
-            float minDist = 0.05f;
-            float maxDist = (numRings - 1.0f) * minDist;
-            float width = 1.0f;
+            var minDist = 0.05f;
+            var maxDist = (numRings - 1.0f) * minDist;
+            var width = 1.0f;
 
             if (maxDist > width)
-            {
                 width = maxDist;
-            }
 
-            float intOffset = -width / 2.0f;
-            float inc = width / (numRings - 1.0f);
-
+            var intOffset = -width / 2.0f;
+            var inc = width / (numRings - 1.0f);
 
 
-            Vector3 offsetInc = new Vector3(0.0f, 0.0f, 0.0f);
-            Vector3 currOffset = new Vector3(0.0f, 0.0f, 0.0f);
+            var offsetInc = new Vector3(0.0f, 0.0f, 0.0f);
+            var currOffset = new Vector3(0.0f, 0.0f, 0.0f);
 
-            Vector3 rotVals = new Vector3(0.0f, 0.0f, 0.0f);
+            var rotVals = new Vector3(0.0f, 0.0f, 0.0f);
             switch (layout)
             {
-                case SphereLayout.Column_X:
+                case SphereLayout.ColumnX:
                     rotVals = new Vector3(0.0f, 90.0f, 0.0f);
                     offsetInc = new Vector3(inc, 0.0f, 0.0f);
                     currOffset = new Vector3(intOffset, 0.0f, 0.0f);
                     break;
-                case SphereLayout.Column_Y:
+                case SphereLayout.ColumnY:
                     rotVals = new Vector3(90.0f, 0.0f, 0.0f);
                     offsetInc = new Vector3(0.0f, inc, 0.0f);
                     currOffset = new Vector3(0.0f, intOffset, 0.0f);
                     break;
-                case SphereLayout.Column_Z:
+                case SphereLayout.ColumnZ:
                     offsetInc = new Vector3(0.0f, 0.0f, inc);
                     currOffset = new Vector3(0.0f, 0.0f, intOffset);
                     break;
             }
 
-            Quaternion rotation = Quaternion.Euler(rotVals);
+            var rotation = Quaternion.Euler(rotVals);
 
-            foreach (GameObject ring in list)
+            foreach (var ring in list)
             {
                 ring.transform.localRotation = rotation;
-                ring.transform.localPosition = (centerGrpPosition + currOffset);
+                ring.transform.localPosition = centerGrpPosition + currOffset;
                 currOffset += offsetInc;
 
-                ring.GetComponent<RingState>().updateColor();
-
+                ring.GetComponent<RingState>().UpdateColor();
             }
-            
         }
 
-        updateAllKeptConnections();
+        UpdateAllKeptConnections();
     }
 
-    public void updateAllKeptConnections()
+    public void UpdateAllKeptConnections()
     {
         MovieConnectionManager connMan;
         NodeState ns;
-        foreach ( MovieObject m in movieObjectMap.Values )
+        foreach (var m in movieObjectMap.Values)
         {
             connMan = m.connManager;
             ns = m.nodeState;
-            if( ns.getIsSelected() && connMan.hasConnections() )
+            if (ns.getIsSelected() && connMan.HasConnections())
             {
-                connMan.forceClearAllConnections();
-                connectMoviesByActors(m.cmData);
+                connMan.ForceClearAllConnections();
+                ConnectMoviesByActors(m.cmData);
             }
         }
     }
 
-    GameObject getRing(string name, List<CMData> list, Color baseColor, int idx = 0)
+    private GameObject getRing(string name, List<CMData> list, Color baseColor, int idx = 0)
     {
-        int numSegments = 60;
+        var numSegments = 60;
 
-        Quaternion quat = Quaternion.Euler(new Vector3(0.0f, 0.0f, 360.0f/numSegments));
+        var quat = Quaternion.Euler(new Vector3(0.0f, 0.0f, 360.0f / numSegments));
 
-        GameObject ring = new GameObject();
+        var ring = new GameObject();
         ring.name = "Ring: " + name;
 
         ringColorMap.Add(ring.name, baseColor);
 
-        GameObject innerRotationObj = new GameObject();
+        var innerRotationObj = new GameObject();
         innerRotationObj.name = "innerRotataion";
         innerRotationObj.transform.SetParent(ring.transform);
 
         innerRotationObj.AddComponent<MeshCollider>();
 
-        GameObject ringLines = new GameObject();
+        var ringLines = new GameObject();
         ringLines.name = "RingLines";
 
         ringLines.transform.SetParent(innerRotationObj.transform);
@@ -372,17 +341,17 @@ public class SphereData : MonoBehaviour {
 
 
         ringLines.AddComponent<LineRenderer>();
-        LineRenderer rend = ringLines.GetComponent<LineRenderer>();
+        var rend = ringLines.GetComponent<LineRenderer>();
         rend.SetWidth(0.005f, 0.005f);
-        rend.SetVertexCount(numSegments+1);
-        rend.material = ringMaterial;
+        rend.SetVertexCount(numSegments + 1);
+        rend.material = RingMaterial;
         //rend.material.color = baseColor * baseRingColor;
         rend.useWorldSpace = false;
 
-        Vector3[] arr = new Vector3[numSegments + 1];
-        Vector3 baseVec = Vector3.right * 0.5f;
+        var arr = new Vector3[numSegments + 1];
+        var baseVec = Vector3.right * 0.5f;
 
-        for ( int i = 0; i <= numSegments; i++ )
+        for (var i = 0; i <= numSegments; i++)
         {
             arr[i] = new Vector3(baseVec.x, baseVec.y, baseVec.z);
             baseVec = quat * baseVec;
@@ -390,15 +359,15 @@ public class SphereData : MonoBehaviour {
 
         rend.transform.SetParent(innerRotationObj.transform);
         rend.SetPositions(arr);
-        
 
-        GameObject ringLabel = new GameObject();
+
+        var ringLabel = new GameObject();
         ringLabel.name = "RingLabel";
         ringLabel.transform.SetParent(innerRotationObj.transform);
         ringLabel.AddComponent<MeshRenderer>();
         ringLabel.AddComponent<TextMesh>();
         ringLabel.AddComponent<CameraOrientedText3D>();
-        TextMesh ringText = ringLabel.GetComponent<TextMesh>();
+        var ringText = ringLabel.GetComponent<TextMesh>();
         ringText.anchor = TextAnchor.UpperCenter;
         ringText.alignment = TextAlignment.Center;
         ringText.text = name;
@@ -408,48 +377,53 @@ public class SphereData : MonoBehaviour {
         ringText.offsetZ = -2.0f;
 
 
-        float scale = 0.03f;
+        var scale = 0.03f;
         ringLabel.transform.localScale = new Vector3(scale, scale, scale);
 
-        Quaternion labelOffset = Quaternion.Euler(new Vector3(0.0f, 0.0f, 0.0f));
-        switch (idx%3)
+        var labelOffset = Quaternion.Euler(new Vector3(0.0f, 0.0f, 0.0f));
+        switch (idx % 3)
         {
-            case 1: labelOffset = Quaternion.Euler(new Vector3(0.0f, 0.0f, -12.0f)); break;
-            case 2: labelOffset = Quaternion.Euler(new Vector3(0.0f, 0.0f, 180.0f)); break;
-            default: break;
+            case 1:
+                labelOffset = Quaternion.Euler(new Vector3(0.0f, 0.0f, -12.0f));
+                break;
+            case 2:
+                labelOffset = Quaternion.Euler(new Vector3(0.0f, 0.0f, 180.0f));
+                break;
+            default:
+                break;
         }
 
         ringLabel.transform.position = labelOffset * (Vector3.right * 0.5f);
 
 
         // add movies
-        float count = 0.0f;
-        float factor = 360.0f / (float)list.Count;
-        float itemScale = 0.01f;
+        var count = 0.0f;
+        var factor = 360.0f / list.Count;
+        var itemScale = 0.01f;
 
-        Quaternion randQuat = Quaternion.Euler(new Vector3(0.0f, 0.0f, Random.value*60.0f));
+        var randQuat = Quaternion.Euler(new Vector3(0.0f, 0.0f, Random.value * 60.0f));
 
-        GameObject ptPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(pointPrefabPath);
+        var ptPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(pointPrefabPath);
 
         string movieKey;
-        foreach (CMData data in list)
+        foreach (var data in list)
         {
             movieKey = MovieDBUtils.getMovieDataKey(data);
 
-            Quaternion itemOffset = randQuat * Quaternion.Euler(new Vector3(0.0f, 0.0f, factor * count));
+            var itemOffset = randQuat * Quaternion.Euler(new Vector3(0.0f, 0.0f, factor * count));
 
-            GameObject movieNodeObj = new GameObject();
+            var movieNodeObj = new GameObject();
             movieNodeObj.name = "Movie: " + movieKey;
             movieNodeObj.transform.SetParent(innerRotationObj.transform);
             movieNodeObj.AddComponent<MovieObject>();
 
-            GameObject itemLabel = new GameObject();
+            var itemLabel = new GameObject();
             itemLabel.name = "MovieLabel";
             itemLabel.transform.SetParent(movieNodeObj.transform);
             itemLabel.AddComponent<MeshRenderer>();
             itemLabel.AddComponent<TextMesh>();
             itemLabel.AddComponent<CameraOrientedText3D>();
-            TextMesh itemText = itemLabel.GetComponent<TextMesh>();
+            var itemText = itemLabel.GetComponent<TextMesh>();
             itemText.anchor = TextAnchor.UpperCenter;
             itemText.alignment = TextAlignment.Center;
             itemText.fontStyle = FontStyle.Bold;
@@ -462,23 +436,20 @@ public class SphereData : MonoBehaviour {
             itemText.offsetZ = -1.0f;
 
 
-            GameObject point = (GameObject)Instantiate(ptPrefab);
+            var point = Instantiate(ptPrefab);
             point.name = "MovieNode";
             point.transform.SetParent(movieNodeObj.transform);
             point.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
 
 
-
-            
             movieNodeObj.transform.position = itemOffset * (Vector3.right * 0.5f);
-
 
 
             point.AddComponent<MovieConnectionManager>();
 
-            MovieConnectionManager connMan = point.GetComponent<MovieConnectionManager>();
+            var connMan = point.GetComponent<MovieConnectionManager>();
 
-            MovieObject mo = movieNodeObj.GetComponent<MovieObject>();
+            var mo = movieNodeObj.GetComponent<MovieObject>();
             mo.ring = ring;
             mo.cmData = data;
             mo.label = itemLabel;
@@ -487,14 +458,12 @@ public class SphereData : MonoBehaviour {
             mo.connManager = connMan;
 
             if (movieObjectMap.ContainsKey(movieKey))
-            {
                 Debug.Log(movieKey + " aready exists");
-            }
             else movieObjectMap.Add(movieKey, mo);
 
 
             movieNodeObj.AddComponent<NodeState>();
-            NodeState ns = movieNodeObj.GetComponent<NodeState>();
+            var ns = movieNodeObj.GetComponent<NodeState>();
 
             mo.nodeState = ns;
 
@@ -502,50 +471,49 @@ public class SphereData : MonoBehaviour {
         }
 
 
-
         ring.AddComponent<RingState>();
-        RingState ringState = ring.GetComponent<RingState>();
-        ringState.setRingColor(baseColor);
+        var ringState = ring.GetComponent<RingState>();
+        ringState.SetRingColor(baseColor);
 
-        ringState.updateColor();
+        ringState.UpdateColor();
 
         return ring;
     }
 
-   
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         //updateScale();
     }
-	
-	// Update is called once per frame
-	void Update () {
-        updateScale();
-        updateMove();
 
-        if( activeRings.Count > 0 )
+    // Update is called once per frame
+    private void Update()
+    {
+        UpdateScale();
+        UpdateMove();
+
+        if (activeRings.Count > 0)
         {
             prevNumRingsActive = activeRings.Count;
-            highlightActiveRings();
+            HighlightActiveRings();
         }
-        else if ( prevNumRingsActive > 0)
+        else if (prevNumRingsActive > 0)
         {
-            unhighlightAllRings();
+            UnhighlightAllRings();
             prevNumRingsActive = 0;
         }
-
-
     }
 
     public void CreateRingsForYear()
     {
+        this.name = "DataObject: Year";
+
         ClearRings();
 
-        int[] years = cmLoader.getAllYears();
-        string[] vals = new string[years.Length];
-        List<CMData>[] lists = new List<CMData>[years.Length];
-        for (int i = 0; i < years.Length; i++)
+        var years = cmLoader.getAllYears();
+        var vals = new string[years.Length];
+        var lists = new List<CMData>[years.Length];
+        for (var i = 0; i < years.Length; i++)
         {
             vals[i] = "" + years[i];
             lists[i] = cmLoader.getCMDataForYear(years[i]);
@@ -555,70 +523,77 @@ public class SphereData : MonoBehaviour {
 
     public void CreateRingsForPublisher()
     {
+        this.name = "DataObject: Publisher";
+
         ClearRings();
 
-        string[] vals = cmLoader.getAllPublishers();
-        List<CMData>[] lists = new List<CMData>[vals.Length];
-        for (int i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForPublisher(vals[i]);
+        var vals = cmLoader.getAllPublishers();
+        var lists = new List<CMData>[vals.Length];
+        for (var i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForPublisher(vals[i]);
         CreateRings(vals, lists);
     }
 
     public void CreateRingsForGrouping()
     {
+        this.name = "DataObject: Grouping";
+
         ClearRings();
 
-        string[] vals = cmLoader.getAllGroupings();
-        List<CMData>[] lists = new List<CMData>[vals.Length];
-        for (int i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForGrouping(vals[i]);
+        var vals = cmLoader.getAllGroupings();
+        var lists = new List<CMData>[vals.Length];
+        for (var i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForGrouping(vals[i]);
         CreateRings(vals, lists);
     }
 
     public void CreateRingsForComic()
     {
+        this.name = "DataObject: Comic";
+
         ClearRings();
 
-        string[] vals = cmLoader.getAllComics();
-        List<CMData>[] lists = new List<CMData>[vals.Length];
-        for (int i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForComic(vals[i]);
+        var vals = cmLoader.getAllComics();
+        var lists = new List<CMData>[vals.Length];
+        for (var i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForComic(vals[i]);
         CreateRings(vals, lists);
     }
 
     public void CreateRingsForDistributor()
     {
+        this.name = "DataObject: Distributor";
+
         ClearRings();
 
-        string[] vals = cmLoader.getAllDistributors();
-        List<CMData>[] lists = new List<CMData>[vals.Length];
-        for (int i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForDistributor(vals[i]);
+        var vals = cmLoader.getAllDistributors();
+        var lists = new List<CMData>[vals.Length];
+        for (var i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForDistributor(vals[i]);
         CreateRings(vals, lists);
     }
 
 
     public void CreateRingsForStudio()
     {
+        this.name = "DataObject: Studio";
+
         ClearRings();
 
-        string[] vals = cmLoader.getAllStudios();
-        List<CMData>[] lists = new List<CMData>[vals.Length];
-        for (int i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForStudio(vals[i]);
+        var vals = cmLoader.getAllStudios();
+        var lists = new List<CMData>[vals.Length];
+        for (var i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForStudio(vals[i]);
         CreateRings(vals, lists);
     }
 
     public void ClearRings()
     {
-
         MovieConnectionManager connMan;
 
-        foreach (MovieObject m in movieObjectMap.Values)
+        foreach (var m in movieObjectMap.Values)
         {
             connMan = m.connManager;
-            connMan.forceClearAllConnections();
+            connMan.ForceClearAllConnections();
         }
 
-        for (int ring = 0; ring < ringList.Count; ring++)
-        {
+        for (var ring = 0; ring < ringList.Count; ring++)
             Destroy(ringList[ring]);
-        }
 
         ringList.Clear();
         ringColorMap.Clear();
@@ -627,102 +602,94 @@ public class SphereData : MonoBehaviour {
         movieConnectionList.Clear();
     }
 
-    void OrderIntoFourGroups(string[] vals, List<CMData>[] lists)
+    private void OrderIntoFourGroups(string[] vals, List<CMData>[] lists)
     {
-        List<string>[] sLinsts = new List<string>[4];
-        List<List<CMData>>[] lLinsts = new List<List<CMData>>[4];
-        for (int i = 0; i < 4; i++)
+        var sLinsts = new List<string>[4];
+        var lLinsts = new List<List<CMData>>[4];
+        for (var i = 0; i < 4; i++)
         {
             sLinsts[i] = new List<string>();
             lLinsts[i] = new List<List<CMData>>();
         }
 
-        for( int i = 0; i < vals.Length; i+= 4)
+        for (var i = 0; i < vals.Length; i += 4)
+        for (var j = 0; j < 4 && j + i < vals.Length; j++)
         {
-            for (int j = 0; j < 4 && j+i < vals.Length; j++)
-            {
-                sLinsts[j].Add(vals[i + j]);
-                lLinsts[j].Add(lists[i + j]);
-            }
+            sLinsts[j].Add(vals[i + j]);
+            lLinsts[j].Add(lists[i + j]);
         }
 
-        int sIIdx = 0;
-        int lIIdx = 0;
-        int tIdx = 0;
-        for (int i = 0; i < 4; i++)
+        var sIIdx = 0;
+        var lIIdx = 0;
+        var tIdx = 0;
+        for (var i = 0; i < 4; i++)
         {
-            foreach (string s in sLinsts[tIdx % 4])
-            {
+            foreach (var s in sLinsts[tIdx % 4])
                 vals[sIIdx++] = s;
-            }
 
-            foreach (List<CMData> l in lLinsts[tIdx % 4])
-            {
+            foreach (var l in lLinsts[tIdx % 4])
                 lists[lIIdx++] = l;
-            }
 
             tIdx += 3;
         }
-
     }
 
     // sort lowest [idx = 0] to highest [idx = list.Count - 1]
-    void SortBySize(string[] vals, List<CMData>[] lists, int beginIdx, int endIdx)
+    private void SortBySize(string[] vals, List<CMData>[] lists, int beginIdx, int endIdx)
     {
-        int idxDist = endIdx - beginIdx;
-        if (idxDist < 1) return;
-        else if (idxDist == 1)
+        var idxDist = endIdx - beginIdx;
+        if (idxDist < 1)
+            return;
+        if (idxDist == 1)
         {
             if (lists[beginIdx].Count > lists[endIdx].Count) swapElements(vals, lists, beginIdx, endIdx);
             return;
         }
 
-        int midIdx = (beginIdx + endIdx) / 2;
-        int countVal = lists[midIdx].Count;
+        var midIdx = (beginIdx + endIdx) / 2;
+        var countVal = lists[midIdx].Count;
 
         swapElements(vals, lists, midIdx, endIdx);
 
 
-        int s = beginIdx;
-        int e = endIdx-1;
-        
-        while ( s < e )
-        {
-            if( lists[s].Count > countVal )
+        var s = beginIdx;
+        var e = endIdx - 1;
+
+        while (s < e)
+            if (lists[s].Count > countVal)
             {
                 swapElements(vals, lists, s, e);
                 e--;
             }
-            else s++;
-        }
+            else
+            {
+                s++;
+            }
 
-        int divider = midIdx;
+        var divider = midIdx;
 
-        for (int i = beginIdx; i < endIdx; i++)
-        {
-            if(lists[i].Count > countVal)
+        for (var i = beginIdx; i < endIdx; i++)
+            if (lists[i].Count > countVal)
             {
                 divider = i;
                 swapElements(vals, lists, divider, endIdx);
                 break;
             }
-        }
 
-        SortBySize(vals, lists, beginIdx, divider-1);
+        SortBySize(vals, lists, beginIdx, divider - 1);
         SortBySize(vals, lists, divider + 1, endIdx);
     }
 
-    void swapElements(string[] vals, List<CMData>[] lists, int i, int j)
+    private void swapElements(string[] vals, List<CMData>[] lists, int i, int j)
     {
-        string t = vals[i];
-        List<CMData> tList = lists[i];
+        var t = vals[i];
+        var tList = lists[i];
 
         vals[i] = vals[j];
         lists[i] = lists[j];
 
         vals[j] = t;
         lists[j] = tList;
-        return;
     }
 
     public void trackMovieConnection(GameObject gObj)
@@ -732,20 +699,20 @@ public class SphereData : MonoBehaviour {
 
     public void trackMovieConnection(GameObject[] gObjs)
     {
-        for (int i = 0; i < gObjs.Length; i++) trackMovieConnection(gObjs[i]);
+        for (var i = 0; i < gObjs.Length; i++) trackMovieConnection(gObjs[i]);
     }
 
     public void trackMovieConnection(List<GameObject> list)
     {
-        foreach(GameObject gObj in list ) trackMovieConnection(gObj);
+        foreach (var gObj in list) trackMovieConnection(gObj);
     }
 
-    public void connectMoviesAndTrack(CMData from, CMData to, Color c)
+    public void ConnectMoviesAndTrack(CMData from, CMData to, Color c)
     {
-        trackMovieConnection(connectMovies(from, to, c));
+        trackMovieConnection(ConnectMovies(from, to, c));
     }
 
-    public GameObject connectMovies(CMData from, CMData to, Color c)
+    public GameObject ConnectMovies(CMData from, CMData to, Color c)
     {
         MovieObject moFrom;
         MovieObject moTo;
@@ -753,7 +720,7 @@ public class SphereData : MonoBehaviour {
         movieObjectMap.TryGetValue(MovieDBUtils.getMovieDataKey(from), out moFrom);
         movieObjectMap.TryGetValue(MovieDBUtils.getMovieDataKey(to), out moTo);
 
-        Vector3[] basePts = new Vector3[4];
+        var basePts = new Vector3[4];
 
         basePts[0] = moFrom.point.transform.position;
         basePts[3] = moTo.point.transform.position;
@@ -761,32 +728,32 @@ public class SphereData : MonoBehaviour {
         basePts[1] = (moFrom.ring.transform.position - basePts[0]) * 0.5f + basePts[0];
         basePts[2] = (moTo.ring.transform.position - basePts[3]) * 0.5f + basePts[3];
 
-        Vector3[] pts = MovieDBUtils.getBezierPoints(basePts, curveLOD);
+        var pts = MovieDBUtils.getBezierPoints(basePts, curveLOD);
 
-        GameObject connCurve = new GameObject();
+        var connCurve = new GameObject();
         connCurve.name = "Conn: " + from.movie + " - " + to.movie;
 
         connCurve.transform.SetParent(gameObject.transform);
 
         connCurve.AddComponent<LineRenderer>();
-        LineRenderer rend = connCurve.GetComponent<LineRenderer>();
+        var rend = connCurve.GetComponent<LineRenderer>();
         rend.SetWidth(0.005f, 0.005f);
         rend.SetColors(moFrom.color, moTo.color);
         rend.SetVertexCount(curveLOD);
-        rend.material = curveMaterial;
+        rend.material = CurveMaterial;
         rend.material.color = new Color(0.3f, 0.3f, 0.3f);
         rend.useWorldSpace = false;
 
         rend.SetPositions(pts);
 
-        moFrom.connManager.addConnection(connCurve, moFrom, moTo);
+        moFrom.connManager.AddConnection(connCurve, moFrom, moTo);
 
         return connCurve;
     }
 
-    public void connectMoviesByActors(CMData cmData, bool track = true)
+    public void ConnectMoviesByActors(CMData cmData, bool track = true)
     {
-        string mainKey = MovieDBUtils.getMovieDataKey(cmData);
+        var mainKey = MovieDBUtils.getMovieDataKey(cmData);
 
         string tKey;
         MovieObject fMo;
@@ -794,73 +761,68 @@ public class SphereData : MonoBehaviour {
 
         movieObjectMap.TryGetValue(mainKey, out fMo);
 
-        List<GameObject> trackList = new List<GameObject>();
+        var trackList = new List<GameObject>();
 
-        for (int i = 0; i < fMo.cmData.roles.Length; i++)
+        for (var i = 0; i < fMo.cmData.roles.Length; i++)
         {
             if (!fMo.cmData.roles[i].active) continue;
-            List<CMData> list = cmLoader.getCMDataForActor(fMo.cmData.roles[i].actor);
+            var list = cmLoader.getCMDataForActor(fMo.cmData.roles[i].actor);
 
-            foreach (CMData data in list)
+            foreach (var data in list)
             {
                 tKey = MovieDBUtils.getMovieDataKey(data);
                 if (mainKey.Equals(tKey)) continue;
 
                 movieObjectMap.TryGetValue(tKey, out tMo);
-                trackList.Add(connectMovies(fMo.cmData, tMo.cmData, Color.red));
+                trackList.Add(ConnectMovies(fMo.cmData, tMo.cmData, Color.red));
             }
         }
     }
 
-    public void clearAllConnections()
+    public void ClearAllConnections()
     {
-        foreach (GameObject gObj in movieConnectionList) Destroy(gObj);
+        foreach (var gObj in movieConnectionList) Destroy(gObj);
         movieConnectionList.Clear();
     }
 
-    public void addActiveRings(List<GameObject> list)
+    public void AddActiveRings(List<GameObject> list)
     {
         activeRings.AddRange(list);
     }
 
-    void unhighlightAllRings()
+    private void UnhighlightAllRings()
     {
         RingState rs;
-        foreach (GameObject ring in ringList)
+        foreach (var ring in ringList)
         {
             rs = ring.GetComponent<RingState>();
-            rs.updateColor();
-            
+            rs.UpdateColor();
         }
     }
 
-    void dimAllRings()
+    private void DimAllRings()
     {
         RingState rs;
-        foreach (GameObject ring in ringList)
+        foreach (var ring in ringList)
         {
             rs = ring.GetComponent<RingState>();
-            rs.setDimmed();
-            rs.updateColor();
+            rs.SetDimmed();
+            rs.UpdateColor();
         }
     }
 
-    void highlightActiveRings()
+    private void HighlightActiveRings()
     {
-        dimAllRings();
+        DimAllRings();
 
         RingState rs;
-        foreach (GameObject ring in activeRings)
+        foreach (var ring in activeRings)
         {
             rs = ring.GetComponent<RingState>();
-            rs.setHighlighted();
-            rs.updateColor();
-
+            rs.SetHighlighted();
+            rs.UpdateColor();
         }
 
         activeRings.Clear();
     }
-
 }
-
-

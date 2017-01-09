@@ -146,7 +146,7 @@ public class ControllerState : BaseState
             quad.AddComponent<ControllerMenuHandler>();
             ControllerMenuHandler menuHandler = quad.GetComponent<ControllerMenuHandler>();
             menuHandler.baseState = this;
-            menuHandler.handlerType = NodeMenuHandler.BaseMenuHandlerType.ToggleOption;
+            menuHandler.handlerType = BaseMenuHandler.BaseMenuHandlerType.ToggleOption;
             menuHandler.ringLayoutState = ringlayoutState;
             menuHandler.boxMaterial = boxMaterial;
             menuHandler.checkMaterial = checkMaterial;
@@ -156,7 +156,6 @@ public class ControllerState : BaseState
             offset.y -= yOffsetPerLine;
         }
 
-        Vector3 controllerPosition = transform.position;
         menu.transform.localPosition = Vector3.zero + new Vector3(-0.071f, 0.106f, 0.104f);
         menu.transform.localRotation = Quaternion.Euler(30, 0, 0);
         menu.SetActive(true);

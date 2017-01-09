@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class MovieConnectionManager : MonoBehaviour {
 
-    List<GameObject> connectionList = new List<GameObject>();
-    Dictionary<string, RingState> activeRingMap = new Dictionary<string, RingState>();
+    readonly List<GameObject> _connectionList = new List<GameObject>();
+    readonly Dictionary<string, RingState> _activeRingMap = new Dictionary<string, RingState>();
 
 	// Use this for initialization
 	void Start () {
@@ -17,42 +17,43 @@ public class MovieConnectionManager : MonoBehaviour {
 	
 	}
 
-    public void addConnection(GameObject g, MovieObject from, MovieObject to )
+    public void AddConnection(GameObject g, MovieObject from, MovieObject to )
     {
-        connectionList.Add(g);
+        _connectionList.Add(g);
 
         string key = MovieDBUtils.getMovieDataKey(from.cmData);
         RingState rs;
 
-        if (!activeRingMap.ContainsKey(key))
+        if (!_activeRingMap.ContainsKey(key))
         {
             rs = from.ring.GetComponent<RingState>();
-            rs.addConnection();
-            activeRingMap.Add(key, rs);
+            rs.AddConnection();
+            _activeRingMap.Add(key, rs);
         }
 
         key = MovieDBUtils.getMovieDataKey(to.cmData);
 
-        if (!activeRingMap.ContainsKey(key))
+        if (!_activeRingMap.ContainsKey(key))
         {
             rs = to.ring.GetComponent<RingState>();
-            rs.addConnection();
-            activeRingMap.Add(key, rs);
+            rs.AddConnection();
+            _activeRingMap.Add(key, rs);
         }
     }
    
-    public void forceClearAllConnections()
+    public void ForceClearAllConnections()
     {
-        foreach (GameObject gObj in connectionList) { Destroy(gObj); }
+        foreach (GameObject gObj in _connectionList) { Destroy(gObj); }
 
-        foreach (RingState rs in activeRingMap.Values) rs.removeConnection();
+        foreach (RingState rs in _activeRingMap.Values) rs.RemoveConnection();
 
-        connectionList.Clear();
-        activeRingMap.Clear();
+        _connectionList.Clear();
+        _activeRingMap.Clear();
     }
 
-    public bool hasConnections()
+    public bool HasConnections()
     {
-        return connectionList.Count > 0;
+        return _connectionList.Count > 0;
     }
+
 }

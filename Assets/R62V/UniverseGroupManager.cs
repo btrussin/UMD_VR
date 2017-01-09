@@ -4,7 +4,6 @@ using System.Collections;
 public class UniverseGroupManager : MonoBehaviour {
 
     GameObject currUniverse = null;
-    UniverseManager currUniverseManager;
 
     public GameObject universe1;
     public GameObject universe2;
@@ -52,7 +51,6 @@ public class UniverseGroupManager : MonoBehaviour {
         if (Physics.Raycast(ray.origin, ray.direction, out hitInfo, 30.0f, universeLayerMask))
         {
             currUniverse = hitInfo.collider.gameObject;
-            currUniverseManager = currUniverse.GetComponent<UniverseManager>();
             intPt = hitInfo.point;
         }
         else currUniverse = null;

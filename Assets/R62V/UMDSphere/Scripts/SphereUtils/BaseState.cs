@@ -103,7 +103,7 @@ public class BaseState : MonoBehaviour {
 
         if (collisionCount == 0)
         {
-            if (!isSelected) connManager.forceClearAllConnections();
+            if (!isSelected) connManager.ForceClearAllConnections();
         }
     }
 
