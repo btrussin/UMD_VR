@@ -4,7 +4,7 @@ using System.Collections;
 
 public class NodeMenuHandler : BaseMenuHandler {
 
-    public CMRole role;
+    public CMRole Role;
 
     void Start () {
         //boxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
@@ -19,7 +19,7 @@ public class NodeMenuHandler : BaseMenuHandler {
     {
         MeshRenderer rend = gameObject.GetComponent<MeshRenderer>();
 
-        if ( role.active )
+        if ( Role.active )
         {
             rend.material = checkMaterial;
         }
@@ -37,7 +37,7 @@ public class NodeMenuHandler : BaseMenuHandler {
                 baseState.destroyMenu();
                 break;
             case BaseMenuHandlerType.ToggleOption:
-                role.active = !role.active;
+                Role.active = !Role.active;
                 UpdateMaterial();
                 break;
             default:

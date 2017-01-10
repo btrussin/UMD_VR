@@ -1,21 +1,21 @@
 ﻿Shader "Custom/Custom_AlphaBlend" {
 	Properties {
-		_MainTex ("Texture", 2D) = ""
+		_MainTex("Base (RGB) Transparent (A)", 2D) = "white" {}
 	}
-	SubShader{
-		Blend SrcAlpha OneMinusSrcAlpha
-		Cull Off
-		Zwrite Off
-		Tags {Queue = Transparent}
 
-		BindChannels {
-			Bind "vertex", vertex
-			Bind "color", color
-			Bind "texcoord1", texcoord
-		}
+	SubShader{
+		Tags {Queue = Transparent}
+		Blend SrcAlpha OneMinusSrcAlpha
+		Lighting Off
+		Fog{ Mode Off }
+		ZWrite Off
+		Cull Off
+		ColorMaterial AmbientAndDiffuse
 
 		Pass {
-			SetTexture[_MainTex]
+			SetTexture[_MainTex] {
+				combine texture * primary
+			}
 		}
 	}
 }

@@ -14,8 +14,8 @@ public class NodeState : BaseState
 	const int MAX_LEVEL = 2;
 
     Transform _referenceLine;
-    Vector3 startLoc;
-    Vector3 endLoc;
+    Vector3 _startLoc;
+    Vector3 _endLoc;
 
 	void Update () {
 	
@@ -170,7 +170,7 @@ public class NodeState : BaseState
             NodeMenuHandler menuHandler = quad.GetComponent<NodeMenuHandler>();
             menuHandler.baseState = this;
             menuHandler.handlerType = BaseMenuHandler.BaseMenuHandlerType.ToggleOption;
-            menuHandler.role = data.roles[i];
+            menuHandler.Role = data.roles[i];
             menuHandler.boxMaterial = boxMaterial;
             menuHandler.checkMaterial = checkMaterial;
 
@@ -220,7 +220,7 @@ public class NodeState : BaseState
 
         while (t < 1.0f)
         {
-            transform.localPosition = Vector3.Lerp(startLoc, endLoc, t);
+            transform.localPosition = Vector3.Lerp(_startLoc, _endLoc, t);
             transform.localScale = Vector3.Lerp(Vector3.one * .015f, Vector3.one * .5f, t / 1f);
             t += Time.deltaTime;
             yield return new WaitForFixedUpdate();
@@ -238,7 +238,7 @@ public class NodeState : BaseState
 
         while (t < 1.0f)
         {
-            transform.localPosition = Vector3.Lerp(endLoc, startLoc, t);
+            transform.localPosition = Vector3.Lerp(_endLoc, _startLoc, t);
             transform.localScale = Vector3.Lerp(Vector3.one * .015f, Vector3.one * .5f, t / 1f);
             t += Time.deltaTime;
             yield return new WaitForFixedUpdate();

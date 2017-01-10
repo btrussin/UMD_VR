@@ -114,12 +114,12 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             _sphereData.AddActiveRings(_ringsInCollision);
             if (_prevNumRingsInCollision == 0)
             {
-                showTrackpadArrows();
+                ShowTrackpadArrows();
             }
         }
         else if (_prevNumRingsInCollision > 0 && (_prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
         {
-            hideTrackpadArrows();
+            HideTrackpadArrows();
         }
 
         _prevNumRingsInCollision = _ringsInCollision.Count;
@@ -225,7 +225,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 _beam.SetActive(true);
                 _useBeam = true;
 
-                showTrackpadArrows();
+                ShowTrackpadArrows();
             }
 
             else if ((_state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0 &&
@@ -238,7 +238,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 if (_ringsInCollision.Count == 0)
                 {
                     _presentInRings = false;
-                    hideTrackpadArrows();
+                    HideTrackpadArrows();
                 }
                 if (this.transform.FindChild("Model").GetComponent<ControllerState>() != null && !_presentInRings
                     && !this.transform.FindChild("Model").GetComponent<ControllerState>().getIsSelected())
@@ -369,12 +369,12 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         }
     }
 
-    void showTrackpadArrows()
+    void ShowTrackpadArrows()
     {
         TrackpadArrowObject.SetActive(true);
     }
 
-    void hideTrackpadArrows()
+    void HideTrackpadArrows()
     {
         TrackpadArrowObject.SetActive(false);
     }

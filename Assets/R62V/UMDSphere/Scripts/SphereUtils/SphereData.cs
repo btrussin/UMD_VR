@@ -339,7 +339,6 @@ public class SphereData : MonoBehaviour
 
         //MovieDBUtils.addMeshFilter(ring, ringMaterial);
 
-
         ringLines.AddComponent<LineRenderer>();
         var rend = ringLines.GetComponent<LineRenderer>();
         rend.SetWidth(0.005f, 0.005f);
@@ -741,8 +740,9 @@ public class SphereData : MonoBehaviour
         rend.SetColors(moFrom.color, moTo.color);
         rend.SetVertexCount(curveLOD);
         rend.material = CurveMaterial;
-        //rend.material.shader = Shader.Find("Custom_AlphaBlend");
-        rend.material.color = new Color(0.3f, 0.3f, 0.3f);
+        //rend.material = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/BeamMaterial.mat");
+        rend.material.shader = Shader.Find("Custom/Custom_AlphaBlend");
+        rend.material.color = new Color(0.3f, 0.3f, 0.3f, 0.5f);
         rend.useWorldSpace = false;
 
         rend.SetPositions(pts);
