@@ -22,6 +22,9 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     SphereCollider _sphereCollider;
 
+    public delegate void StateTriggerChangedHandler();
+    public event StateTriggerChangedHandler DoTriggerOptions;
+
     //List<GameObject> connectionList = new List<GameObject>();
 
     readonly Dictionary<string, MovieObject> _connectionMovieObjectMap = new Dictionary<string, MovieObject>();
@@ -80,8 +83,11 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         _beam.SetActive(false);
 
         _menusLayerMask = 1 << LayerMask.NameToLayer("Menus");
+
+        this.DoTriggerOptions += new StateTriggerChangedHandler(TriggerHandler);
     }
 
+    //TODO Fix this up with some delegate calls
     void Update()
     {
         CurrPosition = transform.position;
@@ -200,7 +206,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         if (stateIsValid && _state.GetHashCode() != _prevState.GetHashCode())
         {
-
             if ((_state.ulButtonPressed & SteamVR_Controller.ButtonMask.ApplicationMenu) != 0 &&
                 (_prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.ApplicationMenu) == 0)
             {
@@ -218,57 +223,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 _sphereData.ReleaseSphereWithObject(gameObject);
             }
 
-            if ((_state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
-               (_prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
-            {
-                // activate bean
-                _beam.SetActive(true);
-                _useBeam = true;
-
-                ShowTrackpadArrows();
-            }
-
-            else if ((_state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0 &&
-               (_prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0)
-            {
-                // deactivate bean
-                _beam.SetActive(false);
-                _useBeam = false;
-                _activeBeamInterceptObj = null;
-                if (_ringsInCollision.Count == 0)
-                {
-                    _presentInRings = false;
-                    HideTrackpadArrows();
-                }
-                if (this.transform.FindChild("Model").GetComponent<ControllerState>() != null && !_presentInRings
-                    && !this.transform.FindChild("Model").GetComponent<ControllerState>().getIsSelected())
-                {
-                    this.transform.FindChild("Model").GetComponent<ControllerState>().toggleSelected();
-                }
-            }
-
-            if ((_state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
-                _prevState.rAxis1.x < 1.0f && _state.rAxis1.x == 1.0f )
-            {
-
-                TriggerActiverBeamObject();
-
-                // toggle connections with all movies
-                foreach (MovieObject m in _connectionMovieObjectMap.Values)
-                {
-                    m.nodeState.toggleSelected();
-                    m.nodeState.updateColor();
-
-                    if (this.transform.FindChild("Model").GetComponent<ControllerState>() != null &&
-                        this.transform.FindChild("Model").GetComponent<ControllerState>().getIsSelected())
-                    {
-                        this.transform.FindChild("Model").GetComponent<ControllerState>().toggleSelected();
-                    }
-                }
-
-            } 
-
-            _prevState = _state;
+            OnDoTriggerOptions();
         }
 
 
@@ -379,5 +334,67 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         TrackpadArrowObject.SetActive(false);
     }
 
-    
+
+    protected virtual void OnDoTriggerOptions()
+    {
+        if (DoTriggerOptions != null)
+            DoTriggerOptions();
+    }
+
+    /* Function for each Handler. */
+    private void TriggerHandler()
+    {
+        if ((_state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
+         (_prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
+        {
+            // activate bean
+            _beam.SetActive(true);
+            _useBeam = true;
+
+            ShowTrackpadArrows();
+        }
+
+        else if ((_state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0 &&
+           (_prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0)
+        {
+            // deactivate bean
+            _beam.SetActive(false);
+            _useBeam = false;
+            _activeBeamInterceptObj = null;
+            if (_ringsInCollision.Count == 0)
+            {
+                _presentInRings = false;
+                HideTrackpadArrows();
+            }
+            if (this.transform.FindChild("Model").GetComponent<ControllerState>() != null && !_presentInRings
+                && !this.transform.FindChild("Model").GetComponent<ControllerState>().getIsSelected())
+            {
+                this.transform.FindChild("Model").GetComponent<ControllerState>().toggleSelected();
+            }
+        }
+
+        if ((_state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
+            _prevState.rAxis1.x < 1.0f && _state.rAxis1.x == 1.0f)
+        {
+
+            TriggerActiverBeamObject();
+
+            // toggle connections with all movies
+            foreach (MovieObject m in _connectionMovieObjectMap.Values)
+            {
+                m.nodeState.toggleSelected();
+                m.nodeState.updateColor();
+
+                if (this.transform.FindChild("Model").GetComponent<ControllerState>() != null &&
+                    this.transform.FindChild("Model").GetComponent<ControllerState>().getIsSelected())
+                {
+                    this.transform.FindChild("Model").GetComponent<ControllerState>().toggleSelected();
+                }
+            }
+
+        }
+
+        _prevState = _state;
+    }
+
 }
