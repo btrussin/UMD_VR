@@ -169,7 +169,7 @@ public class NodeState : BaseState
             quad.AddComponent<NodeMenuHandler>();
             NodeMenuHandler menuHandler = quad.GetComponent<NodeMenuHandler>();
             menuHandler.baseState = this;
-            menuHandler.handlerType = NodeMenuHandler.BaseMenuHandlerType.ToggleOption;
+            menuHandler.handlerType = BaseMenuHandler.BaseMenuHandlerType.ToggleOption;
             menuHandler.role = data.roles[i];
             menuHandler.boxMaterial = boxMaterial;
             menuHandler.checkMaterial = checkMaterial;

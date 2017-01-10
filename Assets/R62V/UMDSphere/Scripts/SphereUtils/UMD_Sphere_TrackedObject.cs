@@ -40,6 +40,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     bool _useBeam = false;
     bool _spawnedMenu = false;
+    bool _presentInRings = false;
 
     int _menusLayerMask;
 
@@ -49,7 +50,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     void Awake()
     {
-
         if (this.transform.name == "Controller (left)")
         {
             this.transform.FindChild("Model").gameObject.AddComponent<ControllerState>(); //add for left controller for now
@@ -80,7 +80,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         _beam.SetActive(false);
 
         _menusLayerMask = 1 << LayerMask.NameToLayer("Menus");
-
     }
 
     void Update()
@@ -108,11 +107,15 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         _ringsInCollision = _sphereData.GetRingsInCollision(CurrPosition + (CurrForwardVec - CurrUpVec) * (0.03f + _sphereCollider.radius) , _sphereCollider.radius*2.0f);
         if (_ringsInCollision.Count > 0)
         {
+            _presentInRings = true;
             //TODO Spawn a Red Animation Circle In The Center of the Controller
             SpawnRedCircle();
             _useBeam = false;
             _sphereData.AddActiveRings(_ringsInCollision);
-            if (_prevNumRingsInCollision == 0) showTrackpadArrows();
+            if (_prevNumRingsInCollision == 0)
+            {
+                showTrackpadArrows();
+            }
         }
         else if (_prevNumRingsInCollision > 0 && (_prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
         {
@@ -234,10 +237,11 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 _activeBeamInterceptObj = null;
                 if (_ringsInCollision.Count == 0)
                 {
+                    _presentInRings = false;
                     hideTrackpadArrows();
                 }
-                if (this.transform.FindChild("Model").GetComponent<ControllerState>() != null &&
-                    !this.transform.FindChild("Model").GetComponent<ControllerState>().getIsSelected())
+                if (this.transform.FindChild("Model").GetComponent<ControllerState>() != null && !_presentInRings
+                    && !this.transform.FindChild("Model").GetComponent<ControllerState>().getIsSelected())
                 {
                     this.transform.FindChild("Model").GetComponent<ControllerState>().toggleSelected();
                 }
@@ -319,16 +323,14 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 _sphereData.ConnectMoviesByActors(mo.cmData);
             }
 
+            //FIXED Needed to add this line in order to map a new location to a node when a category has changed.
+            if (_connectionMovieObjectMap.ContainsKey(key))
+            {
+                _connectionMovieObjectMap.Remove(key);
+            }
+
             _connectionMovieObjectMap.Add(key, mo);
-        } else
-        {
-
         }
-    }
-
-    void OnCollisionStay(Collision col)
-    {
-       
     }
 
     void OnCollisionExit(Collision col)

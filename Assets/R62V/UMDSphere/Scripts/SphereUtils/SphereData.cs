@@ -17,42 +17,42 @@ public class SphereData : MonoBehaviour
     }
 
     public static int NUM_LAYOUTS = 6; //update the layouts
-    private UMD_Sphere_TrackedObject activeGrabObject;
-    private bool activeMove;
+    private UMD_Sphere_TrackedObject _activeGrabObject;
+    private bool _activeMove;
 
-    private readonly List<GameObject> activeRings = new List<GameObject>();
+    private readonly List<GameObject> _activeRings = new List<GameObject>();
 
-    private bool activeScale;
+    private bool _activeScale;
 
-    private Color baseRingColor;
+    private Color _baseRingColor;
 
-    private Vector3 centerGrpPosition;
+    private Vector3 _centerGrpPosition;
 
-    private CMJSONLoader cmLoader;
+    private CMJSONLoader _cmLoader;
 
     private readonly int curveLOD = 100;
 
-    private UMD_Sphere_TrackedObject grabObject1;
-    private UMD_Sphere_TrackedObject grabObject2;
-    private float initialDist;
+    private UMD_Sphere_TrackedObject _grabObject1;
+    private UMD_Sphere_TrackedObject _grabObject2;
+    private float _initialDist;
 
-    private Quaternion initialRotation;
+    private Quaternion _initialRotation;
 
-    private Vector3 initialScale;
-    private Vector3 inititalOffset;
+    private Vector3 _initialScale;
+    private Vector3 _inititalOffset;
 
-    private readonly List<GameObject> movieConnectionList = new List<GameObject>();
+    private readonly List<GameObject> _movieConnectionList = new List<GameObject>();
 
-    private readonly Dictionary<string, MovieObject> movieObjectMap = new Dictionary<string, MovieObject>();
+    private readonly Dictionary<string, MovieObject> _movieObjectMap = new Dictionary<string, MovieObject>();
 
-    [Header("Object Path Strings", order = 1)] public string pointPrefabPath =
+    [Header("Object Path Strings", order = 1)] public string PointPrefabPath =
         "Assets/R62V/UMDSphere/Prefabs/PointPrefab.prefab"; //Set by default. May be changed in the editor.
 
-    private int prevNumRingsActive;
+    private int _prevNumRingsActive;
 
-    private readonly Dictionary<string, Color> ringColorMap = new Dictionary<string, Color>();
+    private readonly Dictionary<string, Color> _ringColorMap = new Dictionary<string, Color>();
 
-    private readonly List<GameObject> ringList = new List<GameObject>();
+    private readonly List<GameObject> _ringList = new List<GameObject>();
 
     [Header("Materials", order = 2)]
     public Material RingMaterial;
@@ -60,26 +60,26 @@ public class SphereData : MonoBehaviour
 
     [Header("Data Object", order = 3)] public GameObject Sphere;
 
-    private SphereLayout sphereLayout = SphereLayout.Sphere;
+    private SphereLayout _sphereLayout = SphereLayout.Sphere;
 
     // Use this for initialization
     private void Start()
     {
-        cmLoader = gameObject.GetComponent<CMJSONLoader>();
-        cmLoader.LoadData();
+        _cmLoader = gameObject.GetComponent<CMJSONLoader>();
+        _cmLoader.LoadData();
         //ringMaterial = new Material(Shader.Find("Standard"));
         RingMaterial = new Material(Shader.Find("Sprites/Default"));
         //curveMaterial = new Material(Shader.Find("Standard"));
         CurveMaterial = new Material(Shader.Find("Sprites/Default"));
 
-        baseRingColor = new Color(0.5f, 0.5f, 0.5f);
+        _baseRingColor = new Color(0.5f, 0.5f, 0.5f);
 
-        centerGrpPosition = new Vector3(0.0f, 0.0f, 0.0f);
+        _centerGrpPosition = new Vector3(0.0f, 0.0f, 0.0f);
 
         transform.Translate(new Vector3(0.0f, 1.0f, 0.0f));
 
-        grabObject1 = null;
-        grabObject2 = null;
+        _grabObject1 = null;
+        _grabObject2 = null;
     }
 
     public List<GameObject> GetRingsInCollision(Vector3 pos, float maxDist)
@@ -88,7 +88,7 @@ public class SphereData : MonoBehaviour
         var scale = gameObject.transform.localScale.x * 0.5f;
         scale *= scale;
 
-        foreach (var ring in ringList)
+        foreach (var ring in _ringList)
         {
             var v = pos - ring.transform.position;
 
@@ -105,40 +105,40 @@ public class SphereData : MonoBehaviour
         var usto = obj.GetComponent<UMD_Sphere_TrackedObject>();
 
 
-        if (grabObject1 == usto || grabObject2 == usto) return;
+        if (_grabObject1 == usto || _grabObject2 == usto) return;
 
-        if (grabObject1 == null)
+        if (_grabObject1 == null)
         {
-            grabObject1 = usto;
-            activeGrabObject = grabObject1;
+            _grabObject1 = usto;
+            _activeGrabObject = _grabObject1;
         }
-        else if (grabObject2 == null)
+        else if (_grabObject2 == null)
         {
-            grabObject2 = usto;
-            activeGrabObject = grabObject2;
+            _grabObject2 = usto;
+            _activeGrabObject = _grabObject2;
         }
 
-        if (grabObject1 != null && grabObject2 != null)
+        if (_grabObject1 != null && _grabObject2 != null)
         {
-            initialScale = gameObject.transform.localScale;
-            Vector3 tVec = grabObject1.CurrPosition - grabObject2.CurrPosition;
-            initialDist = tVec.magnitude;
-            activeScale = true;
-            activeMove = false;
+            _initialScale = gameObject.transform.localScale;
+            Vector3 tVec = _grabObject1.CurrPosition - _grabObject2.CurrPosition;
+            _initialDist = tVec.magnitude;
+            _activeScale = true;
+            _activeMove = false;
         }
         else
         {
             //initialRotation = Quaternion.Inverse(gameObject.transform.rotation) * activeGrabObject.currRotation;
-            initialRotation = Quaternion.Inverse(activeGrabObject.CurrRotation) * gameObject.transform.rotation;
-            var tmpVec = gameObject.transform.position - activeGrabObject.CurrPosition;
+            _initialRotation = Quaternion.Inverse(_activeGrabObject.CurrRotation) * gameObject.transform.rotation;
+            var tmpVec = gameObject.transform.position - _activeGrabObject.CurrPosition;
 
-            inititalOffset.Set(
-                Vector3.Dot(activeGrabObject.CurrUpVec, tmpVec),
-                Vector3.Dot(activeGrabObject.CurrRightVec, tmpVec),
-                Vector3.Dot(activeGrabObject.CurrForwardVec, tmpVec)
+            _inititalOffset.Set(
+                Vector3.Dot(_activeGrabObject.CurrUpVec, tmpVec),
+                Vector3.Dot(_activeGrabObject.CurrRightVec, tmpVec),
+                Vector3.Dot(_activeGrabObject.CurrForwardVec, tmpVec)
             );
-            activeMove = true;
-            activeScale = false;
+            _activeMove = true;
+            _activeScale = false;
         }
     }
 
@@ -148,66 +148,66 @@ public class SphereData : MonoBehaviour
 
         if (usto == null) return;
 
-        if (grabObject1 == usto)
+        if (_grabObject1 == usto)
         {
-            grabObject1 = null;
-            activeScale = false;
+            _grabObject1 = null;
+            _activeScale = false;
 
-            if (grabObject2 == null) activeMove = false;
+            if (_grabObject2 == null) _activeMove = false;
         }
 
-        else if (grabObject2 == usto)
+        else if (_grabObject2 == usto)
         {
-            grabObject2 = null;
-            activeScale = false;
-            if (grabObject1 == null) activeMove = false;
+            _grabObject2 = null;
+            _activeScale = false;
+            if (_grabObject1 == null) _activeMove = false;
         }
     }
 
     private void UpdateMove()
     {
-        if (activeMove)
+        if (_activeMove)
         {
-            gameObject.transform.rotation = activeGrabObject.CurrRotation * initialRotation;
+            gameObject.transform.rotation = _activeGrabObject.CurrRotation * _initialRotation;
 
-            gameObject.transform.position = activeGrabObject.DeviceRay.origin +
-                                            inititalOffset.x * activeGrabObject.CurrUpVec +
-                                            inititalOffset.y * activeGrabObject.CurrRightVec +
-                                            inititalOffset.z * activeGrabObject.CurrForwardVec;
+            gameObject.transform.position = _activeGrabObject.DeviceRay.origin +
+                                            _inititalOffset.x * _activeGrabObject.CurrUpVec +
+                                            _inititalOffset.y * _activeGrabObject.CurrRightVec +
+                                            _inititalOffset.z * _activeGrabObject.CurrForwardVec;
         }
     }
 
     private void UpdateScale()
     {
-        if (activeScale)
+        if (_activeScale)
         {
-            Vector3 tVec = grabObject1.CurrPosition - grabObject2.CurrPosition;
+            Vector3 tVec = _grabObject1.CurrPosition - _grabObject2.CurrPosition;
 
-            var scale = tVec.magnitude / initialDist;
+            var scale = tVec.magnitude / _initialDist;
 
-            gameObject.transform.localScale = initialScale * scale;
+            gameObject.transform.localScale = _initialScale * scale;
         }
     }
 
     public void ToggleMainLayout()
     {
-        switch (sphereLayout)
+        switch (_sphereLayout)
         {
             case SphereLayout.Sphere:
-                sphereLayout = SphereLayout.ColumnX;
+                _sphereLayout = SphereLayout.ColumnX;
                 break;
             case SphereLayout.ColumnX:
-                sphereLayout = SphereLayout.ColumnY;
+                _sphereLayout = SphereLayout.ColumnY;
                 break;
             case SphereLayout.ColumnY:
-                sphereLayout = SphereLayout.ColumnZ;
+                _sphereLayout = SphereLayout.ColumnZ;
                 break;
             case SphereLayout.ColumnZ:
-                sphereLayout = SphereLayout.Sphere;
+                _sphereLayout = SphereLayout.Sphere;
                 break;
         }
 
-        SetRingLayout(ringList, centerGrpPosition, sphereLayout);
+        SetRingLayout(_ringList, _centerGrpPosition, _sphereLayout);
     }
 
     private void CreateRings(string[] vals, List<CMData>[] lists)
@@ -223,12 +223,12 @@ public class SphereData : MonoBehaviour
         for (var i = 0; i < vals.Length; i++)
         {
             var ring = getRing(vals[i], lists[i], palette[i % palette.Length], i);
-            ringList.Add(ring);
+            _ringList.Add(ring);
 
             ring.transform.SetParent(transform);
         }
 
-        SetRingLayout(ringList, centerGrpPosition, sphereLayout);
+        SetRingLayout(_ringList, _centerGrpPosition, _sphereLayout);
     }
 
     private void SetRingLayout(List<GameObject> list, Vector3 centerGrpPosition, SphereLayout layout)
@@ -303,7 +303,7 @@ public class SphereData : MonoBehaviour
     {
         MovieConnectionManager connMan;
         NodeState ns;
-        foreach (var m in movieObjectMap.Values)
+        foreach (var m in _movieObjectMap.Values)
         {
             connMan = m.connManager;
             ns = m.nodeState;
@@ -324,7 +324,7 @@ public class SphereData : MonoBehaviour
         var ring = new GameObject();
         ring.name = "Ring: " + name;
 
-        ringColorMap.Add(ring.name, baseColor);
+        _ringColorMap.Add(ring.name, baseColor);
 
         var innerRotationObj = new GameObject();
         innerRotationObj.name = "innerRotataion";
@@ -403,7 +403,7 @@ public class SphereData : MonoBehaviour
 
         var randQuat = Quaternion.Euler(new Vector3(0.0f, 0.0f, Random.value * 60.0f));
 
-        var ptPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(pointPrefabPath);
+        var ptPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(PointPrefabPath);
 
         string movieKey;
         foreach (var data in list)
@@ -428,7 +428,7 @@ public class SphereData : MonoBehaviour
             itemText.alignment = TextAlignment.Center;
             itemText.fontStyle = FontStyle.Bold;
             itemText.text = data.movie;
-            itemText.color = baseColor * baseRingColor;
+            itemText.color = baseColor * _baseRingColor;
             itemLabel.transform.localScale = new Vector3(itemScale, itemScale, itemScale);
             itemLabel.transform.localPosition = itemOffset * new Vector3(0.05f, 0.0f, 0.0f);
             itemText.characterSize = 0.1f;
@@ -457,9 +457,9 @@ public class SphereData : MonoBehaviour
             mo.color = baseColor;
             mo.connManager = connMan;
 
-            if (movieObjectMap.ContainsKey(movieKey))
+            if (_movieObjectMap.ContainsKey(movieKey))
                 Debug.Log(movieKey + " aready exists");
-            else movieObjectMap.Add(movieKey, mo);
+            else _movieObjectMap.Add(movieKey, mo);
 
 
             movieNodeObj.AddComponent<NodeState>();
@@ -492,15 +492,15 @@ public class SphereData : MonoBehaviour
         UpdateScale();
         UpdateMove();
 
-        if (activeRings.Count > 0)
+        if (_activeRings.Count > 0)
         {
-            prevNumRingsActive = activeRings.Count;
+            _prevNumRingsActive = _activeRings.Count;
             HighlightActiveRings();
         }
-        else if (prevNumRingsActive > 0)
+        else if (_prevNumRingsActive > 0)
         {
             UnhighlightAllRings();
-            prevNumRingsActive = 0;
+            _prevNumRingsActive = 0;
         }
     }
 
@@ -510,13 +510,13 @@ public class SphereData : MonoBehaviour
 
         ClearRings();
 
-        var years = cmLoader.getAllYears();
+        var years = _cmLoader.getAllYears();
         var vals = new string[years.Length];
         var lists = new List<CMData>[years.Length];
         for (var i = 0; i < years.Length; i++)
         {
             vals[i] = "" + years[i];
-            lists[i] = cmLoader.getCMDataForYear(years[i]);
+            lists[i] = _cmLoader.getCMDataForYear(years[i]);
         }
         CreateRings(vals, lists);
     }
@@ -527,9 +527,9 @@ public class SphereData : MonoBehaviour
 
         ClearRings();
 
-        var vals = cmLoader.getAllPublishers();
+        var vals = _cmLoader.getAllPublishers();
         var lists = new List<CMData>[vals.Length];
-        for (var i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForPublisher(vals[i]);
+        for (var i = 0; i < vals.Length; i++) lists[i] = _cmLoader.getCMDataForPublisher(vals[i]);
         CreateRings(vals, lists);
     }
 
@@ -539,9 +539,9 @@ public class SphereData : MonoBehaviour
 
         ClearRings();
 
-        var vals = cmLoader.getAllGroupings();
+        var vals = _cmLoader.getAllGroupings();
         var lists = new List<CMData>[vals.Length];
-        for (var i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForGrouping(vals[i]);
+        for (var i = 0; i < vals.Length; i++) lists[i] = _cmLoader.getCMDataForGrouping(vals[i]);
         CreateRings(vals, lists);
     }
 
@@ -551,9 +551,9 @@ public class SphereData : MonoBehaviour
 
         ClearRings();
 
-        var vals = cmLoader.getAllComics();
+        var vals = _cmLoader.getAllComics();
         var lists = new List<CMData>[vals.Length];
-        for (var i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForComic(vals[i]);
+        for (var i = 0; i < vals.Length; i++) lists[i] = _cmLoader.getCMDataForComic(vals[i]);
         CreateRings(vals, lists);
     }
 
@@ -563,9 +563,9 @@ public class SphereData : MonoBehaviour
 
         ClearRings();
 
-        var vals = cmLoader.getAllDistributors();
+        var vals = _cmLoader.getAllDistributors();
         var lists = new List<CMData>[vals.Length];
-        for (var i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForDistributor(vals[i]);
+        for (var i = 0; i < vals.Length; i++) lists[i] = _cmLoader.getCMDataForDistributor(vals[i]);
         CreateRings(vals, lists);
     }
 
@@ -576,9 +576,9 @@ public class SphereData : MonoBehaviour
 
         ClearRings();
 
-        var vals = cmLoader.getAllStudios();
+        var vals = _cmLoader.getAllStudios();
         var lists = new List<CMData>[vals.Length];
-        for (var i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForStudio(vals[i]);
+        for (var i = 0; i < vals.Length; i++) lists[i] = _cmLoader.getCMDataForStudio(vals[i]);
         CreateRings(vals, lists);
     }
 
@@ -586,20 +586,20 @@ public class SphereData : MonoBehaviour
     {
         MovieConnectionManager connMan;
 
-        foreach (var m in movieObjectMap.Values)
+        foreach (var m in _movieObjectMap.Values)
         {
             connMan = m.connManager;
             connMan.ForceClearAllConnections();
         }
 
-        for (var ring = 0; ring < ringList.Count; ring++)
-            Destroy(ringList[ring]);
+        for (var ring = 0; ring < _ringList.Count; ring++)
+            Destroy(_ringList[ring]);
 
-        ringList.Clear();
-        ringColorMap.Clear();
-        movieObjectMap.Clear();
-        activeRings.Clear();
-        movieConnectionList.Clear();
+        _ringList.Clear();
+        _ringColorMap.Clear();
+        _movieObjectMap.Clear();
+        _activeRings.Clear();
+        _movieConnectionList.Clear();
     }
 
     private void OrderIntoFourGroups(string[] vals, List<CMData>[] lists)
@@ -694,7 +694,7 @@ public class SphereData : MonoBehaviour
 
     public void trackMovieConnection(GameObject gObj)
     {
-        movieConnectionList.Add(gObj);
+        _movieConnectionList.Add(gObj);
     }
 
     public void trackMovieConnection(GameObject[] gObjs)
@@ -717,8 +717,8 @@ public class SphereData : MonoBehaviour
         MovieObject moFrom;
         MovieObject moTo;
 
-        movieObjectMap.TryGetValue(MovieDBUtils.getMovieDataKey(from), out moFrom);
-        movieObjectMap.TryGetValue(MovieDBUtils.getMovieDataKey(to), out moTo);
+        _movieObjectMap.TryGetValue(MovieDBUtils.getMovieDataKey(from), out moFrom);
+        _movieObjectMap.TryGetValue(MovieDBUtils.getMovieDataKey(to), out moTo);
 
         var basePts = new Vector3[4];
 
@@ -741,6 +741,7 @@ public class SphereData : MonoBehaviour
         rend.SetColors(moFrom.color, moTo.color);
         rend.SetVertexCount(curveLOD);
         rend.material = CurveMaterial;
+        //rend.material.shader = Shader.Find("Custom_AlphaBlend");
         rend.material.color = new Color(0.3f, 0.3f, 0.3f);
         rend.useWorldSpace = false;
 
@@ -759,21 +760,21 @@ public class SphereData : MonoBehaviour
         MovieObject fMo;
         MovieObject tMo;
 
-        movieObjectMap.TryGetValue(mainKey, out fMo);
+        _movieObjectMap.TryGetValue(mainKey, out fMo);
 
         var trackList = new List<GameObject>();
 
         for (var i = 0; i < fMo.cmData.roles.Length; i++)
         {
             if (!fMo.cmData.roles[i].active) continue;
-            var list = cmLoader.getCMDataForActor(fMo.cmData.roles[i].actor);
+            var list = _cmLoader.getCMDataForActor(fMo.cmData.roles[i].actor);
 
             foreach (var data in list)
             {
                 tKey = MovieDBUtils.getMovieDataKey(data);
                 if (mainKey.Equals(tKey)) continue;
 
-                movieObjectMap.TryGetValue(tKey, out tMo);
+                _movieObjectMap.TryGetValue(tKey, out tMo);
                 trackList.Add(ConnectMovies(fMo.cmData, tMo.cmData, Color.red));
             }
         }
@@ -781,19 +782,19 @@ public class SphereData : MonoBehaviour
 
     public void ClearAllConnections()
     {
-        foreach (var gObj in movieConnectionList) Destroy(gObj);
-        movieConnectionList.Clear();
+        foreach (var gObj in _movieConnectionList) Destroy(gObj);
+        _movieConnectionList.Clear();
     }
 
     public void AddActiveRings(List<GameObject> list)
     {
-        activeRings.AddRange(list);
+        _activeRings.AddRange(list);
     }
 
     private void UnhighlightAllRings()
     {
         RingState rs;
-        foreach (var ring in ringList)
+        foreach (var ring in _ringList)
         {
             rs = ring.GetComponent<RingState>();
             rs.UpdateColor();
@@ -803,7 +804,7 @@ public class SphereData : MonoBehaviour
     private void DimAllRings()
     {
         RingState rs;
-        foreach (var ring in ringList)
+        foreach (var ring in _ringList)
         {
             rs = ring.GetComponent<RingState>();
             rs.SetDimmed();
@@ -816,13 +817,13 @@ public class SphereData : MonoBehaviour
         DimAllRings();
 
         RingState rs;
-        foreach (var ring in activeRings)
+        foreach (var ring in _activeRings)
         {
             rs = ring.GetComponent<RingState>();
             rs.SetHighlighted();
             rs.UpdateColor();
         }
 
-        activeRings.Clear();
+        _activeRings.Clear();
     }
 }

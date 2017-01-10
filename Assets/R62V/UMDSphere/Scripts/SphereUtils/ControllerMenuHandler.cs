@@ -78,7 +78,6 @@ public class ControllerMenuHandler : BaseMenuHandler {
         }
 
         ClearOtherCategories();
-
     }
 
     private void ClearOtherCategories()
