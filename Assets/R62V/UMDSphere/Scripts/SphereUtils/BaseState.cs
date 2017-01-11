@@ -36,15 +36,15 @@ public class BaseState : MonoBehaviour {
         closeMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/close_mat.mat");
     }
 
-    public void destroyMenu()
+    public void DestroyMenu()
     {
         GameObject.Destroy(menu);
         menu = null;
-        setSelected(false);
+        SetSelected(false);
     }
 
     //TODO: May need to make this virtual
-    public void toggleSelected()
+    public void ToggleSelected()
     {
         isSelected = !isSelected;
 
@@ -52,21 +52,21 @@ public class BaseState : MonoBehaviour {
 
         else if (menu != null)
         {
-            destroyMenu();
+            DestroyMenu();
         }
     }
 
-    public void setSelected(bool selected)
+    public void SetSelected(bool selected)
     {
         isSelected = selected;
     }
 
-    public bool getIsSelected()
+    public bool GetIsSelected()
     {
         return isSelected;
     }
 
-    public static GameObject addText(GameObject obj, string text, TextAlignment alignment, TextAnchor anchor, Vector3 offset)
+    public static GameObject AddText(GameObject obj, string text, TextAlignment alignment, TextAnchor anchor, Vector3 offset, int fontSize)
     {
         GameObject textObj = new GameObject();
         textObj.transform.SetParent(obj.transform);
@@ -77,7 +77,7 @@ public class BaseState : MonoBehaviour {
         ringText.alignment = alignment;
         ringText.text = text;
         ringText.characterSize = 0.03f;
-        ringText.fontSize = 100;
+        ringText.fontSize = fontSize;
 
         float scale = 0.03f;
         textObj.transform.localScale = new Vector3(scale, scale, scale);
@@ -86,17 +86,17 @@ public class BaseState : MonoBehaviour {
         return textObj;
     }
 
-    public int getConnectionCount()
+    public int GetConnectionCount()
     {
         return collisionCount;
     }
 
-    public void addCollision()
+    public void AddCollision()
     {
         collisionCount++;
     }
 
-    public void removeCollision()
+    public void RemoveCollision()
     {
         collisionCount--;
         if (collisionCount < 0) collisionCount = 0;
@@ -107,7 +107,7 @@ public class BaseState : MonoBehaviour {
         }
     }
 
-    public virtual void updateColor()
+    public virtual void UpdateColor()
     {
  
     }

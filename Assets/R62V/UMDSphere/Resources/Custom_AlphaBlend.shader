@@ -1,11 +1,13 @@
 ﻿Shader "Custom/Custom_AlphaBlend" {
 	Properties {
-		_MainTex("Base (RGB) Transparent (A)", 2D) = "white" {}
+		_MainTex("Diffuse (RGB) Alpha (A)", 2D) = "white" {}
 	}
 
 	SubShader{
-		Tags {Queue = Transparent}
+		Tags {Queue = Transparent RenderType = TransparentCutout}
+		BlendOp Max
 		Blend SrcAlpha OneMinusSrcAlpha
+
 		Lighting Off
 		Fog{ Mode Off }
 		ZWrite Off

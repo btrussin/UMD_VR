@@ -307,7 +307,7 @@ public class SphereData : MonoBehaviour
         {
             connMan = m.connManager;
             ns = m.nodeState;
-            if (ns.getIsSelected() && connMan.HasConnections())
+            if (ns.GetIsSelected() && connMan.HasConnections())
             {
                 connMan.ForceClearAllConnections();
                 ConnectMoviesByActors(m.cmData);
@@ -727,7 +727,7 @@ public class SphereData : MonoBehaviour
         basePts[1] = (moFrom.ring.transform.position - basePts[0]) * 0.5f + basePts[0];
         basePts[2] = (moTo.ring.transform.position - basePts[3]) * 0.5f + basePts[3];
 
-        var pts = MovieDBUtils.getBezierPoints(basePts, curveLOD);
+        var pts = MovieDBUtils.getBezierPoints(basePts, curveLOD, 1);
 
         var connCurve = new GameObject();
         connCurve.name = "Conn: " + from.movie + " - " + to.movie;

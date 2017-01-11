@@ -34,7 +34,7 @@ public class NodeMenuHandler : BaseMenuHandler {
         switch(handlerType)
         {
             case BaseMenuHandlerType.CloseMenu:
-                baseState.destroyMenu();
+                baseState.DestroyMenu();
                 break;
             case BaseMenuHandlerType.ToggleOption:
                 Role.active = !Role.active;

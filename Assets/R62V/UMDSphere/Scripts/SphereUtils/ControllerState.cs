@@ -6,7 +6,7 @@ using System.Collections.Generic;
 //TODO: Use withing a Player Class in customizing the type of data on the ring
 public class ControllerState : BaseState
 {
-    public override void updateColor()
+    public override void UpdateColor()
     {
         if (valuesNotSet)
         {
@@ -57,18 +57,21 @@ public class ControllerState : BaseState
         offset.y = -0.02f;
         offset.x = 0.04f;
 
-        textObjects.Add(addText(menu, "Distributor", roleAlign, roleAnchor, offset));
+        textObjects.Add(AddText(menu, "Distributor", roleAlign, roleAnchor, offset, 100));
         offset.y -= yOffsetPerLine;
-        textObjects.Add(addText(menu, "Grouping", roleAlign, roleAnchor, offset));
+        textObjects.Add(AddText(menu, "Grouping", roleAlign, roleAnchor, offset, 100));
         offset.y -= yOffsetPerLine;
-        textObjects.Add(addText(menu, "Comic", roleAlign, roleAnchor, offset));
+        textObjects.Add(AddText(menu, "Comic", roleAlign, roleAnchor, offset, 100));
         offset.y -= yOffsetPerLine;
-        textObjects.Add(addText(menu, "Publisher", roleAlign, roleAnchor, offset));
+        textObjects.Add(AddText(menu, "Publisher", roleAlign, roleAnchor, offset, 100));
         offset.y -= yOffsetPerLine;
-        textObjects.Add(addText(menu, "Studio", roleAlign, roleAnchor, offset));
+        textObjects.Add(AddText(menu, "Studio", roleAlign, roleAnchor, offset, 100));
         offset.y -= yOffsetPerLine;
-        textObjects.Add(addText(menu, "Year", roleAlign, roleAnchor, offset));
+        textObjects.Add(AddText(menu, "Year", roleAlign, roleAnchor, offset, 100));
         offset.y -= yOffsetPerLine;
+        textObjects.Add(AddText(menu, "Cannot select nodes on THIS controller", roleAlign, roleAnchor, offset, 250));
+        offset.y -= yOffsetPerLine;
+        textObjects.Add(AddText(menu, "with this menu active!", roleAlign, roleAnchor, offset, 250));
 
         float firstBoxY = -0.02f;
 

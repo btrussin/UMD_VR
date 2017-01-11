@@ -145,7 +145,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     void SetupControllerMenu()
     {
-        this.transform.FindChild("Model").gameObject.GetComponent<ControllerState>().toggleSelected();
+        this.transform.FindChild("Model").gameObject.GetComponent<ControllerState>().ToggleSelected();
 
         _spawnedMenu = true;
     }
@@ -263,48 +263,60 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     void OnCollisionEnter(Collision col)
     {
         GameObject obj = col.gameObject;
-        if (obj.name.Contains("MovieNode"))
+        if (this.transform.name == "Controller (right)" ||
+            (this.transform.FindChild("Model").GetComponent<ControllerState>() != null &&
+             !this.transform.FindChild("Model").GetComponent<ControllerState>().GetIsSelected()
+            ))
         {
-            MovieObject mo = obj.transform.parent.gameObject.GetComponent<MovieObject>();
-
-            NodeState ns = mo.nodeState;
-            ns.addCollision();
-            ns.updateColor();
-
-            string key = MovieDBUtils.getMovieDataKey(mo.cmData);
-
-            if ( !ns.getIsSelected() )
+            if (obj.name.Contains("MovieNode"))
             {
-                _sphereData.ConnectMoviesByActors(mo.cmData);
-            }
+                MovieObject mo = obj.transform.parent.gameObject.GetComponent<MovieObject>();
 
-            //FIXED Needed to add this line in order to map a new location to a node when a category has changed.
-            if (_connectionMovieObjectMap.ContainsKey(key))
-            {
-                _connectionMovieObjectMap.Remove(key);
-            }
+                NodeState ns = mo.nodeState;
+                ns.AddCollision();
+                ns.UpdateColor();
 
-            _connectionMovieObjectMap.Add(key, mo);
+                string key = MovieDBUtils.getMovieDataKey(mo.cmData);
+
+                if (!ns.GetIsSelected())
+                {
+                    _sphereData.ConnectMoviesByActors(mo.cmData);
+                }
+
+                //FIXED Needed to add this line in order to map a new location to a node when a category has changed.
+                if (_connectionMovieObjectMap.ContainsKey(key))
+                {
+                    _connectionMovieObjectMap.Remove(key);
+                }
+
+                _connectionMovieObjectMap.Add(key, mo);
+            }
         }
     }
 
     void OnCollisionExit(Collision col)
     {
         GameObject obj = col.gameObject;
-        if (obj.name.Contains("MovieNode"))
+        if (this.transform.name == "Controller (right)" ||
+            (this.transform.FindChild("Model").GetComponent<ControllerState>() != null &&
+             !this.transform.FindChild("Model").GetComponent<ControllerState>().GetIsSelected()
+            ))
         {
-            MovieObject mo = obj.transform.parent.gameObject.GetComponent<MovieObject>();
-            string key = MovieDBUtils.getMovieDataKey(mo.cmData);
-
-            mo.nodeState.removeCollision();
-            mo.nodeState.updateColor();
-
-            if( !mo.nodeState.getIsSelected() )
+            if (obj.name.Contains("MovieNode"))
             {
-                mo.connManager.ForceClearAllConnections();
-            }
+                MovieObject mo = obj.transform.parent.gameObject.GetComponent<MovieObject>();
+                string key = MovieDBUtils.getMovieDataKey(mo.cmData);
 
-            _connectionMovieObjectMap.Remove(key);
+                mo.nodeState.RemoveCollision();
+                mo.nodeState.UpdateColor();
+
+                if (!mo.nodeState.GetIsSelected())
+                {
+                    mo.connManager.ForceClearAllConnections();
+                }
+
+                _connectionMovieObjectMap.Remove(key);
+            }
         }
     }
 
@@ -367,9 +379,9 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 HideTrackpadArrows();
             }
             if (this.transform.FindChild("Model").GetComponent<ControllerState>() != null && !_presentInRings
-                && !this.transform.FindChild("Model").GetComponent<ControllerState>().getIsSelected())
+                && !this.transform.FindChild("Model").GetComponent<ControllerState>().GetIsSelected())
             {
-                this.transform.FindChild("Model").GetComponent<ControllerState>().toggleSelected();
+                this.transform.FindChild("Model").GetComponent<ControllerState>().ToggleSelected();
             }
         }
 
@@ -382,13 +394,13 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             // toggle connections with all movies
             foreach (MovieObject m in _connectionMovieObjectMap.Values)
             {
-                m.nodeState.toggleSelected();
-                m.nodeState.updateColor();
+                m.nodeState.ToggleSelected();
+                m.nodeState.UpdateColor();
 
                 if (this.transform.FindChild("Model").GetComponent<ControllerState>() != null &&
-                    this.transform.FindChild("Model").GetComponent<ControllerState>().getIsSelected())
+                    this.transform.FindChild("Model").GetComponent<ControllerState>().GetIsSelected())
                 {
-                    this.transform.FindChild("Model").GetComponent<ControllerState>().toggleSelected();
+                    this.transform.FindChild("Model").GetComponent<ControllerState>().ToggleSelected();
                 }
             }
 

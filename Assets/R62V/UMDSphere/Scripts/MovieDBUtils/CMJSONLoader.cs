@@ -28,11 +28,6 @@ public class CMJSONLoader : MonoBehaviour{
         processData();
     }
 
-
-    void Update() {
-
-    }
-
     void processData()
     {
         for( int i = 0; i < cmData.Length; i++ )

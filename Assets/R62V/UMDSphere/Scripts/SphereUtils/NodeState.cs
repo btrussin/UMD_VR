@@ -21,7 +21,7 @@ public class NodeState : BaseState
 	
 	}
 
-    public override void updateColor()
+    public override void UpdateColor()
     {
         if (valuesNotSet)
         {
@@ -82,25 +82,25 @@ public class NodeState : BaseState
         offset.y = -0.02f;
         offset.x = 0.04f;
 
-        textObjects.Add(addText(menu, "Movie: " + mKey, roleAlign, roleAnchor, offset));
+        textObjects.Add(AddText(menu, "Movie: " + mKey, roleAlign, roleAnchor, offset, 100));
         offset.y -= yOffsetPerLine;
-        textObjects.Add(addText(menu, "Distributor: " + data.distributor, roleAlign, roleAnchor, offset));
+        textObjects.Add(AddText(menu, "Distributor: " + data.distributor, roleAlign, roleAnchor, offset, 100));
         offset.y -= yOffsetPerLine;
-        textObjects.Add(addText(menu, "Comic: " + data.comic, roleAlign, roleAnchor, offset));
+        textObjects.Add(AddText(menu, "Comic: " + data.comic, roleAlign, roleAnchor, offset, 100));
         offset.y -= yOffsetPerLine;
         offset.y -= yOffsetPerLine;
 
         offset.x = 0.01f;
-        textObjects.Add(addText(menu, "Actors (Roles)", roleAlign, roleAnchor, offset));
+        textObjects.Add(AddText(menu, "Actors (Roles)", roleAlign, roleAnchor, offset, 100));
         offset.y -= yOffsetPerLine/4.0f;
-        textObjects.Add(addText(menu, "______________", roleAlign, roleAnchor, offset));
+        textObjects.Add(AddText(menu, "______________", roleAlign, roleAnchor, offset, 100));
         offset.y -= yOffsetPerLine;
 
         float firstBoxY = offset.y;
         offset.x = 0.04f;
         for ( int i = 0; i < data.roles.Length; i++ )
         {
-            textObjects.Add(addText(menu, data.roles[i].actor + " (" + data.roles[i].name + ")", roleAlign, roleAnchor, offset));
+            textObjects.Add(AddText(menu, data.roles[i].actor + " (" + data.roles[i].name + ")", roleAlign, roleAnchor, offset, 100));
             offset.y -= yOffsetPerLine;
         }
 

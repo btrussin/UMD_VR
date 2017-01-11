@@ -77,10 +77,22 @@ public class MovieDBUtils : MonoBehaviour {
         return data.movie + "(" + data.year + ")";
     }
 
-    public static Vector3[] getBezierPoints(Vector3[] basePts, int size)
+    public static Vector3[] getBezierPoints(Vector3[] basePts, int size, float bundlingStrength)
     {
         float h = 1.0f / (float)(size - 1);
         float h_2 = h * h;
+
+        int controlPoints = 4;
+
+        //Straighten a spline curve
+        for (int i = 0; i < controlPoints; i++)
+        {
+            int lastIndexedControlPoint = controlPoints - 1;
+            basePts[i] = bundlingStrength * basePts[i] +
+                         (1 - bundlingStrength) * (basePts[0] + (i / controlPoints - 1)
+                                                   * (basePts[lastIndexedControlPoint] - basePts[0]));
+        }
+
 
         //          A0                   B0              C0       D0
         // t^3(-p0+3p1-3p2+p3) + t^2(3p0-6p1+3p2) + t(-3p0+3p1) + p0

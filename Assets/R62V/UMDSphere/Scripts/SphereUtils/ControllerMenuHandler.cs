@@ -30,7 +30,7 @@ public class ControllerMenuHandler : BaseMenuHandler {
         switch (handlerType)
         {
             case BaseMenuHandlerType.CloseMenu:
-                baseState.destroyMenu();
+                baseState.DestroyMenu();
                 break;
             case BaseMenuHandlerType.ToggleOption:
                 SetNewMaterialCallback();
