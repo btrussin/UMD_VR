@@ -8,6 +8,12 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 {
     public GameObject dataObj;
 
+    public GameObject otherController;
+    UMD_Sphere_TrackedObject otherTrackedObjScript;
+
+    public GameObject menuObject;
+    public bool menuActive = false;
+
     SphereData sphereData;
 
     public Ray deviceRay;
@@ -41,7 +47,8 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     int menusLayerMask;
 
-    float currRayAngle = 30.0f;
+    float currRayAngle = 60.0f;
+    bool adjustRayAngle = false;
 
     bool trackpadArrowsAreActive = false;
     int prevNumRingsInCollision = 0;
@@ -66,6 +73,9 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         beam.SetActive(false);
 
         menusLayerMask = 1 << LayerMask.NameToLayer("Menus");
+        menuObject.SetActive(false);
+
+        otherTrackedObjScript = otherController.GetComponent<UMD_Sphere_TrackedObject>();
     }
 
     void Update()
@@ -135,9 +145,49 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
                 menuHandler.handleTrigger();
 
-                MovieObject mo = activeBeamInterceptObj.transform.parent.transform.parent.gameObject.GetComponent<MovieObject>();
+                //MovieObject mo = activeBeamInterceptObj.transform.parent.transform.parent.gameObject.GetComponent<MovieObject>();
+                MovieObject mo = activeBeamInterceptObj.transform.parent.GetComponent<NodeMenuUtils>().movieObject;
                 sphereData.connectMoviesByActors(mo.cmData);
                 sphereData.updateAllKeptConnections();
+            }
+            else
+            {
+                
+                MainMenuUtils mainMenu = this.GetComponent<MainMenuUtils>();
+                if( mainMenu != null )
+                {
+                    if (mainMenu.sphereData == null)
+                    {
+                        mainMenu.sphereData = sphereData;
+                    }
+
+                    if (activeBeamInterceptObj.name.Contains("Box-Lay"))
+                    {
+                        SphereData.SphereLayout destLayout = SphereData.SphereLayout.Sphere;
+
+                        if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Sphere") == 0) destLayout = SphereData.SphereLayout.Sphere;
+                        else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_X") == 0) destLayout = SphereData.SphereLayout.Column_X;
+                        else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_Y") == 0) destLayout = SphereData.SphereLayout.Column_Y;
+                        else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_Z") == 0) destLayout = SphereData.SphereLayout.Column_Z;
+
+                        sphereData.setMainLayout(destLayout);
+                        mainMenu.updateLayout();
+                    }
+                    else if (activeBeamInterceptObj.name.Contains("Box-Cat"))
+                    {
+                        SphereData.MainRingCategory destCategory = SphereData.MainRingCategory.Publisher;
+
+                        if (activeBeamInterceptObj.name.CompareTo("Box-Cat_Dist") == 0) destCategory = SphereData.MainRingCategory.Distributor;
+                        else if (activeBeamInterceptObj.name.CompareTo("Box-Cat_Grp") == 0) destCategory = SphereData.MainRingCategory.Grouping;
+                        else if (activeBeamInterceptObj.name.CompareTo("Box-Cat_Comic") == 0) destCategory = SphereData.MainRingCategory.Comic;
+                        else if (activeBeamInterceptObj.name.CompareTo("Box-Cat_Pub") == 0) destCategory = SphereData.MainRingCategory.Publisher;
+                        else if (activeBeamInterceptObj.name.CompareTo("Box-Cat_Studio") == 0) destCategory = SphereData.MainRingCategory.Studio;
+                        else if (activeBeamInterceptObj.name.CompareTo("Box-Cat_Year") == 0) destCategory = SphereData.MainRingCategory.Year;
+                        
+                        sphereData.setMainRingCategory(destCategory);
+                        mainMenu.updateLayout();
+                    }
+                }
             }
 
             activeBeamInterceptObj = null;
@@ -156,7 +206,9 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.ApplicationMenu) != 0 &&
                 (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.ApplicationMenu) == 0)
             {
-                sphereData.toggleMainLayout();
+                //sphereData.toggleMainLayout();
+
+                toggleMenu();
             }
 
             if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) != 0 &&
@@ -177,7 +229,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 beam.SetActive(true);
                 useBeam = true;
 
-                showTrackpadArrows();
+                if( adjustRayAngle ) showTrackpadArrows();
             }
 
             else if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0 &&
@@ -228,7 +280,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             sphereData.updateAllKeptConnections();
 
             // update the beam ray direction
-            if (ringsInCollision.Count == 0 && (state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 )
+            if (adjustRayAngle && ringsInCollision.Count == 0 && (state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 )
             {
                 if (state.rAxis0.y > 0.0f) currRayAngle -= 1.0f;
                 else if (state.rAxis0.y < 0.0f) currRayAngle += 1.0f;
@@ -316,6 +368,36 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     void hideTrackpadArrows()
     {
         trackpadArrowObject.SetActive(false);
+    }
+
+    public void toggleMenu()
+    {
+        if (menuActive ) hideMainMenu();
+        else showMainMenu();
+    }
+
+    public void showMainMenu()
+    {
+        menuActive = true;
+        otherTrackedObjScript.menuActive = false;
+        
+
+        menuObject.transform.SetParent(gameObject.transform);
+
+        menuObject.transform.localPosition = new Vector3(0.0f, 0.02f, 0.0f);
+        menuObject.transform.localRotation = Quaternion.Euler(new Vector3(90.0f, 0.0f, 0.0f));
+        menuObject.transform.localScale = new Vector3(0.25f, 0.25f, 1.0f);
+
+        menuObject.SetActive(true);
+
+
+
+    }
+
+    public void hideMainMenu()
+    {
+        menuActive = false;
+        menuObject.SetActive(false);
     }
 
     

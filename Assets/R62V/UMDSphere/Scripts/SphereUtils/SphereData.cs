@@ -18,6 +18,16 @@ public class SphereData : MonoBehaviour {
         Column_Z
     }
 
+    public enum MainRingCategory
+    {
+        Distributor,
+        Grouping,
+        Comic,
+        Publisher,
+        Studio,
+        Year
+    }
+
     CMJSONLoader cmLoader;
 
     [Header("Object Path Strings", order = 1)]
@@ -38,11 +48,14 @@ public class SphereData : MonoBehaviour {
 
     List<GameObject> movieConnectionList = new List<GameObject>();
 
+    List<GameObject> activeRings = new List<GameObject>();
+
     Color baseRingColor;
 
     int curveLOD = 100;
 
     SphereLayout sphereLayout = SphereLayout.Sphere;
+    MainRingCategory ringCategory = MainRingCategory.Publisher;
 
     Vector3 centerGrpPosition;
 
@@ -60,8 +73,6 @@ public class SphereData : MonoBehaviour {
     bool activeMove = false;
  
     int prevNumRingsActive = 0;
-
-    List<GameObject> activeRings = new List<GameObject>();
 
     // Use this for initialization
     void Start () {
@@ -83,7 +94,7 @@ public class SphereData : MonoBehaviour {
         grabObject2 = null;
 
 
-        //CreateRingsForDistributor();
+        CreateRingsForDistributor();
         //CreateRingsForGrouping();
         //CreateRingsForComic();
         CreateRingsForPublisher();
@@ -211,28 +222,72 @@ public class SphereData : MonoBehaviour {
 
     public void toggleMainLayout()
     {
-
         switch(sphereLayout)
         {
             case SphereLayout.Sphere:
-                sphereLayout = SphereLayout.Column_X;
+                setMainLayout(SphereLayout.Column_X);
                 break;
             case SphereLayout.Column_X:
-                sphereLayout = SphereLayout.Column_Y;
+                setMainLayout(SphereLayout.Column_Y);
                 break;
             case SphereLayout.Column_Y:
-                sphereLayout = SphereLayout.Column_Z;
+                setMainLayout(SphereLayout.Column_Z);
                 break;
             case SphereLayout.Column_Z:
-                sphereLayout = SphereLayout.Sphere;
+                setMainLayout(SphereLayout.Sphere);
                 break;
         }
 
-        setRingLayout(ringList, centerGrpPosition, sphereLayout);
     }
+
+    public void setMainLayout(SphereLayout layout)
+    {
+        if( sphereLayout != layout)
+        {
+            sphereLayout = layout;
+            setRingLayout(ringList, centerGrpPosition, sphereLayout);
+        }
+    }
+
+    public SphereLayout getCurrentLayout()
+    {
+        return sphereLayout;
+    }
+
+    public MainRingCategory getMainRingCategory()
+    {
+        return ringCategory;
+    }
+
+    void clearAllLists()
+    {
+        foreach (GameObject obj in ringList) GameObject.Destroy(obj);
+        ringList.Clear();
+
+        foreach (GameObject obj in movieConnectionList) GameObject.Destroy(obj);
+        movieConnectionList.Clear();
+
+        foreach (MovieObject m in movieObjectMap.Values)
+        {
+            if (m.connManager.hasConnections())
+            {
+                m.connManager.forceClearAllConnections();
+            }
+        }
+
+
+        activeRings.Clear();
+        movieObjectMap.Clear();
+        ringColorMap.Clear();
+    }
+
+   
 
     void CreateRings(string[] vals, List<CMData>[] lists)
     {
+        clearAllLists();
+
+
         Color[] palette = MovieDBUtils.getColorPalette();
         palette = MovieDBUtils.randomizeColorPalette(palette);
 
@@ -484,11 +539,11 @@ public class SphereData : MonoBehaviour {
             mo.color = baseColor;
             mo.connManager = connMan;
 
-            if (movieObjectMap.ContainsKey(movieKey))
+            if (!movieObjectMap.ContainsKey(movieKey))
             {
-                Debug.Log(movieKey + " aready exists");
+                movieObjectMap.Add(movieKey, mo);
             }
-            else movieObjectMap.Add(movieKey, mo);
+            
 
 
             movieNodeObj.AddComponent<NodeState>();
@@ -543,10 +598,38 @@ public class SphereData : MonoBehaviour {
 
 
 
+    public void setMainRingCategory(MainRingCategory cat)
+    {
+        if (ringCategory == cat) return;
+        ringCategory = cat;
+        CreateRingsForCurrentCategory();
+    }
 
 
-
-
+    public void CreateRingsForCurrentCategory()
+    {
+        switch(ringCategory)
+        {
+            case MainRingCategory.Comic:
+                CreateRingsForComic();
+                break;
+            case MainRingCategory.Year:
+                CreateRingsForYear();
+                break;
+            case MainRingCategory.Publisher:
+                CreateRingsForPublisher();
+                break;
+            case MainRingCategory.Studio:
+                CreateRingsForStudio();
+                break;
+            case MainRingCategory.Grouping:
+                CreateRingsForGrouping();
+                break;
+            case MainRingCategory.Distributor:
+                CreateRingsForDistributor();
+                break;
+        }
+    }
 
 
 
@@ -732,15 +815,15 @@ public class SphereData : MonoBehaviour {
 
         ColorHSL fColHSL = new ColorHSL(moFrom.color);
         ColorHSL tColHSL = new ColorHSL(moTo.color);
-        //fColHSL.s *= width * 100.0f;
-        //tColHSL.s = fColHSL.s;
+        fColHSL.s *= width * 100.0f;
+        tColHSL.s = fColHSL.s;
         //fColHSL.s *= width / 0.005f;
         //tColHSL.s = fColHSL.s;
 
         //fColHSL.l *= width * 100.0f;
         //tColHSL.l = fColHSL.l;
-        fColHSL.l *= width / 0.005f;
-        tColHSL.l = fColHSL.l;
+        //fColHSL.l *= width / 0.005f;
+        //tColHSL.l = fColHSL.l;
 
         Vector3[] basePts = new Vector3[4];
 
@@ -770,6 +853,10 @@ public class SphereData : MonoBehaviour {
         rend.SetPositions(pts);
 
         moFrom.connManager.addConnection(connCurve, moFrom, moTo);
+
+        connCurve.AddComponent<MeshCollider>();
+
+
 
         return connCurve;
     }

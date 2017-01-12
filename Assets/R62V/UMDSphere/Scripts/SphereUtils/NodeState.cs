@@ -115,9 +115,13 @@ public class NodeState : MonoBehaviour {
     public void bringUpMenu()
     {
         // clear out all other menus that may be present
-        foreach (GameObject obj in menus) GameObject.Destroy(obj);
+        //foreach (GameObject obj in menus) GameObject.Destroy(obj);
+        //menus.Clear();
 
-        menus.Clear();
+        int menuLayerMask = LayerMask.NameToLayer("Menus");
+        GameObject ptPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/R62V/UMDSphere/Prefabs/MenuPlane.prefab");
+        GameObject plane = (GameObject)Instantiate(ptPrefab);
+        plane.layer = menuLayerMask;
 
 
         CMData data = gameObject.GetComponent<MovieObject>().cmData;
@@ -126,9 +130,13 @@ public class NodeState : MonoBehaviour {
 
         nodeMenu = new GameObject();
         nodeMenu.name = "Menu: " + mKey;
-        nodeMenu.transform.SetParent(gameObject.transform);
 
         nodeMenu.AddComponent<CameraOrientedText3D>();
+        nodeMenu.AddComponent<NodeMenuUtils>();
+        NodeMenuUtils menuUtils = nodeMenu.GetComponent<NodeMenuUtils>();
+        menuUtils.movieObject = gameObject.GetComponent<MovieObject>();
+
+
 
         List<GameObject> textObjects = new List<GameObject>();
 
@@ -187,20 +195,21 @@ public class NodeState : MonoBehaviour {
         }
 
 
-        int menuLayerMask = LayerMask.NameToLayer("Menus");
-
-        GameObject ptPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/R62V/UMDSphere/Prefabs/MenuPlane.prefab");
-        GameObject plane = (GameObject)Instantiate(ptPrefab);
+        
 
         float xDim = (maxX - minX) + 0.1f;
         float yDim = (maxY - minY) + 0.04f;
 
+        Vector3 basePos = new Vector3(-xDim * 0.5f, yDim * 0.5f, 0.0f);
+
+        foreach (GameObject obj in textObjects)
+        {
+            obj.transform.localPosition += basePos;
+        }
 
         plane.transform.localScale = new Vector3(xDim, yDim, 1.0f);
-        plane.transform.localPosition = new Vector3(xDim*0.5f, yDim * -0.5f, 0.0f);
-
-        plane.transform.SetParent(nodeMenu.transform);
-
+        plane.transform.localPosition = basePos + new Vector3(xDim * 0.5f, yDim * -0.5f, 0.005f);
+        plane.transform.SetParent(nodeMenu.transform);        
 
         GameObject quad1 = GameObject.CreatePrimitive(PrimitiveType.Quad);
         quad1.name = "Close: " + mKey;
@@ -209,7 +218,7 @@ public class NodeState : MonoBehaviour {
         MeshRenderer qrend = quad1.GetComponent<MeshRenderer>();
         qrend.material = closeMaterial;
         quad1.transform.localScale = new Vector3(0.04f, 0.04f, 1.0f);
-        quad1.transform.localPosition = new Vector3(xDim-0.02f, -0.02f, 0.0f);
+        quad1.transform.localPosition = basePos + new Vector3(xDim -0.02f, -0.02f, 0.0f);
 
         quad1.AddComponent<NodeMenuHandler>();
         quad1.GetComponent<NodeMenuHandler>().nodeState = this;
@@ -228,7 +237,7 @@ public class NodeState : MonoBehaviour {
             MeshRenderer rend = quad.GetComponent<MeshRenderer>();
             rend.material = checkMaterial;
             rend.transform.localScale = new Vector3(0.02f, 0.02f, 1.0f);
-            rend.transform.localPosition = offset;
+            rend.transform.localPosition = basePos + offset;
 
             quad.AddComponent<NodeMenuHandler>();
             NodeMenuHandler menuHandler = quad.GetComponent<NodeMenuHandler>();
@@ -250,6 +259,7 @@ public class NodeState : MonoBehaviour {
         Vector3 dir = nodePosition - ringCenter;
         dir.Normalize();
         nodeMenu.transform.position = nodePosition + dir * 0.2f;
+
 
         nodeMenu.AddComponent<CameraOrientedText3D>();
 

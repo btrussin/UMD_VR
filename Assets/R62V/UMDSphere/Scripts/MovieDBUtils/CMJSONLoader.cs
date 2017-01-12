@@ -23,6 +23,7 @@ public class CMJSONLoader : MonoBehaviour{
     public void LoadData()
     {
         var asset = Resources.Load<TextAsset>("ComicsMovies");
+
         var cmDataArray = JsonUtility.FromJson<CMDataArray>(asset.text);
         cmData = cmDataArray.data;
         processData();
