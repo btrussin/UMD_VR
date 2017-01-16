@@ -129,7 +129,7 @@
         },
         {
           "role": "Black Widow",
-          "actor": "Scarlett Johansson",
+          "actor": "Scarlett Johannson",
           "name": "Natasha Romanoff"
         },
         {
@@ -192,7 +192,7 @@
         },
         {
           "role": "Black Widow",
-          "actor": "Scarlett Johansson",
+          "actor": "Scarlett Johannson",
           "name": "Natasha Romanoff"
         },
         {
@@ -757,7 +757,7 @@
         },
         {
           "role": "Nick Fury",
-          "actor": "Samuel L Jackson",
+          "actor": "Samuel Jackson",
           "name": "Nick Fury"
         },
         {
@@ -790,7 +790,7 @@
         },
         {
           "role": "Black Widow",
-          "actor": "Scarlett Johansson",
+          "actor": "Scarlett Johannson",
           "name": "Natasha Romanoff"
         },
         {
@@ -1103,59 +1103,6 @@
           "role": "Weasel",
           "actor": "TJ Miller",
           "name": "Weasel"
-        }
-      ]
-    },
-    {
-      "comic": "Doctor Strange",
-      "movie": "Doctor Strange",
-      "year": 2016,
-      "publisher": "Marvel",
-      "grouping": "MCU",
-      "distributor": "Walt Disney",
-      "studios": [
-        "Marvel"
-      ],
-      "roles": [
-        {
-          "role": "Doctor Strange",
-          "actor": "Benedict Cumberbatch",
-          "name": "Stephen Strange"
-        },
-        {
-          "role": "Baron Mordo",
-          "actor": "Chiwetel Ejiofor",
-          "name": "Karl Mordo"
-        },
-        {
-          "role": "Christine Palmer",
-          "actor": "Rachel McAdams",
-          "name": "Christine Palmer"
-        },
-        {
-          "role": "Wong",
-          "actor": "Benedict Wong",
-          "name": "Wong"
-        },
-        {
-          "role": "Nicodemus West",
-          "actor": "Michael Stuhlbarg",
-          "name": "Nicodemus West"
-        },
-        {
-          "role": "Jonathan Pangborn",
-          "actor": "Benjamin Bratt",
-          "name": "Jonathan Pangborn"
-        },
-        {
-          "role": "Kaecilius",
-          "actor": "Mads Mikkelsen",
-          "name": "Kaecilius"
-        },
-        {
-          "role": "Ancient One",
-          "actor": "Tilda Swinton",
-          "name": "Ancient One"
         }
       ]
     },
@@ -1833,7 +1780,7 @@
         },
         {
           "role": "Black Widow",
-          "actor": "Scarlett Johansson",
+          "actor": "Scarlett Johannson",
           "name": "Natasha Romanoff"
         },
         {
