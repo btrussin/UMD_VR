@@ -130,7 +130,7 @@ public class ControllerState : BaseState
         offset.y = firstBoxY - 0.005f;
         offset.x = 0.02f;
 
-        for (int layoutInd = 0; layoutInd < SphereData.NUM_LAYOUTS; layoutInd++)
+        for (int layoutInd = 0; layoutInd < 6; layoutInd++)
         {
             ControllerMenuHandler.RingLayoutState ringlayoutState = (ControllerMenuHandler.RingLayoutState) layoutInd;
 

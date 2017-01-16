@@ -2,24 +2,39 @@
 using UnityEditor;
 using System.Collections;
 
-public class NodeMenuHandler : BaseMenuHandler {
+public class NodeMenuHandler : MonoBehaviour
+{
 
-    public CMRole Role;
+    public enum NodeMenuHandlerType
+    {
+        CloseMenu,
+        ToggleActor
+    }
 
-    void Start () {
+    public NodeState nodeState;
+    public NodeMenuHandlerType handlerType;
+
+    public Material boxMaterial;
+    public Material checkMaterial;
+
+    public CMRole role;
+
+    void Start()
+    {
         //boxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
         //checkMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
     }
-	
-	void Update () {
-	
-	}
 
-    public override void UpdateMaterial()
+    void Update()
+    {
+
+    }
+
+    public void UpdateMaterial()
     {
         MeshRenderer rend = gameObject.GetComponent<MeshRenderer>();
 
-        if ( Role.active )
+        if (role.active)
         {
             rend.material = checkMaterial;
         }
@@ -29,15 +44,15 @@ public class NodeMenuHandler : BaseMenuHandler {
         }
     }
 
-    public override void handleTrigger()
+    public void handleTrigger()
     {
-        switch(handlerType)
+        switch (handlerType)
         {
-            case BaseMenuHandlerType.CloseMenu:
-                baseState.DestroyMenu();
+            case NodeMenuHandlerType.CloseMenu:
+                nodeState.destroyMenu();
                 break;
-            case BaseMenuHandlerType.ToggleOption:
-                Role.active = !Role.active;
+            case NodeMenuHandlerType.ToggleActor:
+                role.active = !role.active;
                 UpdateMaterial();
                 break;
             default:
@@ -45,4 +60,8 @@ public class NodeMenuHandler : BaseMenuHandler {
         }
     }
 
+    public void closeMenu()
+    {
+        nodeState.destroyMenu();
+    }
 }

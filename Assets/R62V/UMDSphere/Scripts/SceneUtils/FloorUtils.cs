@@ -4,8 +4,6 @@ using Valve.VR;
 
 public class FloorUtils : MonoBehaviour {
 
-    bool done = false;
-
 	// Use this for initialization
 	void Start () {
         CVRChaperone chap = OpenVR.Chaperone;

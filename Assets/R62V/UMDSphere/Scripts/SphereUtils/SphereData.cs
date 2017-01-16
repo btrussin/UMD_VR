@@ -259,7 +259,7 @@ public class SphereData : MonoBehaviour {
         return ringCategory;
     }
 
-    void clearAllLists()
+    public void clearAllLists()
     {
         foreach (GameObject obj in ringList) GameObject.Destroy(obj);
         ringList.Clear();
@@ -269,9 +269,9 @@ public class SphereData : MonoBehaviour {
 
         foreach (MovieObject m in movieObjectMap.Values)
         {
-            if (m.connManager.hasConnections())
+            if (m.connManager.HasConnections())
             {
-                m.connManager.forceClearAllConnections();
+                m.connManager.ForceClearAllConnections();
             }
         }
 
@@ -323,7 +323,7 @@ public class SphereData : MonoBehaviour {
                 ring.transform.localRotation = rotation;
                 ring.transform.localPosition = centerGrpPosition;
                 i += 1.0f;
-                ring.GetComponent<RingState>().updateColor();
+                ring.GetComponent<RingState>().UpdateColor();
             }
 
         }
@@ -374,7 +374,7 @@ public class SphereData : MonoBehaviour {
                 ring.transform.localPosition = (centerGrpPosition + currOffset);
                 currOffset += offsetInc;
 
-                ring.GetComponent<RingState>().updateColor();
+                ring.GetComponent<RingState>().UpdateColor();
 
             }
             
@@ -391,9 +391,9 @@ public class SphereData : MonoBehaviour {
         {
             connMan = m.connManager;
             ns = m.nodeState;
-            if( ns.getIsSelected() && connMan.hasConnections() )
+            if( ns.getIsSelected() && connMan.HasConnections() )
             {
-                connMan.forceClearAllConnections();
+                connMan.ForceClearAllConnections();
                 connectMoviesByActors(m.cmData);
             }
         }
@@ -558,9 +558,9 @@ public class SphereData : MonoBehaviour {
 
         ring.AddComponent<RingState>();
         RingState ringState = ring.GetComponent<RingState>();
-        ringState.setRingColor(baseColor);
+        ringState.SetRingColor(baseColor);
 
-        ringState.updateColor();
+        ringState.UpdateColor();
 
         return ring;
     }
@@ -633,7 +633,7 @@ public class SphereData : MonoBehaviour {
 
 
 
-    void CreateRingsForYear()
+    public void CreateRingsForYear()
     {
         int[] years = cmLoader.getAllYears();
         string[] vals = new string[years.Length];
@@ -646,7 +646,7 @@ public class SphereData : MonoBehaviour {
         CreateRings(vals, lists);
     }
 
-    void CreateRingsForPublisher()
+    public void CreateRingsForPublisher()
     {
         string[] vals = cmLoader.getAllPublishers();
         List<CMData>[] lists = new List<CMData>[vals.Length];
@@ -654,7 +654,7 @@ public class SphereData : MonoBehaviour {
         CreateRings(vals, lists);
     }
 
-    void CreateRingsForGrouping()
+    public void CreateRingsForGrouping()
     {
         string[] vals = cmLoader.getAllGroupings();
         List<CMData>[] lists = new List<CMData>[vals.Length];
@@ -662,7 +662,7 @@ public class SphereData : MonoBehaviour {
         CreateRings(vals, lists);
     }
 
-    void CreateRingsForComic()
+    public void CreateRingsForComic()
     {
         string[] vals = cmLoader.getAllComics();
         List<CMData>[] lists = new List<CMData>[vals.Length];
@@ -670,7 +670,7 @@ public class SphereData : MonoBehaviour {
         CreateRings(vals, lists);
     }
 
-    void CreateRingsForDistributor()
+    public void CreateRingsForDistributor()
     {
         string[] vals = cmLoader.getAllDistributors();
         List<CMData>[] lists = new List<CMData>[vals.Length];
@@ -679,7 +679,7 @@ public class SphereData : MonoBehaviour {
     }
 
 
-    void CreateRingsForStudio()
+    public void CreateRingsForStudio()
     {
         string[] vals = cmLoader.getAllStudios();
         List<CMData>[] lists = new List<CMData>[vals.Length];
@@ -852,11 +852,9 @@ public class SphereData : MonoBehaviour {
 
         rend.SetPositions(pts);
 
-        moFrom.connManager.addConnection(connCurve, moFrom, moTo);
+        moFrom.connManager.AddConnection(connCurve, moFrom, moTo);
 
         connCurve.AddComponent<MeshCollider>();
-
-
 
         return connCurve;
     }
@@ -908,7 +906,7 @@ public class SphereData : MonoBehaviour {
         foreach (GameObject ring in ringList)
         {
             rs = ring.GetComponent<RingState>();
-            rs.updateColor();
+            rs.UpdateColor();
             
         }
     }
@@ -919,8 +917,8 @@ public class SphereData : MonoBehaviour {
         foreach (GameObject ring in ringList)
         {
             rs = ring.GetComponent<RingState>();
-            rs.setDimmed();
-            rs.updateColor();
+            rs.SetDimmed();
+            rs.UpdateColor();
         }
     }
 
@@ -932,8 +930,8 @@ public class SphereData : MonoBehaviour {
         foreach (GameObject ring in activeRings)
         {
             rs = ring.GetComponent<RingState>();
-            rs.setHighlighted();
-            rs.updateColor();
+            rs.SetHighlighted();
+            rs.UpdateColor();
 
         }
 

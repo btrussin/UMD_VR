@@ -10,7 +10,6 @@ public class NodeState : MonoBehaviour {
     bool isSelected;
 
     Renderer nodeRend = null;
-    TextMesh tMesh = null;
     MovieConnectionManager connManager = null;
 
     bool valuesNotSet = true;
@@ -50,11 +49,9 @@ public class NodeState : MonoBehaviour {
             Transform subTransform = gameObject.transform;
 
             GameObject node = subTransform.FindChild("MovieNode").gameObject;
-            GameObject label = subTransform.FindChild("MovieLabel").gameObject;
 
             nodeRend = node.GetComponent<Renderer>();
             connManager = node.GetComponent<MovieConnectionManager>();
-            tMesh = label.GetComponent<TextMesh>();
 
             valuesNotSet = false;
         }
@@ -91,7 +88,7 @@ public class NodeState : MonoBehaviour {
 
         if( collisionCount == 0 )
         {
-            if( !isSelected ) connManager.forceClearAllConnections();
+            if( !isSelected ) connManager.ForceClearAllConnections();
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public class ControllerMenuHandler : BaseMenuHandler {
@@ -74,7 +75,7 @@ public class ControllerMenuHandler : BaseMenuHandler {
             rend.material = checkMaterial;
         } else {
             rend.material = boxMaterial;
-            FindObjectOfType<SphereData>().ClearRings();
+            FindObjectOfType<SphereData>().clearAllLists();
         }
 
         ClearOtherCategories();
@@ -82,7 +83,7 @@ public class ControllerMenuHandler : BaseMenuHandler {
 
     private void ClearOtherCategories()
     {
-        for (int layerInd = 0; layerInd < SphereData.NUM_LAYOUTS; layerInd++)
+        for (int layerInd = 0; layerInd < Enum.GetNames(typeof(RingLayoutState)).Length; layerInd++)
         {
             if ((RingLayoutState) layerInd != ringLayoutState)
             {

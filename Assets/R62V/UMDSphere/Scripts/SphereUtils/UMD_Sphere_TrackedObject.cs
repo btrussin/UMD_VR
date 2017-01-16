@@ -50,9 +50,9 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     float currRayAngle = 60.0f;
     bool adjustRayAngle = false;
 
-    bool trackpadArrowsAreActive = false;
+    //bool trackpadArrowsAreActive = false;
     int prevNumRingsInCollision = 0;
-
+    
     void Start()
     {
         vrSystem = OpenVR.System;
@@ -335,7 +335,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
             if( !mo.nodeState.getIsSelected() )
             {
-                mo.connManager.forceClearAllConnections();
+                mo.connManager.ForceClearAllConnections();
             }
 
             connectionMovieObjectMap.Remove(key);
@@ -354,7 +354,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         {
             if( connectionMovieObjectMap.TryGetValue(key, out mo) )
             {
-                mo.connManager.forceClearAllConnections();
+                mo.connManager.ForceClearAllConnections();
                 sphereData.connectMoviesByActors(mo.cmData);
             }
         }
