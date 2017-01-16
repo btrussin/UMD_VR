@@ -91,6 +91,22 @@ public class MovieDBUtils {
     // use forward-differencing to calculate bezier points
     public static Vector3[] getBezierPoints(Vector3[] basePts, int size)
     {
+        //TODO Could possibly use bundling with the control points A0, B0, C0, D0 and then with future control points
+
+        //P0' = BS * P0 + (1 - BS) * (P0 + 0/(N - 1) * (P(N-1) - P0))
+        //P1' = BS * P1 + (1 - BS) * (P0 + 1/(N - 1) * (P(N-1) - P0))
+
+        /*int controlPoints = 4;
+
+        //Straighten a spline curve
+        for (int i = 0; i < controlPoints; i++)
+        {
+            int lastIndexedControlPoint = controlPoints - 1;
+            basePts[i] = 0.75f * basePts[i] +
+                         (1 - 0.75f) * (basePts[0] + (i / controlPoints - 1)
+                                                   * (basePts[lastIndexedControlPoint] - basePts[0]));
+        }*/
+
         float h = 1.0f / (float)(size - 1);
         float h_2 = h * h;
 

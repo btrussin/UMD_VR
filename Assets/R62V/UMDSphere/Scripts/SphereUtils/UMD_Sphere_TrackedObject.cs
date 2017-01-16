@@ -114,7 +114,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     void projectBeam()
     {
         float beamDist = 10.0f;
-        
 
         RaycastHit hitInfo;
 
@@ -389,9 +388,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         menuObject.transform.localScale = new Vector3(0.25f, 0.25f, 1.0f);
 
         menuObject.SetActive(true);
-
-
-
     }
 
     public void hideMainMenu()

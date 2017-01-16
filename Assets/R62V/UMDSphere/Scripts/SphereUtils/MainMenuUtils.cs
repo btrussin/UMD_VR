@@ -36,12 +36,8 @@ public class MainMenuUtils : MonoBehaviour {
 
     public SphereData sphereData = null;
 
-    
-
-
     // Use this for initialization
     void Start () {
-        
         boxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
         checkMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
 
@@ -59,13 +55,8 @@ public class MainMenuUtils : MonoBehaviour {
 
     }
 
-   
-	// Update is called once per frame
-	void Update () {}
-
     public void updateLayout()
     {
-
         sphereBoxRenderer.material = boxMaterial;
         cylXBoxRenderer.material = boxMaterial;
         cylYBoxRenderer.material = boxMaterial;

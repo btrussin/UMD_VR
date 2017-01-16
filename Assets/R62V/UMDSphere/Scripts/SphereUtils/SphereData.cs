@@ -585,13 +585,6 @@ public class SphereData : MonoBehaviour {
 
         return ring;
     }
-
-   
-
-    void FixedUpdate()
-    {
-        //updateScale();
-    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -608,15 +601,7 @@ public class SphereData : MonoBehaviour {
             unhighlightAllRings();
             prevNumRingsActive = 0;
         }
-
-
     }
-
-
-
-
-
-
 
 
     public void SetMainRingCategory(MainRingCategory cat)
@@ -664,9 +649,8 @@ public class SphereData : MonoBehaviour {
             vals[i] = "" + years[i];
             lists[i] = cmLoader.getCMDataForYear(years[i]);
         }
-        //Debug.Log("Before Sort: " + vals[vals.Length - 1]);
         Array.Sort(vals);
-        //Debug.Log("After Sort: " + vals[vals.Length - 1]);
+
         CreateYearRings(vals, lists);
     }
 
@@ -701,7 +685,6 @@ public class SphereData : MonoBehaviour {
         for (int i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForDistributor(vals[i]);
         CreateRings(vals, lists);
     }
-
 
     public void CreateRingsForStudio()
     {

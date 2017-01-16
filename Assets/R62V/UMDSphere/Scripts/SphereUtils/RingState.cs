@@ -32,18 +32,6 @@ public class RingState : MonoBehaviour
     bool doHighlight = false;
     bool doDim = false;
 
-    void Start()
-    {
-
-
-    }
-
-    void Update()
-    {
-
-    }
-
-
     public void UpdateColor()
     {
         if (valuesNotSet)
@@ -79,9 +67,7 @@ public class RingState : MonoBehaviour
             lRend.material.color = ringColor * noneAmt;
         }
 
-
         tMesh.color = ringColor;
-
     }
 
     public void AddConnection()
