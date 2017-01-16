@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
+using Valve.VR;
+using Random = UnityEngine.Random;
 
 //TODO: Need to find a way to group the data and expand into rings.
 
@@ -94,12 +97,12 @@ public class SphereData : MonoBehaviour {
         grabObject2 = null;
 
 
-        CreateRingsForDistributor();
+        //CreateRingsForDistributor();
         //CreateRingsForGrouping();
         //CreateRingsForComic();
-        CreateRingsForPublisher();
+        //CreateRingsForPublisher();
         //CreateRingsForStudio();
-        //CreateRingsForYear();
+        CreateRingsForYear();
 
     }
 
@@ -275,18 +278,37 @@ public class SphereData : MonoBehaviour {
             }
         }
 
-
         activeRings.Clear();
         movieObjectMap.Clear();
         ringColorMap.Clear();
     }
 
-   
+    void CreateYearRings(string[] vals, List<CMData>[] lists)
+    {
+        clearAllLists();
+
+        Color[] palette = MovieDBUtils.getColorPalette();
+        palette = MovieDBUtils.randomizeColorPalette(palette);
+
+        Random.InitState(6);
+
+        //SortByYears(vals, 0, vals.Length - 1);
+        //OrderIntoFourGroups(vals, lists);
+
+        for (int i = 0; i < vals.Length; i++)
+        {
+            GameObject ring = getRing(vals[i], lists[i], palette[i % palette.Length], i);
+            ringList.Add(ring);
+
+            ring.transform.SetParent(this.transform);
+        }
+
+        setRingLayout(ringList, centerGrpPosition, sphereLayout);
+    }
 
     void CreateRings(string[] vals, List<CMData>[] lists)
     {
         clearAllLists();
-
 
         Color[] palette = MovieDBUtils.getColorPalette();
         palette = MovieDBUtils.randomizeColorPalette(palette);
@@ -295,7 +317,7 @@ public class SphereData : MonoBehaviour {
 
         SortBySize(vals, lists, 0, vals.Length - 1);
         OrderIntoFourGroups(vals, lists);
-  
+
         for (int i = 0; i < vals.Length; i++)
         {
             GameObject ring = getRing(vals[i], lists[i], palette[i% palette.Length], i);
@@ -305,7 +327,6 @@ public class SphereData : MonoBehaviour {
         }
 
         setRingLayout(ringList, centerGrpPosition, sphereLayout);
-
     }
 
     void setRingLayout(List<GameObject> list, Vector3 centerGrpPosition, SphereLayout layout)
@@ -598,7 +619,7 @@ public class SphereData : MonoBehaviour {
 
 
 
-    public void setMainRingCategory(MainRingCategory cat)
+    public void SetMainRingCategory(MainRingCategory cat)
     {
         if (ringCategory == cat) return;
         ringCategory = cat;
@@ -643,7 +664,10 @@ public class SphereData : MonoBehaviour {
             vals[i] = "" + years[i];
             lists[i] = cmLoader.getCMDataForYear(years[i]);
         }
-        CreateRings(vals, lists);
+        //Debug.Log("Before Sort: " + vals[vals.Length - 1]);
+        Array.Sort(vals);
+        //Debug.Log("After Sort: " + vals[vals.Length - 1]);
+        CreateYearRings(vals, lists);
     }
 
     public void CreateRingsForPublisher()
@@ -725,6 +749,51 @@ public class SphereData : MonoBehaviour {
         }
 
     }
+
+    // sort from lowest year [idx = 0] to highest year [idx = list.Count - 1]
+    /*void SortByYears(string[] years, int beginIdx, int endIdx)
+    {
+        int idxDist = endIdx - beginIdx;
+        if (idxDist < 1) return;
+        else if (idxDist == 1)
+        {
+            if ((years[endIdx].CompareTo(years[beginIdx])) > 0) swapElements(years, beginIdx, endIdx);
+            return;
+        }
+
+        int midIdx = (beginIdx + endIdx) / 2;
+
+        swapElements(years, midIdx, endIdx);
+
+
+        int s = beginIdx;
+        int e = endIdx - 1;
+
+        while (s < e)
+        {
+            if (years[s] > countVal)
+            {
+                swapElements(years, s, e);
+                e--;
+            }
+            else s++;
+        }
+
+        int divider = midIdx;
+
+        for (int i = beginIdx; i < endIdx; i++)
+        {
+            if (lists[i].Count > countVal)
+            {
+                divider = i;
+                swapElements(vals, lists, divider, endIdx);
+                break;
+            }
+        }
+
+        SortBySize(vals, lists, beginIdx, divider - 1);
+        SortBySize(vals, lists, divider + 1, endIdx);
+    }*/
 
     // sort lowest [idx = 0] to highest [idx = list.Count - 1]
     void SortBySize(string[] vals, List<CMData>[] lists, int beginIdx, int endIdx)

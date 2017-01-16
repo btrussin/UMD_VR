@@ -184,7 +184,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                         else if (activeBeamInterceptObj.name.CompareTo("Box-Cat_Studio") == 0) destCategory = SphereData.MainRingCategory.Studio;
                         else if (activeBeamInterceptObj.name.CompareTo("Box-Cat_Year") == 0) destCategory = SphereData.MainRingCategory.Year;
                         
-                        sphereData.setMainRingCategory(destCategory);
+                        sphereData.SetMainRingCategory(destCategory);
                         mainMenu.updateLayout();
                     }
                 }
