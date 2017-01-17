@@ -44,7 +44,7 @@ public class SphereData : MonoBehaviour {
     public Material curveMaterial;
 
     [Header("Line Connector Info", order = 4)]
-    public float bundlingStrength = 0.75f;
+    public float bundlingStrength = 0.5f;
     public int numControlPoints = 100;
 
     List<GameObject> ringList = new List<GameObject>();
@@ -97,15 +97,6 @@ public class SphereData : MonoBehaviour {
 
         grabObject1 = null;
         grabObject2 = null;
-
-
-        CreateRingsForDistributor();
-        //CreateRingsForGrouping();
-        //CreateRingsForComic();
-        //CreateRingsForPublisher();
-        //CreateRingsForStudio();
-        CreateRingsForYear();
-
     }
 
     public List<GameObject> getRingsInCollision(Vector3 pos, float maxDist)
@@ -343,6 +334,7 @@ public class SphereData : MonoBehaviour {
             foreach (GameObject ring in list)
             {
                 rotation = Quaternion.Euler(new Vector3(0.0f, 180.0f * i / numRings, 0.0f));
+                //StartCoroutine(TransitionAnimation(ring, rotation, centerGrpPosition, Vector3.zero));
                 ring.transform.localRotation = rotation;
                 ring.transform.localPosition = centerGrpPosition;
                 i += 1.0f;
@@ -393,6 +385,7 @@ public class SphereData : MonoBehaviour {
 
             foreach (GameObject ring in list)
             {
+                //StartCoroutine(TransitionAnimation(ring, rotation, centerGrpPosition, currOffset));
                 ring.transform.localRotation = rotation;
                 ring.transform.localPosition = (centerGrpPosition + currOffset);
                 currOffset += offsetInc;
@@ -404,6 +397,21 @@ public class SphereData : MonoBehaviour {
         }
 
         updateAllKeptConnections();
+    }
+
+    private IEnumerator TransitionAnimation(GameObject ring, Quaternion rotation, Vector3 centerGrpPosition, Vector3 currOffset)
+    {
+        float speed = 5.0f;
+
+        float t = 0f;
+
+        while (t < 1.0f)
+        {
+            ring.transform.localRotation = Quaternion.Lerp(ring.transform.localRotation, rotation, t / speed);
+            ring.transform.localPosition = Vector3.Lerp(ring.transform.localPosition, centerGrpPosition + currOffset, t / speed);
+        }
+
+        yield return null;
     }
 
     public void updateAllKeptConnections()

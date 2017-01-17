@@ -76,6 +76,9 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         menuObject.SetActive(false);
 
         otherTrackedObjScript = otherController.GetComponent<UMD_Sphere_TrackedObject>();
+
+        sphereData.setMainLayout(SphereData.SphereLayout.Sphere);
+        sphereData.SetMainRingCategory(SphereData.MainRingCategory.Year);
     }
 
     void Update()
