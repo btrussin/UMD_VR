@@ -43,6 +43,10 @@ public class SphereData : MonoBehaviour {
     public Material ringMaterial;
     public Material curveMaterial;
 
+    [Header("Line Connector Info", order = 4)]
+    public float bundlingStrength = 0.75f;
+    public int numControlPoints = 100;
+
     List<GameObject> ringList = new List<GameObject>();
 
     Dictionary<string, MovieObject> movieObjectMap = new Dictionary<string, MovieObject>();
@@ -54,8 +58,6 @@ public class SphereData : MonoBehaviour {
     List<GameObject> activeRings = new List<GameObject>();
 
     Color baseRingColor;
-
-    int curveLOD = 100;
 
     SphereLayout sphereLayout = SphereLayout.Sphere;
     MainRingCategory ringCategory = MainRingCategory.Publisher;
@@ -97,7 +99,7 @@ public class SphereData : MonoBehaviour {
         grabObject2 = null;
 
 
-        //CreateRingsForDistributor();
+        CreateRingsForDistributor();
         //CreateRingsForGrouping();
         //CreateRingsForComic();
         //CreateRingsForPublisher();
@@ -885,7 +887,7 @@ public class SphereData : MonoBehaviour {
         basePts[1] = (moFrom.ring.transform.position - basePts[0]) * 0.5f + basePts[0];
         basePts[2] = (moTo.ring.transform.position - basePts[3]) * 0.5f + basePts[3];
 
-        Vector3[] pts = MovieDBUtils.getBezierPoints(basePts, curveLOD);
+        Vector3[] pts = MovieDBUtils.getBezierPoints(basePts, numControlPoints, bundlingStrength);
 
         GameObject connCurve = new GameObject();
         connCurve.name = "Conn: " + from.movie + " - " + to.movie;
@@ -897,8 +899,9 @@ public class SphereData : MonoBehaviour {
         rend.SetWidth(width, width);
         //rend.SetColors(moFrom.color, moTo.color);
         rend.SetColors(fColHSL.getRGBColor(), tColHSL.getRGBColor());
-        rend.SetVertexCount(curveLOD);
+        rend.SetVertexCount(numControlPoints);
         rend.material = curveMaterial;
+        rend.material.shader = Shader.Find("Custom/Custom_AlphaBlend");
         rend.material.color = new Color(0.3f, 0.3f, 0.3f);
         rend.useWorldSpace = false;
 

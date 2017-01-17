@@ -89,23 +89,12 @@ public class MovieDBUtils {
     }
 
     // use forward-differencing to calculate bezier points
-    public static Vector3[] getBezierPoints(Vector3[] basePts, int size)
+    public static Vector3[] getBezierPoints(Vector3[] basePts, int size, float bundlingStrength)
     {
         //TODO Could possibly use bundling with the control points A0, B0, C0, D0 and then with future control points
 
         //P0' = BS * P0 + (1 - BS) * (P0 + 0/(N - 1) * (P(N-1) - P0))
         //P1' = BS * P1 + (1 - BS) * (P0 + 1/(N - 1) * (P(N-1) - P0))
-
-        /*int controlPoints = 4;
-
-        //Straighten a spline curve
-        for (int i = 0; i < controlPoints; i++)
-        {
-            int lastIndexedControlPoint = controlPoints - 1;
-            basePts[i] = 0.75f * basePts[i] +
-                         (1 - 0.75f) * (basePts[0] + (i / controlPoints - 1)
-                                                   * (basePts[lastIndexedControlPoint] - basePts[0]));
-        }*/
 
         float h = 1.0f / (float)(size - 1);
         float h_2 = h * h;
@@ -144,12 +133,21 @@ public class MovieDBUtils {
         Vector3[] pts = new Vector3[size];
         pts[0] = basePts[0];
 
-
         for (int i = 1; i < size; i++)
         {
             pts[i] = pts[i - 1] + D1;
             D1 += D2;
             D2 += D3;
+        }
+
+        //Straightening a spline curve. Got this information from research paper.
+        int lastIndexedControlPoint = size - 1;
+
+        for (int i = 0; i < size; i++)
+        {
+            pts[i] = bundlingStrength * pts[i] +
+                         (1 - bundlingStrength) * (pts[0] + (float)i / lastIndexedControlPoint
+                                                   * (pts[lastIndexedControlPoint] - pts[0]));
         }
 
         return pts;
