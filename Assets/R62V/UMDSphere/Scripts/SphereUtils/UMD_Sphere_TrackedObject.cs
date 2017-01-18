@@ -56,11 +56,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     
     void Start()
     {
-        if (OpenVR.IsHmdPresent()) {
-            vrSystem = OpenVR.System;
-        }
-
-        vrSystem = null;
+        vrSystem = OpenVR.System;
 
         sphereCollider = gameObject.GetComponent<SphereCollider>();
         sphereCollider.transform.SetParent(gameObject.transform);

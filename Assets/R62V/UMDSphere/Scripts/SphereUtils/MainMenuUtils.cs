@@ -45,6 +45,7 @@ public class MainMenuUtils : MonoBehaviour {
         cylXBoxRenderer = cylinderXLayoutBox.GetComponent<MeshRenderer>();
         cylYBoxRenderer = cylinderYLayoutBox.GetComponent<MeshRenderer>();
         cylZBoxRenderer = cylinderZLayoutBox.GetComponent<MeshRenderer>();
+        animationBoxRenderer = animationLayoutBox.GetComponent<MeshRenderer>();
 
         distBoxRenderer = distCategoryBox.GetComponent<MeshRenderer>();
         grpBoxRenderer = grpCategoryBox.GetComponent<MeshRenderer>();
