@@ -168,14 +168,23 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                     {
                         SphereData.SphereLayout destLayout = SphereData.SphereLayout.Sphere;
 
-                        if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Sphere") == 0) destLayout = SphereData.SphereLayout.Sphere;
-                        else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_X") == 0) destLayout = SphereData.SphereLayout.Column_X;
-                        else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_Y") == 0) destLayout = SphereData.SphereLayout.Column_Y;
-                        else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_Z") == 0) destLayout = SphereData.SphereLayout.Column_Z;
-                        else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Animation") == 0) animationLayout = !animationLayout;
+                        if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Animation") == 0)
+                            animationLayout = !animationLayout;
 
-                        sphereData.setMainLayout(destLayout);
-                        mainMenu.updateLayout();
+                        else
+                        {
+                            if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Sphere") == 0)
+                                destLayout = SphereData.SphereLayout.Sphere;
+                            else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_X") == 0)
+                                destLayout = SphereData.SphereLayout.Column_X;
+                            else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_Y") == 0)
+                                destLayout = SphereData.SphereLayout.Column_Y;
+                            else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_Z") == 0)
+                                destLayout = SphereData.SphereLayout.Column_Z;
+
+                            sphereData.setMainLayout(destLayout);
+                            mainMenu.updateLayout();
+                        }
                     }
                     else if (activeBeamInterceptObj.name.Contains("Box-Cat"))
                     {
