@@ -97,6 +97,12 @@ public class SphereData : MonoBehaviour {
 
         grabObject1 = null;
         grabObject2 = null;
+
+        if (!OpenVR.IsHmdPresent())
+        {
+            setMainLayout(SphereData.SphereLayout.Sphere);
+            SetMainRingCategory(SphereData.MainRingCategory.Year);
+        }
     }
 
     public List<GameObject> getRingsInCollision(Vector3 pos, float maxDist)
@@ -334,10 +340,14 @@ public class SphereData : MonoBehaviour {
             foreach (GameObject ring in list)
             {
                 rotation = Quaternion.Euler(new Vector3(0.0f, 180.0f * i / numRings, 0.0f));
-                //StartCoroutine(TransitionAnimation(ring, rotation, centerGrpPosition, Vector3.zero));
-                ring.transform.localRotation = rotation;
-                ring.transform.localPosition = centerGrpPosition;
-                i += 1.0f;
+                if (UMD_Sphere_TrackedObject.animationLayout)
+                    StartCoroutine(TransitionAnimation(ring, rotation, centerGrpPosition, Vector3.zero));
+                else
+                {
+                    ring.transform.localPosition = centerGrpPosition;
+                    ring.transform.localRotation = rotation;
+                }
+               i += 1.0f;
                 ring.GetComponent<RingState>().UpdateColor();
             }
 
@@ -385,9 +395,15 @@ public class SphereData : MonoBehaviour {
 
             foreach (GameObject ring in list)
             {
-                //StartCoroutine(TransitionAnimation(ring, rotation, centerGrpPosition, currOffset));
-                ring.transform.localRotation = rotation;
-                ring.transform.localPosition = (centerGrpPosition + currOffset);
+                if (UMD_Sphere_TrackedObject.animationLayout)
+                {
+                    StartCoroutine(TransitionAnimation(ring, rotation, centerGrpPosition, currOffset));
+                }
+                else
+                {
+                    ring.transform.localPosition = centerGrpPosition + currOffset;
+                    ring.transform.localRotation = rotation;
+                }
                 currOffset += offsetInc;
 
                 ring.GetComponent<RingState>().UpdateColor();
@@ -409,6 +425,9 @@ public class SphereData : MonoBehaviour {
         {
             ring.transform.localRotation = Quaternion.Lerp(ring.transform.localRotation, rotation, t / speed);
             ring.transform.localPosition = Vector3.Lerp(ring.transform.localPosition, centerGrpPosition + currOffset, t / speed);
+
+            t += Time.deltaTime;
+            yield return new WaitForFixedUpdate();
         }
 
         yield return null;

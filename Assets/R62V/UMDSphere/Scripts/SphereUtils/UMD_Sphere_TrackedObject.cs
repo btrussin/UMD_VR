@@ -13,6 +13,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     public GameObject menuObject;
     public bool menuActive = false;
+    public static bool animationLayout = true;
 
     SphereData sphereData;
 
@@ -55,7 +56,11 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     
     void Start()
     {
-        vrSystem = OpenVR.System;
+        if (OpenVR.IsHmdPresent()) {
+            vrSystem = OpenVR.System;
+        }
+
+        vrSystem = null;
 
         sphereCollider = gameObject.GetComponent<SphereCollider>();
         sphereCollider.transform.SetParent(gameObject.transform);
@@ -171,6 +176,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                         else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_X") == 0) destLayout = SphereData.SphereLayout.Column_X;
                         else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_Y") == 0) destLayout = SphereData.SphereLayout.Column_Y;
                         else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_Z") == 0) destLayout = SphereData.SphereLayout.Column_Z;
+                        else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Animation") == 0) animationLayout = !animationLayout;
 
                         sphereData.setMainLayout(destLayout);
                         mainMenu.updateLayout();
@@ -189,6 +195,8 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                         sphereData.SetMainRingCategory(destCategory);
                         mainMenu.updateLayout();
                     }
+
+                    mainMenu.updateOneStates(animationLayout);
                 }
             }
 

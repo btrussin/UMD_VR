@@ -11,7 +11,7 @@ public class MainMenuUtils : MonoBehaviour {
     public GameObject cylinderXLayoutBox;
     public GameObject cylinderYLayoutBox;
     public GameObject cylinderZLayoutBox;
-
+    public GameObject animationLayoutBox;
 
     public GameObject distCategoryBox;
     public GameObject grpCategoryBox;
@@ -20,11 +20,11 @@ public class MainMenuUtils : MonoBehaviour {
     public GameObject studioCategoryBox;
     public GameObject yearCategoryBox;
 
-
     MeshRenderer sphereBoxRenderer;
     MeshRenderer cylXBoxRenderer;
     MeshRenderer cylYBoxRenderer;
     MeshRenderer cylZBoxRenderer;
+    MeshRenderer animationBoxRenderer;
 
     MeshRenderer distBoxRenderer;
     MeshRenderer grpBoxRenderer;
@@ -112,6 +112,11 @@ public class MainMenuUtils : MonoBehaviour {
             default:
                 break;
         }
+    }
+
+    public void updateOneStates(bool status)
+    {
+        animationBoxRenderer.material = (status) ? checkMaterial : boxMaterial;
     }
 
 }
