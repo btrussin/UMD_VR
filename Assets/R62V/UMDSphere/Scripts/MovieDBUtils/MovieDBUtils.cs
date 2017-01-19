@@ -143,11 +143,41 @@ public class MovieDBUtils {
         //Straightening a spline curve. Got this information from research paper.
         int lastIndexedControlPoint = size - 1;
 
+        // adding constant terms for optimization
+
+
+        // defn: B = bundlingStrength
+        // defn: Bc = 1-B (B-compliment)
+        // defn: L = lastIndexedControlPoint
+        // defn: pi = pts[i]
+        // defn: p0 = pts[0]
+        // defn: pN = pts[lastIndexedControlPoint]
+        // pi = B*pi + Bc*[p0 + i/L*(pN-p0)]
+        //    = B*pi + Bc*p0 + i*Bc/L*(pN-p0)
+
+        // defn: cnstVec1 = Bc*p0
+        // defn: cnstVec2 = Bc/L*(pN-p0)
+
+        // final: pi = B*pi + cnstVec1 + i*cnstVec2
+
+
+        Vector3 cnstVec1 = (1 - bundlingStrength) * pts[0];
+        Vector3 cnstVec2 = (pts[lastIndexedControlPoint] - pts[0]) * (1 - bundlingStrength) / lastIndexedControlPoint;
+
+        // however, since cnstVec2 just increments by integers 0, 1, 2, ..., size-1; we can start with a zero-vector 
+        // and just add cnstVec2 to it every iteration
+        Vector3 incrementedVec = Vector3.zero;
+
+
         for (int i = 0; i < size; i++)
         {
-            pts[i] = bundlingStrength * pts[i] +
-                         (1 - bundlingStrength) * (pts[0] + (float)i / lastIndexedControlPoint
-                                                   * (pts[lastIndexedControlPoint] - pts[0]));
+            //pts[i] = bundlingStrength * pts[i] +
+            //             (1 - bundlingStrength) * (pts[0] + (float)i / lastIndexedControlPoint
+            //                                       * (pts[lastIndexedControlPoint] - pts[0]));
+
+            pts[i] = bundlingStrength * pts[i] + cnstVec1 + incrementedVec;
+
+            incrementedVec += cnstVec2;
         }
 
         return pts;
