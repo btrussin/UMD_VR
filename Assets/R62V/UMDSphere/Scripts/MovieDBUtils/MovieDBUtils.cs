@@ -160,7 +160,6 @@ public class MovieDBUtils {
 
         // final: pi = B*pi + cnstVec1 + i*cnstVec2
 
-
         Vector3 cnstVec1 = (1 - bundlingStrength) * pts[0];
         Vector3 cnstVec2 = (pts[lastIndexedControlPoint] - pts[0]) * (1 - bundlingStrength) / lastIndexedControlPoint;
 

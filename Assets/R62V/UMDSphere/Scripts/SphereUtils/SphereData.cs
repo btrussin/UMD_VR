@@ -291,7 +291,7 @@ public class SphereData : MonoBehaviour {
 
         Random.InitState(6);
 
-        //SortByYears(vals, 0, vals.Length - 1);
+        //SortBySize(vals, lists, 0, vals.Length - 1);
         //OrderIntoFourGroups(vals, lists);
 
         for (int i = 0; i < vals.Length; i++)
@@ -673,6 +673,8 @@ public class SphereData : MonoBehaviour {
         int[] years = cmLoader.getAllYears();
         string[] vals = new string[years.Length];
         List<CMData>[] lists = new List<CMData>[years.Length];
+
+        Array.Sort(years);
         for (int i = 0; i < years.Length; i++)
         {
             vals[i] = "" + years[i];
@@ -761,51 +763,6 @@ public class SphereData : MonoBehaviour {
         }
 
     }
-
-    // sort from lowest year [idx = 0] to highest year [idx = list.Count - 1]
-    /*void SortByYears(string[] years, int beginIdx, int endIdx)
-    {
-        int idxDist = endIdx - beginIdx;
-        if (idxDist < 1) return;
-        else if (idxDist == 1)
-        {
-            if ((years[endIdx].CompareTo(years[beginIdx])) > 0) swapElements(years, beginIdx, endIdx);
-            return;
-        }
-
-        int midIdx = (beginIdx + endIdx) / 2;
-
-        swapElements(years, midIdx, endIdx);
-
-
-        int s = beginIdx;
-        int e = endIdx - 1;
-
-        while (s < e)
-        {
-            if (years[s] > countVal)
-            {
-                swapElements(years, s, e);
-                e--;
-            }
-            else s++;
-        }
-
-        int divider = midIdx;
-
-        for (int i = beginIdx; i < endIdx; i++)
-        {
-            if (lists[i].Count > countVal)
-            {
-                divider = i;
-                swapElements(vals, lists, divider, endIdx);
-                break;
-            }
-        }
-
-        SortBySize(vals, lists, beginIdx, divider - 1);
-        SortBySize(vals, lists, divider + 1, endIdx);
-    }*/
 
     // sort lowest [idx = 0] to highest [idx = list.Count - 1]
     void SortBySize(string[] vals, List<CMData>[] lists, int beginIdx, int endIdx)
