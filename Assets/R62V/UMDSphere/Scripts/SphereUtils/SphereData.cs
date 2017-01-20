@@ -76,7 +76,8 @@ public class SphereData : MonoBehaviour {
 
     bool activeScale = false;
     bool activeMove = false;
- 
+    bool inTransition = false;
+
     int prevNumRingsActive = 0;
 
     // Use this for initialization
@@ -423,13 +424,14 @@ public class SphereData : MonoBehaviour {
 
         while (t < 1.0f)
         {
+            inTransition = true;
             ring.transform.localRotation = Quaternion.Lerp(ring.transform.localRotation, rotation, t / speed);
             ring.transform.localPosition = Vector3.Lerp(ring.transform.localPosition, centerGrpPosition + currOffset, t / speed);
 
             t += Time.deltaTime;
             yield return new WaitForFixedUpdate();
         }
-
+        inTransition = false;
         yield return null;
     }
 
@@ -629,6 +631,11 @@ public class SphereData : MonoBehaviour {
         {
             unhighlightAllRings();
             prevNumRingsActive = 0;
+        }
+
+        if (inTransition)
+        {
+            updateAllKeptConnections();
         }
     }
 

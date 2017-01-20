@@ -53,7 +53,14 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     //bool trackpadArrowsAreActive = false;
     int prevNumRingsInCollision = 0;
-    
+
+    public GameObject sliderLeftPnt;
+    public GameObject sliderRightPnt;
+    public GameObject sliderPoint;
+
+    float sliderPointDistance = 0.0f;
+    bool updateSlider = false;
+
     void Start()
     {
         vrSystem = OpenVR.System;
@@ -80,6 +87,9 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         sphereData.setMainLayout(SphereData.SphereLayout.Sphere);
         sphereData.SetMainRingCategory(SphereData.MainRingCategory.Year);
+
+        setSliderLocalPosition(sphereData.bundlingStrength);
+
     }
 
     void Update()
@@ -113,6 +123,40 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         prevNumRingsInCollision = ringsInCollision.Count;
 
         if (useBeam) projectBeam();
+
+        if( updateSlider )
+        {
+            calcSliderPosition();
+            sphereData.updateAllKeptConnections();
+        }
+    }
+
+    void calcSliderPosition()
+    {
+        // get proposted position of the slider point in world space
+        Vector3 tVec = deviceRay.GetPoint(sliderPointDistance);
+
+        // project that point onto the world positions of the slider ends
+        Vector3 v1 = sliderRightPnt.transform.position - sliderLeftPnt.transform.position;
+        Vector3 v2 = tVec - sliderLeftPnt.transform.position;
+
+        // 'd' is the vector-projection amount of v2 onto v1
+        float d = Vector3.Dot(v1, v2)/ Vector3.Dot(v1, v1);
+
+        // 'd' is also the correct linear combination of the left and right slider edges
+        // left * d + right * ( 1 - d )
+        setSliderLocalPosition(d);
+    }
+
+    void setSliderLocalPosition(float dist)
+    {
+        // clamp dist to 0.0 and 1.0
+        // float tDist = Mathf.Min(1.0f, Mathf.Max(0.0f, dist));
+        float tDist = Mathf.Clamp(dist, 0.0f, 1.0f);
+        Vector3 tVec = (sliderRightPnt.transform.localPosition - sliderLeftPnt.transform.localPosition)* tDist;
+        sliderPoint.transform.localPosition = sliderLeftPnt.transform.localPosition + tVec;
+
+        sphereData.bundlingStrength = tDist;
     }
 
     void projectBeam()
@@ -200,6 +244,13 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                         sphereData.SetMainRingCategory(destCategory);
                         mainMenu.updateLayout();
                     }
+                    else if(activeBeamInterceptObj.name.CompareTo("Quad_Slider_Point") == 0 )
+                    {
+                        updateSlider = true;
+
+                        Vector3 distVec = sliderPoint.transform.position - gameObject.transform.position;
+                        sliderPointDistance = distVec.magnitude;
+                    }
 
                     mainMenu.updateOneStates(animationLayout);
                 }
@@ -255,6 +306,8 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 useBeam = false;
                 activeBeamInterceptObj = null;
                 if (ringsInCollision.Count == 0) hideTrackpadArrows();
+
+                updateSlider = false;
             }
 
             if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
