@@ -3,8 +3,8 @@ using System.Collections;
 
 public class BaseMenuHandler : MonoBehaviour {
 
-    public Material boxMaterial;
-    public Material checkMaterial;
+    public Material baseMaterial;
+    public Material inputInteractMaterial;
 
     public BaseState baseState;
 

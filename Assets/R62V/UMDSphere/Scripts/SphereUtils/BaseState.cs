@@ -11,9 +11,14 @@ public class BaseState : MonoBehaviour {
     public Material ptMatSelected;
     public Material ptMatCollision;
 
+    public Material circleMaterial;
     public Material boxMaterial;
     public Material checkMaterial;
     public Material closeMaterial;
+
+    //Slider material 
+    public Material sliderPointMaterial;
+    public Material sliderBarMaterial;
 
     protected bool isSelected;
     protected GameObject menu;
@@ -25,12 +30,15 @@ public class BaseState : MonoBehaviour {
     protected bool valuesNotSet = true;
 
 
-    void Start()
+    protected virtual void Start()
     {
         ptMatOrig = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/PointMaterial.mat");
         ptMatSelected = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/PointMaterialRed.mat");
         ptMatCollision = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/PointMaterialYellow.mat");
 
+        sliderPointMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/sliderpnt_mat.mat");
+        sliderBarMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/sliderbar_mat.mat");
+        circleMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/circ_mat.mat");
         boxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
         checkMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
         closeMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/close_mat.mat");

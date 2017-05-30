@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 public class CSVEntries {
 
@@ -175,6 +177,36 @@ public class CSVEntries {
         } 
 
         return result;
+    }
+
+    public static void SaveOutputData(List<string> selectInformation, long startTime)
+    {
+        long endTime = DateTime.Now.ToFileTime();
+
+        string path = "Form_Results/CSVFormData_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm") + ".csv";
+        Debug.Log(selectInformation.Count);
+
+        using (var w = new StreamWriter(path))
+        {
+            for (int i = 0; i < selectInformation.Count; i++)
+            {
+                var first = selectInformation[i];
+                string line = string.Format("{0},{1}", "Checked Option", first); //using string interpolation
+                w.WriteLine(line);
+                w.Flush();
+            }
+
+            DateTime startDate = DateTime.FromFileTime(startTime);
+            DateTime endDate = DateTime.FromFileTime(endTime);
+
+            string startToEnd = string.Format("{0},{1}", startDate, endDate);
+            w.WriteLine(startToEnd);
+            w.Flush();
+
+            string lastLine = string.Format("{0},{1}", "Time Elapsed", endDate - startDate);
+            w.WriteLine(lastLine);
+            w.Flush();
+        }
     }
 
 
