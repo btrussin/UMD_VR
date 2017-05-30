@@ -4,11 +4,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using System.Linq;
 
 public class FormMenuHandler : BaseMenuHandler
 {
+    
     private bool materialStatus;
-
+    private List<String> answers = new List<string>();
+    private TextMesh current_question_text;
     public enum FormMenuHandlerType
     {
         ToggleCheckbox,
@@ -22,14 +25,45 @@ public class FormMenuHandler : BaseMenuHandler
     private static List<string> allActiveGOs = new List<string>();
 
     private long startTime;
+    // class for inputing form questions in editor
+    [System.Serializable]
+    public class FormQuestions
+    {
+        public static int QuestionIndex;
+        public int number_of_questions;
+        public  List<String> questions = new List<string>();               
+    }
+    public FormQuestions form_questions = new FormQuestions();
 
     void Start()
     {
         startTime = DateTime.Now.ToFileTime();
         //boxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
         //checkMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
+        SetQuestion();
     }
 
+    public void SetQuestion()
+    {
+        foreach (TextMesh text in gameObject.GetComponentsInChildren<TextMesh>())
+        {
+            if (text.tag == "CurrentQuestion")
+            {
+                current_question_text = text;
+            }
+        }
+        current_question_text.text = form_questions.questions[FormQuestions.QuestionIndex];
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.RightArrow))
+        {
+            FormQuestions.QuestionIndex++;
+            Debug.Log((FormQuestions.QuestionIndex));
+            SetQuestion();
+        }
+    }
     public override void UpdateMaterial()
     {
         MeshRenderer rend = gameObject.GetComponent<MeshRenderer>();

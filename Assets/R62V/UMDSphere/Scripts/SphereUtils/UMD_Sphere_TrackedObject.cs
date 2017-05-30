@@ -264,6 +264,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     {
         bool stateIsValid = vrSystem.GetControllerState((uint)index, ref state);
 
+
         if (!stateIsValid) Debug.Log("Invalid State for Idx: " + index);
 
         if (stateIsValid && state.GetHashCode() != prevState.GetHashCode())
