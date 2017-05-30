@@ -81,7 +81,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         beam.SetActive(false);
 
         menusLayerMask = 1 << LayerMask.NameToLayer("Menus");
-        menuObject.SetActive(false);
+        //menuObject.SetActive(false);
 
         otherTrackedObjScript = otherController.GetComponent<UMD_Sphere_TrackedObject>();
 
@@ -440,7 +440,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     public void toggleMenu()
     {
-        if (menuActive ) hideMainMenu();
+        if (menuActive) hideMainMenu();
         else showMainMenu();
     }
 
