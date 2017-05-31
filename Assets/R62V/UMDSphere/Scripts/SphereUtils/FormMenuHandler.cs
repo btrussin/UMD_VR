@@ -29,14 +29,16 @@ public class FormMenuHandler : BaseMenuHandler
     [System.Serializable]
     public class FormQuestions
     {
-        public static int QuestionIndex;
-        public int number_of_questions;
-        public  List<String> questions = new List<string>();               
+        public int QuestionIndex;
+        public  List<String> questions = new List<string>();
+        public String[] answers;
     }
     public FormQuestions form_questions = new FormQuestions();
 
     void Start()
     {
+        form_questions.answers = new string[form_questions.questions.Count];
+        
         startTime = DateTime.Now.ToFileTime();
         //boxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
         //checkMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
@@ -52,17 +54,14 @@ public class FormMenuHandler : BaseMenuHandler
                 current_question_text = text;
             }
         }
-        current_question_text.text = form_questions.questions[FormQuestions.QuestionIndex];
+        if (form_questions.QuestionIndex < form_questions.questions.Count)
+        {
+            current_question_text.text = form_questions.questions[form_questions.QuestionIndex];
+        }
     }
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.RightArrow))
-        {
-            FormQuestions.QuestionIndex++;
-            Debug.Log((FormQuestions.QuestionIndex));
-            SetQuestion();
-        }
     }
     public override void UpdateMaterial()
     {
@@ -105,6 +104,28 @@ public class FormMenuHandler : BaseMenuHandler
                 break;
         }
     }
+    /*
+    // converts String[] arrays to List<String>
+    public static List<String> ArrayToList(String[] array)
+    {
+        List<String> newList = new List<String>();
+        foreach (String i in array)
+        {
+            newList.Add(i);
+        }
+        return newList;
+    }
+
+    // sends the answers to the survey questions to the SaveOutputData function
+    public void SubmitForm()
+    {
+        SaveOutputData(ArrayToList(form_questions.answers),startTime);
+    }
+
+    */
+
+
+
 
     public static void SaveOutputData(List<string> selectInformation, long startTime)
     {

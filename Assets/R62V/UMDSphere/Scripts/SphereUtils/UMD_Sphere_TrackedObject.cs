@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
@@ -61,6 +62,24 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     float sliderPointDistance = 0.0f;
     bool updateSlider = false;
 
+    private bool isCollidingWithRing;
+    public bool padJustPressedDown;
+
+    // returns true on touchpad click up
+    public bool padClicked()
+    {
+        if (padJustPressedDown && (state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) == 0)
+        {
+            padJustPressedDown = false;
+            return true;
+        }
+        return false;
+    }
+    // reference to instance of FormQuestions class
+    private FormMenuHandler.FormQuestions form_questions;
+    // reference to form menu script
+    private FormMenuHandler fmh_script;
+
     void Start()
     {
         vrSystem = OpenVR.System;
@@ -90,6 +109,9 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         setSliderLocalPosition(sphereData.bundlingStrength);
 
+
+        fmh_script = GameObject.FindObjectOfType<FormMenuHandler>();
+        form_questions = fmh_script.form_questions;
     }
 
     void Update()
@@ -197,6 +219,27 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 sphereData.connectMoviesByActors(mo.cmData);
                 sphereData.updateAllKeptConnections();
             }
+
+            FormMenuHandler formMenuHandler = activeBeamInterceptObj.GetComponent<FormMenuHandler>();
+            if (formMenuHandler != null)
+            {
+                formMenuHandler.handleTrigger();
+
+                if (activeBeamInterceptObj != null)
+                {
+                    if (activeBeamInterceptObj.name.CompareTo("Quad_Slider_Point") == 0)
+                    {
+                        //TODO
+                        //formMenuHandler.UpdateSlider(true);
+                    }
+                }
+            }
+
+            if (activeBeamInterceptObj.name.Contains("Text"))
+            {
+                activeBeamInterceptObj.transform.GetComponentInChildren<FormMenuHandler>().handleTrigger();
+            }
+
             else
             {
                 
@@ -262,6 +305,13 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     void handleStateChanges()
     {
+        // enter survey question answer
+        if (padClicked() && !isCollidingWithRing)
+        {
+            form_questions.QuestionIndex++;
+            fmh_script.SetQuestion();
+
+        }
         bool stateIsValid = vrSystem.GetControllerState((uint)index, ref state);
 
 
@@ -333,6 +383,10 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) != 0)
         {
+            padJustPressedDown = true;
+            // reset the collision check to false before checking again
+            isCollidingWithRing = false;
+
             Quaternion addRotation = Quaternion.Euler(0.0f, 0.0f, state.rAxis0.y);
             Quaternion origRot;
             GameObject innerRot;
@@ -342,8 +396,14 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 origRot = innerRot.transform.localRotation;
 
                 innerRot.transform.localRotation = origRot * addRotation;
-            }
 
+                // check if colliding with ring
+                if (innerRot != null)
+                {
+                    isCollidingWithRing = true;
+                }
+            }
+            
             UpdateConnections();
 
             sphereData.updateAllKeptConnections();
@@ -351,6 +411,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             // update the beam ray direction
             if (adjustRayAngle && ringsInCollision.Count == 0 && (state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 )
             {
+
                 if (state.rAxis0.y > 0.0f) currRayAngle -= 1.0f;
                 else if (state.rAxis0.y < 0.0f) currRayAngle += 1.0f;
 
@@ -359,7 +420,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 else if (currRayAngle < 0.0f) currRayAngle = 0.0f;
 
             }
-
         }
     }
 

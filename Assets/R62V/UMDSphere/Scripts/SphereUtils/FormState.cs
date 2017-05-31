@@ -10,7 +10,7 @@ public class FormState : BaseState {
     {
         base.Start();
 
-        bringUpMenu();
+       bringUpMenu();
     }
 
     public override void bringUpMenu()
@@ -107,9 +107,7 @@ public class FormState : BaseState {
         rightMostPoint.AddComponent<MeshFilter>();
         rightMostPoint.AddComponent<MeshRenderer>();
         leftText.AddComponent<TextMesh>();
-        leftText.AddComponent<MeshRenderer>();
         rightText.AddComponent<TextMesh>();
-        rightText.AddComponent<MeshRenderer>();
 
         slider.GetComponent<Renderer>().material = sliderBarMaterial;
         sliderPoint.GetComponent<Renderer>().material = sliderPointMaterial;
