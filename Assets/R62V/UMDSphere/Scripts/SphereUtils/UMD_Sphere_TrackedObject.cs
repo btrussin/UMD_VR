@@ -127,7 +127,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         if( updateSlider )
         {
             calcSliderPosition();
-            sphereData.updateAllKeptConnections();
+            sphereData.updateAllKeptConnections(ringsInCollision);
         }
     }
 
@@ -195,7 +195,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 //MovieObject mo = activeBeamInterceptObj.transform.parent.transform.parent.gameObject.GetComponent<MovieObject>();
                 MovieObject mo = activeBeamInterceptObj.transform.parent.GetComponent<NodeMenuUtils>().movieObject;
                 sphereData.connectMoviesByActors(mo.cmData);
-                sphereData.updateAllKeptConnections();
+                sphereData.updateAllKeptConnections(ringsInCollision);
             }
             else
             {
@@ -334,18 +334,15 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         {
             Quaternion addRotation = Quaternion.Euler(0.0f, 0.0f, state.rAxis0.y);
             Quaternion origRot;
-            GameObject innerRot;
             foreach (GameObject g in ringsInCollision)
             {
-                innerRot = g.transform.GetChild(0).gameObject;
-                origRot = innerRot.transform.localRotation;
-
-                innerRot.transform.localRotation = origRot * addRotation;
+                origRot = g.transform.localRotation;
+                g.transform.localRotation = origRot * addRotation;
             }
 
             UpdateConnections();
 
-            sphereData.updateAllKeptConnections();
+            sphereData.updateAllKeptConnections(ringsInCollision);
 
             // update the beam ray direction
             if (adjustRayAngle && ringsInCollision.Count == 0 && (state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 )

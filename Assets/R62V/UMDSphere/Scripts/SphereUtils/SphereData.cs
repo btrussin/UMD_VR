@@ -33,8 +33,17 @@ public class SphereData : MonoBehaviour {
 
     CMJSONLoader cmLoader;
 
+   
     [Header("Object Path Strings", order = 1)]
-    public string pointPrefabPath = "Assets/R62V/UMDSphere/Prefabs/PointPrefab.prefab"; //Set by default. May be changed in the editor.
+    public GameObject ptPrefab;
+
+    public Material ptMatOrig;
+    public Material ptMatSelected;
+    public Material ptMatCollision;
+
+    public Material boxMaterial;
+    public Material checkMaterial;
+    public Material closeMaterial;
 
     [Header("Data Object", order = 2)]
     public GameObject sphere;
@@ -62,7 +71,7 @@ public class SphereData : MonoBehaviour {
     SphereLayout sphereLayout = SphereLayout.Sphere;
     MainRingCategory ringCategory = MainRingCategory.Publisher;
 
-    Vector3 centerGrpPosition;
+    public Vector3 centerGrpPosition;
 
     UMD_Sphere_TrackedObject grabObject1;
     UMD_Sphere_TrackedObject grabObject2;
@@ -80,9 +89,29 @@ public class SphereData : MonoBehaviour {
 
     int prevNumRingsActive = 0;
 
+    public float edgeBrightnessHighlighted = 0.95f;
+    public float edgeBrightnessSelected = 0.75f;
+    public float edgeBrightnessNone = 0.5f;
+    public float edgeBrightnessDim = 0.35f;
+
+    public bool edgesAlwaysOn = false;
+
+    Dictionary<string, CMData> cmDataMap = new Dictionary<string, CMData>();
+    Dictionary<string, HashSet<string>> baseAllConnectionMap = new Dictionary<string, HashSet<string>>();
+    Dictionary<string, Dictionary<string, GameObject>> baseAllConnectionEdges = new Dictionary<string, Dictionary<string, GameObject>>();
+
+    Dictionary<string, GameObject> edgeMap = new Dictionary<string, GameObject>();
+
+    Dictionary<string, List<EdgeInfo>> ringEdgeMap = new Dictionary<string, List<EdgeInfo>>();
+
+
+    List<CMData>[] mainCMDataLists;
+
     // Use this for initialization
     void Start () {
-        cmLoader = this.gameObject.GetComponent<CMJSONLoader>();
+        if (edgesAlwaysOn) edgeBrightnessSelected = edgeBrightnessNone;
+
+         cmLoader = this.gameObject.GetComponent<CMJSONLoader>();
         cmLoader.LoadData();
         //ringMaterial = new Material(Shader.Find("Sprites/Default"));
         //ringMaterial = new Material(Shader.Find("Standard"));
@@ -270,22 +299,38 @@ public class SphereData : MonoBehaviour {
         foreach (GameObject obj in movieConnectionList) GameObject.Destroy(obj);
         movieConnectionList.Clear();
 
-        foreach (MovieObject m in movieObjectMap.Values)
-        {
-            if (m.connManager.HasConnections())
-            {
-                m.connManager.ForceClearAllConnections();
-            }
-        }
+        foreach (KeyValuePair<string, List<EdgeInfo>> kv in ringEdgeMap) kv.Value.Clear();
+        ringEdgeMap.Clear();
+
+        foreach (KeyValuePair<string, GameObject> kv in edgeMap) GameObject.Destroy(kv.Value);
+        edgeMap.Clear();
 
         activeRings.Clear();
         movieObjectMap.Clear();
         ringColorMap.Clear();
+
+
+        cmDataMap.Clear();
+
+        foreach(KeyValuePair<string, HashSet<string>> kv in baseAllConnectionMap)
+        {
+            kv.Value.Clear();
+        }
+        baseAllConnectionMap.Clear();
+
+        foreach (KeyValuePair<string, Dictionary<string, GameObject>> kv in baseAllConnectionEdges)
+        {
+            kv.Value.Clear();
+        }
+        baseAllConnectionEdges.Clear();
+
     }
 
     void CreateYearRings(string[] vals, List<CMData>[] lists)
     {
         clearAllLists();
+
+        mainCMDataLists = lists;
 
         Color[] palette = MovieDBUtils.getColorPalette();
         palette = MovieDBUtils.randomizeColorPalette(palette);
@@ -304,11 +349,112 @@ public class SphereData : MonoBehaviour {
         }
 
         setRingLayout(ringList, centerGrpPosition, sphereLayout);
+
+        if (edgesAlwaysOn) populateBaseConnections();
+    }
+
+    void populateBaseConnections()
+    {
+        Debug.Log("Populating all edges");
+
+
+        string key;
+        foreach(List<CMData> list in mainCMDataLists)
+        {
+            foreach(CMData data in list)
+            {
+                key = MovieDBUtils.getMovieDataKey(data);
+                cmDataMap.Add(key, data);
+            }
+        }
+
+        string[] allKeys = new string[cmDataMap.Count];
+
+        int idx = 0;
+
+        foreach (string currKey in cmDataMap.Keys)
+        {
+            allKeys[idx++] = currKey;
+        }
+
+        string mainKey, tKey;
+        MovieObject movieObj;
+
+        string aKey, bKey;
+
+        for (int j = 0; j < allKeys.Length; j++)
+        {
+            mainKey = allKeys[j];
+            movieObj = movieObjectMap[mainKey];
+
+            for (int i = 0; i < movieObj.cmData.roles.Length; i++)
+            {
+                if (!movieObj.cmData.roles[i].active) continue;
+                List<CMData> list = cmLoader.getCMDataForActor(movieObj.cmData.roles[i].actor);
+                float width = 0.001f * Mathf.Max(Mathf.Min(list.Count - 1, 5), 1.0f);
+
+                foreach (CMData data in list)
+                {
+                    tKey = MovieDBUtils.getMovieDataKey(data);
+                    if (mainKey.Equals(tKey)) continue;
+                    else if (mainKey.CompareTo(tKey) < 0)
+                    {
+                        aKey = mainKey;
+                        bKey = tKey;
+                    }
+                    else
+                    {
+                        aKey = tKey;
+                        bKey = mainKey;
+                    }
+
+                    HashSet<string> set;
+                    if (!baseAllConnectionMap.TryGetValue(aKey, out set))
+                    {
+                        set = new HashSet<string>();
+                        baseAllConnectionMap.Add(aKey, set);
+                        set = baseAllConnectionMap[aKey];
+                    }
+
+                    if (!set.Contains(bKey))
+                    {
+                        set.Add(bKey);
+                        GameObject edgeConn = connectMovies(cmDataMap[aKey], cmDataMap[bKey], width);
+                        Dictionary<string, GameObject> map;
+
+                        trackMovieConnection(edgeConn);
+
+                        if (!baseAllConnectionEdges.TryGetValue(aKey, out map))
+                        {
+                            map = new Dictionary<string, GameObject>();
+                            baseAllConnectionEdges.Add(aKey, map);
+                            map = baseAllConnectionEdges[aKey];
+                        }
+
+                        map.Add(bKey, edgeConn);
+
+                        MovieObject aMovieObj = movieObjectMap[aKey];
+                        MovieObject bMovieObj = movieObjectMap[bKey];
+
+                        aMovieObj.nodeState.updateColor();
+                        bMovieObj.nodeState.updateColor();
+
+                       
+                    }
+                }
+            }
+        }
+
+
+
     }
 
     void CreateRings(string[] vals, List<CMData>[] lists)
     {
         clearAllLists();
+
+        mainCMDataLists = lists;
+
 
         Color[] palette = MovieDBUtils.getColorPalette();
         palette = MovieDBUtils.randomizeColorPalette(palette);
@@ -327,10 +473,14 @@ public class SphereData : MonoBehaviour {
         }
 
         setRingLayout(ringList, centerGrpPosition, sphereLayout);
+
+
+        if (edgesAlwaysOn) populateBaseConnections();
     }
 
-    void setRingLayout(List<GameObject> list, Vector3 centerGrpPosition, SphereLayout layout)
+    void setRingLayout(List<GameObject> list, Vector3 grpPos, SphereLayout layout)
     {
+        Debug.Log("Grp Pos: " + grpPos);
         float numRings = (float)list.Count;
 
         if (layout == SphereLayout.Sphere )
@@ -342,10 +492,10 @@ public class SphereData : MonoBehaviour {
             {
                 rotation = Quaternion.Euler(new Vector3(0.0f, 180.0f * i / numRings, 0.0f));
                 if (UMD_Sphere_TrackedObject.animationLayout)
-                    StartCoroutine(TransitionAnimation(ring, rotation, centerGrpPosition, Vector3.zero));
+                    StartCoroutine(TransitionAnimation(ring, rotation, grpPos, Vector3.zero));
                 else
                 {
-                    ring.transform.localPosition = centerGrpPosition;
+                    ring.transform.localPosition = grpPos;
                     ring.transform.localRotation = rotation;
                 }
                i += 1.0f;
@@ -398,11 +548,11 @@ public class SphereData : MonoBehaviour {
             {
                 if (UMD_Sphere_TrackedObject.animationLayout)
                 {
-                    StartCoroutine(TransitionAnimation(ring, rotation, centerGrpPosition, currOffset));
+                    StartCoroutine(TransitionAnimation(ring, rotation, grpPos, currOffset));
                 }
                 else
                 {
-                    ring.transform.localPosition = centerGrpPosition + currOffset;
+                    ring.transform.localPosition = grpPos + currOffset;
                     ring.transform.localRotation = rotation;
                 }
                 currOffset += offsetInc;
@@ -413,10 +563,10 @@ public class SphereData : MonoBehaviour {
             
         }
 
-        updateAllKeptConnections();
+        updateAllKeptConnections(null);
     }
 
-    private IEnumerator TransitionAnimation(GameObject ring, Quaternion rotation, Vector3 centerGrpPosition, Vector3 currOffset)
+    private IEnumerator TransitionAnimation(GameObject ring, Quaternion rotation, Vector3 grpPos, Vector3 currOffset)
     {
         float speed = 5.0f;
 
@@ -426,28 +576,96 @@ public class SphereData : MonoBehaviour {
         {
             inTransition = true;
             ring.transform.localRotation = Quaternion.Lerp(ring.transform.localRotation, rotation, t / speed);
-            ring.transform.localPosition = Vector3.Lerp(ring.transform.localPosition, centerGrpPosition + currOffset, t / speed);
+            ring.transform.localPosition = Vector3.Lerp(ring.transform.localPosition, grpPos + currOffset, t / speed);
 
             t += Time.deltaTime;
             yield return new WaitForFixedUpdate();
         }
         inTransition = false;
+
         yield return null;
     }
 
-    public void updateAllKeptConnections()
+    private IEnumerator TransitionAnimationMain(Vector3 grpPos, Vector3 currOffset)
     {
+        float speed = 5.0f;
+
+        float t = 0f;
+
+        while (t < 1.0f)
+        {
+            inTransition = true;
+
+            gameObject.transform.localPosition = Vector3.Lerp(gameObject.transform.localPosition, grpPos + currOffset, t / speed);
+
+            t += Time.deltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+        inTransition = false;
+
+        yield return null;
+    }
+
+    public void updateAllKeptConnections(List<GameObject> listGo)
+    {
+        //Dictionary<string, List<EdgeInfo>> ringEdgeMap = new Dictionary<string, List<EdgeInfo>>();
+
+        if( listGo == null )
+        {
+            foreach(List<EdgeInfo> list in ringEdgeMap.Values)
+            {
+                foreach(EdgeInfo edgeInfo in list )
+                {
+                    edgeInfo.updateEdgePositionsThisFrame = true;
+                }
+            }
+        }
+
+        else
+        {
+            List<EdgeInfo> list;
+            foreach (GameObject gObj in listGo)
+            {
+
+                if(ringEdgeMap.TryGetValue(gObj.name, out list))
+                {
+                    foreach (EdgeInfo edgeInfo in list)
+                    {
+                        if (!edgeInfo.getIsInnerRingEdge()) edgeInfo.updateEdgePositionsThisFrame = true;
+                    }
+                }
+ 
+            }
+        }
+
+
+
+
         MovieConnectionManager connMan;
         NodeState ns;
         foreach ( MovieObject m in movieObjectMap.Values )
         {
             connMan = m.connManager;
             ns = m.nodeState;
-            if( ns.getIsSelected() && connMan.HasConnections() )
+
+            /*
+            if( ns.getIsSelected() )
             {
-                connMan.ForceClearAllConnections();
-                connectMoviesByActors(m.cmData);
+                List<GameObject> connectionList = connMan.getConnectionList();
+
+
+
+                foreach( GameObject g in connectionList )
+                {
+                    EdgeInfo info = g.GetComponent<EdgeInfo>();
+                    info.updateEdgePositionsThisFrame = true;
+                }
+
+
+                //connMan.ForceClearAllConnections();
+                //connectMoviesByActors(m.cmData);
             }
+            */
         }
     }
 
@@ -534,8 +752,6 @@ public class SphereData : MonoBehaviour {
 
         Quaternion randQuat = Quaternion.Euler(new Vector3(0.0f, 0.0f, Random.value*60.0f));
 
-        GameObject ptPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(pointPrefabPath);
-
         string movieKey;
         foreach (CMData data in list)
         {
@@ -600,9 +816,17 @@ public class SphereData : MonoBehaviour {
 
             movieNodeObj.AddComponent<NodeState>();
             NodeState ns = movieNodeObj.GetComponent<NodeState>();
+            ns.ptMatOrig = ptMatOrig;
+            ns.ptMatSelected = ptMatSelected;
+            ns.ptMatCollision = ptMatCollision;
+            ns.boxMaterial = boxMaterial;
+            ns.checkMaterial = checkMaterial;
+            ns.closeMaterial = closeMaterial;
+           
+            ns.updateColor();
 
             mo.nodeState = ns;
-
+            
             count += 1.0f;
         }
 
@@ -611,7 +835,10 @@ public class SphereData : MonoBehaviour {
         ring.AddComponent<RingState>();
         RingState ringState = ring.GetComponent<RingState>();
         ringState.SetRingColor(baseColor);
-
+        ringState.highlightAmt = edgeBrightnessHighlighted;
+        ringState.selectedAmt = edgeBrightnessSelected;
+        ringState.noneAmt = edgeBrightnessNone;
+        ringState.dimAmt = edgeBrightnessDim;
         ringState.UpdateColor();
 
         return ring;
@@ -635,7 +862,7 @@ public class SphereData : MonoBehaviour {
 
         if (inTransition)
         {
-            updateAllKeptConnections();
+            updateAllKeptConnections(null);
         }
     }
 
@@ -852,57 +1079,71 @@ public class SphereData : MonoBehaviour {
 
     public GameObject connectMovies(CMData from, CMData to, float width = 0.005f)
     {
-        MovieObject moFrom;
-        MovieObject moTo;
 
-        movieObjectMap.TryGetValue(MovieDBUtils.getMovieDataKey(from), out moFrom);
-        movieObjectMap.TryGetValue(MovieDBUtils.getMovieDataKey(to), out moTo);
+        string key = MovieDBUtils.getMovieDataKey(from) + "|" + MovieDBUtils.getMovieDataKey(to);
+        if (edgeMap.ContainsKey(key))
+        {
+            GameObject go = edgeMap[key];
+            if (go != null) return go;
+            else
+            {
+                Debug.Log("Need to redo the edge");
+            }
+        }
 
-        ColorHSL fColHSL = new ColorHSL(moFrom.color);
-        ColorHSL tColHSL = new ColorHSL(moTo.color);
-        fColHSL.s *= width * 100.0f;
-        tColHSL.s = fColHSL.s;
-        //fColHSL.s *= width / 0.005f;
-        //tColHSL.s = fColHSL.s;
-
-        //fColHSL.l *= width * 100.0f;
-        //tColHSL.l = fColHSL.l;
-        //fColHSL.l *= width / 0.005f;
-        //tColHSL.l = fColHSL.l;
-
-        Vector3[] basePts = new Vector3[4];
-
-        basePts[0] = moFrom.point.transform.position;
-        basePts[3] = moTo.point.transform.position;
-
-        basePts[1] = (moFrom.ring.transform.position - basePts[0]) * 0.5f + basePts[0];
-        basePts[2] = (moTo.ring.transform.position - basePts[3]) * 0.5f + basePts[3];
-
-        Vector3[] pts = MovieDBUtils.getBezierPoints(basePts, numControlPoints, bundlingStrength);
+        MovieObject moFrom = movieObjectMap[MovieDBUtils.getMovieDataKey(from)];
+        MovieObject moTo = movieObjectMap[MovieDBUtils.getMovieDataKey(to)];
 
         GameObject connCurve = new GameObject();
-        connCurve.name = "Conn: " + from.movie + " - " + to.movie;
+        connCurve.AddComponent<EdgeInfo>();
+        EdgeInfo edgeInfo = connCurve.GetComponent<EdgeInfo>();
 
-        connCurve.transform.SetParent(gameObject.transform);
+        edgeInfo.setValues(gameObject.transform, moFrom, moTo, numControlPoints);
+        edgeInfo.setup(from, to, curveMaterial);
 
-        connCurve.AddComponent<LineRenderer>();
-        LineRenderer rend = connCurve.GetComponent<LineRenderer>();
-        rend.SetWidth(width, width);
-        //rend.SetColors(moFrom.color, moTo.color);
-        rend.SetColors(fColHSL.getRGBColor(), tColHSL.getRGBColor());
-        rend.SetVertexCount(numControlPoints);
-        rend.material = curveMaterial;
-        rend.material.shader = Shader.Find("Custom/Custom_AlphaBlend");
-        rend.material.color = new Color(0.3f, 0.3f, 0.3f);
-        rend.useWorldSpace = false;
+        string key2 = MovieDBUtils.getMovieDataKey(to) + "|" + MovieDBUtils.getMovieDataKey(from);
 
-        rend.SetPositions(pts);
+        if (edgeMap.ContainsKey(key)) edgeMap[key] = connCurve;
+        else edgeMap.Add(key, connCurve);
 
-        moFrom.connManager.AddConnection(connCurve, moFrom, moTo);
+        if (edgeMap.ContainsKey(key2)) edgeMap[key2] = connCurve;
+        else edgeMap.Add(key2, connCurve);
 
-        connCurve.AddComponent<MeshCollider>();
+        edgeInfo.updateEdgePositionsThisFrame = true;
+
+        List<EdgeInfo> infoList;
+
+        if (!ringEdgeMap.TryGetValue(moFrom.ring.name, out infoList))
+        {
+            infoList = new List<EdgeInfo>();
+            ringEdgeMap.Add(moFrom.ring.name, infoList);
+            infoList = ringEdgeMap[moFrom.ring.name];
+        }
+
+        if (!moFrom.ring.name.Equals(moTo.ring.name))
+        {
+            connCurve.transform.SetParent(gameObject.transform);
+        }
+
+        infoList.Add(edgeInfo);
+
+        if( !edgeInfo.getIsInnerRingEdge() )
+        {
+
+            if (!ringEdgeMap.TryGetValue(moTo.ring.name, out infoList))
+            {
+                infoList = new List<EdgeInfo>();
+                ringEdgeMap.Add(moTo.ring.name, infoList);
+                infoList = ringEdgeMap[moTo.ring.name];
+            }
+
+            infoList.Add(edgeInfo);
+        }
+
+
 
         return connCurve;
+
     }
 
     public void connectMoviesByActors(CMData cmData, bool track = true)
