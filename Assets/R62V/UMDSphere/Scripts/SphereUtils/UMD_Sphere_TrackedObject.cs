@@ -78,7 +78,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     // reference to instance of FormQuestions class
     private FormMenuHandler.FormQuestions form_questions;
     // reference to form menu script
-    private FormMenuHandler fmh_script;
+    public FormMenuHandler fmh_script;
 
     void Start()
     {
@@ -109,8 +109,8 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         setSliderLocalPosition(sphereData.bundlingStrength);
 
-
-        fmh_script = GameObject.FindObjectOfType<FormMenuHandler>();
+        //this was getting some other reference to another instance of fmh_script
+        //fmh_script = GameObject.FindObjectOfType<FormMenuHandler>();
         form_questions = fmh_script.form_questions;
     }
 
@@ -308,7 +308,8 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         // enter survey question answer
         if (padClicked() && !isCollidingWithRing)
         {
-            form_questions.QuestionIndex++;
+            Debug.Log(fmh_script.form_questions.QuestionIndex);
+            fmh_script.form_questions.QuestionIndex++;
             fmh_script.SetQuestion();
 
         }

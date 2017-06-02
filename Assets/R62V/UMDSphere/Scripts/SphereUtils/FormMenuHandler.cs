@@ -18,7 +18,12 @@ public class FormMenuHandler : BaseMenuHandler
         ToggleRadio,
         SubmitForm
     }
-
+    public enum QuestionTypes
+    {
+        RadioButtons,
+        CheckBoxes,
+        Slider
+    }
     [NonSerialized]
     public new FormMenuHandlerType handlerType;
 
@@ -29,35 +34,54 @@ public class FormMenuHandler : BaseMenuHandler
     [System.Serializable]
     public class FormQuestions
     {
+        [System.Serializable]
+        public class Question
+        {
+            public string QuestionText;
+            public QuestionTypes QuestionType;
+            public int NumberOfAnswers;
+        }
         public int QuestionIndex;
-        public  List<String> questions = new List<string>();
-        public String[] answers;
+        public  List<Question> questions = new List<Question>();
+        //public String[] answers;
+
     }
     public FormQuestions form_questions = new FormQuestions();
 
     void Start()
     {
-        form_questions.answers = new string[form_questions.questions.Count];
-        
+        foreach (TextMesh text in gameObject.GetComponentsInChildren<TextMesh>())
+        {
+            Debug.Log(text);
+            if (text.tag == "CurrentQuestionText")
+            {
+                current_question_text = text;
+            }
+        }
+        // next line deprecated?
+        //form_questions.answers = new string[form_questions.questions.Count];
+
         startTime = DateTime.Now.ToFileTime();
         //boxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
         //checkMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
         SetQuestion();
     }
 
-    public void SetQuestion()
+    public void SetQuestion()    // generates the text and the radio buttons or checkboxes or slider
     {
-        foreach (TextMesh text in gameObject.GetComponentsInChildren<TextMesh>())
-        {
-            if (text.tag == "CurrentQuestion")
-            {
-                current_question_text = text;
-            }
-        }
+        
         if (form_questions.QuestionIndex < form_questions.questions.Count)
         {
-            current_question_text.text = form_questions.questions[form_questions.QuestionIndex];
+            FormQuestions.Question currentQuestion = form_questions.questions[form_questions.QuestionIndex];
+
+            current_question_text.text = currentQuestion.QuestionText;
+
+            if (currentQuestion.QuestionType == QuestionTypes.CheckBoxes)
+            {
+                
+            }
         }
+        
     }
 
     void Update()

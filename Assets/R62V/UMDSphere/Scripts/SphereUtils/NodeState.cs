@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.Serialization.Formatters;
 
 public class NodeState : MonoBehaviour {
 
