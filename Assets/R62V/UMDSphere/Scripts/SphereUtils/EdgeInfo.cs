@@ -18,6 +18,19 @@ public class EdgeInfo : MonoBehaviour {
 
     LineRenderer lineRend;
 
+    public float highlightAmt = 0.95f;
+    public float selectedAmt = 0.75f;
+    public float noneAmt = 0.5f;
+    public float dimAmt = 0.35f;
+
+    bool selected = false;
+    bool highlighted = false;
+    bool dimmed = false;
+    bool alwaysOn = false;
+
+    int numNodesSelected = 0;
+    int numNodesHighlighted = 0;
+
     // Use this for initialization
     void Start () {
 	
@@ -29,6 +42,12 @@ public class EdgeInfo : MonoBehaviour {
         {
             updateEdgePositions();
             updateEdgePositionsThisFrame = false;
+        }
+
+        if( updateEdgeColorThisFrame )
+        {
+            updateEdgeWidthAndColors();
+            updateEdgeColorThisFrame = false;
         }
 	}
 
@@ -63,13 +82,36 @@ public class EdgeInfo : MonoBehaviour {
 
     public void updateEdgeWidthAndColors()
     {
-        ColorHSL fColHSL = new ColorHSL(fromMovieObject.color);
-        ColorHSL tColHSL = new ColorHSL(toMovieObject.color);
-        fColHSL.s *= edgeWidth * 100.0f;
-        tColHSL.s = fColHSL.s;
+        Color fromColor = fromMovieObject.color;
+        Color toColor = toMovieObject.color;
+
+        if( highlighted )
+        {
+            fromColor *= highlightAmt;
+            toColor *= highlightAmt;
+        }
+        else if( selected )
+        {
+            fromColor *= selectedAmt;
+            toColor *= selectedAmt;
+        }
+        else if (dimmed)
+        {
+            fromColor *= dimAmt;
+            toColor *= dimAmt;
+        }
+        else
+        {
+            fromColor *= noneAmt;
+            toColor *= noneAmt;
+        }
+
+        //fColHSL.s *= edgeWidth * 100.0f;
+        //tColHSL.s = fColHSL.s;
 
         lineRend.SetWidth(edgeWidth, edgeWidth);
-        lineRend.SetColors(fColHSL.getRGBColor(), tColHSL.getRGBColor());
+        //lineRend.SetColors(fColHSL.getRGBColor(), tColHSL.getRGBColor());
+        lineRend.SetColors(fromColor, toColor);
     }
 
     public void setValues(Transform transform, MovieObject moFrom, MovieObject moTo, int numCtrlPoints)
@@ -126,5 +168,67 @@ public class EdgeInfo : MonoBehaviour {
         
         lineRend.useWorldSpace = false;
 
+    }
+
+    public void hightlight()
+    {
+        numNodesHighlighted++;
+        if (numNodesHighlighted > 2) numNodesHighlighted = 2;
+        highlighted = true;
+        updateEdgeColorThisFrame = true;
+    }
+
+    public void unhightlight()
+    {
+        numNodesHighlighted--;
+        if (numNodesHighlighted <= 0)
+        {
+            numNodesHighlighted = 0;
+            highlighted = false;
+            updateEdgeColorThisFrame = true;
+        }
+    }
+
+    public void select()
+    {
+        numNodesSelected++;
+        if (numNodesSelected > 2) numNodesSelected = 2;
+        selected = true;
+        updateEdgeColorThisFrame = true;
+    }
+
+    public void unselect()
+    {
+        numNodesSelected--;
+        if( numNodesSelected <= 0 )
+        {
+            numNodesSelected = 0;
+            selected = false;
+            updateEdgeColorThisFrame = true;
+        }
+    }
+
+    public void dim()
+    {
+        dimmed = true;
+        updateEdgeColorThisFrame = true;
+    }
+
+    public void undim()
+    {
+        dimmed = false;
+        updateEdgeColorThisFrame = true;
+    }
+
+    public void toggleSelected()
+    {
+        if (selected) unselect();
+        else select();
+    }
+
+    public void setAlwaysOn(bool on)
+    {
+        alwaysOn = on;
+        updateEdgeColorThisFrame = true;
     }
 }

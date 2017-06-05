@@ -94,6 +94,11 @@ public class SphereData : MonoBehaviour {
     public float edgeBrightnessNone = 0.5f;
     public float edgeBrightnessDim = 0.35f;
 
+    public float ringBrightnessHighlighted = 0.95f;
+    public float ringBrightnessSelected = 0.75f;
+    public float ringBrightnessNone = 0.5f;
+    public float ringBrightnessDim = 0.35f;
+
     public bool edgesAlwaysOn = false;
 
     Dictionary<string, CMData> cmDataMap = new Dictionary<string, CMData>();
@@ -109,7 +114,7 @@ public class SphereData : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        if (edgesAlwaysOn) edgeBrightnessSelected = edgeBrightnessNone;
+        
 
          cmLoader = this.gameObject.GetComponent<CMJSONLoader>();
         cmLoader.LoadData();
@@ -355,9 +360,7 @@ public class SphereData : MonoBehaviour {
 
     void populateBaseConnections()
     {
-        Debug.Log("Populating all edges");
-
-
+      
         string key;
         foreach(List<CMData> list in mainCMDataLists)
         {
@@ -480,7 +483,6 @@ public class SphereData : MonoBehaviour {
 
     void setRingLayout(List<GameObject> list, Vector3 grpPos, SphereLayout layout)
     {
-        Debug.Log("Grp Pos: " + grpPos);
         float numRings = (float)list.Count;
 
         if (layout == SphereLayout.Sphere )
@@ -835,10 +837,10 @@ public class SphereData : MonoBehaviour {
         ring.AddComponent<RingState>();
         RingState ringState = ring.GetComponent<RingState>();
         ringState.SetRingColor(baseColor);
-        ringState.highlightAmt = edgeBrightnessHighlighted;
-        ringState.selectedAmt = edgeBrightnessSelected;
-        ringState.noneAmt = edgeBrightnessNone;
-        ringState.dimAmt = edgeBrightnessDim;
+        ringState.highlightAmt = ringBrightnessHighlighted;
+        ringState.selectedAmt = ringBrightnessSelected;
+        ringState.noneAmt = ringBrightnessNone;
+        ringState.dimAmt = ringBrightnessDim;
         ringState.UpdateColor();
 
         return ring;
@@ -1100,6 +1102,13 @@ public class SphereData : MonoBehaviour {
 
         edgeInfo.setValues(gameObject.transform, moFrom, moTo, numControlPoints);
         edgeInfo.setup(from, to, curveMaterial);
+        edgeInfo.highlightAmt = edgeBrightnessHighlighted;
+        edgeInfo.selectedAmt = edgeBrightnessSelected;
+        edgeInfo.noneAmt = edgeBrightnessNone;
+        edgeInfo.dimAmt = edgeBrightnessDim;
+
+        moFrom.addEdge(edgeInfo);
+        moTo.addEdge(edgeInfo);
 
         string key2 = MovieDBUtils.getMovieDataKey(to) + "|" + MovieDBUtils.getMovieDataKey(from);
 
@@ -1110,6 +1119,7 @@ public class SphereData : MonoBehaviour {
         else edgeMap.Add(key2, connCurve);
 
         edgeInfo.updateEdgePositionsThisFrame = true;
+        edgeInfo.updateEdgeColorThisFrame = true;
 
         List<EdgeInfo> infoList;
 

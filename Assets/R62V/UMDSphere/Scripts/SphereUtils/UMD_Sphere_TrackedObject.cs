@@ -321,6 +321,10 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 {
                     m.nodeState.toggleSelected();
                     m.nodeState.updateColor();
+
+                    HashSet<EdgeInfo> edgeSet = m.getEdges();
+                    if (m.nodeState.getIsSelected()) foreach (EdgeInfo info in edgeSet) info.select();
+                    else foreach (EdgeInfo info in edgeSet) info.unselect();
                 }
 
             }
@@ -372,6 +376,12 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
             string key = MovieDBUtils.getMovieDataKey(mo.cmData);
 
+            HashSet<EdgeInfo> edgeSet = mo.getEdges();
+            foreach (EdgeInfo info in edgeSet)
+            {
+                info.hightlight();
+            }
+
             if ( !ns.getIsSelected() )
             {
                 sphereData.connectMoviesByActors(mo.cmData);
@@ -397,6 +407,12 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
             mo.nodeState.removeCollision();
             mo.nodeState.updateColor();
+
+            HashSet<EdgeInfo> edgeSet = mo.getEdges();
+            foreach(EdgeInfo info in edgeSet)
+            {
+                info.unhightlight();
+            }
 
             if( !mo.nodeState.getIsSelected() )
             {
