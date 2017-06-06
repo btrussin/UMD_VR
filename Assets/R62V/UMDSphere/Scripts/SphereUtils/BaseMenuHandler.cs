@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 
 public class BaseMenuHandler : MonoBehaviour {
@@ -14,6 +15,7 @@ public class BaseMenuHandler : MonoBehaviour {
         ToggleOption
     }
 
+    [NonSerialized]
     public BaseMenuHandlerType handlerType;
    
     public virtual void handleTrigger()
