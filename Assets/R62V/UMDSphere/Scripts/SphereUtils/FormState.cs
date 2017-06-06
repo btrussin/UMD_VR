@@ -10,7 +10,7 @@ public class FormState : BaseState {
     {
         base.Start();
 
-       bringUpMenu();
+       //bringUpMenu();
     }
 
     public override void bringUpMenu()
