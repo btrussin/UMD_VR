@@ -20,7 +20,7 @@ public class FormMenuHandler : BaseMenuHandler
     private List<String> answers = new List<string>();
     private TextMesh current_question_text;
     private FormState formState;
-    private FormQuestions.Question currentQuestion; //TEST TEST
+    private FormQuestions.Question currentQuestion;
 
     public enum FormMenuHandlerType
     {
