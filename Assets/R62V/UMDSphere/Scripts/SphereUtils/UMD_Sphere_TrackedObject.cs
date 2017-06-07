@@ -384,15 +384,17 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             prevState = state;
         }
 
+        // if touchpad scroll without clicking - RK ,Alex
         if ((SteamVR_Controller.ButtonMask.Touchpad) != 0)
         {
             GameObject slider = GameObject.FindGameObjectWithTag("Slider");
             Transform sliderPoint = null;
             Transform sliderLeftLimit = null;
             Transform sliderRightLimit = null;
+
+            // gets reference to slider parts 
             if (slider != null)
             {
-                //slider.transform.Translate(state.rAxis0.x/100,0,0);
                 foreach (Transform t in slider.GetComponentsInChildren<Transform>())
                 {
                     if ((t.tag == "SliderPoint"))
@@ -403,21 +405,21 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                     {
                         
                         sliderLeftLimit = t;
-                        Debug.Log("left " + sliderLeftLimit.position);
+
                     }
                     else if (t.tag == "SliderRightLimit")
                     {
                         sliderRightLimit = t;
                         
-                        Debug.Log("right " + sliderRightLimit.position);
+
                     }
                 }
                
 
-                // if it is right of the leftmost point 
+                // keeps slider within bounds
                 if (!(sliderPoint.position.x >= sliderLeftLimit.position.x) && (!(sliderPoint.position.x <= sliderRightLimit.position.x)))
                 {
-                    Debug.Log("second");
+
                     sliderPoint.Translate(0, -state.rAxis0.x / 100, 0);
                 }
 
@@ -435,29 +437,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             }
         }
 
-        /*
-                        Debug.Log((sliderPoint.position.x) >= (sliderRightLimit.position.x));
-
-                        if (!((sliderPoint.position.x) <= (sliderRightLimit.position.x)))
-                        {
-                            Debug.Log("second"+-state.rAxis0.x);
-                            if ((-state.rAxis0.x < 0) && (-state.rAxis0.x < sliderLeftLimit.))
-                            {
-                                //move left
-                                sliderPoint.Translate(0, -state.rAxis0.x / 100, 0);
-                            }
-                        }
-
-                        if (!((sliderPoint.position.x) >= (sliderLeftLimit.position.x)))
-                        {
-                            if (-state.rAxis0.x == 0)
-                            {
-                                // move right
-                                sliderPoint.Translate(0, -state.rAxis0.x / 100, 0);
-                            }
-                        }
-
-            */
 
         if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) != 0)
         {

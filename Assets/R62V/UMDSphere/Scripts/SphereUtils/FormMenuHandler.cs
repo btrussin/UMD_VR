@@ -179,7 +179,7 @@ public class FormMenuHandler : BaseMenuHandler
             quad.transform.SetParent(transform);
 
             MeshRenderer rend = quad.GetComponent<MeshRenderer>();
-            //rend.material = CircleMaterial;
+           
             rend.transform.localScale = new Vector3(0.1f, 0.1f, 1.0f);
             rend.transform.localRotation = Quaternion.identity;
             rend.transform.localPosition = Vector3.zero;
@@ -356,14 +356,13 @@ public class FormMenuHandler : BaseMenuHandler
                 UpdateMaterial();
                 break;
             case FormMenuHandlerType.ToggleRadio:
-             
+                // sets all the radiobuttons to false
                 foreach (GameObject g in GameObject.FindGameObjectsWithTag("RadioButton") )
-                {
-                    //Debug.Log("before" + g.GetComponent<FormMenuHandler>().materialStatus);
+                {     
                     g.GetComponent<FormMenuHandler>().materialStatus = false;
                     g.GetComponent<FormMenuHandler>().UpdateMaterial();
-                    //Debug.Log(g.GetComponent<FormMenuHandler>().materialStatus);
                 }
+                // sets selected radio button to true and updates materials
                 materialStatus = !materialStatus;
                 UpdateMaterial();
                 break;
