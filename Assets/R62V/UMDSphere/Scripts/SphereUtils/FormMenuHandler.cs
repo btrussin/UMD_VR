@@ -17,6 +17,7 @@ public class FormMenuHandler : BaseMenuHandler
     public Material sliderPointMaterial;
     public Material sliderBarMaterial;
 
+    private FormMenuHandler submitButton;
     private List<String> answers = new List<string>();
     private TextMesh current_question_text;
     private FormState formState;
@@ -26,7 +27,8 @@ public class FormMenuHandler : BaseMenuHandler
     {
         ToggleCheckbox,
         ToggleRadio,
-        SubmitForm
+        SubmitForm,
+        SubmitQuestionAnswer
     }
     public enum QuestionTypes
     {
@@ -73,16 +75,19 @@ public class FormMenuHandler : BaseMenuHandler
         sliderBarMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/sliderbar_mat.mat");
 
         formState = GetComponent<FormState>();
+
+        submitButton = GameObject.FindGameObjectWithTag("SubmitButton").GetComponent<FormMenuHandler>();
+        submitButton.baseState = formState;
+        submitButton.handlerType = FormMenuHandler.FormMenuHandlerType.SubmitQuestionAnswer;
+        
+
         foreach (TextMesh text in gameObject.GetComponentsInChildren<TextMesh>())
         {
-            Debug.Log(text);
             if (text.tag == "CurrentQuestionText")
             {
                 current_question_text = text;
             }
         }
-        // next line deprecated?
-        //form_questions.answers = new string[form_questions.questions.Count];
 
         startTime = DateTime.Now.ToFileTime();
         SetQuestion();
@@ -122,7 +127,7 @@ public class FormMenuHandler : BaseMenuHandler
     { 
         float offset_y = 0.0675f;
         float yOffsetPerLine = 0.12f;
-        int checkBoxesLength = 3;  
+         
         List<GameObject> interactableObjects = new List<GameObject>();
         int menuLayerMask = LayerMask.NameToLayer("Menus");
 
@@ -134,7 +139,6 @@ public class FormMenuHandler : BaseMenuHandler
             quad.layer = menuLayerMask;
             quad.transform.SetParent(transform);
 
-           // by RK, check for Mike and Alex
             MeshRenderer rend = quad.GetComponent<MeshRenderer>();
             rend.transform.localScale = new Vector3(0.1f, 0.1f, 1.0f);
             rend.transform.localRotation = Quaternion.identity;
@@ -146,9 +150,9 @@ public class FormMenuHandler : BaseMenuHandler
             FormMenuHandler menuHandler = quad.GetComponent<FormMenuHandler>();
             menuHandler.baseState = formState;
             menuHandler.handlerType = FormMenuHandler.FormMenuHandlerType.ToggleCheckbox;
+            
             menuHandler.baseMaterial = BoxMaterial;
             menuHandler.inputInteractMaterial = CheckMaterial;
-
             menuHandler.UpdateMaterial();
 
             offset_y += yOffsetPerLine;
@@ -157,9 +161,10 @@ public class FormMenuHandler : BaseMenuHandler
         offset_y += yOffsetPerLine;
     }
 
+    
     public void GenRadioButton()
     {  // by RK, check for Alex and Mike
-        int bestOptionLength = 3;
+        
         float offset_y = 0.0675f;
         float yOffsetPerLine = 0.12f;
         List<GameObject> interactableObjects = new List<GameObject>();
@@ -167,7 +172,6 @@ public class FormMenuHandler : BaseMenuHandler
 
         for (int toggleInd = 0; toggleInd < currentQuestion.NumberOfAnswers; toggleInd++)
         {
-            Debug.Log(toggleInd);
             GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
             quad.tag = "RadioButton";
             quad.name = "Best Option";
@@ -175,26 +179,32 @@ public class FormMenuHandler : BaseMenuHandler
             quad.transform.SetParent(transform);
 
             MeshRenderer rend = quad.GetComponent<MeshRenderer>();
-            rend.material = CircleMaterial;
+            //rend.material = CircleMaterial;
             rend.transform.localScale = new Vector3(0.1f, 0.1f, 1.0f);
             rend.transform.localRotation = Quaternion.identity;
             rend.transform.localPosition = Vector3.zero;
-            rend.transform.localPosition = new Vector3(-0.55f, 0.42f, 0.94f);
+            rend.transform.localPosition = new Vector3(-0.49f, 0.31f, 0.88f);
             rend.transform.localPosition -= new Vector3(0, offset_y, 0);
 
             quad.AddComponent<FormMenuHandler>();
             FormMenuHandler menuHandler = quad.GetComponent<FormMenuHandler>();
             menuHandler.baseState = formState;
             menuHandler.handlerType = FormMenuHandler.FormMenuHandlerType.ToggleRadio;
+
             menuHandler.baseMaterial = CircleMaterial;
             menuHandler.inputInteractMaterial = sliderPointMaterial;
-
             menuHandler.UpdateMaterial();
 
             offset_y += yOffsetPerLine;
         }
+
+        offset_y += yOffsetPerLine;
     }
 
+    public void SubmitQuestionAnswer()
+    {
+       
+    }
 
     public void AnsInput(String answer)
     {
@@ -205,17 +215,19 @@ public class FormMenuHandler : BaseMenuHandler
     {
         GameObject sliderContainer = new GameObject("Slider_Container");
         sliderContainer.transform.SetParent(transform);
-        sliderContainer.transform.localPosition = new Vector3(-0.02f, 1.26f, 0.94f); 
+        sliderContainer.transform.localPosition = new Vector3(-0.02f, 1.26f, 0.94f);
         sliderContainer.transform.localRotation = Quaternion.identity;
-        sliderContainer.transform.localScale = new Vector3(7.9f,9.4f,4.02f);
+        sliderContainer.transform.localScale = new Vector3(7.9f, 9.4f, 4.02f);
         sliderContainer.tag = "Slider";
 
         GameObject slider = new GameObject("Quad_Slider");
         GameObject sliderPoint = new GameObject("Quad_Slider_Point");
+        //
         GameObject leftMostPoint = new GameObject("Quad_Slider_left");
         GameObject rightMostPoint = new GameObject("Quad_Slider_right");
         GameObject leftText = new GameObject("Text-Rating_1");
         GameObject rightText = new GameObject("Text-Rating_10");
+        List<GameObject> textObjects = new List<GameObject>();
 
 
         slider.AddComponent<MeshFilter>();
@@ -283,6 +295,10 @@ public class FormMenuHandler : BaseMenuHandler
         rightText.transform.localRotation = Quaternion.identity;
         leftText.transform.localScale = leftMostPoint.transform.localScale;
         rightText.transform.localScale = leftMostPoint.transform.localScale;
+        sliderPoint.tag = "SliderPoint";
+        leftMostPoint.tag = "SliderLeftLimit";
+        rightMostPoint.tag = "SliderRightLimit";
+
     }
 
     public void clearSelection()
@@ -301,11 +317,11 @@ public class FormMenuHandler : BaseMenuHandler
     }
     public override void UpdateMaterial()
     {
+        Debug.Log(materialStatus);
         MeshRenderer rend = gameObject.GetComponent<MeshRenderer>();
 
         if (materialStatus)
         {
-            Debug.Log(inputInteractMaterial);
             rend.material = inputInteractMaterial;
             try
             {
@@ -316,11 +332,11 @@ public class FormMenuHandler : BaseMenuHandler
                 
             }
             
-           // to check with brian and mike what this code exactly does????????
         }
         else
         {
             Debug.Log(baseMaterial);
+           
             rend.material = baseMaterial;
 
             if (allActiveGOs.Count > 0)
@@ -332,6 +348,7 @@ public class FormMenuHandler : BaseMenuHandler
 
     public override void handleTrigger()
     {
+        
         switch (handlerType)
         {
             case FormMenuHandlerType.ToggleCheckbox:
@@ -339,13 +356,26 @@ public class FormMenuHandler : BaseMenuHandler
                 UpdateMaterial();
                 break;
             case FormMenuHandlerType.ToggleRadio:
-                //TODO
+             
+                foreach (GameObject g in GameObject.FindGameObjectsWithTag("RadioButton") )
+                {
+                    //Debug.Log("before" + g.GetComponent<FormMenuHandler>().materialStatus);
+                    g.GetComponent<FormMenuHandler>().materialStatus = false;
+                    g.GetComponent<FormMenuHandler>().UpdateMaterial();
+                    //Debug.Log(g.GetComponent<FormMenuHandler>().materialStatus);
+                }
+                materialStatus = !materialStatus;
+                UpdateMaterial();
                 break;
             case FormMenuHandlerType.SubmitForm:
                 FindObjectOfType<UMD_Sphere_TrackedObject>().hideMainMenu();
                 CSVEntries.SaveOutputData(allActiveGOs, startTime);
                 allActiveGOs.Clear();
                 baseState.DestroyMenu();
+         
+                break;
+            case FormMenuHandlerType.SubmitQuestionAnswer:
+         
                 break;
             default:
                 break;

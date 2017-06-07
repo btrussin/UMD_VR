@@ -207,9 +207,10 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     void triggerActiverBeamObject()
     {
         if( activeBeamInterceptObj != null )
-        {
+        { 
             NodeMenuHandler menuHandler = activeBeamInterceptObj.GetComponent<NodeMenuHandler>();
-            if(menuHandler != null )
+          
+            if (menuHandler != null )
             {
 
                 menuHandler.handleTrigger();
@@ -221,8 +222,10 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             }
 
             FormMenuHandler formMenuHandler = activeBeamInterceptObj.GetComponent<FormMenuHandler>();
+
             if (formMenuHandler != null)
             {
+               
                 formMenuHandler.handleTrigger();
 
                 if (activeBeamInterceptObj != null)
@@ -343,7 +346,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
             {
-                // activate bean
+                // activate beam
                 beam.SetActive(true);
                 useBeam = true;
 
@@ -353,7 +356,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             else if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0 &&
                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0)
             {
-                // deactivate bean
+                // deactivate beam
                 beam.SetActive(false);
                 useBeam = false;
                 activeBeamInterceptObj = null;
@@ -381,6 +384,80 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             prevState = state;
         }
 
+        if ((SteamVR_Controller.ButtonMask.Touchpad) != 0)
+        {
+            GameObject slider = GameObject.FindGameObjectWithTag("Slider");
+            Transform sliderPoint = null;
+            Transform sliderLeftLimit = null;
+            Transform sliderRightLimit = null;
+            if (slider != null)
+            {
+                //slider.transform.Translate(state.rAxis0.x/100,0,0);
+                foreach (Transform t in slider.GetComponentsInChildren<Transform>())
+                {
+                    if ((t.tag == "SliderPoint"))
+                    {
+                        sliderPoint = t;
+                    }
+                    else if (t.tag == "SliderLeftLimit")
+                    {
+                        
+                        sliderLeftLimit = t;
+                        Debug.Log("left " + sliderLeftLimit.position);
+                    }
+                    else if (t.tag == "SliderRightLimit")
+                    {
+                        sliderRightLimit = t;
+                        
+                        Debug.Log("right " + sliderRightLimit.position);
+                    }
+                }
+               
+
+                // if it is right of the leftmost point 
+                if (!(sliderPoint.position.x >= sliderLeftLimit.position.x) && (!(sliderPoint.position.x <= sliderRightLimit.position.x)))
+                {
+                    Debug.Log("second");
+                    sliderPoint.Translate(0, -state.rAxis0.x / 100, 0);
+                }
+
+                else if ((state.rAxis0.x <= 0) && (!(sliderPoint.position.x >= sliderLeftLimit.position.x)) )
+                {
+                        sliderPoint.Translate(0, -state.rAxis0.x / 100, 0);
+                    
+                }
+
+                else if((state.rAxis0.x >= 0) && (!(sliderPoint.position.x <= sliderRightLimit.position.x)))
+                {
+                    sliderPoint.Translate(0, -state.rAxis0.x / 100, 0);
+                }
+
+            }
+        }
+
+        /*
+                        Debug.Log((sliderPoint.position.x) >= (sliderRightLimit.position.x));
+
+                        if (!((sliderPoint.position.x) <= (sliderRightLimit.position.x)))
+                        {
+                            Debug.Log("second"+-state.rAxis0.x);
+                            if ((-state.rAxis0.x < 0) && (-state.rAxis0.x < sliderLeftLimit.))
+                            {
+                                //move left
+                                sliderPoint.Translate(0, -state.rAxis0.x / 100, 0);
+                            }
+                        }
+
+                        if (!((sliderPoint.position.x) >= (sliderLeftLimit.position.x)))
+                        {
+                            if (-state.rAxis0.x == 0)
+                            {
+                                // move right
+                                sliderPoint.Translate(0, -state.rAxis0.x / 100, 0);
+                            }
+                        }
+
+            */
 
         if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) != 0)
         {

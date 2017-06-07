@@ -46,6 +46,7 @@ public class NodeMenuHandler : MonoBehaviour
 
     public void handleTrigger()
     {
+     
         switch (handlerType)
         {
             case NodeMenuHandlerType.CloseMenu:
