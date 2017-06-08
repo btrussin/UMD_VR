@@ -2,9 +2,11 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using UnityEditor;
 using System.Linq;
+using Debug = UnityEngine.Debug;
 
 public class FormMenuHandler : BaseMenuHandler
 {
@@ -198,7 +200,6 @@ public class FormMenuHandler : BaseMenuHandler
 
             offset_y += yOffsetPerLine;
         }
-
         offset_y += yOffsetPerLine;
     }
 
@@ -236,14 +237,15 @@ public class FormMenuHandler : BaseMenuHandler
         // submits the response from the particular question into the list.   
         if (FormMenu.currentQuestion.QuestionType == QuestionTypes.CheckBoxes)
         {
-           
+            int numberOfSelectedCheckBoxes = 0;
             foreach (FormMenuHandler fmh in FormMenu.GetComponentsInChildren<FormMenuHandler>())
             {  
                 if ((fmh.tag == "CheckBox") && fmh.materialStatus)
                 {
-                    Debug.Log(fmh);
+                    numberOfSelectedCheckBoxes++;
                 }
             }
+            AddToList(FormMenu.currentQuestion.QuestionType, FormMenu.form_questions.QuestionIndex + 1, numberOfSelectedCheckBoxes);
         }
         else if (FormMenu.currentQuestion.QuestionType == QuestionTypes.RadioButtons)
         {
@@ -251,7 +253,7 @@ public class FormMenuHandler : BaseMenuHandler
             {
                 if ((fmh.tag == "RadioButton") && fmh.materialStatus)
                 {
-                    Debug.Log(fmh);
+                    Debug.Log( "grgrg");
                 }
             }
         }
@@ -441,7 +443,7 @@ public class FormMenuHandler : BaseMenuHandler
             case FormMenuHandlerType.ToggleCheckbox:
                 materialStatus = !materialStatus;
                 UpdateMaterial();
-                SubmitQuestionAnswer();
+                
                 break;
             case FormMenuHandlerType.ToggleRadio:
                 // sets all the radiobuttons to false
@@ -452,9 +454,7 @@ public class FormMenuHandler : BaseMenuHandler
                 }
                 // sets selected radio button to true and updates materials
                 materialStatus = !materialStatus;
-               // SubmitQuestionAnswer();
                 UpdateMaterial();
-                SubmitQuestionAnswer();
                 break;
             case FormMenuHandlerType.SubmitForm:
                 Debug.Log("hi");
