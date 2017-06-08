@@ -189,6 +189,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         if (Physics.Raycast(deviceRay.origin, deviceRay.direction, out hitInfo, 30.0f, menusLayerMask))
         {
+          
             activeBeamInterceptObj = hitInfo.collider.gameObject;
             beamDist = hitInfo.distance;
         }
@@ -222,7 +223,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             }
 
             FormMenuHandler formMenuHandler = activeBeamInterceptObj.GetComponent<FormMenuHandler>();
-
             if (formMenuHandler != null)
             {
                
@@ -311,7 +311,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         // enter survey question answer
         if (padClicked() && !isCollidingWithRing)
         {
-            Debug.Log(fmh_script.form_questions.QuestionIndex);
             fmh_script.form_questions.QuestionIndex++;
             fmh_script.SetQuestion();
 
@@ -411,7 +410,11 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                     {
                         sliderRightLimit = t;
                         
-
+                    }
+                    else if (t.tag == "NumberText")
+                    {
+                        t.gameObject.GetComponent<TextMesh>().text =
+                            (FindObjectOfType<FormMenuHandler>().GetSliderValue(slider)).ToString();
                     }
                 }
                

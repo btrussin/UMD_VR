@@ -22,6 +22,7 @@ public class FormMenuHandler : BaseMenuHandler
     private TextMesh current_question_text;
     private FormState formState;
     private FormQuestions.Question currentQuestion;
+    private FormMenuHandler FormMenu;
 
     public enum FormMenuHandlerType
     {
@@ -68,6 +69,7 @@ public class FormMenuHandler : BaseMenuHandler
 
     void Start()
     {
+        FormMenu = GameObject.FindGameObjectWithTag("FormMenu").GetComponent<FormMenuHandler>();
         BoxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
         CheckMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
         CircleMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/circ_mat.mat");
@@ -95,7 +97,6 @@ public class FormMenuHandler : BaseMenuHandler
 
     public void SetQuestion()    // generates the text and the radio buttons or checkboxes or slider
     {
-        
         if (form_questions.QuestionIndex < form_questions.questions.Count)
         {
             clearSelection();
@@ -108,11 +109,11 @@ public class FormMenuHandler : BaseMenuHandler
                 GenCheckBox();
             }
             if (currentQuestion.QuestionType == QuestionTypes.RadioButtons)
-            {
+            {             
                 GenRadioButton();
             }
             if (currentQuestion.QuestionType == QuestionTypes.Slider)
-            {
+            {            
                 GenSlider();
             }
             if (currentQuestion.QuestionType == QuestionTypes.AnsInput)
@@ -201,9 +202,70 @@ public class FormMenuHandler : BaseMenuHandler
         offset_y += yOffsetPerLine;
     }
 
+    public int GetSliderValue(GameObject slider)
+    { 
+        // gets the value of the slider on a scale from 1-10. 
+        Transform sliderPoint = null;
+        Transform sliderLeftLimit = null;
+        Transform sliderRightLimit = null;
+        foreach (Transform t in slider.GetComponentsInChildren<Transform>())
+        {
+            if ((t.tag == "SliderPoint"))
+            {
+                sliderPoint = t;
+            }
+            else if (t.tag == "SliderLeftLimit")
+            {
+                sliderLeftLimit = t;
+
+            }
+            else if (t.tag == "SliderRightLimit")
+            {
+                sliderRightLimit = t;
+            }
+        }
+        float length = Mathf.Abs(sliderLeftLimit.localPosition.x - sliderRightLimit.localPosition.x);
+        float currentSliderPointPosition = ((sliderPoint.localPosition.x) - sliderLeftLimit.localPosition.x);
+
+        return Mathf.RoundToInt((currentSliderPointPosition/ length) * 10);
+    }
+
+
     public void SubmitQuestionAnswer()
     {
-       
+        // submits the response from the particular question into the list.   
+        if (FormMenu.currentQuestion.QuestionType == QuestionTypes.CheckBoxes)
+        {
+           
+            foreach (FormMenuHandler fmh in FormMenu.GetComponentsInChildren<FormMenuHandler>())
+            {  
+                if ((fmh.tag == "CheckBox") && fmh.materialStatus)
+                {
+                    Debug.Log(fmh);
+                }
+            }
+        }
+        else if (FormMenu.currentQuestion.QuestionType == QuestionTypes.RadioButtons)
+        {
+            foreach (FormMenuHandler fmh in FormMenu.GetComponentsInChildren<FormMenuHandler>())
+            {
+                if ((fmh.tag == "RadioButton") && fmh.materialStatus)
+                {
+                    Debug.Log(fmh);
+                }
+            }
+        }
+        else if (FormMenu.currentQuestion.QuestionType == QuestionTypes.Slider)
+        {
+            foreach (Transform t in FormMenu.GetComponentsInChildren<Transform>())
+            {
+
+                if ((t.tag == "Slider"))
+                {
+                    AddToList(FormMenu.currentQuestion.QuestionType, FormMenu.form_questions.QuestionIndex + 1, GetSliderValue(t.gameObject));
+                }
+            }
+        }
     }
 
     public void AnsInput(String answer)
@@ -227,6 +289,7 @@ public class FormMenuHandler : BaseMenuHandler
         GameObject rightMostPoint = new GameObject("Quad_Slider_right");
         GameObject leftText = new GameObject("Text-Rating_1");
         GameObject rightText = new GameObject("Text-Rating_10");
+        GameObject numberText = new GameObject("NumberText");
         List<GameObject> textObjects = new List<GameObject>();
 
 
@@ -243,6 +306,7 @@ public class FormMenuHandler : BaseMenuHandler
         rightMostPoint.AddComponent<MeshRenderer>();
         leftText.AddComponent<TextMesh>();
         rightText.AddComponent<TextMesh>();
+        numberText.AddComponent<TextMesh>();
 
         slider.GetComponent<Renderer>().material = sliderBarMaterial;
         sliderPoint.GetComponent<Renderer>().material = sliderPointMaterial;
@@ -252,6 +316,8 @@ public class FormMenuHandler : BaseMenuHandler
         leftText.GetComponent<TextMesh>().fontSize = 16;
         rightText.GetComponent<TextMesh>().text = "10";
         rightText.GetComponent<TextMesh>().fontSize = 16;
+        numberText.GetComponent<TextMesh>().text = "null";
+        numberText.GetComponent<TextMesh>().fontSize = 16;
 
         // Create a quad game object
         GameObject quadGO = GameObject.CreatePrimitive(PrimitiveType.Quad);
@@ -268,6 +334,7 @@ public class FormMenuHandler : BaseMenuHandler
         rightMostPoint.transform.SetParent(sliderContainer.transform);
         leftText.transform.SetParent(sliderContainer.transform);
         rightText.transform.SetParent(sliderContainer.transform);
+        numberText.transform.SetParent(sliderContainer.transform);
 
         slider.transform.localPosition = Vector3.zero;
         slider.transform.localPosition -= new Vector3(0, 0.1f, 0.01f);
@@ -291,15 +358,23 @@ public class FormMenuHandler : BaseMenuHandler
         rightMostPoint.transform.localScale = leftMostPoint.transform.localScale;
         leftText.transform.localPosition = leftMostPoint.transform.localPosition - new Vector3(0.004f, -0.0017f, 0);
         rightText.transform.localPosition = rightMostPoint.transform.localPosition + new Vector3(0.004f, 0.0017f, 0);
+        rightText.transform.localPosition = rightMostPoint.transform.localPosition + new Vector3(0.004f, 0.0017f, 0);
+        numberText.transform.localPosition = Vector3.zero;
+        numberText.transform.localPosition -= new Vector3(0, 0.105f, 0.01f);
+
+        numberText.transform.localRotation = Quaternion.identity;
         leftText.transform.localRotation = Quaternion.identity;
         rightText.transform.localRotation = Quaternion.identity;
+        numberText.transform.localScale = leftMostPoint.transform.localScale;
         leftText.transform.localScale = leftMostPoint.transform.localScale;
         rightText.transform.localScale = leftMostPoint.transform.localScale;
         sliderPoint.tag = "SliderPoint";
         leftMostPoint.tag = "SliderLeftLimit";
         rightMostPoint.tag = "SliderRightLimit";
+        numberText.tag = "NumberText";
 
     }
+
 
     public void clearSelection()
     {
@@ -317,7 +392,6 @@ public class FormMenuHandler : BaseMenuHandler
     }
     public override void UpdateMaterial()
     {
-        Debug.Log(materialStatus);
         MeshRenderer rend = gameObject.GetComponent<MeshRenderer>();
 
         if (materialStatus)
@@ -335,7 +409,6 @@ public class FormMenuHandler : BaseMenuHandler
         }
         else
         {
-            Debug.Log(baseMaterial);
            
             rend.material = baseMaterial;
 
@@ -346,14 +419,29 @@ public class FormMenuHandler : BaseMenuHandler
         }
     }
 
+    public void AddToList(QuestionTypes QType, int QNum, int value)
+    {
+        // just adds the incoming variables in a list
+        List<String> il = new List<String>();
+        il.Add("QType:"+ QType + " " + "QNum:" + QNum + " " + "Input Value:" + value);
+
+        foreach (String l in il  )
+        {
+            Debug.Log(""+l);
+        }
+
+
+    }
+
     public override void handleTrigger()
     {
-        
+
         switch (handlerType)
         {
             case FormMenuHandlerType.ToggleCheckbox:
                 materialStatus = !materialStatus;
                 UpdateMaterial();
+                SubmitQuestionAnswer();
                 break;
             case FormMenuHandlerType.ToggleRadio:
                 // sets all the radiobuttons to false
@@ -364,17 +452,20 @@ public class FormMenuHandler : BaseMenuHandler
                 }
                 // sets selected radio button to true and updates materials
                 materialStatus = !materialStatus;
+               // SubmitQuestionAnswer();
                 UpdateMaterial();
+                SubmitQuestionAnswer();
                 break;
             case FormMenuHandlerType.SubmitForm:
+                Debug.Log("hi");
                 FindObjectOfType<UMD_Sphere_TrackedObject>().hideMainMenu();
                 CSVEntries.SaveOutputData(allActiveGOs, startTime);
                 allActiveGOs.Clear();
                 baseState.DestroyMenu();
          
                 break;
-            case FormMenuHandlerType.SubmitQuestionAnswer:
-         
+            case FormMenuHandlerType.SubmitQuestionAnswer:             
+                SubmitQuestionAnswer();
                 break;
             default:
                 break;
