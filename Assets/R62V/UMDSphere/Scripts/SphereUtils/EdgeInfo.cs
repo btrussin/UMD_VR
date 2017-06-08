@@ -4,6 +4,14 @@ using System.Collections.Generic;
 
 public class EdgeInfo : MonoBehaviour {
 
+    enum colorTypeIdx
+    {
+        HIGHLIGHT = 0,
+        SELECT = 1,
+        NONE = 2,
+        DIM = 3
+    };
+
     HashSet<string> actorNames = new HashSet<string>();
     public bool updateEdgePositionsThisFrame = false;
     public bool updateEdgeColorThisFrame = false;
@@ -12,16 +20,74 @@ public class EdgeInfo : MonoBehaviour {
     MovieObject fromMovieObject;
     MovieObject toMovieObject;
     float edgeWidth = 0.001f;
-    bool isInnerRingEdge = false;
+    bool isInnerRingEdge = true;
 
     Transform parentTransform;
 
     LineRenderer lineRend;
 
-    public float highlightAmt = 0.95f;
-    public float selectedAmt = 0.75f;
-    public float noneAmt = 0.5f;
-    public float dimAmt = 0.35f;
+    public float _highlightAmt = 0.95f;
+    public float _selectedAmt = 0.75f;
+    public float _noneAmt = 0.5f;
+    public float _dimAmt = 0.35f;
+
+    public float highlightAmt
+    {
+        set
+        {
+            _highlightAmt = value;
+            setColors(colorTypeIdx.HIGHLIGHT);
+            updateEdgeColorThisFrame = true;
+        }
+        get
+        {
+            return _highlightAmt;
+        }
+    }
+
+    public float selectedAmt
+    {
+        set
+        {
+            _selectedAmt = value;
+            setColors(colorTypeIdx.SELECT);
+            updateEdgeColorThisFrame = true;
+        }
+        get
+        {
+            return _selectedAmt;
+        }
+    }
+
+    public float noneAmt
+    {
+        set
+        {
+            _noneAmt = value;
+            setColors(colorTypeIdx.NONE);
+            updateEdgeColorThisFrame = true;
+        }
+        get
+        {
+            return _noneAmt;
+        }
+    }
+
+    public float dimAmt
+    {
+        set
+        {
+            _dimAmt = value;
+            setColors(colorTypeIdx.DIM);
+            updateEdgeColorThisFrame = true;  
+        }
+        get
+        {
+            return _dimAmt;
+        }
+    }
+
+    //public float 
 
     bool selected = false;
     bool highlighted = false;
@@ -30,6 +96,68 @@ public class EdgeInfo : MonoBehaviour {
 
     int numNodesSelected = 0;
     int numNodesHighlighted = 0;
+
+    Color startColor = Color.white;
+    Color endColor = Color.white;
+    Color[] startColors = new Color[4];
+    Color[] endColors = { Color.white, Color.white, Color.white, Color.white };
+
+    bool useHSL = true;
+
+    void setColors()
+    {
+        setColors(colorTypeIdx.HIGHLIGHT);
+        setColors(colorTypeIdx.SELECT);
+        setColors(colorTypeIdx.NONE);
+        setColors(colorTypeIdx.DIM);
+    }
+
+    void setColors(colorTypeIdx idx)
+    {
+        float amt = 0.0f;
+        switch(idx)
+        {
+            case colorTypeIdx.HIGHLIGHT:
+                amt = _highlightAmt;
+                break;
+            case colorTypeIdx.SELECT:
+                amt = _selectedAmt;
+                break;
+            case colorTypeIdx.NONE:
+                amt = _noneAmt;
+                break;
+            case colorTypeIdx.DIM:
+                amt = _dimAmt;
+                break;
+        }
+
+        if( useHSL )
+        {
+            ColorHSL tmpHsl;
+            tmpHsl = new ColorHSL(startColor);
+            tmpHsl.l = amt;
+            startColors[(int)idx] = tmpHsl.getRGBColor();
+
+            tmpHsl = new ColorHSL(endColor);
+            tmpHsl.l = amt;
+            endColors[(int)idx] = tmpHsl.getRGBColor();
+        }
+        else
+        {
+            startColors[(int)idx] = startColor * amt;
+            endColors[(int)idx] = endColor * amt;
+        }
+
+
+    }
+
+    public bool IsOn
+    {
+        get
+        {
+            return numNodesSelected > 0 || numNodesHighlighted > 0;
+        }
+    }
 
     // Use this for initialization
     void Start () {
@@ -65,12 +193,22 @@ public class EdgeInfo : MonoBehaviour {
         basePts[0] = fromMovieObject.point.transform.position;
         basePts[3] = toMovieObject.point.transform.position;
 
+
+        /* old way
         basePts[1] = (fromMovieObject.ring.transform.position - basePts[0]) * 0.5f + basePts[0];
         basePts[2] = (toMovieObject.ring.transform.position - basePts[3]) * 0.5f + basePts[3];
 
         Vector3[] pts = MovieDBUtils.getBezierPoints(basePts, numControlPoints, bundlingStrength);
+        */
 
-        for( int i = 0; i < pts.Length; i++ )
+        /* new way */
+        basePts[1] = (fromMovieObject.ring.transform.position - basePts[0]) * bundlingStrength + basePts[0];
+        basePts[2] = (toMovieObject.ring.transform.position - basePts[3]) * bundlingStrength + basePts[3];
+
+        Vector3[] pts = MovieDBUtils.getBezierPoints(basePts, numControlPoints, -1.0f);
+        /* end new way */
+
+        for ( int i = 0; i < pts.Length; i++ )
         {
             pts[i] = lineRend.transform.InverseTransformPoint(pts[i]);
         }
@@ -82,36 +220,55 @@ public class EdgeInfo : MonoBehaviour {
 
     public void updateEdgeWidthAndColors()
     {
+        /*
         Color fromColor = fromMovieObject.color;
         Color toColor = toMovieObject.color;
 
         if( highlighted )
         {
-            fromColor *= highlightAmt;
-            toColor *= highlightAmt;
+            fromColor *= _highlightAmt;
+            toColor *= _highlightAmt;
         }
         else if( selected )
         {
-            fromColor *= selectedAmt;
-            toColor *= selectedAmt;
+            fromColor *= _selectedAmt;
+            toColor *= _selectedAmt;
         }
         else if (dimmed)
         {
-            fromColor *= dimAmt;
-            toColor *= dimAmt;
+            fromColor *= _dimAmt;
+            toColor *= _dimAmt;
         }
         else
         {
-            fromColor *= noneAmt;
-            toColor *= noneAmt;
+            fromColor *= _noneAmt;
+            toColor *= _noneAmt;
         }
 
         //fColHSL.s *= edgeWidth * 100.0f;
         //tColHSL.s = fColHSL.s;
+        */
 
         lineRend.SetWidth(edgeWidth, edgeWidth);
         //lineRend.SetColors(fColHSL.getRGBColor(), tColHSL.getRGBColor());
-        lineRend.SetColors(fromColor, toColor);
+        //lineRend.SetColors(fromColor, toColor);
+
+        if (highlighted)
+        {
+            lineRend.SetColors(startColors[(int)colorTypeIdx.HIGHLIGHT], endColors[(int)colorTypeIdx.HIGHLIGHT]);
+        }
+        else if (selected)
+        {
+            lineRend.SetColors(startColors[(int)colorTypeIdx.SELECT], endColors[(int)colorTypeIdx.SELECT]);
+        }
+        else if (dimmed)
+        {
+            lineRend.SetColors(startColors[(int)colorTypeIdx.DIM], endColors[(int)colorTypeIdx.DIM]);
+        }
+        else
+        {
+            lineRend.SetColors(startColors[(int)colorTypeIdx.NONE], endColors[(int)colorTypeIdx.NONE]);
+        }
     }
 
     public void setValues(Transform transform, MovieObject moFrom, MovieObject moTo, int numCtrlPoints)
@@ -120,6 +277,10 @@ public class EdgeInfo : MonoBehaviour {
         fromMovieObject = moFrom;
         toMovieObject = moTo;
         numControlPoints = numCtrlPoints;
+
+        startColor = fromMovieObject.color;
+        endColor = toMovieObject.color;
+        setColors();
 
         isInnerRingEdge = fromMovieObject.ring.name.Equals(toMovieObject.ring.name);
     }

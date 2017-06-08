@@ -8,9 +8,8 @@ public class MainMenuUtils : MonoBehaviour {
     Material checkMaterial;
 
     public GameObject sphereLayoutBox;
-    public GameObject cylinderXLayoutBox;
-    public GameObject cylinderYLayoutBox;
-    public GameObject cylinderZLayoutBox;
+    public GameObject cylinderLayoutBox;
+    public GameObject showEdgesBox;
     public GameObject animationLayoutBox;
 
     public GameObject distCategoryBox;
@@ -21,9 +20,8 @@ public class MainMenuUtils : MonoBehaviour {
     public GameObject yearCategoryBox;
 
     MeshRenderer sphereBoxRenderer;
-    MeshRenderer cylXBoxRenderer;
-    MeshRenderer cylYBoxRenderer;
-    MeshRenderer cylZBoxRenderer;
+    MeshRenderer cylBoxRenderer;
+    MeshRenderer showEdgesBoxRenderer;
     MeshRenderer animationBoxRenderer;
 
     MeshRenderer distBoxRenderer;
@@ -42,9 +40,8 @@ public class MainMenuUtils : MonoBehaviour {
         checkMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
 
         sphereBoxRenderer = sphereLayoutBox.GetComponent<MeshRenderer>();
-        cylXBoxRenderer = cylinderXLayoutBox.GetComponent<MeshRenderer>();
-        cylYBoxRenderer = cylinderYLayoutBox.GetComponent<MeshRenderer>();
-        cylZBoxRenderer = cylinderZLayoutBox.GetComponent<MeshRenderer>();
+        cylBoxRenderer = cylinderLayoutBox.GetComponent<MeshRenderer>();
+        showEdgesBoxRenderer = showEdgesBox.GetComponent<MeshRenderer>();
         animationBoxRenderer = animationLayoutBox.GetComponent<MeshRenderer>();
 
         distBoxRenderer = distCategoryBox.GetComponent<MeshRenderer>();
@@ -54,14 +51,17 @@ public class MainMenuUtils : MonoBehaviour {
         studioBoxRenderer = studioCategoryBox.GetComponent<MeshRenderer>();
         yearBoxRenderer = yearCategoryBox.GetComponent<MeshRenderer>();
 
+
+        updateLayout();
+
     }
 
     public void updateLayout()
     {
         sphereBoxRenderer.material = boxMaterial;
-        cylXBoxRenderer.material = boxMaterial;
-        cylYBoxRenderer.material = boxMaterial;
-        cylZBoxRenderer.material = boxMaterial;
+        cylBoxRenderer.material = boxMaterial;
+
+        showEdgesBoxRenderer.material = boxMaterial;
 
 
         distBoxRenderer.material = boxMaterial;
@@ -76,17 +76,14 @@ public class MainMenuUtils : MonoBehaviour {
             case SphereData.SphereLayout.Sphere:
                 sphereBoxRenderer.material = checkMaterial;
                 break;
-            case SphereData.SphereLayout.Column_X:
-                cylXBoxRenderer.material = checkMaterial;
-                break;
-            case SphereData.SphereLayout.Column_Y:
-                cylYBoxRenderer.material = checkMaterial;
-                break;
-            case SphereData.SphereLayout.Column_Z:
-                cylZBoxRenderer.material = checkMaterial;
-                break;
             default:
+                cylBoxRenderer.material = checkMaterial;
                 break;
+        }
+
+        if( sphereData.edgesAlwaysOn )
+        {
+            showEdgesBoxRenderer.material = checkMaterial;
         }
 
 

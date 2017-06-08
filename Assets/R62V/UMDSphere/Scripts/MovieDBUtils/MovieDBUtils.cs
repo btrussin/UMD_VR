@@ -140,6 +140,11 @@ public class MovieDBUtils {
             D2 += D3;
         }
 
+        if( bundlingStrength < 0f || bundlingStrength >= 1f )
+        {
+            return pts;
+        }
+
         //Straightening a spline curve. Got this information from research paper.
         int lastIndexedControlPoint = size - 1;
 

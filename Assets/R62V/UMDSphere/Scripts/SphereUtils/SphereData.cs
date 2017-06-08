@@ -45,15 +45,27 @@ public class SphereData : MonoBehaviour {
     public Material checkMaterial;
     public Material closeMaterial;
 
-    [Header("Data Object", order = 2)]
-    public GameObject sphere;
-
-    [Header("Materials", order = 3)]
+    [Header("Materials", order = 2)]
     public Material ringMaterial;
     public Material curveMaterial;
 
-    [Header("Line Connector Info", order = 4)]
-    public float bundlingStrength = 0.5f;
+    [Header("Line Connector Info", order = 3)]
+    float bundlingStrength = 0.5f;
+
+    
+    public float BundlingStrength
+    {
+        get
+        {
+            return bundlingStrength;
+        }
+        set
+        {
+            bundlingStrength = value;
+            updateBundlingStrengthForEdges();
+        }
+    }
+    
     public int numControlPoints = 100;
 
     List<GameObject> ringList = new List<GameObject>();
@@ -114,15 +126,12 @@ public class SphereData : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        
 
-         cmLoader = this.gameObject.GetComponent<CMJSONLoader>();
+        if (!edgesAlwaysOn) edgeBrightnessNone = 0.0f;
+
+        cmLoader = this.gameObject.GetComponent<CMJSONLoader>();
         cmLoader.LoadData();
-        //ringMaterial = new Material(Shader.Find("Sprites/Default"));
-        //ringMaterial = new Material(Shader.Find("Standard"));
-        ringMaterial = new Material(Shader.Find("Sprites/Default"));
-        //curveMaterial = new Material(Shader.Find("Standard"));
-        curveMaterial = new Material(Shader.Find("Sprites/Default"));
+        
 
         baseRingColor = new Color(0.5f, 0.5f, 0.5f);
 
@@ -133,10 +142,11 @@ public class SphereData : MonoBehaviour {
         grabObject1 = null;
         grabObject2 = null;
 
-        if (!OpenVR.IsHmdPresent())
+        if (OpenVR.IsHmdPresent())
         {
             setMainLayout(SphereData.SphereLayout.Sphere);
-            SetMainRingCategory(SphereData.MainRingCategory.Year);
+            ringCategory = SphereData.MainRingCategory.Publisher;
+            CreateRingsForCurrentCategory();
         }
     }
 
@@ -231,6 +241,14 @@ public class SphereData : MonoBehaviour {
         
     }
 
+    public void rotateGraph(Vector2 vec)
+    {
+        Vector3 rotationAmt = new Vector3(vec.y, vec.x, 0f);
+        Quaternion quat = Quaternion.Euler(rotationAmt);
+        Quaternion finalRot = quat * gameObject.transform.rotation;
+        gameObject.transform.rotation = finalRot;
+    }
+
     void updateMove()
     {
         if( activeMove)
@@ -298,6 +316,13 @@ public class SphereData : MonoBehaviour {
 
     public void clearAllLists()
     {
+        foreach (KeyValuePair<string, MovieObject> kv in movieObjectMap)
+        {
+            GameObject.Destroy(kv.Value.point);
+            GameObject.Destroy(kv.Value.label);
+        }
+        movieObjectMap.Clear();
+
         foreach (GameObject obj in ringList) GameObject.Destroy(obj);
         ringList.Clear();
 
@@ -311,7 +336,6 @@ public class SphereData : MonoBehaviour {
         edgeMap.Clear();
 
         activeRings.Clear();
-        movieObjectMap.Clear();
         ringColorMap.Clear();
 
 
@@ -355,7 +379,7 @@ public class SphereData : MonoBehaviour {
 
         setRingLayout(ringList, centerGrpPosition, sphereLayout);
 
-        if (edgesAlwaysOn) populateBaseConnections();
+        populateBaseConnections();
     }
 
     void populateBaseConnections()
@@ -477,8 +501,7 @@ public class SphereData : MonoBehaviour {
 
         setRingLayout(ringList, centerGrpPosition, sphereLayout);
 
-
-        if (edgesAlwaysOn) populateBaseConnections();
+        populateBaseConnections();
     }
 
     void setRingLayout(List<GameObject> list, Vector3 grpPos, SphereLayout layout)
@@ -581,10 +604,11 @@ public class SphereData : MonoBehaviour {
             ring.transform.localPosition = Vector3.Lerp(ring.transform.localPosition, grpPos + currOffset, t / speed);
 
             t += Time.deltaTime;
+           
             yield return new WaitForFixedUpdate();
         }
         inTransition = false;
-
+      
         yield return null;
     }
 
@@ -601,24 +625,46 @@ public class SphereData : MonoBehaviour {
             gameObject.transform.localPosition = Vector3.Lerp(gameObject.transform.localPosition, grpPos + currOffset, t / speed);
 
             t += Time.deltaTime;
+            
             yield return new WaitForFixedUpdate();
         }
         inTransition = false;
-
+        
         yield return null;
+    }
+
+    public void updateBundlingStrengthForEdges()
+    {
+        foreach (List<EdgeInfo> list in ringEdgeMap.Values)
+        {
+            foreach (EdgeInfo edgeInfo in list)
+            {
+                edgeInfo.bundlingStrength = bundlingStrength;
+            }
+        }
+    }
+
+    public void updateAllConnections()
+    {
+        foreach (List<EdgeInfo> list in ringEdgeMap.Values)
+        {
+            foreach (EdgeInfo edgeInfo in list)
+            {
+                edgeInfo.updateEdgePositionsThisFrame = true;
+            }
+        }
     }
 
     public void updateAllKeptConnections(List<GameObject> listGo)
     {
-        //Dictionary<string, List<EdgeInfo>> ringEdgeMap = new Dictionary<string, List<EdgeInfo>>();
-
         if( listGo == null )
         {
-            foreach(List<EdgeInfo> list in ringEdgeMap.Values)
+            foreach (List<EdgeInfo> list in ringEdgeMap.Values)
             {
-                foreach(EdgeInfo edgeInfo in list )
+                foreach (EdgeInfo edgeInfo in list)
                 {
-                    edgeInfo.updateEdgePositionsThisFrame = true;
+                    //edgeInfo.updateEdgePositionsThisFrame = true;
+                    if (!edgeInfo.getIsInnerRingEdge()) edgeInfo.updateEdgePositionsThisFrame = true;
                 }
             }
         }
@@ -639,35 +685,34 @@ public class SphereData : MonoBehaviour {
  
             }
         }
+    }
 
+    public void toggleEdgesAlwaysOn()
+    {
+        edgesAlwaysOn = !edgesAlwaysOn;
 
-
-
-        MovieConnectionManager connMan;
-        NodeState ns;
-        foreach ( MovieObject m in movieObjectMap.Values )
+        if( edgesAlwaysOn )
         {
-            connMan = m.connManager;
-            ns = m.nodeState;
 
-            /*
-            if( ns.getIsSelected() )
+            foreach (List<EdgeInfo> list in ringEdgeMap.Values)
             {
-                List<GameObject> connectionList = connMan.getConnectionList();
-
-
-
-                foreach( GameObject g in connectionList )
+                foreach (EdgeInfo edgeInfo in list)
                 {
-                    EdgeInfo info = g.GetComponent<EdgeInfo>();
-                    info.updateEdgePositionsThisFrame = true;
+                    edgeInfo.noneAmt = edgeBrightnessNone;
+                    edgeInfo.updateEdgeColorThisFrame = true;
                 }
-
-
-                //connMan.ForceClearAllConnections();
-                //connectMoviesByActors(m.cmData);
             }
-            */
+        }
+        else
+        {
+            foreach (List<EdgeInfo> list in ringEdgeMap.Values)
+            {
+                foreach (EdgeInfo edgeInfo in list)
+                {
+                    edgeInfo.noneAmt = 0f;
+                    edgeInfo.updateEdgeColorThisFrame = true;
+                }
+            }
         }
     }
 
@@ -686,7 +731,7 @@ public class SphereData : MonoBehaviour {
         innerRotationObj.name = "innerRotataion";
         innerRotationObj.transform.SetParent(ring.transform);
 
-        innerRotationObj.AddComponent<MeshCollider>();
+        //innerRotationObj.AddComponent<MeshCollider>();
 
         GameObject ringLines = new GameObject();
         ringLines.name = "RingLines";
@@ -1104,7 +1149,8 @@ public class SphereData : MonoBehaviour {
         edgeInfo.setup(from, to, curveMaterial);
         edgeInfo.highlightAmt = edgeBrightnessHighlighted;
         edgeInfo.selectedAmt = edgeBrightnessSelected;
-        edgeInfo.noneAmt = edgeBrightnessNone;
+        if( edgesAlwaysOn ) edgeInfo.noneAmt = edgeBrightnessNone;
+        else edgeInfo.noneAmt = 0f;
         edgeInfo.dimAmt = edgeBrightnessDim;
 
         moFrom.addEdge(edgeInfo);

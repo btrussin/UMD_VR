@@ -49,7 +49,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     int menusLayerMask;
 
     float currRayAngle = 60.0f;
-    bool adjustRayAngle = false;
 
     //bool trackpadArrowsAreActive = false;
     int prevNumRingsInCollision = 0;
@@ -85,10 +84,13 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         otherTrackedObjScript = otherController.GetComponent<UMD_Sphere_TrackedObject>();
 
+        /*
         sphereData.setMainLayout(SphereData.SphereLayout.Sphere);
         sphereData.SetMainRingCategory(SphereData.MainRingCategory.Year);
+        */
 
-        setSliderLocalPosition(sphereData.bundlingStrength);
+        setSliderLocalPosition(sphereData.BundlingStrength);
+
 
     }
 
@@ -105,7 +107,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         deviceRay.direction = rayRotation * currForwardVec;
 
-        sphereCollider.center = new Vector3(0.0f, 0.0f, 0.03f);
+        //sphereCollider.center = new Vector3(0.0f, 0.0f, 0.03f);
 
         handleStateChanges();
 
@@ -127,7 +129,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         if( updateSlider )
         {
             calcSliderPosition();
-            sphereData.updateAllKeptConnections(ringsInCollision);
+            sphereData.updateAllConnections();
         }
     }
 
@@ -156,7 +158,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         Vector3 tVec = (sliderRightPnt.transform.localPosition - sliderLeftPnt.transform.localPosition)* tDist;
         sliderPoint.transform.localPosition = sliderLeftPnt.transform.localPosition + tVec;
 
-        sphereData.bundlingStrength = tDist;
+        sphereData.BundlingStrength = tDist;
     }
 
     void projectBeam()
@@ -219,16 +221,18 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                         {
                             if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Sphere") == 0)
                                 destLayout = SphereData.SphereLayout.Sphere;
-                            else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_X") == 0)
+                            else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl") == 0)
                                 destLayout = SphereData.SphereLayout.Column_X;
-                            else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_Y") == 0)
-                                destLayout = SphereData.SphereLayout.Column_Y;
-                            else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_Z") == 0)
-                                destLayout = SphereData.SphereLayout.Column_Z;
+                           
 
                             sphereData.setMainLayout(destLayout);
                             mainMenu.updateLayout();
                         }
+                    }
+                    else if(activeBeamInterceptObj.name.CompareTo("Box-Show_Conn") == 0)
+                    {
+                        sphereData.toggleEdgesAlwaysOn();
+                        mainMenu.updateLayout();
                     }
                     else if (activeBeamInterceptObj.name.Contains("Box-Cat"))
                     {
@@ -294,8 +298,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 // activate bean
                 beam.SetActive(true);
                 useBeam = true;
-
-                if( adjustRayAngle ) showTrackpadArrows();
             }
 
             else if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0 &&
@@ -336,30 +338,35 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) != 0)
         {
-            Quaternion addRotation = Quaternion.Euler(0.0f, 0.0f, state.rAxis0.y);
-            Quaternion origRot;
-            foreach (GameObject g in ringsInCollision)
+            if(ringsInCollision.Count < 1)
             {
-                origRot = g.transform.localRotation;
-                g.transform.localRotation = origRot * addRotation;
+                Vector2 vec;
+                if( Mathf.Abs(state.rAxis0.x) > Mathf.Abs(state.rAxis0.y ) )
+                {
+                    vec = new Vector2(state.rAxis0.x, 0f);
+                    sphereData.rotateGraph(vec);
+                }
+                else
+                {
+                    vec = new Vector2(0f, state.rAxis0.y);
+                    sphereData.rotateGraph(vec);
+                }
+                
             }
-
-            UpdateConnections();
-
-            sphereData.updateAllKeptConnections(ringsInCollision);
-
-            // update the beam ray direction
-            if (adjustRayAngle && ringsInCollision.Count == 0 && (state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 )
+            else
             {
-                if (state.rAxis0.y > 0.0f) currRayAngle -= 1.0f;
-                else if (state.rAxis0.y < 0.0f) currRayAngle += 1.0f;
+                Quaternion addRotation = Quaternion.Euler(0.0f, 0.0f, state.rAxis0.y);
+                Quaternion origRot;
+                foreach (GameObject g in ringsInCollision)
+                {
+                    origRot = g.transform.localRotation;
+                    g.transform.localRotation = origRot * addRotation;
+                }
 
-                // keep within the bounds of 0 and 90 degrees
-                if (currRayAngle > 90.0f) currRayAngle = 90.0f;
-                else if (currRayAngle < 0.0f) currRayAngle = 0.0f;
+                UpdateConnections();
 
+                sphereData.updateAllKeptConnections(ringsInCollision);
             }
-
         }
     }
 
