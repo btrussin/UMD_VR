@@ -45,7 +45,7 @@ public class FormMenuHandler : BaseMenuHandler
 
     private static List<string> allActiveGOs = new List<string>();
 
-    private long startTime;
+    public long startTime;
     // class for inputing form questions in editor
     [System.Serializable]
     public class FormQuestions
@@ -55,7 +55,7 @@ public class FormMenuHandler : BaseMenuHandler
         {
             public string QuestionText;
             public QuestionTypes QuestionType;
-            public int NumberOfAnswers;
+            //public int NumberOfAnswers;
             public List<String> possible_answers = new List<String>();
 
             
@@ -67,6 +67,8 @@ public class FormMenuHandler : BaseMenuHandler
         //public String[] answers;
 
     }
+
+
     public FormQuestions form_questions = new FormQuestions();
 
     void Start()
@@ -134,7 +136,7 @@ public class FormMenuHandler : BaseMenuHandler
         List<GameObject> interactableObjects = new List<GameObject>();
         int menuLayerMask = LayerMask.NameToLayer("Menus");
 
-        for (int toggleInd = 0; toggleInd < currentQuestion.NumberOfAnswers; toggleInd++)
+        for (int toggleInd = 0; toggleInd < currentQuestion.possible_answers.Count; toggleInd++)
         {
             GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
             quad.tag = "CheckBox";
@@ -142,18 +144,34 @@ public class FormMenuHandler : BaseMenuHandler
             quad.layer = menuLayerMask;
             quad.transform.SetParent(transform);
 
+
+
             MeshRenderer rend = quad.GetComponent<MeshRenderer>();
             rend.transform.localScale = new Vector3(0.1f, 0.1f, 1.0f);
             rend.transform.localRotation = Quaternion.identity;
             rend.transform.localPosition = Vector3.zero;
-            rend.transform.localPosition = new Vector3(-0.47f,0.316f,0.887f);
+            rend.transform.localPosition = new Vector3(-0.62f,0.33f,0.887f);
             rend.transform.localPosition -= new Vector3(0,offset_y,0);
 
             quad.AddComponent<FormMenuHandler>();
             FormMenuHandler menuHandler = quad.GetComponent<FormMenuHandler>();
             menuHandler.baseState = formState;
             menuHandler.handlerType = FormMenuHandler.FormMenuHandlerType.ToggleCheckbox;
-            
+
+            GameObject optionText = new GameObject("");
+            optionText.AddComponent<TextMesh>();
+            if (FormMenu.currentQuestion.possible_answers.Count >= toggleInd)
+            {
+                optionText.GetComponent<TextMesh>().text = FormMenu.currentQuestion.possible_answers[toggleInd];
+            }
+            optionText.GetComponent<TextMesh>().fontSize = 16;
+            optionText.name = "Option Text";
+            optionText.transform.SetParent(quad.transform);
+            optionText.transform.localRotation = Quaternion.identity;
+            optionText.transform.localPosition = new Vector3(.69f, .48f, -.0015f);
+            optionText.transform.localScale = new Vector3(.5f,.5f,203); ;
+
+
             menuHandler.baseMaterial = BoxMaterial;
             menuHandler.inputInteractMaterial = CheckMaterial;
             menuHandler.UpdateMaterial();
@@ -173,7 +191,7 @@ public class FormMenuHandler : BaseMenuHandler
         List<GameObject> interactableObjects = new List<GameObject>();
         int menuLayerMask = LayerMask.NameToLayer("Menus");
 
-        for (int toggleInd = 0; toggleInd < currentQuestion.NumberOfAnswers; toggleInd++)
+        for (int toggleInd = 0; toggleInd < currentQuestion.possible_answers.Count; toggleInd++)
         {
             GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
             quad.tag = "RadioButton";
@@ -193,6 +211,19 @@ public class FormMenuHandler : BaseMenuHandler
             FormMenuHandler menuHandler = quad.GetComponent<FormMenuHandler>();
             menuHandler.baseState = formState;
             menuHandler.handlerType = FormMenuHandler.FormMenuHandlerType.ToggleRadio;
+
+            GameObject optionText = new GameObject("");
+            optionText.AddComponent<TextMesh>();
+            if (FormMenu.currentQuestion.possible_answers.Count >= toggleInd)
+            {
+                optionText.GetComponent<TextMesh>().text = FormMenu.currentQuestion.possible_answers[toggleInd];
+            }
+            optionText.GetComponent<TextMesh>().fontSize = 16;
+            optionText.name = "Option Text";
+            optionText.transform.SetParent(quad.transform);
+            optionText.transform.localRotation = Quaternion.identity;
+            optionText.transform.localPosition = new Vector3(.69f, .48f, -.0015f);
+            optionText.transform.localScale = new Vector3(.5f, .5f, 203); ;
 
             menuHandler.baseMaterial = CircleMaterial;
             menuHandler.inputInteractMaterial = sliderPointMaterial;
@@ -237,15 +268,16 @@ public class FormMenuHandler : BaseMenuHandler
         // submits the response from the particular question into the list.   
         if (FormMenu.currentQuestion.QuestionType == QuestionTypes.CheckBoxes)
         {
-            int numberOfSelectedCheckBoxes = 0;
+            int numberofCheckBoxSelected = 0;
             foreach (FormMenuHandler fmh in FormMenu.GetComponentsInChildren<FormMenuHandler>())
             {  
                 if ((fmh.tag == "CheckBox") && fmh.materialStatus)
                 {
-                    numberOfSelectedCheckBoxes++;
+                    numberofCheckBoxSelected++;
                 }
             }
-            AddToList(FormMenu.currentQuestion.QuestionType, FormMenu.form_questions.QuestionIndex + 1, numberOfSelectedCheckBoxes);
+            AddToList(FormMenu.currentQuestion.QuestionType, FormMenu.form_questions.QuestionIndex + 1, numberofCheckBoxSelected);
+
         }
         else if (FormMenu.currentQuestion.QuestionType == QuestionTypes.RadioButtons)
         {
@@ -253,7 +285,7 @@ public class FormMenuHandler : BaseMenuHandler
             {
                 if ((fmh.tag == "RadioButton") && fmh.materialStatus)
                 {
-                    Debug.Log( "grgrg");
+                    Debug.Log(fmh.transform.GetComponentInChildren<TextMesh>().text);
                 }
             }
         }
@@ -268,6 +300,10 @@ public class FormMenuHandler : BaseMenuHandler
                 }
             }
         }
+        
+        FormMenu.form_questions.QuestionIndex++;
+        FormMenu.SetQuestion();
+        Debug.Log(form_questions.QuestionIndex);
     }
 
     public void AnsInput(String answer)
@@ -411,7 +447,6 @@ public class FormMenuHandler : BaseMenuHandler
         }
         else
         {
-           
             rend.material = baseMaterial;
 
             if (allActiveGOs.Count > 0)
@@ -443,7 +478,6 @@ public class FormMenuHandler : BaseMenuHandler
             case FormMenuHandlerType.ToggleCheckbox:
                 materialStatus = !materialStatus;
                 UpdateMaterial();
-                
                 break;
             case FormMenuHandlerType.ToggleRadio:
                 // sets all the radiobuttons to false
@@ -466,6 +500,8 @@ public class FormMenuHandler : BaseMenuHandler
                 break;
             case FormMenuHandlerType.SubmitQuestionAnswer:             
                 SubmitQuestionAnswer();
+
+                // move on to the next question after doing this , probably +1 ing the index of the questionIndex and setting that to current, didn't work when I tried. Could make an update question method. 
                 break;
             default:
                 break;
@@ -494,7 +530,7 @@ public class FormMenuHandler : BaseMenuHandler
 
 
 
-    public static void SaveOutputData(List<string> selectInformation, long startTime)
+    public void SaveOutputData(List<string> selectInformation)
     {
         long endTime = DateTime.Now.ToFileTime();
 
