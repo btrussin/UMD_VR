@@ -16,10 +16,10 @@ public class RingState : MonoBehaviour
 
     Color ringColor;
 
-    float highlightAmt = 0.95f;
-    float selectedAmt = 0.75f;
-    float noneAmt = 0.5f;
-    float dimAmt = 0.35f;
+    public float highlightAmt = 0.95f;
+    public float selectedAmt = 0.75f;
+    public float noneAmt = 0.5f;
+    public float dimAmt = 0.35f;
 
     int connectionCount = 0;
 
