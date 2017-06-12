@@ -15,13 +15,13 @@ public class NodeState : MonoBehaviour {
 
     bool valuesNotSet = true;
 
-    Material ptMatOrig;
-    Material ptMatSelected;
-    Material ptMatCollision;
+    public Material ptMatOrig;
+    public Material ptMatSelected;
+    public Material ptMatCollision;
 
-    Material boxMaterial;
-    Material checkMaterial;
-    Material closeMaterial;
+    public Material boxMaterial;
+    public Material checkMaterial;
+    public Material closeMaterial;
 
     GameObject nodeMenu;
 
@@ -29,14 +29,6 @@ public class NodeState : MonoBehaviour {
 
     void Start () {
         isSelected = false;
-
-        ptMatOrig = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/PointMaterial.mat");
-        ptMatSelected = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/PointMaterialRed.mat");
-        ptMatCollision = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/PointMaterialYellow.mat");
-
-        boxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
-        checkMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
-        closeMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/close_mat.mat");
     }
 
 	void Update () {
@@ -56,6 +48,7 @@ public class NodeState : MonoBehaviour {
 
             valuesNotSet = false;
         }
+
 
         if (isSelected)
         {
@@ -97,11 +90,13 @@ public class NodeState : MonoBehaviour {
     {
         isSelected = !isSelected;
 
+        /*
         if (isSelected) bringUpMenu();
         else if (nodeMenu != null)
         {
             destroyMenu();  
         }
+        */
     }
 
     public void destroyMenu()
@@ -115,6 +110,8 @@ public class NodeState : MonoBehaviour {
         // clear out all other menus that may be present
         //foreach (GameObject obj in menus) GameObject.Destroy(obj);
         //menus.Clear();
+
+
 
         int menuLayerMask = LayerMask.NameToLayer("Menus");
         GameObject ptPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/R62V/UMDSphere/Prefabs/MenuPlane.prefab");

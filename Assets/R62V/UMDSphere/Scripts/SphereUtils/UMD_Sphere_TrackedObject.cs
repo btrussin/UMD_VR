@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Valve.VR;
 
 public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
@@ -26,6 +27,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     public Quaternion currRotation;
 
     public GameObject trackpadArrowObject;
+    public float amount_scrolled = 0;
 
     SphereCollider sphereCollider;
 
@@ -45,12 +47,13 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     GameObject beam;
     GameObject activeBeamInterceptObj = null;
 
+    private GameObject submitButton;
+
     bool useBeam = false;
 
     int menusLayerMask;
 
     float currRayAngle = 60.0f;
-    bool adjustRayAngle = false;
 
     //bool trackpadArrowsAreActive = false;
     int prevNumRingsInCollision = 0;
@@ -104,16 +107,19 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         otherTrackedObjScript = otherController.GetComponent<UMD_Sphere_TrackedObject>();
 
+        /*
         sphereData.setMainLayout(SphereData.SphereLayout.Sphere);
         sphereData.SetMainRingCategory(SphereData.MainRingCategory.Year);
+        */
 
-        setSliderLocalPosition(sphereData.bundlingStrength);
+        setSliderLocalPosition(sphereData.BundlingStrength);
+
 
         //this was getting some other reference to another instance of fmh_script
         //fmh_script = GameObject.FindObjectOfType<FormMenuHandler>();
         form_questions = fmh_script.form_questions;
+        submitButton = GameObject.FindGameObjectWithTag("SubmitButton");
     }
-
     void Update()
     {
         currPosition = transform.position;
@@ -127,9 +133,12 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         deviceRay.direction = rayRotation * currForwardVec;
 
-        sphereCollider.center = new Vector3(0.0f, 0.0f, 0.03f);
+        //sphereCollider.center = new Vector3(0.0f, 0.0f, 0.03f);
 
         handleStateChanges();
+
+        submitButton.SetActive(fmh_script.readyForSubmit);
+      
 
         ringsInCollision = sphereData.getRingsInCollision(currPosition + (currForwardVec - currUpVec) * (0.03f + sphereCollider.radius) , sphereCollider.radius*2.0f);
         if (ringsInCollision.Count > 0)
@@ -149,7 +158,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         if( updateSlider )
         {
             calcSliderPosition();
-            sphereData.updateAllKeptConnections();
+            sphereData.updateAllConnections();
         }
     }
 
@@ -178,7 +187,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         Vector3 tVec = (sliderRightPnt.transform.localPosition - sliderLeftPnt.transform.localPosition)* tDist;
         sliderPoint.transform.localPosition = sliderLeftPnt.transform.localPosition + tVec;
 
-        sphereData.bundlingStrength = tDist;
+        sphereData.BundlingStrength = tDist;
     }
 
     void projectBeam()
@@ -219,7 +228,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 //MovieObject mo = activeBeamInterceptObj.transform.parent.transform.parent.gameObject.GetComponent<MovieObject>();
                 MovieObject mo = activeBeamInterceptObj.transform.parent.GetComponent<NodeMenuUtils>().movieObject;
                 sphereData.connectMoviesByActors(mo.cmData);
-                sphereData.updateAllKeptConnections();
+                sphereData.updateAllKeptConnections(ringsInCollision);
             }
 
             FormMenuHandler formMenuHandler = activeBeamInterceptObj.GetComponent<FormMenuHandler>();
@@ -265,16 +274,18 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                         {
                             if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Sphere") == 0)
                                 destLayout = SphereData.SphereLayout.Sphere;
-                            else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_X") == 0)
+                            else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl") == 0)
                                 destLayout = SphereData.SphereLayout.Column_X;
-                            else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_Y") == 0)
-                                destLayout = SphereData.SphereLayout.Column_Y;
-                            else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl_Z") == 0)
-                                destLayout = SphereData.SphereLayout.Column_Z;
+                           
 
                             sphereData.setMainLayout(destLayout);
                             mainMenu.updateLayout();
                         }
+                    }
+                    else if(activeBeamInterceptObj.name.CompareTo("Box-Show_Conn") == 0)
+                    {
+                        sphereData.toggleEdgesAlwaysOn();
+                        mainMenu.updateLayout();
                     }
                     else if (activeBeamInterceptObj.name.Contains("Box-Cat"))
                     {
@@ -348,8 +359,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 // activate beam
                 beam.SetActive(true);
                 useBeam = true;
-
-                if( adjustRayAngle ) showTrackpadArrows();
             }
 
             else if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0 &&
@@ -375,6 +384,10 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 {
                     m.nodeState.toggleSelected();
                     m.nodeState.updateColor();
+
+                    HashSet<EdgeInfo> edgeSet = m.getEdges();
+                    if (m.nodeState.getIsSelected()) foreach (EdgeInfo info in edgeSet) info.select();
+                    else foreach (EdgeInfo info in edgeSet) info.unselect();
                 }
 
             }
@@ -383,102 +396,85 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             prevState = state;
         }
 
-        // if touchpad scroll without clicking - RK ,Alex
-        if ((SteamVR_Controller.ButtonMask.Touchpad) != 0)
-        {
-            GameObject slider = GameObject.FindGameObjectWithTag("Slider");
-            Transform sliderPoint = null;
-            Transform sliderLeftLimit = null;
-            Transform sliderRightLimit = null;
 
-            // gets reference to slider parts 
-            if (slider != null)
+        if ((state.ulButtonTouched) == 4294967296) // if the touchpad is touched 
+        {           
+            Debug.Log(transform);
+            
+            if (fmh_script.amountScrolled < 70 && state.rAxis0.x >= 0)
             {
-                foreach (Transform t in slider.GetComponentsInChildren<Transform>())
-                {
-                    if ((t.tag == "SliderPoint"))
-                    {
-                        sliderPoint = t;
-                    }
-                    else if (t.tag == "SliderLeftLimit")
-                    {
-                        
-                        sliderLeftLimit = t;
-
-                    }
-                    else if (t.tag == "SliderRightLimit")
-                    {
-                        sliderRightLimit = t;
-                        
-                    }
-                    else if (t.tag == "NumberText")
-                    {
-                        t.gameObject.GetComponent<TextMesh>().text =
-                            (FindObjectOfType<FormMenuHandler>().GetSliderValue(slider)).ToString();
-                    }
-                }
-               
-
-                // keeps slider within bounds
-                if (!(sliderPoint.position.x >= sliderLeftLimit.position.x) && (!(sliderPoint.position.x <= sliderRightLimit.position.x)))
-                {
-
-                    sliderPoint.Translate(0, -state.rAxis0.x / 100, 0);
-                }
-
-                else if ((state.rAxis0.x <= 0) && (!(sliderPoint.position.x >= sliderLeftLimit.position.x)) )
-                {
-                        sliderPoint.Translate(0, -state.rAxis0.x / 100, 0);
-                    
-                }
-
-                else if((state.rAxis0.x >= 0) && (!(sliderPoint.position.x <= sliderRightLimit.position.x)))
-                {
-                    sliderPoint.Translate(0, -state.rAxis0.x / 100, 0);
-                }
-
+                fmh_script.amountScrolled += state.rAxis0.x;
             }
+            
+            else if (fmh_script.amountScrolled >= 0 && state.rAxis0.x < 0)
+            {
+                fmh_script.amountScrolled += state.rAxis0.x;
+            }
+            else if (fmh_script.amountScrolled <= 70 && fmh_script.amountScrolled >= 0)
+            {
+                fmh_script.amountScrolled += state.rAxis0.x;
+            }
+
+            GameObject formMenu = GameObject.FindGameObjectWithTag("FormMenu");
+            float radioButtonOffset = 70;
+            
+            foreach (Transform t in formMenu.GetComponentsInChildren<Transform>())
+            {
+                if (t.tag == "Slider")
+                {
+                    radioButtonOffset -= 10f;
+                   
+                    FormMenuHandler fmh = t.GetComponent<FormMenuHandler>();
+                    if (radioButtonOffset < fmh_script.amountScrolled)
+                    {
+                        t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
+                        fmh_script.readyForSubmit = true;
+                    }
+                    else
+                    {
+                        t.gameObject.GetComponent<FormMenuHandler>().materialStatus = false;
+                    }
+                    fmh.UpdateMaterial(); 
+                              
+                }
+
+                
+            }
+            radioButtonOffset = 70;
         }
 
 
         if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) != 0)
         {
-            padJustPressedDown = true;
-            // reset the collision check to false before checking again
-            isCollidingWithRing = false;
 
-            Quaternion addRotation = Quaternion.Euler(0.0f, 0.0f, state.rAxis0.y);
-            Quaternion origRot;
-            GameObject innerRot;
-            foreach (GameObject g in ringsInCollision)
+            if(ringsInCollision.Count < 1)
             {
-                innerRot = g.transform.GetChild(0).gameObject;
-                origRot = innerRot.transform.localRotation;
-
-                innerRot.transform.localRotation = origRot * addRotation;
-
-                // check if colliding with ring
-                if (innerRot != null)
+                Vector2 vec;
+                if( Mathf.Abs(state.rAxis0.x) > Mathf.Abs(state.rAxis0.y ) )
                 {
-                    isCollidingWithRing = true;
+                    vec = new Vector2(state.rAxis0.x, 0f);
+                    sphereData.rotateGraph(vec);
                 }
+                else
+                {
+                    vec = new Vector2(0f, state.rAxis0.y);
+                    sphereData.rotateGraph(vec);
+                }
+                
             }
-            
-            UpdateConnections();
-
-            sphereData.updateAllKeptConnections();
-
-            // update the beam ray direction
-            if (adjustRayAngle && ringsInCollision.Count == 0 && (state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 )
+            else
             {
+                Quaternion addRotation = Quaternion.Euler(0.0f, 0.0f, state.rAxis0.y);
+                Quaternion origRot;
+                foreach (GameObject g in ringsInCollision)
+                {
+                    origRot = g.transform.localRotation;
+                    g.transform.localRotation = origRot * addRotation;
+                }
 
-                if (state.rAxis0.y > 0.0f) currRayAngle -= 1.0f;
-                else if (state.rAxis0.y < 0.0f) currRayAngle += 1.0f;
+                UpdateConnections();
 
-                // keep within the bounds of 0 and 90 degrees
-                if (currRayAngle > 90.0f) currRayAngle = 90.0f;
-                else if (currRayAngle < 0.0f) currRayAngle = 0.0f;
-
+                sphereData.updateAllKeptConnections(ringsInCollision);
             }
         }
     }
@@ -495,6 +491,12 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             ns.updateColor();
 
             string key = MovieDBUtils.getMovieDataKey(mo.cmData);
+
+            HashSet<EdgeInfo> edgeSet = mo.getEdges();
+            foreach (EdgeInfo info in edgeSet)
+            {
+                info.hightlight();
+            }
 
             if ( !ns.getIsSelected() )
             {
@@ -521,6 +523,12 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
             mo.nodeState.removeCollision();
             mo.nodeState.updateColor();
+
+            HashSet<EdgeInfo> edgeSet = mo.getEdges();
+            foreach(EdgeInfo info in edgeSet)
+            {
+                info.unhightlight();
+            }
 
             if( !mo.nodeState.getIsSelected() )
             {

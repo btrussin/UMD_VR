@@ -11,13 +11,15 @@ using Debug = UnityEngine.Debug;
 public class FormMenuHandler : BaseMenuHandler
 {
     
-    private bool materialStatus;
+    public bool materialStatus;
+    public bool readyForSubmit;
 
     public Material CheckMaterial;
     public Material BoxMaterial;
     public Material CircleMaterial;
     public Material sliderPointMaterial;
     public Material sliderBarMaterial;
+    public float amountScrolled = 0;
 
     private FormMenuHandler submitButton;
     private List<String> answers = new List<string>();
@@ -81,10 +83,18 @@ public class FormMenuHandler : BaseMenuHandler
         sliderBarMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/sliderbar_mat.mat");
 
         formState = GetComponent<FormState>();
+        try
+        {
+            submitButton = GameObject.FindGameObjectWithTag("SubmitButton").GetComponent<FormMenuHandler>();
+            submitButton.baseState = formState;
+            submitButton.handlerType = FormMenuHandler.FormMenuHandlerType.SubmitQuestionAnswer;
+        }
+        catch (NullReferenceException)
+        {
+            
+        }
+        
 
-        submitButton = GameObject.FindGameObjectWithTag("SubmitButton").GetComponent<FormMenuHandler>();
-        submitButton.baseState = formState;
-        submitButton.handlerType = FormMenuHandler.FormMenuHandlerType.SubmitQuestionAnswer;
         
 
         foreach (TextMesh text in gameObject.GetComponentsInChildren<TextMesh>())
@@ -107,6 +117,7 @@ public class FormMenuHandler : BaseMenuHandler
             currentQuestion = form_questions.questions[form_questions.QuestionIndex];
 
             current_question_text.text = currentQuestion.QuestionText;
+            current_question_text.text = current_question_text.text.Substring(0, 42) + Environment.NewLine + current_question_text.text.Substring(43);
 
             if (currentQuestion.QuestionType == QuestionTypes.CheckBoxes)
             {
@@ -125,7 +136,8 @@ public class FormMenuHandler : BaseMenuHandler
                 AnsInput("");
             }
         }
-        
+        readyForSubmit = false;
+        amountScrolled = 0;
     }
 
     public void GenCheckBox()
@@ -150,7 +162,7 @@ public class FormMenuHandler : BaseMenuHandler
             rend.transform.localScale = new Vector3(0.1f, 0.1f, 1.0f);
             rend.transform.localRotation = Quaternion.identity;
             rend.transform.localPosition = Vector3.zero;
-            rend.transform.localPosition = new Vector3(-0.62f,0.33f,0.887f);
+            rend.transform.localPosition = new Vector3(-0.44f,0.31f,0.887f);
             rend.transform.localPosition -= new Vector3(0,offset_y,0);
 
             quad.AddComponent<FormMenuHandler>();
@@ -234,34 +246,6 @@ public class FormMenuHandler : BaseMenuHandler
         offset_y += yOffsetPerLine;
     }
 
-    public int GetSliderValue(GameObject slider)
-    { 
-        // gets the value of the slider on a scale from 1-10. 
-        Transform sliderPoint = null;
-        Transform sliderLeftLimit = null;
-        Transform sliderRightLimit = null;
-        foreach (Transform t in slider.GetComponentsInChildren<Transform>())
-        {
-            if ((t.tag == "SliderPoint"))
-            {
-                sliderPoint = t;
-            }
-            else if (t.tag == "SliderLeftLimit")
-            {
-                sliderLeftLimit = t;
-
-            }
-            else if (t.tag == "SliderRightLimit")
-            {
-                sliderRightLimit = t;
-            }
-        }
-        float length = Mathf.Abs(sliderLeftLimit.localPosition.x - sliderRightLimit.localPosition.x);
-        float currentSliderPointPosition = ((sliderPoint.localPosition.x) - sliderLeftLimit.localPosition.x);
-
-        return Mathf.RoundToInt((currentSliderPointPosition/ length) * 10);
-    }
-
 
     public void SubmitQuestionAnswer()
     {
@@ -296,14 +280,14 @@ public class FormMenuHandler : BaseMenuHandler
 
                 if ((t.tag == "Slider"))
                 {
-                    AddToList(FormMenu.currentQuestion.QuestionType, FormMenu.form_questions.QuestionIndex + 1, GetSliderValue(t.gameObject));
+                   /* AddToList(FormMenu.currentQuestion.QuestionType, FormMenu.form_questions.QuestionIndex + 1, GetSliderValue(t.gameObject));
+            */        
                 }
             }
         }
         
         FormMenu.form_questions.QuestionIndex++;
         FormMenu.SetQuestion();
-        Debug.Log(form_questions.QuestionIndex);
     }
 
     public void AnsInput(String answer)
@@ -311,106 +295,57 @@ public class FormMenuHandler : BaseMenuHandler
 
     }
 
+
     public void GenSlider()
-    {
-        GameObject sliderContainer = new GameObject("Slider_Container");
-        sliderContainer.transform.SetParent(transform);
-        sliderContainer.transform.localPosition = new Vector3(-0.02f, 1.26f, 0.94f);
-        sliderContainer.transform.localRotation = Quaternion.identity;
-        sliderContainer.transform.localScale = new Vector3(7.9f, 9.4f, 4.02f);
-        sliderContainer.tag = "Slider";
+    {   // by RK, check for Alex and Mike, as requested this is the radio button slider.
 
-        GameObject slider = new GameObject("Quad_Slider");
-        GameObject sliderPoint = new GameObject("Quad_Slider_Point");
-        //
-        GameObject leftMostPoint = new GameObject("Quad_Slider_left");
-        GameObject rightMostPoint = new GameObject("Quad_Slider_right");
-        GameObject leftText = new GameObject("Text-Rating_1");
-        GameObject rightText = new GameObject("Text-Rating_10");
-        GameObject numberText = new GameObject("NumberText");
-        List<GameObject> textObjects = new List<GameObject>();
+        float offset_y = -0.75f;
+        float yOffsetPerLine = 0.12f;
+        List<GameObject> interactableObjects = new List<GameObject>();
+        int menuLayerMask = LayerMask.NameToLayer("Menus");
 
+        for (int toggleInd = 0; toggleInd < currentQuestion.possible_answers.Count; toggleInd++)
+        {
+            GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            quad.tag = "Slider";
+            quad.name = "Best Option";
+            quad.layer = menuLayerMask;
+            quad.transform.SetParent(transform);
 
-        slider.AddComponent<MeshFilter>();
-        slider.AddComponent<MeshRenderer>();
-        sliderPoint.AddComponent<MeshFilter>();
-        sliderPoint.AddComponent<MeshRenderer>();
-        sliderPoint.AddComponent<MeshCollider>();
-        sliderPoint.AddComponent<Rigidbody>();
-        sliderPoint.GetComponent<Rigidbody>().isKinematic = true;
-        leftMostPoint.AddComponent<MeshFilter>();
-        leftMostPoint.AddComponent<MeshRenderer>();
-        rightMostPoint.AddComponent<MeshFilter>();
-        rightMostPoint.AddComponent<MeshRenderer>();
-        leftText.AddComponent<TextMesh>();
-        rightText.AddComponent<TextMesh>();
-        numberText.AddComponent<TextMesh>();
+            MeshRenderer rend = quad.GetComponent<MeshRenderer>();
 
-        slider.GetComponent<Renderer>().material = sliderBarMaterial;
-        sliderPoint.GetComponent<Renderer>().material = sliderPointMaterial;
-        leftMostPoint.GetComponent<Renderer>().material = sliderPointMaterial;
-        rightMostPoint.GetComponent<Renderer>().material = sliderPointMaterial;
-        leftText.GetComponent<TextMesh>().text = "1";
-        leftText.GetComponent<TextMesh>().fontSize = 16;
-        rightText.GetComponent<TextMesh>().text = "10";
-        rightText.GetComponent<TextMesh>().fontSize = 16;
-        numberText.GetComponent<TextMesh>().text = "null";
-        numberText.GetComponent<TextMesh>().fontSize = 16;
+            rend.transform.localScale = new Vector3(0.1f, 0.1f, 1.0f);
+            rend.transform.localRotation = Quaternion.identity;
+            rend.transform.localPosition = Vector3.zero;
+            rend.transform.localPosition = new Vector3(-0.16f, 0.24f, 0.88f);
+            rend.transform.localPosition -= new Vector3(offset_y, 0, 0); 
 
-        // Create a quad game object
-        GameObject quadGO = GameObject.CreatePrimitive(PrimitiveType.Quad);
-        // Assign the mesh from that quad to your gameobject's mesh    
-        slider.GetComponent<MeshFilter>().mesh = quadGO.GetComponent<MeshFilter>().mesh;
-        sliderPoint.GetComponent<MeshFilter>().mesh = quadGO.GetComponent<MeshFilter>().mesh;
-        leftMostPoint.GetComponent<MeshFilter>().mesh = quadGO.GetComponent<MeshFilter>().mesh;
-        rightMostPoint.GetComponent<MeshFilter>().mesh = quadGO.GetComponent<MeshFilter>().mesh;
-        GameObject.Destroy(quadGO);
+            quad.AddComponent<FormMenuHandler>();
+            FormMenuHandler menuHandler = quad.GetComponent<FormMenuHandler>();
+            menuHandler.baseState = formState;
+            menuHandler.handlerType = FormMenuHandler.FormMenuHandlerType.ToggleRadio;
 
-        slider.transform.SetParent(sliderContainer.transform);
-        sliderPoint.transform.SetParent(sliderContainer.transform);
-        leftMostPoint.transform.SetParent(sliderContainer.transform);
-        rightMostPoint.transform.SetParent(sliderContainer.transform);
-        leftText.transform.SetParent(sliderContainer.transform);
-        rightText.transform.SetParent(sliderContainer.transform);
-        numberText.transform.SetParent(sliderContainer.transform);
+            GameObject optionText = new GameObject("");
+            optionText.AddComponent<TextMesh>();
+            if (FormMenu.currentQuestion.possible_answers.Count >= toggleInd)
+            {
+                optionText.GetComponent<TextMesh>().text = FormMenu.currentQuestion.possible_answers[toggleInd];
+            }
 
-        slider.transform.localPosition = Vector3.zero;
-        slider.transform.localPosition -= new Vector3(0, 0.1f, 0.01f);
-        slider.transform.localRotation = Quaternion.identity;
-        slider.transform.Rotate(Vector3.forward, 90);
-        slider.transform.localScale = new Vector3(0.0009747184f, 0.06f, 0.7797724f);
-        sliderPoint.transform.localPosition = Vector3.zero;
-        sliderPoint.transform.localPosition -= new Vector3(0, 0.1f, 0.01f);
-        sliderPoint.transform.localRotation = Quaternion.identity;
-        sliderPoint.transform.Rotate(Vector3.forward, 90);
-        sliderPoint.transform.localScale = new Vector3(0.007797747f, 0.007797728f, 0.7797745f);
-        leftMostPoint.transform.localPosition = Vector3.zero;
-        leftMostPoint.transform.localPosition -= new Vector3(0.03f, 0.1f, 0.01f);
-        leftMostPoint.transform.localRotation = Quaternion.identity;
-        leftMostPoint.transform.Rotate(Vector3.forward, 90);
-        leftMostPoint.transform.localScale = new Vector3(0.001949439f, 0.001949435f, 0.7797739f);
-        rightMostPoint.transform.localPosition = Vector3.zero;
-        rightMostPoint.transform.localPosition -= new Vector3(-0.03f, 0.1f, 0.01f);
-        rightMostPoint.transform.localRotation = Quaternion.identity;
-        rightMostPoint.transform.Rotate(Vector3.forward, 90);
-        rightMostPoint.transform.localScale = leftMostPoint.transform.localScale;
-        leftText.transform.localPosition = leftMostPoint.transform.localPosition - new Vector3(0.004f, -0.0017f, 0);
-        rightText.transform.localPosition = rightMostPoint.transform.localPosition + new Vector3(0.004f, 0.0017f, 0);
-        rightText.transform.localPosition = rightMostPoint.transform.localPosition + new Vector3(0.004f, 0.0017f, 0);
-        numberText.transform.localPosition = Vector3.zero;
-        numberText.transform.localPosition -= new Vector3(0, 0.105f, 0.01f);
+            optionText.GetComponent<TextMesh>().fontSize = 16;
+            optionText.name = "Option Text";
+            optionText.transform.SetParent(quad.transform);
+            optionText.transform.localRotation = Quaternion.identity;
+            optionText.transform.localPosition = new Vector3(-0.5f, -0.71f, -.0003f);
+            optionText.transform.localScale = new Vector3(.5f, .5f, 203); ;
+            
+            menuHandler.baseMaterial = CircleMaterial;
+            menuHandler.inputInteractMaterial = sliderPointMaterial;
+            menuHandler.UpdateMaterial();
 
-        numberText.transform.localRotation = Quaternion.identity;
-        leftText.transform.localRotation = Quaternion.identity;
-        rightText.transform.localRotation = Quaternion.identity;
-        numberText.transform.localScale = leftMostPoint.transform.localScale;
-        leftText.transform.localScale = leftMostPoint.transform.localScale;
-        rightText.transform.localScale = leftMostPoint.transform.localScale;
-        sliderPoint.tag = "SliderPoint";
-        leftMostPoint.tag = "SliderLeftLimit";
-        rightMostPoint.tag = "SliderRightLimit";
-        numberText.tag = "NumberText";
-
+            offset_y += yOffsetPerLine + 0.05f;
+        }
+        offset_y += yOffsetPerLine;
     }
 
 
@@ -427,6 +362,7 @@ public class FormMenuHandler : BaseMenuHandler
 
     void Update()
     {
+
     }
     public override void UpdateMaterial()
     {
