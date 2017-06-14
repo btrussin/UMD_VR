@@ -90,13 +90,13 @@ public class NodeState : MonoBehaviour {
     {
         isSelected = !isSelected;
 
-        /*
+        
         if (isSelected) bringUpMenu();
         else if (nodeMenu != null)
         {
             destroyMenu();  
         }
-        */
+        
     }
 
     public void destroyMenu()
@@ -108,8 +108,8 @@ public class NodeState : MonoBehaviour {
     public void bringUpMenu()
     {
         // clear out all other menus that may be present
-        //foreach (GameObject obj in menus) GameObject.Destroy(obj);
-        //menus.Clear();
+        foreach (GameObject obj in menus) GameObject.Destroy(obj);
+        menus.Clear();
 
 
 
