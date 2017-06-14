@@ -366,6 +366,16 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0)
             {
                 // deactivate beam
+                if (activeBeamInterceptObj != null)
+                {
+                    if (activeBeamInterceptObj.transform.parent.GetComponent<UserDataCollectionHandler>())
+                    {
+                        UserDataCollectionHandler udch =
+                            activeBeamInterceptObj.transform.parent.GetComponent<UserDataCollectionHandler>();
+                        udch.minimzed = !udch.minimzed;
+                    }
+                }
+
                 beam.SetActive(false);
                 useBeam = false;
                 activeBeamInterceptObj = null;
