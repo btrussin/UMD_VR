@@ -136,9 +136,10 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         //sphereCollider.center = new Vector3(0.0f, 0.0f, 0.03f);
 
         handleStateChanges();
-
-        submitButton.SetActive(fmh_script.readyForSubmit);
-      
+        if (submitButton != null)
+        {
+            submitButton.SetActive(fmh_script.readyForSubmit);
+        }
 
         ringsInCollision = sphereData.getRingsInCollision(currPosition + (currForwardVec - currUpVec) * (0.03f + sphereCollider.radius) , sphereCollider.radius*2.0f);
         if (ringsInCollision.Count > 0)
@@ -329,7 +330,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         bool stateIsValid = vrSystem.GetControllerState((uint)index, ref state);
 
 
-        if (!stateIsValid) Debug.Log("Invalid State for Idx: " + index);
+        //if (!stateIsValid) Debug.Log("Invalid State for Idx: " + index);
 
         if (stateIsValid && state.GetHashCode() != prevState.GetHashCode())
         {
@@ -399,7 +400,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         if ((state.ulButtonTouched) == 4294967296) // if the touchpad is touched 
         {           
-            Debug.Log(transform);
             
             if (fmh_script.amountScrolled < 70 && state.rAxis0.x >= 0)
             {

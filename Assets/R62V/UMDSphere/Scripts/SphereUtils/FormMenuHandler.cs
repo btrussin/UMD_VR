@@ -27,13 +27,15 @@ public class FormMenuHandler : BaseMenuHandler
     private FormState formState;
     private FormQuestions.Question currentQuestion;
     private FormMenuHandler FormMenu;
+    private GameObject selectText;
 
     public enum FormMenuHandlerType
     {
         ToggleCheckbox,
         ToggleRadio,
         SubmitForm,
-        SubmitQuestionAnswer
+        SubmitQuestionAnswer,
+        NotClickable
     }
     public enum QuestionTypes
     {
@@ -66,6 +68,7 @@ public class FormMenuHandler : BaseMenuHandler
         }
         public int QuestionIndex;
         public  List<Question> questions = new List<Question>();
+        public List<String> surveyResponses = new List<String>();
         //public String[] answers;
 
     }
@@ -75,6 +78,7 @@ public class FormMenuHandler : BaseMenuHandler
 
     void Start()
     {
+        selectText = GameObject.FindGameObjectWithTag("SelectText");
         FormMenu = GameObject.FindGameObjectWithTag("FormMenu").GetComponent<FormMenuHandler>();
         BoxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
         CheckMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
@@ -93,9 +97,6 @@ public class FormMenuHandler : BaseMenuHandler
         {
             
         }
-        
-
-        
 
         foreach (TextMesh text in gameObject.GetComponentsInChildren<TextMesh>())
         {
@@ -116,19 +117,42 @@ public class FormMenuHandler : BaseMenuHandler
             clearSelection();
             currentQuestion = form_questions.questions[form_questions.QuestionIndex];
 
-            current_question_text.text = currentQuestion.QuestionText;
-            current_question_text.text = current_question_text.text.Substring(0, 42) + Environment.NewLine + current_question_text.text.Substring(43);
+           
+            current_question_text.text = currentQuestion.QuestionText; // nullreference exception on this line, known bug
+
+
+            if (current_question_text.text.Length > 60)
+            {
+                if (FormMenu.current_question_text.text[60].ToString() == " " ||
+                    FormMenu.current_question_text.text[59].ToString() == " ")
+                {
+                    current_question_text.text = current_question_text.text.Substring(0, 60) + Environment.NewLine + current_question_text.text.Substring(60);
+                }
+                else
+                {
+                    for (int i = 0; i < FormMenu.current_question_text.text.Substring(60).Length; i++)
+                    {
+                        if (FormMenu.current_question_text.text.Substring(60)[i] == ' ')
+                        {
+                            
+                            current_question_text.text = current_question_text.text.Substring(0, 60+i) + Environment.NewLine + current_question_text.text.Substring(60+i);
+                            break;
+                        }
+                    }
+                }
+            }
+
 
             if (currentQuestion.QuestionType == QuestionTypes.CheckBoxes)
             {
                 GenCheckBox();
             }
             if (currentQuestion.QuestionType == QuestionTypes.RadioButtons)
-            {             
+            {
                 GenRadioButton();
             }
             if (currentQuestion.QuestionType == QuestionTypes.Slider)
-            {            
+            {
                 GenSlider();
             }
             if (currentQuestion.QuestionType == QuestionTypes.AnsInput)
@@ -260,7 +284,7 @@ public class FormMenuHandler : BaseMenuHandler
                     numberofCheckBoxSelected++;
                 }
             }
-            AddToList(FormMenu.currentQuestion.QuestionType, FormMenu.form_questions.QuestionIndex + 1, numberofCheckBoxSelected);
+            AddToList(FormMenu.form_questions.QuestionIndex + 1, numberofCheckBoxSelected);
 
         }
         else if (FormMenu.currentQuestion.QuestionType == QuestionTypes.RadioButtons)
@@ -275,19 +299,21 @@ public class FormMenuHandler : BaseMenuHandler
         }
         else if (FormMenu.currentQuestion.QuestionType == QuestionTypes.Slider)
         {
-            foreach (Transform t in FormMenu.GetComponentsInChildren<Transform>())
+            int numberofButtonSelected = 0;
+            foreach (FormMenuHandler fmh in FormMenu.GetComponentsInChildren<FormMenuHandler>())
             {
 
-                if ((t.tag == "Slider"))
+                if ((fmh.tag == "Slider") && fmh.materialStatus)
                 {
-                   /* AddToList(FormMenu.currentQuestion.QuestionType, FormMenu.form_questions.QuestionIndex + 1, GetSliderValue(t.gameObject));
-            */        
+                    numberofButtonSelected++;
                 }
             }
+            AddToList(FormMenu.form_questions.QuestionIndex + 1, numberofButtonSelected);
         }
         
         FormMenu.form_questions.QuestionIndex++;
         FormMenu.SetQuestion();
+
     }
 
     public void AnsInput(String answer)
@@ -323,7 +349,7 @@ public class FormMenuHandler : BaseMenuHandler
             quad.AddComponent<FormMenuHandler>();
             FormMenuHandler menuHandler = quad.GetComponent<FormMenuHandler>();
             menuHandler.baseState = formState;
-            menuHandler.handlerType = FormMenuHandler.FormMenuHandlerType.ToggleRadio;
+            menuHandler.handlerType = FormMenuHandler.FormMenuHandlerType.NotClickable;
 
             GameObject optionText = new GameObject("");
             optionText.AddComponent<TextMesh>();
@@ -392,19 +418,18 @@ public class FormMenuHandler : BaseMenuHandler
         }
     }
 
-    public void AddToList(QuestionTypes QType, int QNum, int value)
+    public void AddToList(int QNum, int value)
     {
         // just adds the incoming variables in a list
-        List<String> il = new List<String>();
-        il.Add("QType:"+ QType + " " + "QNum:" + QNum + " " + "Input Value:" + value);
-
-        foreach (String l in il  )
+        
+        FormMenu.form_questions.surveyResponses.Add( "QNum:" + QNum + " " + "Input Value:" + value);
+        if (FormMenu.form_questions.QuestionIndex == FormMenu.form_questions.questions.Count -2)
         {
-            Debug.Log(""+l);
+            SaveOutputData(FormMenu.form_questions.surveyResponses);
         }
-
-
     }
+
+
 
     public override void handleTrigger()
     {
@@ -469,9 +494,26 @@ public class FormMenuHandler : BaseMenuHandler
     public void SaveOutputData(List<string> selectInformation)
     {
         long endTime = DateTime.Now.ToFileTime();
+        string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        string path = pathDesktop + "\\mycsvfile.csv";
+        System.Random rnd = new System.Random();
+        int index = 0;
+        
 
-        string path = "Form_Results/CSVFormData_" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm") + ".csv";
-        Debug.Log(selectInformation.Count);
+        if (!File.Exists(path))
+        {
+            
+            File.Create(path).Close();
+        }
+        else
+        {
+            path = pathDesktop + "\\user" + index + ".csv";
+            while (File.Exists(path))
+            {
+                index++;
+                path = pathDesktop + "\\user" + index + ".csv";
+            }
+        }
 
         using (var w = new StreamWriter(path))
         {
