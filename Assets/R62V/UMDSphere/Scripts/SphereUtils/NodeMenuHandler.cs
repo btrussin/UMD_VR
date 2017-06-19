@@ -33,7 +33,6 @@ public class NodeMenuHandler : MonoBehaviour
     public void UpdateMaterial()
     {
         MeshRenderer rend = gameObject.GetComponent<MeshRenderer>();
-
         if (role.active)
         {
             rend.material = checkMaterial;
@@ -55,6 +54,7 @@ public class NodeMenuHandler : MonoBehaviour
             case NodeMenuHandlerType.ToggleActor:
                 role.active = !role.active;
                 UpdateMaterial();
+                FindObjectOfType<UserDataCollectionHandler>().PromptUserInput(role.actor);
                 break;
             default:
                 break;

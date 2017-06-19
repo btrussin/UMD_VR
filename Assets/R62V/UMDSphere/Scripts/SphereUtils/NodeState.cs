@@ -130,9 +130,7 @@ public class NodeState : MonoBehaviour {
         nodeMenu.AddComponent<NodeMenuUtils>();
         NodeMenuUtils menuUtils = nodeMenu.GetComponent<NodeMenuUtils>();
         menuUtils.movieObject = gameObject.GetComponent<MovieObject>();
-        Debug.Log(menuUtils.movieObject.cmData.roles[0].actor);
-        Debug.Log(menuUtils.movieObject.cmData.roles[0].active);
-
+        FindObjectOfType<UserDataCollectionHandler>().RefreshMovieObject(menuUtils.movieObject);
 
         List<GameObject> textObjects = new List<GameObject>();
 

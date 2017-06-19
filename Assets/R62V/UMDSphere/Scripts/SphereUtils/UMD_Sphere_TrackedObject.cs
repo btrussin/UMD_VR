@@ -71,6 +71,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     // returns true on touchpad click up
     public bool padClicked()
     {
+        
         if (padJustPressedDown && (state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) == 0)
         {
             padJustPressedDown = false;
@@ -218,7 +219,11 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     void triggerActiverBeamObject()
     {
         if( activeBeamInterceptObj != null )
-        { 
+        {
+            if (activeBeamInterceptObj.tag == "CloseButton")
+            {
+                activeBeamInterceptObj.transform.parent.gameObject.SetActive(false); // All purpose blind close button code: sets direct parent of button inactive
+            }
             NodeMenuHandler menuHandler = activeBeamInterceptObj.GetComponent<NodeMenuHandler>();
           
             if (menuHandler != null )
@@ -320,12 +325,11 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     void handleStateChanges()
     {
+        
         // enter survey question answer
         if (padClicked() && !isCollidingWithRing)
         {
-            fmh_script.form_questions.QuestionIndex++;
-            fmh_script.SetQuestion();
-
+            Debug.Log("here1");
         }
         bool stateIsValid = vrSystem.GetControllerState((uint)index, ref state);
 
@@ -368,7 +372,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 // deactivate beam
                 if (activeBeamInterceptObj != null)
                 {
-                    if (activeBeamInterceptObj.transform.parent.GetComponent<UserDataCollectionHandler>())
+                    if (activeBeamInterceptObj.tag == "ExpandedPopUpMenu" || activeBeamInterceptObj.tag == "PopUpMenu")
                     {
                         UserDataCollectionHandler udch =
                             activeBeamInterceptObj.transform.parent.GetComponent<UserDataCollectionHandler>();
@@ -456,7 +460,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) != 0)
         {
-
+            padJustPressedDown = true;
             if(ringsInCollision.Count < 1)
             {
                 Vector2 vec;

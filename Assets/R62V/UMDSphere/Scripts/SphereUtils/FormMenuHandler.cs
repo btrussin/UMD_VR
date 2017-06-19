@@ -79,6 +79,7 @@ public class FormMenuHandler : BaseMenuHandler
     void Start()
     {
         selectText = GameObject.FindGameObjectWithTag("SelectText");
+        Debug.Log(gameObject.name);
         FormMenu = GameObject.FindGameObjectWithTag("FormMenu").GetComponent<FormMenuHandler>();
         BoxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
         CheckMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
@@ -102,7 +103,7 @@ public class FormMenuHandler : BaseMenuHandler
         {
             if (text.tag == "CurrentQuestionText")
             {
-                current_question_text = text;
+                FormMenu.current_question_text = text;
             }
         }
 
@@ -115,10 +116,12 @@ public class FormMenuHandler : BaseMenuHandler
         if (form_questions.QuestionIndex < form_questions.questions.Count)
         {
             clearSelection();
-            currentQuestion = form_questions.questions[form_questions.QuestionIndex];
+            currentQuestion = FormMenu.form_questions.questions[form_questions.QuestionIndex];
 
            
-            current_question_text.text = currentQuestion.QuestionText; // nullreference exception on this line, known bug
+            current_question_text.text = currentQuestion.QuestionText; 
+            // nullreference exception on this line, known bug
+            // current_question_text is null here ---> RK
 
 
             if (current_question_text.text.Length > 60)
@@ -318,7 +321,7 @@ public class FormMenuHandler : BaseMenuHandler
 
     public void AnsInput(String answer)
     {
-
+        
     }
 
 
@@ -433,7 +436,7 @@ public class FormMenuHandler : BaseMenuHandler
 
     public override void handleTrigger()
     {
-
+        Debug.Log(gameObject.name);
         switch (handlerType)
         {
             case FormMenuHandlerType.ToggleCheckbox:
@@ -461,8 +464,6 @@ public class FormMenuHandler : BaseMenuHandler
                 break;
             case FormMenuHandlerType.SubmitQuestionAnswer:             
                 SubmitQuestionAnswer();
-
-                // move on to the next question after doing this , probably +1 ing the index of the questionIndex and setting that to current, didn't work when I tried. Could make an update question method. 
                 break;
             default:
                 break;
