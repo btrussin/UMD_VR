@@ -9,8 +9,9 @@ public class UserDataCollectionHandler : MonoBehaviour
     private GameObject ExpandedPopUpMenu;
     private GameObject ConfirmationPopUp;
     private FormMenuHandler.FormQuestions.Question currentQuestion;
-    public int QuestionIndex;
     private MovieObject movieObject;
+    private string currentAnswerSelected;
+    private TextMesh QuestionText;
     // public GameObject NextPart;
 
     // Use this for initialization
@@ -21,9 +22,10 @@ public class UserDataCollectionHandler : MonoBehaviour
         ConfirmationPopUp = GameObject.FindGameObjectWithTag("ConfirmationPopUp");
         ConfirmationPopUp.SetActive(false);
         movieObject = FindObjectOfType<NodeState>().GetComponent<MovieObject>();
+	    QuestionText = GameObject.FindGameObjectWithTag("CurrentQuestionText").GetComponent<TextMesh>();
+	    // NextPart = GameObject.FindGameObjectWithTag("NextPart");
 
-        // NextPart = GameObject.FindGameObjectWithTag("NextPart");
-    }
+	}
 
 
     public FormMenuHandler.FormQuestions form_questions = new FormMenuHandler.FormQuestions();
@@ -43,8 +45,22 @@ public class UserDataCollectionHandler : MonoBehaviour
             PopUpMenu.SetActive(false);
             ExpandedPopUpMenu.SetActive(true);
         }
+        SetQuestion();
 	}
 
+    void SetQuestion()
+    {
+        if (form_questions.QuestionIndex <= form_questions.questions.Count - 1)
+        {
+            currentQuestion = form_questions.questions[form_questions.QuestionIndex];
+            QuestionText.text = currentQuestion.QuestionText;
+        }
+        else
+        {
+            GameObject.FindGameObjectWithTag("MainCamera").GetComponentInChildren<FormMenuHandler>(true).gameObject.SetActive(true);
+            gameObject.SetActive(false);
+        }
+    }
     public void RefreshMovieObject(MovieObject m)
     {
         movieObject = m;
@@ -52,19 +68,28 @@ public class UserDataCollectionHandler : MonoBehaviour
     public void PromptUserInput(string dataSelected)
     {
         ConfirmationPopUp.SetActive(true);
-        currentQuestion = form_questions.questions[QuestionIndex];
+        
         if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput)
         {
-            Debug.Log(ConfirmationPopUp.GetComponentInChildren<TextMesh>());
-            ConfirmationPopUp.GetComponentInChildren<TextMesh>().text = "You selected " + dataSelected + ". " +
+            ConfirmationPopUp.GetComponent<TextMesh>().text = "You selected " + dataSelected + ". " +
                                                               Environment.NewLine +
                                                               "Click the trackpad to submit your answer.";
         }
-        
+        currentAnswerSelected = dataSelected;
     }
-    void HandleUserInput(string dataSelected)
+
+    public void HandleUserInput()
     {
-        form_questions.surveyResponses.Add(dataSelected);
+        if (currentAnswerSelected != null)
+        {
+            form_questions.surveyResponses.Add("QNumT:"+form_questions.QuestionIndex+" Input Value:"+currentAnswerSelected);
+            foreach (string s in form_questions.surveyResponses)
+            {
+                Debug.Log(s);
+            }
+            form_questions.QuestionIndex++;
+            currentAnswerSelected = null;
+        }
     }
 
 }

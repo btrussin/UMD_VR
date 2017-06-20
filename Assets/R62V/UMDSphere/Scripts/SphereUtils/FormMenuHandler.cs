@@ -109,6 +109,22 @@ public class FormMenuHandler : BaseMenuHandler
 
         startTime = DateTime.Now.ToFileTime();
         SetQuestion();
+        if (tag == "FormMenu")
+        {
+            IEnumerator coroutine;
+            coroutine = WaitAndTurnOff(1f, gameObject);
+            StartCoroutine(coroutine);
+        }
+
+    }
+    private IEnumerator WaitAndTurnOff(float waitTime,GameObject g)
+    {
+        while (true)
+        {
+            
+            yield return new WaitForSeconds(waitTime);
+            g.SetActive(false);
+        }
     }
 
     public void SetQuestion()    // generates the text and the radio buttons or checkboxes or slider
@@ -425,10 +441,19 @@ public class FormMenuHandler : BaseMenuHandler
     {
         // just adds the incoming variables in a list
         
-        FormMenu.form_questions.surveyResponses.Add( "QNum:" + QNum + " " + "Input Value:" + value);
+        FormMenu.form_questions.surveyResponses.Add("QNumS:" + QNum + " " + "Input Value:" + value);
         if (FormMenu.form_questions.QuestionIndex == FormMenu.form_questions.questions.Count -2)
         {
-            SaveOutputData(FormMenu.form_questions.surveyResponses);
+            List<String> data = new List<string>();
+            foreach (string s in GameObject.FindGameObjectWithTag("MainCamera").GetComponentInChildren<UserDataCollectionHandler>(true).form_questions.surveyResponses)
+            {
+                data.Add(s);
+            }
+            foreach (string s in FormMenu.form_questions.surveyResponses)
+            {
+                data.Add(s);
+            }
+            SaveOutputData(data);
         }
     }
 
@@ -497,9 +522,9 @@ public class FormMenuHandler : BaseMenuHandler
         long endTime = DateTime.Now.ToFileTime();
         string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         string path = pathDesktop + "\\mycsvfile.csv";
+        /*
         System.Random rnd = new System.Random();
         int index = 0;
-        
 
         if (!File.Exists(path))
         {
@@ -515,15 +540,15 @@ public class FormMenuHandler : BaseMenuHandler
                 path = pathDesktop + "\\user" + index + ".csv";
             }
         }
-
-        using (var w = new StreamWriter(path))
+        */
+        using (var w = new StreamWriter(path,true))
         {
-            for (int i = 0; i < selectInformation.Count; i++)
+            for (int i =0; i < selectInformation.Count; i++)
             {
                 var first = selectInformation[i];
-                string line = string.Format("{0},{1}", "Checked Option", first); //using string interpolation
+                string line = string.Format("{0}", first); //using string interpolation
                 w.WriteLine(line);
-                w.Flush();
+                //w.Flush();                
             }
 
             DateTime startDate = DateTime.FromFileTime(startTime);
@@ -531,11 +556,11 @@ public class FormMenuHandler : BaseMenuHandler
 
             string startToEnd = string.Format("{0},{1}", startDate, endDate);
             w.WriteLine(startToEnd);
-            w.Flush();
+            //w.Flush();
 
             string lastLine = string.Format("{0},{1}", "Time Elapsed", endDate - startDate);
             w.WriteLine(lastLine);
-            w.Flush();
+            //w.Flush();
         }
     }
 }

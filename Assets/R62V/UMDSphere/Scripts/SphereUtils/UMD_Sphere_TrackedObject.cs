@@ -329,7 +329,8 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         // enter survey question answer
         if (padClicked() && !isCollidingWithRing)
         {
-            Debug.Log("here1");
+            FindObjectOfType<UserDataCollectionHandler>().HandleUserInput();
+
         }
         bool stateIsValid = vrSystem.GetControllerState((uint)index, ref state);
 
@@ -431,28 +432,30 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
             GameObject formMenu = GameObject.FindGameObjectWithTag("FormMenu");
             float radioButtonOffset = 70;
-            
-            foreach (Transform t in formMenu.GetComponentsInChildren<Transform>())
+            if (formMenu != null)
             {
-                if (t.tag == "Slider")
+                foreach (Transform t in formMenu.GetComponentsInChildren<Transform>())
                 {
-                    radioButtonOffset -= 10f;
-                   
-                    FormMenuHandler fmh = t.GetComponent<FormMenuHandler>();
-                    if (radioButtonOffset < fmh_script.amountScrolled)
+                    if (t.tag == "Slider")
                     {
-                        t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
-                        fmh_script.readyForSubmit = true;
-                    }
-                    else
-                    {
-                        t.gameObject.GetComponent<FormMenuHandler>().materialStatus = false;
-                    }
-                    fmh.UpdateMaterial(); 
-                              
-                }
+                        radioButtonOffset -= 10f;
 
-                
+                        FormMenuHandler fmh = t.GetComponent<FormMenuHandler>();
+                        if (radioButtonOffset < fmh_script.amountScrolled)
+                        {
+                            t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
+                            fmh_script.readyForSubmit = true;
+                        }
+                        else
+                        {
+                            t.gameObject.GetComponent<FormMenuHandler>().materialStatus = false;
+                        }
+                        fmh.UpdateMaterial();
+
+                    }
+
+
+                }
             }
             radioButtonOffset = 70;
         }
