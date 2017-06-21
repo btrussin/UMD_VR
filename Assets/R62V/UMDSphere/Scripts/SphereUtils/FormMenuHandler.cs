@@ -42,7 +42,8 @@ public class FormMenuHandler : BaseMenuHandler
         RadioButtons,
         CheckBoxes,
         Slider,
-        AnsInput
+        InputActor,
+        InputMovie
     }
 
     public new FormMenuHandlerType handlerType;
@@ -79,7 +80,6 @@ public class FormMenuHandler : BaseMenuHandler
     void Start()
     {
         selectText = GameObject.FindGameObjectWithTag("SelectText");
-        Debug.Log(gameObject.name);
         FormMenu = GameObject.FindGameObjectWithTag("FormMenu").GetComponent<FormMenuHandler>();
         BoxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
         CheckMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
@@ -139,7 +139,6 @@ public class FormMenuHandler : BaseMenuHandler
             // nullreference exception on this line, known bug
             // current_question_text is null here ---> RK
 
-
             if (current_question_text.text.Length > 60)
             {
                 if (FormMenu.current_question_text.text[60].ToString() == " " ||
@@ -174,9 +173,9 @@ public class FormMenuHandler : BaseMenuHandler
             {
                 GenSlider();
             }
-            if (currentQuestion.QuestionType == QuestionTypes.AnsInput)
+            if (currentQuestion.QuestionType == QuestionTypes.InputActor)
             {
-                AnsInput("");
+                InputActor("");
             }
         }
         readyForSubmit = false;
@@ -335,7 +334,7 @@ public class FormMenuHandler : BaseMenuHandler
 
     }
 
-    public void AnsInput(String answer)
+    public void InputActor(String answer)
     {
         
     }
@@ -461,7 +460,6 @@ public class FormMenuHandler : BaseMenuHandler
 
     public override void handleTrigger()
     {
-        Debug.Log(gameObject.name);
         switch (handlerType)
         {
             case FormMenuHandlerType.ToggleCheckbox:
@@ -480,7 +478,6 @@ public class FormMenuHandler : BaseMenuHandler
                 UpdateMaterial();
                 break;
             case FormMenuHandlerType.SubmitForm:
-                Debug.Log("hi");
                 FindObjectOfType<UMD_Sphere_TrackedObject>().hideMainMenu();
                 CSVEntries.SaveOutputData(allActiveGOs, startTime);
                 allActiveGOs.Clear();

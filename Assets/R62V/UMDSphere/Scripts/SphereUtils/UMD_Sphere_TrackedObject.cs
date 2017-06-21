@@ -220,6 +220,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     {
         if( activeBeamInterceptObj != null )
         {
+            Debug.Log(activeBeamInterceptObj.tag);
             if (activeBeamInterceptObj.tag == "CloseButton")
             {
                 activeBeamInterceptObj.transform.parent.gameObject.SetActive(false); // All purpose blind close button code: sets direct parent of button inactive
