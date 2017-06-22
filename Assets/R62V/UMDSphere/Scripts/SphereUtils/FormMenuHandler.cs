@@ -42,8 +42,7 @@ public class FormMenuHandler : BaseMenuHandler
         RadioButtons,
         CheckBoxes,
         Slider,
-        InputActor,
-        InputMovie
+        AnsInput
     }
 
     public new FormMenuHandlerType handlerType;
@@ -80,6 +79,7 @@ public class FormMenuHandler : BaseMenuHandler
     void Start()
     {
         selectText = GameObject.FindGameObjectWithTag("SelectText");
+        Debug.Log(gameObject.name);
         FormMenu = GameObject.FindGameObjectWithTag("FormMenu").GetComponent<FormMenuHandler>();
         BoxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
         CheckMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
@@ -109,14 +109,16 @@ public class FormMenuHandler : BaseMenuHandler
 
         startTime = DateTime.Now.ToFileTime();
         SetQuestion();
+        /*
         if (tag == "FormMenu")
         {
             IEnumerator coroutine;
             coroutine = WaitAndTurnOff(1f, gameObject);
             StartCoroutine(coroutine);
-        }
+        }*/
 
     }
+    /*
     private IEnumerator WaitAndTurnOff(float waitTime,GameObject g)
     {
         while (true)
@@ -125,10 +127,11 @@ public class FormMenuHandler : BaseMenuHandler
             yield return new WaitForSeconds(waitTime);
             g.SetActive(false);
         }
-    }
+    }*/
 
     public void SetQuestion()    // generates the text and the radio buttons or checkboxes or slider
     {
+
         if (form_questions.QuestionIndex < form_questions.questions.Count)
         {
             clearSelection();
@@ -138,6 +141,7 @@ public class FormMenuHandler : BaseMenuHandler
             current_question_text.text = currentQuestion.QuestionText; 
             // nullreference exception on this line, known bug
             // current_question_text is null here ---> RK
+
 
             if (current_question_text.text.Length > 60)
             {
@@ -173,13 +177,13 @@ public class FormMenuHandler : BaseMenuHandler
             {
                 GenSlider();
             }
-            if (currentQuestion.QuestionType == QuestionTypes.InputActor)
+            if (currentQuestion.QuestionType == QuestionTypes.AnsInput)
             {
-                InputActor("");
+                AnsInput("");
             }
         }
         readyForSubmit = false;
-        amountScrolled = 0;
+        amountScrolled = 35;
     }
 
     public void GenCheckBox()
@@ -334,7 +338,7 @@ public class FormMenuHandler : BaseMenuHandler
 
     }
 
-    public void InputActor(String answer)
+    public void AnsInput(String answer)
     {
         
     }
@@ -342,9 +346,10 @@ public class FormMenuHandler : BaseMenuHandler
 
     public void GenSlider()
     {   // by RK, check for Alex and Mike, as requested this is the radio button slider.
-
+        
         float offset_y = -0.75f;
         float yOffsetPerLine = 0.12f;
+        int number = 1;
         List<GameObject> interactableObjects = new List<GameObject>();
         int menuLayerMask = LayerMask.NameToLayer("Menus");
 
@@ -385,13 +390,19 @@ public class FormMenuHandler : BaseMenuHandler
             
             menuHandler.baseMaterial = CircleMaterial;
             menuHandler.inputInteractMaterial = sliderPointMaterial;
+            if (number == 4)
+            {
+                menuHandler.materialStatus = true;
+            }
             menuHandler.UpdateMaterial();
 
+
             offset_y += yOffsetPerLine + 0.05f;
+            number += 1;
         }
         offset_y += yOffsetPerLine;
-    }
-
+        }
+    
 
     public void clearSelection()
     {
@@ -420,8 +431,7 @@ public class FormMenuHandler : BaseMenuHandler
                 allActiveGOs.Add(transform.parent.gameObject.GetComponent<TextMesh>().text);
             }
             catch (MissingComponentException)
-            {
-                
+            {   
             }
             
         }
@@ -460,6 +470,7 @@ public class FormMenuHandler : BaseMenuHandler
 
     public override void handleTrigger()
     {
+        Debug.Log(gameObject.name);
         switch (handlerType)
         {
             case FormMenuHandlerType.ToggleCheckbox:
@@ -468,16 +479,19 @@ public class FormMenuHandler : BaseMenuHandler
                 break;
             case FormMenuHandlerType.ToggleRadio:
                 // sets all the radiobuttons to false
-                foreach (GameObject g in GameObject.FindGameObjectsWithTag("RadioButton") )
-                {     
-                    g.GetComponent<FormMenuHandler>().materialStatus = false;
-                    g.GetComponent<FormMenuHandler>().UpdateMaterial();
+                {
+                    foreach (GameObject g in GameObject.FindGameObjectsWithTag("RadioButton"))
+                    {
+                        g.GetComponent<FormMenuHandler>().materialStatus = false;
+                        g.GetComponent<FormMenuHandler>().UpdateMaterial();
+                    }
+                    // sets selected radio button to true and updates materials
+                    materialStatus = !materialStatus;
+                    UpdateMaterial();
                 }
-                // sets selected radio button to true and updates materials
-                materialStatus = !materialStatus;
-                UpdateMaterial();
                 break;
             case FormMenuHandlerType.SubmitForm:
+                Debug.Log("hi");
                 FindObjectOfType<UMD_Sphere_TrackedObject>().hideMainMenu();
                 CSVEntries.SaveOutputData(allActiveGOs, startTime);
                 allActiveGOs.Clear();
