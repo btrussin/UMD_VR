@@ -448,13 +448,16 @@ public class FormMenuHandler : BaseMenuHandler
 
     public void AddToList(int QNum, int value)
     {
+        // TODO : save to cv file every time subject hits submit
+
+
         // just adds the incoming variables in a list
-        
+        /*
         FormMenu.form_questions.surveyResponses.Add("QNumS:" + QNum + " " + "Input Value:" + value);
         if (FormMenu.form_questions.QuestionIndex == FormMenu.form_questions.questions.Count -2)
         {
             List<String> data = new List<string>();
-            foreach (string s in GameObject.FindGameObjectWithTag("MainCamera").GetComponentInChildren<UserDataCollectionHandler>(true).form_questions.surveyResponses)
+            foreach (string s in GameObject.FindObjectOfType<UserDataCollectionHandler>().form_questions.surveyResponses)
             {
                 data.Add(s);
             }
@@ -463,7 +466,7 @@ public class FormMenuHandler : BaseMenuHandler
                 data.Add(s);
             }
             SaveOutputData(data);
-        }
+        }*/
     }
 
 

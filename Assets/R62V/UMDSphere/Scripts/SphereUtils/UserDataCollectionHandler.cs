@@ -23,8 +23,7 @@ public class UserDataCollectionHandler : MonoBehaviour
 
     // Use this for initialization
     void Start ()
-	{
-	    PopUpMenu = GameObject.FindGameObjectWithTag("PopUpMenu");
+	{	   
 	    ExpandedPopUpMenu = GameObject.FindGameObjectWithTag("ExpandedPopUpMenu");
         ConfirmationPopUp = GameObject.FindGameObjectWithTag("ConfirmationPopUp");
         ConfirmationPopUp.SetActive(false);
@@ -46,17 +45,6 @@ public class UserDataCollectionHandler : MonoBehaviour
     // Update is called once per frame
     void Update () {
         
-	    if (minimzed)
-	    {
-	        PopUpMenu.SetActive(true);
-            ExpandedPopUpMenu.SetActive(false);
-           // NextPart.SetActive(true);
-	    }
-	    else
-	    {
-            PopUpMenu.SetActive(false);
-            ExpandedPopUpMenu.SetActive(true);
-        }
         SetQuestion();
 	}
 
@@ -142,7 +130,7 @@ public class UserDataCollectionHandler : MonoBehaviour
     {
         ConfirmationPopUp.SetActive(true);
         
-        if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.InputActor)
+        if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput)
         {
             ConfirmationPopUp.GetComponent<TextMesh>().text = "You selected " + dataSelected + ". " +
                                                               Environment.NewLine +

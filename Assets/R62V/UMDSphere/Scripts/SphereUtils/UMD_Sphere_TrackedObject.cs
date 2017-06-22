@@ -220,7 +220,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     {
         if( activeBeamInterceptObj != null )
         {
-            Debug.Log(activeBeamInterceptObj.tag);
             if (activeBeamInterceptObj.tag == "CloseButton")
             {
                 activeBeamInterceptObj.transform.parent.gameObject.SetActive(false); // All purpose blind close button code: sets direct parent of button inactive
@@ -324,6 +323,54 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         }
     }
 
+    public void handleSlider()
+    {
+        if (fmh_script.amountScrolled < 70 && state.rAxis0.x >= 0)
+        {
+            fmh_script.amountScrolled += state.rAxis0.x;
+        }
+
+        else if (fmh_script.amountScrolled >= 0 && state.rAxis0.x < 0)
+        {
+            fmh_script.amountScrolled += state.rAxis0.x;
+        }
+        else if (fmh_script.amountScrolled <= 70 && fmh_script.amountScrolled >= 0)
+        {
+            fmh_script.amountScrolled += state.rAxis0.x;
+        }
+
+        GameObject formMenu = GameObject.FindGameObjectWithTag("FormMenu");
+        float radioButtonOffset = 70;
+        if (formMenu != null)
+        {
+            foreach (Transform t in formMenu.GetComponentsInChildren<Transform>())
+            {
+                if (t.tag == "Slider")
+                {
+                    radioButtonOffset -= 10f;
+
+                    FormMenuHandler fmh = t.GetComponent<FormMenuHandler>();
+                    if (radioButtonOffset < fmh_script.amountScrolled && radioButtonOffset > fmh_script.amountScrolled - 10)
+                    {
+                        t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
+                        fmh_script.readyForSubmit = true;
+                    }
+                    else if ((radioButtonOffset == 0 && fmh_script.amountScrolled < 10) || (fmh_script.amountScrolled > 70 && radioButtonOffset == 60))
+                    {
+                        t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
+                        fmh_script.readyForSubmit = true;
+                    }
+                    else
+                    {
+                        t.gameObject.GetComponent<FormMenuHandler>().materialStatus = false;
+                    }
+                    fmh.UpdateMaterial();
+
+                }
+            }
+        }
+        radioButtonOffset = 70;
+    }
     void handleStateChanges()
     {
         
@@ -411,55 +458,11 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
 
             prevState = state;
-        }
-
-
-        if ((state.ulButtonTouched) == 4294967296) // if the touchpad is touched 
-        {           
-            
-            if (fmh_script.amountScrolled < 70 && state.rAxis0.x >= 0)
-            {
-                fmh_script.amountScrolled += state.rAxis0.x;
-            }
-            
-            else if (fmh_script.amountScrolled >= 0 && state.rAxis0.x < 0)
-            {
-                fmh_script.amountScrolled += state.rAxis0.x;
-            }
-            else if (fmh_script.amountScrolled <= 70 && fmh_script.amountScrolled >= 0)
-            {
-                fmh_script.amountScrolled += state.rAxis0.x;
-            }
-
-            GameObject formMenu = GameObject.FindGameObjectWithTag("FormMenu");
-            float radioButtonOffset = 70;
-            if (formMenu != null)
-            {
-                foreach (Transform t in formMenu.GetComponentsInChildren<Transform>())
-                {
-                    if (t.tag == "Slider")
-                    {
-                        radioButtonOffset -= 10f;
-
-                        FormMenuHandler fmh = t.GetComponent<FormMenuHandler>();
-                        if (radioButtonOffset < fmh_script.amountScrolled)
-                        {
-                            t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
-                            fmh_script.readyForSubmit = true;
-                        }
-                        else
-                        {
-                            t.gameObject.GetComponent<FormMenuHandler>().materialStatus = false;
-                        }
-                        fmh.UpdateMaterial();
-
-                    }
-
-
+        }      
+                if ((state.ulButtonTouched) == 4294967296) // if the touchpad is touched 
+                {           
+                  handleSlider();
                 }
-            }
-            radioButtonOffset = 70;
-        }
 
 
         if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) != 0)
