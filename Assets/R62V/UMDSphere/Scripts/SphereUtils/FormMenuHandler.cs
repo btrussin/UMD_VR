@@ -133,8 +133,13 @@ public class FormMenuHandler : BaseMenuHandler
         {
             clearSelection();
             currentQuestion = FormMenu.form_questions.questions[form_questions.QuestionIndex];
+            if (current_question_text == null)
+            {
+                Debug.Log("current_question_text is null");
+                return;
+            }
 
-           
+
             current_question_text.text = currentQuestion.QuestionText; 
             // nullreference exception on this line, known bug
             // current_question_text is null here ---> RK
