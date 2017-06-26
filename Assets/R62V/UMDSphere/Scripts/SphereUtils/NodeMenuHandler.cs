@@ -52,6 +52,7 @@ public class NodeMenuHandler : MonoBehaviour
                 nodeState.destroyMenu();
                 break;
             case NodeMenuHandlerType.ToggleActor:
+  
                 role.active = !role.active;
                 UpdateMaterial();
                 FindObjectOfType<UserDataCollectionHandler>().PromptUserInput(role.actor);
