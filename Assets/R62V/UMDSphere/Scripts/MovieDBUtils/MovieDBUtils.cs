@@ -85,7 +85,42 @@ public class MovieDBUtils {
 
     public static string getMovieDataKey(CMData data)
     {
-        return data.movie + "(" + data.year + ")";
+        return data.movie + " (" + data.year + ")";
+    }
+
+    public static string getWordWrappedString(string origStr, int linePartLength, out int numLines)
+    {
+        char[] splitParams = { ' ' };
+        string[] origParts = origStr.Split(splitParams);
+
+        List<string> resultLines = new List<string>();
+        string tName = origParts[0];
+
+        for (int i = 1; i < origParts.Length; i++)
+        {
+            if (tName.Length >= linePartLength)
+            {
+                resultLines.Add(tName);
+                tName = origParts[i];
+            }
+            else
+            {
+                tName += " " + origParts[i];
+            }
+        }
+
+        if (tName.Length > 0) resultLines.Add(tName);
+
+        string result = "";
+
+        foreach (string s in resultLines)
+        {
+            if (result.Length == 0) result = s;
+            else result += "\n" + s;
+        }
+
+        numLines = resultLines.Count;
+        return result;
     }
 
     // use forward-differencing to calculate bezier points

@@ -26,11 +26,13 @@ public class NodeState : MonoBehaviour {
     GameObject nodeMenu;
 
     static int maxCharSize = 30;
+    static int menuLayerMask = 0;
 
     //static List<GameObject> menus = new List<GameObject>();
 
     void Start () {
         isSelected = false;
+        menuLayerMask = LayerMask.NameToLayer("Menus");
     }
 
 	void Update () {
@@ -118,8 +120,6 @@ public class NodeState : MonoBehaviour {
         //menus.Clear();
 
 
-
-        int menuLayerMask = LayerMask.NameToLayer("Menus");
         GameObject ptPrefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/R62V/UMDSphere/Prefabs/MenuPlane.prefab");
         GameObject plane = (GameObject)Instantiate(ptPrefab);
         plane.layer = menuLayerMask;
@@ -153,38 +153,48 @@ public class NodeState : MonoBehaviour {
 
         offset.x = 0.0f;
 
-        GameObject t;
-
-
-        textObjects.Add(t = addText(nodeMenu, mKey, roleAlign, roleAnchor, offset, 0.08f));
-        TextMesh textMesh = t.GetComponent<TextMesh>();
-        if( textMesh.text.Length > maxCharSize )
+        if (mKey.Length > maxCharSize)
         {
-            maxCharSize = textMesh.text.Length;
-            Debug.Log("Max chars: " + maxCharSize);
+            maxCharSize = mKey.Length;
         }
-       
 
+        if( mKey.Length > 15 )
+        {
+            int numLines;
+            string tKey = MovieDBUtils.getWordWrappedString(mKey, 12, out numLines);
+
+            textObjects.Add(addText(nodeMenu, tKey, roleAlign, roleAnchor, offset, 0.08f, false));
+
+            offset.y -= 0.08f * numLines;
+        }
+        else
+        {
+            textObjects.Add(addText(nodeMenu, mKey, roleAlign, roleAnchor, offset, 0.08f, false));
+            offset.y -= 0.08f;
+        }
+
+        
         offset.x = 0.04f;
-        offset.y -= 0.08f;
 
-        textObjects.Add(addText(nodeMenu, "Distributor: " + data.distributor, roleAlign, roleAnchor, offset, normalTextSize));
+        textObjects.Add(addText(nodeMenu, "Distributor: " + data.distributor, roleAlign, roleAnchor, offset, normalTextSize, false));
         offset.y -= yOffsetPerLine;
-        textObjects.Add(addText(nodeMenu, "Comic: " + data.comic, roleAlign, roleAnchor, offset, normalTextSize));
+        textObjects.Add(addText(nodeMenu, "Comic: " + data.comic, roleAlign, roleAnchor, offset, normalTextSize, false));
         offset.y -= yOffsetPerLine;
         offset.y -= yOffsetPerLine;
 
         offset.x = 0.01f;
-        textObjects.Add(addText(nodeMenu, "Actors (Roles)", roleAlign, roleAnchor, offset, normalTextSize));
+        textObjects.Add(addText(nodeMenu, "Actors (Roles)", roleAlign, roleAnchor, offset, normalTextSize, false));
         offset.y -= yOffsetPerLine/4.0f;
-        textObjects.Add(addText(nodeMenu, "______________", roleAlign, roleAnchor, offset, normalTextSize));
+        textObjects.Add(addText(nodeMenu, "______________", roleAlign, roleAnchor, offset, normalTextSize, false));
         offset.y -= yOffsetPerLine;
 
         float firstBoxY = offset.y;
         offset.x = 0.04f;
         for ( int i = 0; i < data.roles.Length; i++ )
         {
-            textObjects.Add(addText(nodeMenu, data.roles[i].actor + " (" + data.roles[i].name + ")", roleAlign, roleAnchor, offset, normalTextSize));
+            GameObject gObj = addText(nodeMenu, data.roles[i].actor + " (" + data.roles[i].name + ")", roleAlign, roleAnchor, offset, normalTextSize, true);
+            //gObj.transform.localScale = Vector3.one * 0.1f;
+            textObjects.Add(gObj);
             offset.y -= yOffsetPerLine;
         }
 
@@ -195,6 +205,8 @@ public class NodeState : MonoBehaviour {
 
         float maxX = float.MinValue;
         float maxY = float.MinValue;
+
+        bool passedFirstElement = false;
 
         foreach (GameObject obj in textObjects)
         {
@@ -207,6 +219,10 @@ public class NodeState : MonoBehaviour {
 
             if (min.y < minY) minY = min.y;
             if (max.y > maxY) maxY = max.y;
+            
+            if (passedFirstElement) obj.transform.localScale = Vector3.one * 0.1f;
+
+            passedFirstElement = true;
         }
 
 
@@ -215,7 +231,8 @@ public class NodeState : MonoBehaviour {
         float xDim = (maxX - minX) + 0.1f;
         float yDim = (maxY - minY) + 0.04f;
 
-        Vector3 basePos = new Vector3(-xDim * 0.5f, yDim * 0.5f, 0.0f);
+        //Vector3 basePos = new Vector3(-xDim * 0.5f, yDim * 0.5f, 0.0f);
+        Vector3 basePos = new Vector3(-xDim * 0.5f, 0.0f, 0.0f);
 
         foreach (GameObject obj in textObjects)
         {
@@ -224,6 +241,9 @@ public class NodeState : MonoBehaviour {
 
         //plane.transform.localScale = new Vector3(xDim, yDim, 1.0f);
         //plane.transform.localPosition = basePos + new Vector3(xDim * 0.5f, yDim * -0.5f, 0.005f);
+
+        plane.transform.localPosition = basePos + new Vector3(xDim * 0.5f, yDim * -0.5f, 0.005f);
+
 
         //nodeMenu.transform.localScale = new Vector3(xDim, yDim, yDim);
         plane.transform.SetParent(nodeMenu.transform);      
@@ -244,6 +264,8 @@ public class NodeState : MonoBehaviour {
         quad1.GetComponent<NodeMenuHandler>().handlerType = NodeMenuHandler.NodeMenuHandlerType.CloseMenu;
         */
 
+
+        /*
         offset = Vector3.zero;
         offset.y = firstBoxY - 0.005f;
         offset.x = 0.02f;
@@ -273,7 +295,7 @@ public class NodeState : MonoBehaviour {
 
             offset.y -= yOffsetPerLine;
         }
-
+        */
 
         /*
         Vector3 ringCenter = gameObject.transform.parent.transform.position;
@@ -286,27 +308,44 @@ public class NodeState : MonoBehaviour {
         //nodeMenu.AddComponent<CameraOrientedText3D>();
         //menus.Add(nodeMenu);
 
-       // nodeMenu.transform.localScale = new Vector3(xDim, yDim, yDim);
+        // nodeMenu.transform.localScale = new Vector3(xDim, yDim, yDim);
+
+        // set the x-y dimensions
+        menuUtils.xDimension = xDim;
+        menuUtils.yDimension = yDim;
+        nodeMenu.layer = menuLayerMask;
+        
 
         NodeDetailsManager.addDetails(mKey, nodeMenu);
 
 
-
-
     }
 
-    static GameObject addText(GameObject obj, string text, TextAlignment alignment, TextAnchor anchor, Vector3 offset, float charSize = 0.05f)
+    static GameObject addText(GameObject obj, string text, TextAlignment alignment, TextAnchor anchor, Vector3 offset, float charSize = 0.05f, bool isActor = true)
     {
         GameObject textObj = new GameObject();
         textObj.transform.SetParent(obj.transform);
         textObj.AddComponent<MeshRenderer>();
         textObj.AddComponent<TextMesh>();
-        TextMesh ringText = textObj.GetComponent<TextMesh>();
-        ringText.anchor = anchor;
-        ringText.alignment = alignment;
-        ringText.text = text;
-        ringText.characterSize = charSize;
-        ringText.fontSize = 100;
+        TextMesh textMesh = textObj.GetComponent<TextMesh>();
+        textMesh.anchor = anchor;
+        textMesh.alignment = alignment;
+        textMesh.text = text;
+        textMesh.characterSize = charSize;
+        textMesh.fontSize = 100;
+
+        if(isActor)
+        {
+            textObj.name = "Actor: " + text;
+            textObj.AddComponent<BoxCollider>();
+            textObj.layer = menuLayerMask;
+        }
+        else
+        {
+            textObj.name = "Text: " + text;
+        }
+
+        
 
         float scale = charSize;
         textObj.transform.localScale = new Vector3(scale, scale, scale);

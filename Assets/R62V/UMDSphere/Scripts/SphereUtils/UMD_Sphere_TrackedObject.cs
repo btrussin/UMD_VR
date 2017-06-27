@@ -46,6 +46,10 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     GameObject beam;
     GameObject activeBeamInterceptObj = null;
+    GameObject activeNodeMenu = null;
+    GameObject activeActorText = null;
+    Vector3 actorTextNormalScale = Vector3.one * 0.1f;
+    Vector3 actorTextLargeScale = Vector3.one * 0.15f;
 
     private GameObject submitButton;
 
@@ -203,9 +207,26 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
           
             activeBeamInterceptObj = hitInfo.collider.gameObject;
             beamDist = hitInfo.distance;
+
+            if (activeBeamInterceptObj != activeNodeMenu)
+            {
+                reduceSizeOfActiveMenu();
+                activeNodeMenu = activeBeamInterceptObj;
+                increaseSizeOfActiveMenu();
+            }
+
+            if( activeBeamInterceptObj.name.Contains("Actor:") && activeBeamInterceptObj != activeActorText)
+            {
+                if(activeActorText != null ) activeActorText.transform.localScale = actorTextNormalScale;
+                activeActorText = activeBeamInterceptObj;
+                activeActorText.transform.localScale = actorTextLargeScale;
+            }
         }
         else
         {
+            reduceSizeOfActiveMenu();
+
+            activeNodeMenu = null;
             activeBeamInterceptObj = null;
         }
 
@@ -214,6 +235,58 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
         lineRend.SetPosition(0, deviceRay.origin);
         lineRend.SetPosition(1, end);
+    }
+
+    void increaseSizeOfActiveMenu()
+    {
+        if (activeNodeMenu != null)
+        {
+            NodeMenuUtils menuUtils = getFirstNodeMenuUtilsOfParents(activeNodeMenu);
+            if (menuUtils != null)
+            {
+                menuUtils.makeLarge();
+            }
+        }
+    }
+
+    void reduceSizeOfActiveMenu()
+    {
+        if (activeNodeMenu != null)
+        {
+            NodeMenuUtils menuUtils = getFirstNodeMenuUtilsOfParents(activeNodeMenu);
+            if (menuUtils != null)
+            {
+                menuUtils.makeSmall();
+            }
+        }
+
+        if(activeActorText != null)
+        {
+            activeActorText.transform.localScale = actorTextNormalScale;
+            activeActorText = null;
+        }
+    }
+
+
+    NodeMenuUtils getFirstNodeMenuUtilsOfParents(GameObject obj)
+    {
+
+        GameObject tObj = obj;
+        NodeMenuUtils menuUtils = null;
+
+        while (tObj != null)
+        {
+            menuUtils = tObj.GetComponent<NodeMenuUtils>();
+            if (menuUtils != null)
+            {
+                return menuUtils;
+            }
+
+            if (tObj.transform.parent != null) tObj = tObj.transform.parent.gameObject;
+            else tObj = null;
+        }
+
+        return null;
     }
 
     void triggerActiverBeamObject()
@@ -427,6 +500,11 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                             activeBeamInterceptObj.transform.parent.GetComponent<UserDataCollectionHandler>();
                         udch.minimzed = !udch.minimzed;
                     }
+                }
+                if( activeNodeMenu != null )
+                {
+                    reduceSizeOfActiveMenu();
+                    activeNodeMenu = null;
                 }
 
                 beam.SetActive(false);

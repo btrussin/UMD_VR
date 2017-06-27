@@ -52,6 +52,8 @@ public class SphereData : MonoBehaviour {
     [Header("Line Connector Info", order = 3)]
     float bundlingStrength = 0.5f;
 
+    public bool enableSingleHandTranslation = true;
+
     
     public float BundlingStrength
     {
@@ -251,7 +253,7 @@ public class SphereData : MonoBehaviour {
 
     void updateMove()
     {
-        if( activeMove)
+        if( enableSingleHandTranslation && activeMove)
         {
             gameObject.transform.rotation = activeGrabObject.currRotation * initialRotation;
 
