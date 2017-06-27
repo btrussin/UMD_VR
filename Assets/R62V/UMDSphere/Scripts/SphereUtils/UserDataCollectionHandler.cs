@@ -12,13 +12,15 @@ public class UserDataCollectionHandler : MonoBehaviour
 
     private GameObject PopUpMenu;
     private GameObject ExpandedPopUpMenu;
+    private FormMenuHandler submitButton;
     private GameObject ConfirmationPopUp;
-    private FormMenuHandler.FormQuestions.Question currentQuestion;
+    public FormMenuHandler.FormQuestions.Question currentQuestion;
     private MovieObject movieObject;
     private FormState formState;
     private string currentAnswerSelected;
     private TextMesh QuestionText;
     private bool questionLoaded = false;
+
     // public GameObject NextPart;
 
     // Use this for initialization
@@ -35,9 +37,8 @@ public class UserDataCollectionHandler : MonoBehaviour
 
         formState = GetComponent<FormState>();
 
-
     }
-
+    Dictionary<string, MovieObject> connectionMovieObjectMap = new Dictionary<string, MovieObject>();
 
     public FormMenuHandler.FormQuestions form_questions = new FormMenuHandler.FormQuestions();
 
@@ -53,11 +54,11 @@ public class UserDataCollectionHandler : MonoBehaviour
     {  // by RK, check for Alex and Mike
 
         float offset_y = 0.0675f;
-        float yOffsetPerLine = 0.12f;
+        float yOffsetPerLine = 0.06f;
         List<GameObject> interactableObjects = new List<GameObject>();
         int menuLayerMask = LayerMask.NameToLayer("Menus");
 
-        for (int toggleInd = 0; toggleInd < 2; toggleInd++)
+        for (int toggleInd = 0; toggleInd < currentQuestion.possible_answers.Count; toggleInd++)
         {
             GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
             quad.tag = "RadioButton";
@@ -67,10 +68,10 @@ public class UserDataCollectionHandler : MonoBehaviour
 
             MeshRenderer rend = quad.GetComponent<MeshRenderer>();
 
-            rend.transform.localScale = new Vector3(0.07f, 0.1f, 1.0f);
+            rend.transform.localScale = new Vector3(0.035f, 0.05f, 0.5f);
             rend.transform.localRotation = Quaternion.identity;
             rend.transform.localPosition = Vector3.zero;
-            rend.transform.localPosition = new Vector3(-0.083f, 0.111f, -0.0102f);
+            rend.transform.localPosition = new Vector3(-0.253f, 0.247f, -0.0019f);
             rend.transform.localPosition -= new Vector3(0, offset_y, 0);
 
             quad.AddComponent<FormMenuHandler>();
@@ -110,6 +111,7 @@ public class UserDataCollectionHandler : MonoBehaviour
             {
                GenYesNoRadioButtons();
                 questionLoaded = true;
+                
             }
         }
         else
@@ -130,7 +132,7 @@ public class UserDataCollectionHandler : MonoBehaviour
     {
         ConfirmationPopUp.SetActive(true);
         
-        if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput)
+        if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput || currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.RadioButtons)
         {
             ConfirmationPopUp.GetComponent<TextMesh>().text = "You selected " + dataSelected + ". " +
                                                               Environment.NewLine +
@@ -143,15 +145,37 @@ public class UserDataCollectionHandler : MonoBehaviour
     {
         if (currentAnswerSelected != null)
         {
-            form_questions.surveyResponses.Add("QNumT:"+form_questions.QuestionIndex+" Input Value:"+currentAnswerSelected);
-           /* foreach (string s in form_questions.surveyResponses)
-            {
-                Debug.Log(s);
-            }*/
+            form_questions.surveyResponses.Add("QNumT:" + form_questions.QuestionIndex + " Input Value:" +
+                                               currentAnswerSelected);
+            /* foreach (string s in form_questions.surveyResponses)
+             {
+                 Debug.Log(s);
+             }*/
             form_questions.QuestionIndex++;
             questionLoaded = false;
             currentAnswerSelected = null;
+
+            if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.RadioButtons)
+            {
+                foreach (Transform t in GetComponentsInChildren<Transform>())
+                {
+                    if (t.tag == "RadioButton")
+                    {
+                        Destroy(t.gameObject);
+                    }
+                }
+            }
+            
+            ConfirmationPopUp.SetActive(false);
+            foreach (MovieObject m in GameObject.FindObjectsOfType<MovieObject>())
+            {
+                if (m.nodeState.isSelected)
+                {
+                    Debug.Log(m);
+                    m.nodeState.isSelected = false;
+                    m.nodeState.updateColor();
+                }
+            }
         }
     }
-
 }

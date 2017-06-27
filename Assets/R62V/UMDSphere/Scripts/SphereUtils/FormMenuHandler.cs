@@ -78,16 +78,21 @@ public class FormMenuHandler : BaseMenuHandler
 
     void Start()
     {
-        selectText = GameObject.FindGameObjectWithTag("SelectText");
-        Debug.Log(gameObject.name);
-        FormMenu = GameObject.FindGameObjectWithTag("FormMenu").GetComponent<FormMenuHandler>();
-        BoxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
-        CheckMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
-        CircleMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/circ_mat.mat");
-        sliderPointMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/sliderpnt_mat.mat");
-        sliderBarMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/sliderbar_mat.mat");
+        if (tag == "FormMenu")
+        {
+            selectText = GameObject.FindGameObjectWithTag("SelectText");
+            Debug.Log(gameObject.name);
+            FormMenu = GameObject.FindGameObjectWithTag("FormMenu").GetComponent<FormMenuHandler>();
+            BoxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
+            CheckMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
+            CircleMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/circ_mat.mat");
+            sliderPointMaterial =
+                AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/sliderpnt_mat.mat");
+            sliderBarMaterial =
+                AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/sliderbar_mat.mat");
 
-        formState = GetComponent<FormState>();
+            formState = GetComponent<FormState>();
+        }
         try
         {
             submitButton = GameObject.FindGameObjectWithTag("SubmitButton").GetComponent<FormMenuHandler>();
@@ -142,11 +147,7 @@ public class FormMenuHandler : BaseMenuHandler
                 return;
             }
 
-
-            current_question_text.text = currentQuestion.QuestionText; 
-            // nullreference exception on this line, known bug
-            // current_question_text is null here ---> RK
-
+            current_question_text.text = currentQuestion.QuestionText;
 
             if (current_question_text.text.Length > 60)
             {
@@ -478,7 +479,7 @@ public class FormMenuHandler : BaseMenuHandler
 
     public override void handleTrigger()
     {
-        Debug.Log(gameObject.name);
+        
         switch (handlerType)
         {
             case FormMenuHandlerType.ToggleCheckbox:
@@ -488,6 +489,7 @@ public class FormMenuHandler : BaseMenuHandler
             case FormMenuHandlerType.ToggleRadio:
                 // sets all the radiobuttons to false
                 {
+
                     foreach (GameObject g in GameObject.FindGameObjectsWithTag("RadioButton"))
                     {
                         g.GetComponent<FormMenuHandler>().materialStatus = false;
@@ -499,7 +501,7 @@ public class FormMenuHandler : BaseMenuHandler
                 }
                 break;
             case FormMenuHandlerType.SubmitForm:
-                Debug.Log("hi");
+                
                 FindObjectOfType<UMD_Sphere_TrackedObject>().hideMainMenu();
                 CSVEntries.SaveOutputData(allActiveGOs, startTime);
                 allActiveGOs.Clear();

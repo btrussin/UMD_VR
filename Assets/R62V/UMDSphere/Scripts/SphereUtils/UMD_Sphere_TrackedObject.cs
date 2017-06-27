@@ -33,7 +33,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     //List<GameObject> connectionList = new List<GameObject>();
 
-    Dictionary<string, MovieObject> connectionMovieObjectMap = new Dictionary<string, MovieObject>();
+    public Dictionary<string, MovieObject> connectionMovieObjectMap = new Dictionary<string, MovieObject>();
 
     CVRSystem vrSystem;
 
@@ -71,6 +71,8 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
 
     private bool isCollidingWithRing;
     public bool padJustPressedDown;
+
+    private UserDataCollectionHandler udch;
 
     // returns true on touchpad click up
     public bool padClicked()
@@ -111,7 +113,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         //menuObject.SetActive(false);
 
         otherTrackedObjScript = otherController.GetComponent<UMD_Sphere_TrackedObject>();
-
+        udch = FindObjectOfType<UserDataCollectionHandler>();
         /*
         sphereData.setMainLayout(SphereData.SphereLayout.Sphere);
         sphereData.SetMainRingCategory(SphereData.MainRingCategory.Year);
@@ -297,6 +299,10 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             {
                 activeBeamInterceptObj.transform.parent.gameObject.SetActive(false); // All purpose blind close button code: sets direct parent of button inactive
             }
+            else if (activeBeamInterceptObj.tag == "RadioButton")
+            {
+                udch.PromptUserInput(activeBeamInterceptObj.GetComponentInChildren<TextMesh>().text);
+            }
             NodeMenuHandler menuHandler = activeBeamInterceptObj.GetComponent<NodeMenuHandler>();
           
             if (menuHandler != null )
@@ -439,7 +445,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                     }
                     fmh.UpdateMaterial();
 
-                }
+                }               
             }
         }
         radioButtonOffset = 70;
@@ -450,7 +456,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         // enter survey question answer
         if (padClicked() && !isCollidingWithRing)
         {
-            FindObjectOfType<UserDataCollectionHandler>().HandleUserInput();
+            udch.HandleUserInput();
 
         }
         bool stateIsValid = vrSystem.GetControllerState((uint)index, ref state);
@@ -496,8 +502,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 {
                     if (activeBeamInterceptObj.tag == "ExpandedPopUpMenu" || activeBeamInterceptObj.tag == "PopUpMenu")
                     {
-                        UserDataCollectionHandler udch =
-                            activeBeamInterceptObj.transform.parent.GetComponent<UserDataCollectionHandler>();
                         udch.minimzed = !udch.minimzed;
                     }
                 }
@@ -524,6 +528,11 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 // toggle connections with all movies
                 foreach (MovieObject m in connectionMovieObjectMap.Values)
                 {
+
+                    if (udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput)
+                    {
+                        udch.PromptUserInput(m.name);
+                    }
                     m.nodeState.toggleSelected();
                     m.nodeState.updateColor();
 

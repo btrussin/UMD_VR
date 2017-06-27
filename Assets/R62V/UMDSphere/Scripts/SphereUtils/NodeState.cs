@@ -8,7 +8,7 @@ public class NodeState : MonoBehaviour {
 
     int collisionCount = 0;
 
-    bool isSelected;
+    public bool isSelected;
 
     Renderer nodeRend = null;
     MovieConnectionManager connManager = null;
@@ -219,14 +219,12 @@ public class NodeState : MonoBehaviour {
 
             if (min.y < minY) minY = min.y;
             if (max.y > maxY) maxY = max.y;
-            
+
             if (passedFirstElement) obj.transform.localScale = Vector3.one * 0.1f;
 
             passedFirstElement = true;
         }
 
-
-        
 
         float xDim = (maxX - minX) + 0.1f;
         float yDim = (maxY - minY) + 0.04f;
@@ -248,7 +246,7 @@ public class NodeState : MonoBehaviour {
         //nodeMenu.transform.localScale = new Vector3(xDim, yDim, yDim);
         plane.transform.SetParent(nodeMenu.transform);      
         
-        /*
+        
 
         GameObject quad1 = GameObject.CreatePrimitive(PrimitiveType.Quad);
         quad1.name = "Close: " + mKey;
@@ -262,7 +260,7 @@ public class NodeState : MonoBehaviour {
         quad1.AddComponent<NodeMenuHandler>();
         quad1.GetComponent<NodeMenuHandler>().nodeState = this;
         quad1.GetComponent<NodeMenuHandler>().handlerType = NodeMenuHandler.NodeMenuHandlerType.CloseMenu;
-        */
+        
 
 
         /*
@@ -286,6 +284,7 @@ public class NodeState : MonoBehaviour {
             menuHandler.nodeState = this;
             menuHandler.handlerType = NodeMenuHandler.NodeMenuHandlerType.ToggleActor;
             menuHandler.role = data.roles[i];
+
             menuHandler.boxMaterial = boxMaterial;
             menuHandler.checkMaterial = checkMaterial;
 
