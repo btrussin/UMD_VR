@@ -247,7 +247,7 @@ public class NodeState : MonoBehaviour {
         plane.transform.SetParent(nodeMenu.transform);      
         
         
-
+        /*
         GameObject quad1 = GameObject.CreatePrimitive(PrimitiveType.Quad);
         quad1.name = "Close: " + mKey;
         quad1.layer = menuLayerMask;
@@ -260,7 +260,7 @@ public class NodeState : MonoBehaviour {
         quad1.AddComponent<NodeMenuHandler>();
         quad1.GetComponent<NodeMenuHandler>().nodeState = this;
         quad1.GetComponent<NodeMenuHandler>().handlerType = NodeMenuHandler.NodeMenuHandlerType.CloseMenu;
-        
+        */
 
 
         /*
