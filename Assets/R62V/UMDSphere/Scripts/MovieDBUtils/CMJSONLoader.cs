@@ -26,7 +26,45 @@ public class CMJSONLoader : MonoBehaviour{
 
         var cmDataArray = JsonUtility.FromJson<CMDataArray>(asset.text);
         cmData = cmDataArray.data;
+        //purgeData();
         processData();
+    }
+
+    void purgeData()
+    {
+        CMData currData;
+        CMRole[] currRoles;
+        int tabooIdx;
+        for( int i = 0; i < cmData.Length; i++ )
+        {
+            currData = cmData[i];
+            currRoles = currData.roles;
+            tabooIdx = -1;
+            for( int j = 0; j < currRoles.Length; j++ )
+            {
+                if( currRoles[j].actor.Equals("Stan Lee") )
+                {
+                    tabooIdx = j;
+                    break;
+                }
+            }
+
+            if (tabooIdx < 0) continue;
+
+            CMRole[] modRoles = new CMRole[currRoles.Length - 1];
+            int idx = 0;
+            for (int j = 0; j < currRoles.Length; j++)
+            {
+                if (j == tabooIdx) continue;
+                modRoles[idx++] = currRoles[j];
+            }
+
+            currData.roles = modRoles;
+
+        }
+
+
+
     }
 
     void processData()

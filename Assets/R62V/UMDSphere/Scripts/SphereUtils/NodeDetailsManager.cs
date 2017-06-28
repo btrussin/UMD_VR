@@ -36,25 +36,27 @@ public class NodeDetailsManager : MonoBehaviour {
         l = 0.0f;
         OpenVR.Chaperone.GetPlayAreaSize(ref l, ref w);
 
+        float boudaryOffset = 0.0f;
 
-
-        maxX = l * 0.5f + 0.5f;
+        maxX = l * 0.5f + boudaryOffset;
         minX = -maxX;
 
-        maxZ = w * 0.5f + 0.5f;
+        maxZ = w * 0.5f + boudaryOffset;
         minZ = -maxZ;
 
         float lowestY = 0.0f;
         float maxHeight = 0f;
         int currVecIdx = 0;
 
+        float wallOffset = 0.0f;
+
         Vector3 heightVector = new Vector3(0f, 2.5f, 0f);
         Vector3 offsetVector = Vector3.zero;
 
         Vector3[] startVectors = new Vector3[3];
-        startVectors[0] = new Vector3(maxX, 0f, minZ - 1f);
-        startVectors[1] = new Vector3(minX - 1f, 0f, minZ);
-        startVectors[2] = new Vector3(minX, 0f, maxZ + 1f);
+        startVectors[0] = new Vector3(maxX, 0f, minZ - wallOffset);
+        startVectors[1] = new Vector3(minX - wallOffset, 0f, minZ);
+        startVectors[2] = new Vector3(minX, 0f, maxZ + wallOffset);
 
         Vector3[] dirVectors = new Vector3[3];
         dirVectors[0] = new Vector3(-1f, 0f, 0f);
