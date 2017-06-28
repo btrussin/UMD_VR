@@ -52,7 +52,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     Vector3 actorTextLargeScale = Vector3.one * 0.15f;
 
     private GameObject submitButton;
-
+    private SubmitButtonScript sbs;
     bool useBeam = false;
 
     int menusLayerMask;
@@ -73,7 +73,6 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
     public bool padJustPressedDown;
 
     private UserDataCollectionHandler udch;
-
     // returns true on touchpad click up
     public bool padClicked()
     {
@@ -126,6 +125,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         //fmh_script = GameObject.FindObjectOfType<FormMenuHandler>();
         form_questions = fmh_script.form_questions;
         submitButton = GameObject.FindGameObjectWithTag("SubmitButton");
+        sbs = submitButton.GetComponent<SubmitButtonScript>();
     }
     void Update()
     {
@@ -143,10 +143,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         //sphereCollider.center = new Vector3(0.0f, 0.0f, 0.03f);
 
         handleStateChanges();
-        if (submitButton != null)
-        {
-            submitButton.SetActive(fmh_script.readyForSubmit);
-        }
+
 
         ringsInCollision = sphereData.getRingsInCollision(currPosition + (currForwardVec - currUpVec) * (0.03f + sphereCollider.radius) , sphereCollider.radius*2.0f);
         if (ringsInCollision.Count > 0)
@@ -167,6 +164,14 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         {
             calcSliderPosition();
             sphereData.updateAllConnections();
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (submitButton != null)
+        {
+            submitButton.SetActive(sbs.readyForSubmit);
         }
     }
 
@@ -303,6 +308,19 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
             {
                 udch.PromptUserInput(activeBeamInterceptObj.GetComponentInChildren<TextMesh>().text);
             }
+            else if (activeBeamInterceptObj.tag == "SubmitButton")
+            {
+                sbs = activeBeamInterceptObj.GetComponent<SubmitButtonScript>();
+                submitButton = activeBeamInterceptObj;
+                if (udch.gameObject.activeSelf)
+                {
+                    udch.HandleUserInput();
+                }
+                else
+                {
+                    fmh_script.SubmitQuestionAnswer();
+                }
+            }
             NodeMenuHandler menuHandler = activeBeamInterceptObj.GetComponent<NodeMenuHandler>();
           
             if (menuHandler != null )
@@ -432,12 +450,12 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                     if (radioButtonOffset < fmh_script.amountScrolled && radioButtonOffset > fmh_script.amountScrolled - 10)
                     {
                         t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
-                        fmh_script.readyForSubmit = true;
+                        sbs.readyForSubmit = true;
                     }
                     else if ((radioButtonOffset == 0 && fmh_script.amountScrolled < 10) || (fmh_script.amountScrolled > 70 && radioButtonOffset == 60))
                     {
                         t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
-                        fmh_script.readyForSubmit = true;
+                        sbs.readyForSubmit = true;
                     }
                     else
                     {
@@ -456,7 +474,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         // enter survey question answer
         if (padClicked() && !isCollidingWithRing)
         {
-            udch.HandleUserInput();
+            //udch.HandleUserInput();
 
         }
         bool stateIsValid = vrSystem.GetControllerState((uint)index, ref state);
@@ -529,7 +547,7 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
                 foreach (MovieObject m in connectionMovieObjectMap.Values)
                 {
 
-                    if (udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput)
+                    if (udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput || udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
                     {
                         udch.PromptUserInput(m.name);
                     }

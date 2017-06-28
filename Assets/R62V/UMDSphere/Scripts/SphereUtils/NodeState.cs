@@ -36,7 +36,6 @@ public class NodeState : MonoBehaviour {
     }
 
 	void Update () {
-	
 	}
 
     public void updateColor()
@@ -131,6 +130,7 @@ public class NodeState : MonoBehaviour {
 
         nodeMenu = new GameObject();
         nodeMenu.name = "Menu: " + mKey;
+        nodeMenu.tag = "NodeMenu";
 
         //nodeMenu.AddComponent<CameraOrientedText3D>();
         nodeMenu.AddComponent<NodeMenuUtils>();

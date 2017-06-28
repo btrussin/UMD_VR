@@ -12,12 +12,13 @@ public class UserDataCollectionHandler : MonoBehaviour
 
     private GameObject PopUpMenu;
     private GameObject ExpandedPopUpMenu;
-    private FormMenuHandler submitButton;
+    private SubmitButtonScript sbs;
     private GameObject ConfirmationPopUp;
     public FormMenuHandler.FormQuestions.Question currentQuestion;
     private MovieObject movieObject;
     private FormState formState;
     private string currentAnswerSelected;
+    private List<String> currentAnswersList;
     private TextMesh QuestionText;
     private bool questionLoaded = false;
 
@@ -25,8 +26,9 @@ public class UserDataCollectionHandler : MonoBehaviour
 
     // Use this for initialization
     void Start ()
-	{	   
-	    ExpandedPopUpMenu = GameObject.FindGameObjectWithTag("ExpandedPopUpMenu");
+	{
+        currentAnswersList = new List<string>();
+        ExpandedPopUpMenu = GameObject.FindGameObjectWithTag("ExpandedPopUpMenu");
         ConfirmationPopUp = GameObject.FindGameObjectWithTag("ConfirmationPopUp");
         ConfirmationPopUp.SetActive(false);
         movieObject = FindObjectOfType<NodeState>().GetComponent<MovieObject>();
@@ -36,8 +38,9 @@ public class UserDataCollectionHandler : MonoBehaviour
         sliderPointMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/sliderpnt_mat.mat");
 
         formState = GetComponent<FormState>();
+	    sbs = GameObject.FindObjectOfType<SubmitButtonScript>();
 
-    }
+	}
     Dictionary<string, MovieObject> connectionMovieObjectMap = new Dictionary<string, MovieObject>();
 
     public FormMenuHandler.FormQuestions form_questions = new FormMenuHandler.FormQuestions();
@@ -85,7 +88,8 @@ public class UserDataCollectionHandler : MonoBehaviour
             {
                 optionText.GetComponent<TextMesh>().text = currentQuestion.possible_answers[toggleInd];
             }
-            optionText.GetComponent<TextMesh>().fontSize = 16;
+            optionText.GetComponent<TextMesh>().fontSize = 50;
+            optionText.GetComponent<TextMesh>().characterSize = 0.35f;
             optionText.name = "Option Text";
             optionText.transform.SetParent(quad.transform);
             optionText.transform.localRotation = Quaternion.identity;
@@ -110,9 +114,9 @@ public class UserDataCollectionHandler : MonoBehaviour
             if ((currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.RadioButtons) &&(questionLoaded==false) )
             {
                GenYesNoRadioButtons();
-                questionLoaded = true;
-                
+                questionLoaded = true;               
             }
+
         }
         else
         {
@@ -131,12 +135,15 @@ public class UserDataCollectionHandler : MonoBehaviour
     public void PromptUserInput(string dataSelected)
     {
         ConfirmationPopUp.SetActive(true);
-        
+        sbs.readyForSubmit = true;
         if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput || currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.RadioButtons)
         {
-            ConfirmationPopUp.GetComponent<TextMesh>().text = "You selected " + dataSelected + ". " +
-                                                              Environment.NewLine +
-                                                              "Click the trackpad to submit your answer.";
+            ConfirmationPopUp.GetComponent<TextMesh>().text = dataSelected;
+        }
+        else if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
+        {
+            currentAnswersList.Add(dataSelected);
+            ConfirmationPopUp.GetComponent<TextMesh>().text += Environment.NewLine + dataSelected;
         }
         currentAnswerSelected = dataSelected;
     }
@@ -145,6 +152,7 @@ public class UserDataCollectionHandler : MonoBehaviour
     {
         if (currentAnswerSelected != null)
         {
+            sbs.readyForSubmit = false;
             form_questions.surveyResponses.Add("QNumT:" + form_questions.QuestionIndex + " Input Value:" +
                                                currentAnswerSelected);
             /* foreach (string s in form_questions.surveyResponses)
@@ -171,11 +179,14 @@ public class UserDataCollectionHandler : MonoBehaviour
             {
                 if (m.nodeState.isSelected)
                 {
-                    Debug.Log(m);
-                    m.nodeState.isSelected = false;
+                    //m.nodeState.isSelected = false;
+                    m.nodeState.toggleSelected();
                     m.nodeState.updateColor();
                 }
             }
+            currentAnswersList.Clear();
+            ConfirmationPopUp.GetComponent<TextMesh>().text = "";
+
         }
     }
 }
