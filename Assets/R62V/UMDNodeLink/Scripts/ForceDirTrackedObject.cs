@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Valve.VR;
 
-public class ForceDirTrackedObject : SteamVR_TrackedObject
+public class ForceDirTrackedObject : BaseSteamController
 {
     public GameObject otherController;
     ForceDirTrackedObject otherTrackedObjScript;
@@ -63,8 +63,19 @@ public class ForceDirTrackedObject : SteamVR_TrackedObject
         fDirScript = forceDirLayoutObj.GetComponent<ForceDirLayout>();
     }
 
+    
+    new void FixedUpdate()
+    {
+        base.FixedUpdate();
+        if (__goToParentScene)
+        {
+            goToParentScene("PivotScene");
+        }
+    }
+    
+
     // Update is called once per frame
-    void Update () {
+    void Update () { 
 
         // update the device ray per frame
         Quaternion rayRotation = Quaternion.AngleAxis(60.0f, transform.right);

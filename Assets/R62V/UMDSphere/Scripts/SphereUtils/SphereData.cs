@@ -129,6 +129,10 @@ public class SphereData : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
+        string pVal = SceneParams.getParamValue("ShowEdges");
+        if (pVal.Equals("true")) edgesAlwaysOn = true;
+        else edgesAlwaysOn = false;
+
         if (!edgesAlwaysOn) edgeBrightnessNone = 0.0f;
 
         cmLoader = this.gameObject.GetComponent<CMJSONLoader>();

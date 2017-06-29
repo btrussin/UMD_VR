@@ -26,7 +26,7 @@ public class CMJSONLoader : MonoBehaviour{
 
         var cmDataArray = JsonUtility.FromJson<CMDataArray>(asset.text);
         cmData = cmDataArray.data;
-        //purgeData();
+        purgeData();
         processData();
     }
 

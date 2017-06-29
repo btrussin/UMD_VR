@@ -55,6 +55,10 @@ public class ForceDirLayout : GraphGenerator
     // Use this for initialization
     void Start () {
 
+        string pVal = SceneParams.getParamValue("ShowEdges");
+        if (pVal.Equals("true")) drawEdges = true;
+        else drawEdges = false;
+
         sphereCenter = gameObject.transform.position;
 
         NodeLinkDataLoader dataLoader = new NodeLinkDataLoader();

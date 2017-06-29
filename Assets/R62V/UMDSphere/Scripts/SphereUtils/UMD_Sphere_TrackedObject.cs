@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Valve.VR;
 
-public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
+public class UMD_Sphere_TrackedObject : BaseSteamController
 {
     public GameObject dataObj;
 
@@ -127,6 +127,16 @@ public class UMD_Sphere_TrackedObject : SteamVR_TrackedObject
         form_questions = fmh_script.form_questions;
         submitButton = GameObject.FindGameObjectWithTag("SubmitButton");
     }
+
+    new void FixedUpdate()
+    {
+        base.FixedUpdate();
+        if (__goToParentScene)
+        {
+            goToParentScene("PivotScene");
+        }
+    }
+
     void Update()
     {
         currPosition = transform.position;
