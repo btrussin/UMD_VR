@@ -71,6 +71,7 @@ public class NodeDetailsManager : MonoBehaviour {
         bool newLine = false;
 
         int numPopulated = 0;
+        int numRows = 0;
 
         offsetVector = startVectors[0];
 
@@ -94,11 +95,12 @@ public class NodeDetailsManager : MonoBehaviour {
 
             if( newLine )
             {
-                heightVector.y -= maxHeight;
+                numRows++;
+                heightVector.y -= maxHeight * 0.6f;
                 maxHeight = 0f;
                 newLine = false;
 
-                if( heightVector.y < lowestY )
+                if( heightVector.y < lowestY || numRows > 2)
                 {
                     currVecIdx++;
                     if (currVecIdx > 2)
@@ -122,6 +124,10 @@ public class NodeDetailsManager : MonoBehaviour {
             currObj.transform.forward = forwardVectors[currVecIdx];
 
             offsetVector += menuUtils.xDimension * dirVectors[currVecIdx];
+
+            menuUtils.largePosition = currObj.transform.position;
+            menuUtils.smallPosition = currObj.transform.position + forwardVectors[currVecIdx] * 0.15f;
+
 
             menuUtils.makeSmall();
 
@@ -171,6 +177,7 @@ public class NodeDetailsManager : MonoBehaviour {
 
             currCircum += menuUtils.xDimension;
 
+            menuUtils.makeLarge();
             menuUtils.makeSmall();
 
         }

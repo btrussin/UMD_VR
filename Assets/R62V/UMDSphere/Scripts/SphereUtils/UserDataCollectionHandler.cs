@@ -182,6 +182,13 @@ public class UserDataCollectionHandler : MonoBehaviour
                     //m.nodeState.isSelected = false;
                     m.nodeState.toggleSelected();
                     m.nodeState.updateColor();
+
+                    // added by Brian; the following is consistent with the controller
+                    HashSet<EdgeInfo> edgeSet = m.getEdges();
+                    if (m.nodeState.getIsSelected()) foreach (EdgeInfo info in edgeSet) info.select();
+                    else foreach (EdgeInfo info in edgeSet) info.unselect();
+
+                    m.connManager.ForceClearAllConnections();
                 }
             }
             currentAnswersList.Clear();

@@ -49,7 +49,8 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
     GameObject activeNodeMenu = null;
     GameObject activeActorText = null;
     Vector3 actorTextNormalScale = Vector3.one * 0.1f;
-    Vector3 actorTextLargeScale = Vector3.one * 0.15f;
+    //Vector3 actorTextLargeScale = Vector3.one * 0.15f;
+    Vector3 actorTextLargeScale = Vector3.one * 0.1f;
 
     private GameObject submitButton;
     private SubmitButtonScript sbs;

@@ -148,10 +148,10 @@ public class NodeState : MonoBehaviour {
         float normalTextSize = 0.05f;
         float yOffsetPerLine = normalTextSize;
 
-        Vector3 offset = Vector3.zero;
-        offset.y = -0.02f;
+        Vector3 offset = new Vector3(0.3f, -0.3f, 0.0f);
+        offset.y += -0.02f;
 
-        offset.x = 0.0f;
+        //offset.x = 0.0f;
 
         if (mKey.Length > maxCharSize)
         {
@@ -174,7 +174,7 @@ public class NodeState : MonoBehaviour {
         }
 
         
-        offset.x = 0.04f;
+        //offset.x += 0.04f;
 
         textObjects.Add(addText(nodeMenu, "Distributor: " + data.distributor, roleAlign, roleAnchor, offset, normalTextSize, false));
         offset.y -= yOffsetPerLine;
@@ -182,14 +182,14 @@ public class NodeState : MonoBehaviour {
         offset.y -= yOffsetPerLine;
         offset.y -= yOffsetPerLine;
 
-        offset.x = 0.01f;
+        //offset.x = 0.01f;
         textObjects.Add(addText(nodeMenu, "Actors (Roles)", roleAlign, roleAnchor, offset, normalTextSize, false));
         offset.y -= yOffsetPerLine/4.0f;
         textObjects.Add(addText(nodeMenu, "______________", roleAlign, roleAnchor, offset, normalTextSize, false));
         offset.y -= yOffsetPerLine;
 
         float firstBoxY = offset.y;
-        offset.x = 0.04f;
+        //offset.x = 0.04f;
         for ( int i = 0; i < data.roles.Length; i++ )
         {
             GameObject gObj = addText(nodeMenu, data.roles[i].actor + " (" + data.roles[i].name + ")", roleAlign, roleAnchor, offset, normalTextSize, true);
@@ -230,7 +230,7 @@ public class NodeState : MonoBehaviour {
         float yDim = (maxY - minY) + 0.04f;
 
         //Vector3 basePos = new Vector3(-xDim * 0.5f, yDim * 0.5f, 0.0f);
-        Vector3 basePos = new Vector3(-xDim * 0.5f, 0.0f, 0.0f);
+        Vector3 basePos = new Vector3(-xDim * 0.5f, 0.0f, 0f);
 
         foreach (GameObject obj in textObjects)
         {
@@ -240,7 +240,7 @@ public class NodeState : MonoBehaviour {
         //plane.transform.localScale = new Vector3(xDim, yDim, 1.0f);
         //plane.transform.localPosition = basePos + new Vector3(xDim * 0.5f, yDim * -0.5f, 0.005f);
 
-        plane.transform.localPosition = basePos + new Vector3(xDim * 0.5f, yDim * -0.5f, 0.005f);
+        plane.transform.localPosition = basePos + new Vector3(xDim, -yDim, 0.005f);
 
 
         //nodeMenu.transform.localScale = new Vector3(xDim, yDim, yDim);
