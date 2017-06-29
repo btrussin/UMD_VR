@@ -28,7 +28,7 @@ public class FormMenuHandler : BaseMenuHandler
     private FormQuestions.Question currentQuestion;
     private FormMenuHandler FormMenu;
     private GameObject selectText;
-
+    private SubmitButtonScript sbs;
     public enum FormMenuHandlerType
     {
         ToggleCheckbox,
@@ -42,7 +42,8 @@ public class FormMenuHandler : BaseMenuHandler
         RadioButtons,
         CheckBoxes,
         Slider,
-        AnsInput
+        AnsInput,
+        MultipleInput
     }
 
     public new FormMenuHandlerType handlerType;
@@ -80,8 +81,8 @@ public class FormMenuHandler : BaseMenuHandler
     {
         if (tag == "FormMenu")
         {
+            sbs = GameObject.FindObjectOfType<SubmitButtonScript>();
             selectText = GameObject.FindGameObjectWithTag("SelectText");
-            Debug.Log(gameObject.name);
             FormMenu = GameObject.FindGameObjectWithTag("FormMenu").GetComponent<FormMenuHandler>();
             BoxMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/box_mat.mat");
             CheckMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/check_mat.mat");
@@ -113,7 +114,10 @@ public class FormMenuHandler : BaseMenuHandler
         }
 
         startTime = DateTime.Now.ToFileTime();
-        SetQuestion();
+        if (tag == "FormMenu")
+        {
+            SetQuestion();
+        }
         /*
         if (tag == "FormMenu")
         {
@@ -170,7 +174,7 @@ public class FormMenuHandler : BaseMenuHandler
                 }
             }
 
-
+            
             if (currentQuestion.QuestionType == QuestionTypes.CheckBoxes)
             {
                 GenCheckBox();
@@ -188,7 +192,7 @@ public class FormMenuHandler : BaseMenuHandler
                 AnsInput("");
             }
         }
-        readyForSubmit = false;
+        sbs.readyForSubmit = false;
         amountScrolled = 35;
     }
 
@@ -282,7 +286,8 @@ public class FormMenuHandler : BaseMenuHandler
             {
                 optionText.GetComponent<TextMesh>().text = FormMenu.currentQuestion.possible_answers[toggleInd];
             }
-            optionText.GetComponent<TextMesh>().fontSize = 16;
+            optionText.GetComponent<TextMesh>().fontSize = 50;
+            optionText.GetComponent<TextMesh>().characterSize = 0.35f;
             optionText.name = "Option Text";
             optionText.transform.SetParent(quad.transform);
             optionText.transform.localRotation = Quaternion.identity;
