@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 
 public class UserDataCollectionHandler : MonoBehaviour
@@ -21,12 +22,14 @@ public class UserDataCollectionHandler : MonoBehaviour
     private List<String> currentAnswersList;
     private TextMesh QuestionText;
     private bool questionLoaded = false;
+    public long startTime;
 
     // public GameObject NextPart;
 
     // Use this for initialization
     void Start ()
 	{
+        startTime = DateTime.Now.ToFileTime();
         currentAnswersList = new List<string>();
         ExpandedPopUpMenu = GameObject.FindGameObjectWithTag("ExpandedPopUpMenu");
         ConfirmationPopUp = GameObject.FindGameObjectWithTag("ConfirmationPopUp");
@@ -131,7 +134,11 @@ public class UserDataCollectionHandler : MonoBehaviour
         movieObject = m;
     }
 
-
+    public void RemoveAnswer(string dataSelected)
+    {
+        TextMesh text = ConfirmationPopUp.GetComponent<TextMesh>();
+        text.text = text.text.Replace(dataSelected, "");
+    }
     public void PromptUserInput(string dataSelected)
     {
         ConfirmationPopUp.SetActive(true);
@@ -153,12 +160,7 @@ public class UserDataCollectionHandler : MonoBehaviour
         if (currentAnswerSelected != null)
         {
             sbs.readyForSubmit = false;
-            form_questions.surveyResponses.Add("QNumT:" + form_questions.QuestionIndex + " Input Value:" +
-                                               currentAnswerSelected);
-            /* foreach (string s in form_questions.surveyResponses)
-             {
-                 Debug.Log(s);
-             }*/
+            AddToList(form_questions.QuestionIndex,currentAnswerSelected);
             form_questions.QuestionIndex++;
             questionLoaded = false;
             currentAnswerSelected = null;
@@ -191,9 +193,41 @@ public class UserDataCollectionHandler : MonoBehaviour
                     m.connManager.ForceClearAllConnections();
                 }
             }
+           
             currentAnswersList.Clear();
             ConfirmationPopUp.GetComponent<TextMesh>().text = "";
 
+        }
+    }
+    public void AddToList(int QNum, string value)
+    {
+        List<String> data = new List<string>();
+        if (FindObjectOfType<UserDataCollectionHandler>() != null)
+        {
+            data.Add("QNumT:" + QNum + " " + "Input Value:" + value);
+            Debug.Log("saved");
+            SaveOutputData(data);  
+        }
+    }
+    public void SaveOutputData(List<string> selectInformation)
+    {
+        long endTime = DateTime.Now.ToFileTime();
+        string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        string path = pathDesktop + "\\mycsvfile.csv";
+
+        using (var w = new StreamWriter(path, true))
+        {
+            DateTime startDate = DateTime.FromFileTime(startTime);
+
+            string startToEnd = string.Format("{0}", startDate);
+            w.WriteLine(startToEnd);
+
+            for (int i = 0; i < selectInformation.Count; i++)
+            {
+                var first = selectInformation[i];
+                string line = string.Format("{0}", first); 
+                w.WriteLine(line);
+            }
         }
     }
 }

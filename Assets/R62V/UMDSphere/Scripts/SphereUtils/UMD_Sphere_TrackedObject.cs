@@ -121,11 +121,9 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
 
         setSliderLocalPosition(sphereData.BundlingStrength);
 
-
-        //this was getting some other reference to another instance of fmh_script
-        //fmh_script = GameObject.FindObjectOfType<FormMenuHandler>();
         form_questions = fmh_script.form_questions;
         submitButton = GameObject.FindGameObjectWithTag("SubmitButton");
+        // this is null because there are two TrackedObject scripts
         sbs = submitButton.GetComponent<SubmitButtonScript>();
     }
 
@@ -482,10 +480,10 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
     void handleStateChanges()
     {
         
-        // enter survey question answer
+        
         if (padClicked() && !isCollidingWithRing)
         {
-            //udch.HandleUserInput();
+            
 
         }
         bool stateIsValid = vrSystem.GetControllerState((uint)index, ref state);
@@ -560,10 +558,18 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
 
                     if (udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput || udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
                     {
-                        udch.PromptUserInput(m.name);
+                        m.nodeState.toggleSelected();
+                        m.nodeState.updateColor();
+                        if (m.nodeState.isSelected)
+                        {
+                            udch.PromptUserInput(m.name);
+                        }
+                        else
+                        {
+                            udch.RemoveAnswer(m.name);
+                        }
                     }
-                    m.nodeState.toggleSelected();
-                    m.nodeState.updateColor();
+
 
                     HashSet<EdgeInfo> edgeSet = m.getEdges();
                     if (m.nodeState.getIsSelected()) foreach (EdgeInfo info in edgeSet) info.select();

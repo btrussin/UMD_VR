@@ -317,7 +317,7 @@ public class FormMenuHandler : BaseMenuHandler
                     numberofCheckBoxSelected++;
                 }
             }
-            AddToList(FormMenu.form_questions.QuestionIndex + 1, numberofCheckBoxSelected);
+            AddToList(FormMenu.form_questions.QuestionIndex + 1, numberofCheckBoxSelected.ToString());
 
         }
         else if (FormMenu.currentQuestion.QuestionType == QuestionTypes.RadioButtons)
@@ -341,7 +341,7 @@ public class FormMenuHandler : BaseMenuHandler
                     numberofButtonSelected++;
                 }
             }
-            AddToList(FormMenu.form_questions.QuestionIndex + 1, numberofButtonSelected);
+            AddToList(FormMenu.form_questions.QuestionIndex + 1, numberofButtonSelected.ToString());
         }
         
         FormMenu.form_questions.QuestionIndex++;
@@ -457,27 +457,14 @@ public class FormMenuHandler : BaseMenuHandler
         }
     }
 
-    public void AddToList(int QNum, int value)
+    public void AddToList(int QNum, string value)
     {
-        // TODO : save to cv file every time subject hits submit
-
-
-        // just adds the incoming variables in a list
-        /*
-        FormMenu.form_questions.surveyResponses.Add("QNumS:" + QNum + " " + "Input Value:" + value);
-        if (FormMenu.form_questions.QuestionIndex == FormMenu.form_questions.questions.Count -2)
-        {
-            List<String> data = new List<string>();
-            foreach (string s in GameObject.FindObjectOfType<UserDataCollectionHandler>().form_questions.surveyResponses)
-            {
-                data.Add(s);
-            }
-            foreach (string s in FormMenu.form_questions.surveyResponses)
-            {
-                data.Add(s);
-            }
-            SaveOutputData(data);
-        }*/
+        QNum = FormMenu.form_questions.QuestionIndex;
+        
+        List<String> data = new List<string>();
+        data.Add("QNumS:" + QNum + " " + "Input Value:" + value);
+        Debug.Log("saved");
+        SaveOutputData(data);
     }
 
 
@@ -520,27 +507,6 @@ public class FormMenuHandler : BaseMenuHandler
                 break;
         }
     }
-    /*
-    // converts String[] arrays to List<String>
-    public static List<String> ArrayToList(String[] array)
-    {
-        List<String> newList = new List<String>();
-        foreach (String i in array)
-        {
-            newList.Add(i);
-        }
-        return newList;
-    }
-
-    // sends the answers to the survey questions to the SaveOutputData function
-    public void SubmitForm()
-    {
-        SaveOutputData(ArrayToList(form_questions.answers),startTime);
-    }
-
-    */
-
-
 
 
     public void SaveOutputData(List<string> selectInformation)
@@ -548,25 +514,7 @@ public class FormMenuHandler : BaseMenuHandler
         long endTime = DateTime.Now.ToFileTime();
         string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         string path = pathDesktop + "\\mycsvfile.csv";
-        /*
-        System.Random rnd = new System.Random();
-        int index = 0;
 
-        if (!File.Exists(path))
-        {
-            
-            File.Create(path).Close();
-        }
-        else
-        {
-            path = pathDesktop + "\\user" + index + ".csv";
-            while (File.Exists(path))
-            {
-                index++;
-                path = pathDesktop + "\\user" + index + ".csv";
-            }
-        }
-        */
         using (var w = new StreamWriter(path,true))
         {
             for (int i =0; i < selectInformation.Count; i++)
@@ -583,10 +531,7 @@ public class FormMenuHandler : BaseMenuHandler
             string startToEnd = string.Format("{0},{1}", startDate, endDate);
             w.WriteLine(startToEnd);
             //w.Flush();
-
-            string lastLine = string.Format("{0},{1}", "Time Elapsed", endDate - startDate);
-            w.WriteLine(lastLine);
-            //w.Flush();
+            
         }
     }
 }
