@@ -27,34 +27,34 @@ public class UserDataCollectionHandler : MonoBehaviour
     // public GameObject NextPart;
 
     // Use this for initialization
-    void Start ()
-	{
+    void Start()
+    {
         startTime = DateTime.Now.ToFileTime();
         currentAnswersList = new List<string>();
         ExpandedPopUpMenu = GameObject.FindGameObjectWithTag("ExpandedPopUpMenu");
         ConfirmationPopUp = GameObject.FindGameObjectWithTag("ConfirmationPopUp");
         ConfirmationPopUp.SetActive(false);
         movieObject = FindObjectOfType<NodeState>().GetComponent<MovieObject>();
-	    QuestionText = GameObject.FindGameObjectWithTag("CurrentQuestionText").GetComponent<TextMesh>();
+        QuestionText = GameObject.FindGameObjectWithTag("CurrentQuestionText").GetComponent<TextMesh>();
         // NextPart = GameObject.FindGameObjectWithTag("NextPart");
         CircleMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/circ_mat.mat");
         sliderPointMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/sliderpnt_mat.mat");
-    
 
         formState = GetComponent<FormState>();
-	    sbs = GameObject.FindObjectOfType<SubmitButtonScript>();
+        sbs = GameObject.FindObjectOfType<SubmitButtonScript>();
 
-	}
+    }
     Dictionary<string, MovieObject> connectionMovieObjectMap = new Dictionary<string, MovieObject>();
 
     public FormMenuHandler.FormQuestions form_questions = new FormMenuHandler.FormQuestions();
 
 
     // Update is called once per frame
-    void Update () {
-        
+    void Update()
+    {
+
         SetQuestion();
-	}
+    }
 
 
     public void GenYesNoRadioButtons()
@@ -115,10 +115,10 @@ public class UserDataCollectionHandler : MonoBehaviour
         {
             currentQuestion = form_questions.questions[form_questions.QuestionIndex];
             QuestionText.text = currentQuestion.QuestionText;
-            if ((currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.RadioButtons) &&(questionLoaded==false) )
+            if ((currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.RadioButtons) && (questionLoaded == false))
             {
-               GenYesNoRadioButtons();
-                questionLoaded = true;               
+                GenYesNoRadioButtons();
+                questionLoaded = true;
             }
 
         }
@@ -189,31 +189,31 @@ public class UserDataCollectionHandler : MonoBehaviour
         }
         sbs.readyForSubmit = false;
 
-            form_questions.QuestionIndex++;
-            questionLoaded = false;
-            currentAnswerSelected = null;
+        form_questions.QuestionIndex++;
+        questionLoaded = false;
+        currentAnswerSelected = null;
 
 
-            ConfirmationPopUp.SetActive(false);
-            foreach (MovieObject m in GameObject.FindObjectsOfType<MovieObject>())
+        ConfirmationPopUp.SetActive(false);
+        foreach (MovieObject m in GameObject.FindObjectsOfType<MovieObject>())
+        {
+            if (m.nodeState.isSelected)
             {
-                if (m.nodeState.isSelected)
-                {
-                    //m.nodeState.isSelected = false;
-                    m.nodeState.toggleSelected();
-                    m.nodeState.updateColor();
+                //m.nodeState.isSelected = false;
+                m.nodeState.toggleSelected();
+                m.nodeState.updateColor();
 
-                    // added by Brian; the following is consistent with the controller
-                    HashSet<EdgeInfo> edgeSet = m.getEdges();
-                    if (m.nodeState.getIsSelected()) foreach (EdgeInfo info in edgeSet) info.select();
-                    else foreach (EdgeInfo info in edgeSet) info.unselect();
+                // added by Brian; the following is consistent with the controller
+                HashSet<EdgeInfo> edgeSet = m.getEdges();
+                if (m.nodeState.getIsSelected()) foreach (EdgeInfo info in edgeSet) info.select();
+                else foreach (EdgeInfo info in edgeSet) info.unselect();
 
-                    m.connManager.ForceClearAllConnections();
-                }
+                m.connManager.ForceClearAllConnections();
             }
-           
-            currentAnswersList.Clear();
-            ConfirmationPopUp.GetComponent<TextMesh>().text = "";
+        }
+
+        currentAnswersList.Clear();
+        ConfirmationPopUp.GetComponent<TextMesh>().text = "";
 
     }
 
@@ -225,7 +225,7 @@ public class UserDataCollectionHandler : MonoBehaviour
         {
             data.Add("QNumT:" + QNum + " " + "Input Value:" + value);
             Debug.Log("saved");
-            SaveOutputData(data);  
+            SaveOutputData(data);
         }
     }
     public void SaveOutputData(List<string> selectInformation)
@@ -239,7 +239,7 @@ public class UserDataCollectionHandler : MonoBehaviour
             for (int i = 0; i < selectInformation.Count; i++)
             {
                 var first = selectInformation[i];
-                string line = string.Format("{0}", first); 
+                string line = string.Format("{0}", first);
                 w.WriteLine(line);
             }
             DateTime startDate = DateTime.FromFileTime(startTime);
@@ -247,6 +247,6 @@ public class UserDataCollectionHandler : MonoBehaviour
 
             string lastLine = string.Format("{0},{1}", "Time Elapsed", endDate - startDate);
             w.WriteLine(lastLine);
-       }
+        }
     }
 }
