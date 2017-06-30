@@ -39,6 +39,7 @@ public class UserDataCollectionHandler : MonoBehaviour
         // NextPart = GameObject.FindGameObjectWithTag("NextPart");
         CircleMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/circ_mat.mat");
         sliderPointMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/sliderpnt_mat.mat");
+    
 
         formState = GetComponent<FormState>();
 	    sbs = GameObject.FindObjectOfType<SubmitButtonScript>();
@@ -157,25 +158,42 @@ public class UserDataCollectionHandler : MonoBehaviour
 
     public void HandleUserInput()
     {
-        if (currentAnswerSelected != null)
+        if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput ||
+            currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.RadioButtons)
         {
-            sbs.readyForSubmit = false;
-            AddToList(form_questions.QuestionIndex,currentAnswerSelected);
+            if (currentAnswerSelected != null)
+            {
+                AddToList(form_questions.QuestionIndex, currentAnswerSelected);
+
+                if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.RadioButtons)
+                {
+                    foreach (Transform t in GetComponentsInChildren<Transform>())
+                    {
+                        if (t.tag == "RadioButton")
+                        {
+                            Destroy(t.gameObject);
+                        }
+                    }
+                }
+            }
+        }
+        else if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
+        {
+
+            string test = "";
+            foreach (string s in currentAnswersList)
+            {
+                test += s;
+            }
+            AddToList(form_questions.QuestionIndex, test);
+        }
+        sbs.readyForSubmit = false;
+
             form_questions.QuestionIndex++;
             questionLoaded = false;
             currentAnswerSelected = null;
 
-            if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.RadioButtons)
-            {
-                foreach (Transform t in GetComponentsInChildren<Transform>())
-                {
-                    if (t.tag == "RadioButton")
-                    {
-                        Destroy(t.gameObject);
-                    }
-                }
-            }
-            
+
             ConfirmationPopUp.SetActive(false);
             foreach (MovieObject m in GameObject.FindObjectsOfType<MovieObject>())
             {
@@ -197,8 +215,9 @@ public class UserDataCollectionHandler : MonoBehaviour
             currentAnswersList.Clear();
             ConfirmationPopUp.GetComponent<TextMesh>().text = "";
 
-        }
     }
+
+
     public void AddToList(int QNum, string value)
     {
         List<String> data = new List<string>();
@@ -217,17 +236,17 @@ public class UserDataCollectionHandler : MonoBehaviour
 
         using (var w = new StreamWriter(path, true))
         {
-            DateTime startDate = DateTime.FromFileTime(startTime);
-
-            string startToEnd = string.Format("{0}", startDate);
-            w.WriteLine(startToEnd);
-
             for (int i = 0; i < selectInformation.Count; i++)
             {
                 var first = selectInformation[i];
                 string line = string.Format("{0}", first); 
                 w.WriteLine(line);
             }
-        }
+            DateTime startDate = DateTime.FromFileTime(startTime);
+            DateTime endDate = DateTime.FromFileTime(endTime);
+
+            string lastLine = string.Format("{0},{1}", "Time Elapsed", endDate - startDate);
+            w.WriteLine(lastLine);
+       }
     }
 }
