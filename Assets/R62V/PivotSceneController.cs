@@ -27,22 +27,6 @@ public class PivotSceneController : SteamVR_TrackedObject
     void Start () {
         vrSystem = OpenVR.System;
 
-       
-
-        /*
-        SceneParams.setParamValue("ShowEdges", "true");
-        SceneParams.setParamValue("ShowEdges", "false");
-
-
-        //SceneManager.LoadScene("SphereScene", LoadSceneMode.Single);
-        //SceneManager.LoadScene(sphereScene.name, LoadSceneMode.Single);
-        SceneManager.LoadScene(nodeLinkScene.name, LoadSceneMode.Single);
-        */
-
-
-
-        //SceneManager.LoadScene(sphereScene.name, LoadSceneMode.Single);
-        //SceneManager.LoadScene("Assets/R62V/UMDSphere/Scenes/SphereScene", LoadSceneMode.Single);
     }
 	
 	// Update is called once per frame
@@ -57,7 +41,6 @@ public class PivotSceneController : SteamVR_TrackedObject
 
         if (Physics.Raycast(deviceRay.origin, deviceRay.direction, out hitInfo, 60.0f))
         {
-            Debug.Log("Hit something");
             hitObj.SetActive(true);
             hitObj.transform.position = deviceRay.GetPoint(hitInfo.distance);
             selectedObject = hitInfo.collider.gameObject;
@@ -112,7 +95,6 @@ public class PivotSceneController : SteamVR_TrackedObject
 
     public void SwitchScenes(string scene)
     {
-        Debug.Log("here");
         SceneParams.setParamValue("ShowEdges", "false");
         SceneManager.LoadScene(scene, LoadSceneMode.Single);
     }
