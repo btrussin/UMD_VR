@@ -77,7 +77,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
     // returns true on touchpad click up
     public bool padClicked()
     {
-        
+
         if (padJustPressedDown && (state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) == 0)
         {
             padJustPressedDown = false;
@@ -121,11 +121,9 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
 
         setSliderLocalPosition(sphereData.BundlingStrength);
 
-
-        //this was getting some other reference to another instance of fmh_script
-        //fmh_script = GameObject.FindObjectOfType<FormMenuHandler>();
         form_questions = fmh_script.form_questions;
         submitButton = GameObject.FindGameObjectWithTag("SubmitButton");
+        // this is null because there are two TrackedObject scripts
         sbs = submitButton.GetComponent<SubmitButtonScript>();
     }
 
@@ -156,7 +154,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
         handleStateChanges();
 
 
-        ringsInCollision = sphereData.getRingsInCollision(currPosition + (currForwardVec - currUpVec) * (0.03f + sphereCollider.radius) , sphereCollider.radius*2.0f);
+        ringsInCollision = sphereData.getRingsInCollision(currPosition + (currForwardVec - currUpVec) * (0.03f + sphereCollider.radius), sphereCollider.radius * 2.0f);
         if (ringsInCollision.Count > 0)
         {
             sphereData.addActiveRings(ringsInCollision);
@@ -171,7 +169,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
 
         if (useBeam) projectBeam();
 
-        if( updateSlider )
+        if (updateSlider)
         {
             calcSliderPosition();
             sphereData.updateAllConnections();
@@ -196,7 +194,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
         Vector3 v2 = tVec - sliderLeftPnt.transform.position;
 
         // 'd' is the vector-projection amount of v2 onto v1
-        float d = Vector3.Dot(v1, v2)/ Vector3.Dot(v1, v1);
+        float d = Vector3.Dot(v1, v2) / Vector3.Dot(v1, v1);
 
         // 'd' is also the correct linear combination of the left and right slider edges
         // left * d + right * ( 1 - d )
@@ -208,7 +206,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
         // clamp dist to 0.0 and 1.0
         // float tDist = Mathf.Min(1.0f, Mathf.Max(0.0f, dist));
         float tDist = Mathf.Clamp(dist, 0.0f, 1.0f);
-        Vector3 tVec = (sliderRightPnt.transform.localPosition - sliderLeftPnt.transform.localPosition)* tDist;
+        Vector3 tVec = (sliderRightPnt.transform.localPosition - sliderLeftPnt.transform.localPosition) * tDist;
         sliderPoint.transform.localPosition = sliderLeftPnt.transform.localPosition + tVec;
 
         sphereData.BundlingStrength = tDist;
@@ -222,7 +220,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
 
         if (Physics.Raycast(deviceRay.origin, deviceRay.direction, out hitInfo, 30.0f, menusLayerMask))
         {
-          
+
             activeBeamInterceptObj = hitInfo.collider.gameObject;
             beamDist = hitInfo.distance;
 
@@ -233,9 +231,9 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
                 increaseSizeOfActiveMenu();
             }
 
-            if( activeBeamInterceptObj.name.Contains("Actor:") && activeBeamInterceptObj != activeActorText)
+            if (activeBeamInterceptObj.name.Contains("Actor:") && activeBeamInterceptObj != activeActorText)
             {
-                if(activeActorText != null ) activeActorText.transform.localScale = actorTextNormalScale;
+                if (activeActorText != null) activeActorText.transform.localScale = actorTextNormalScale;
                 activeActorText = activeBeamInterceptObj;
                 activeActorText.transform.localScale = actorTextLargeScale;
             }
@@ -278,7 +276,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
             }
         }
 
-        if(activeActorText != null)
+        if (activeActorText != null)
         {
             activeActorText.transform.localScale = actorTextNormalScale;
             activeActorText = null;
@@ -309,7 +307,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
 
     void triggerActiverBeamObject()
     {
-        if( activeBeamInterceptObj != null )
+        if (activeBeamInterceptObj != null)
         {
             if (activeBeamInterceptObj.tag == "CloseButton")
             {
@@ -333,8 +331,8 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
                 }
             }
             NodeMenuHandler menuHandler = activeBeamInterceptObj.GetComponent<NodeMenuHandler>();
-          
-            if (menuHandler != null )
+
+            if (menuHandler != null)
             {
 
                 menuHandler.handleTrigger();
@@ -348,7 +346,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
             FormMenuHandler formMenuHandler = activeBeamInterceptObj.GetComponent<FormMenuHandler>();
             if (formMenuHandler != null)
             {
-               
+
                 formMenuHandler.handleTrigger();
 
                 if (activeBeamInterceptObj != null)
@@ -368,9 +366,9 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
 
             else
             {
-                
+
                 MainMenuUtils mainMenu = this.GetComponent<MainMenuUtils>();
-                if( mainMenu != null )
+                if (mainMenu != null)
                 {
                     if (mainMenu.sphereData == null)
                     {
@@ -390,13 +388,13 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
                                 destLayout = SphereData.SphereLayout.Sphere;
                             else if (activeBeamInterceptObj.name.CompareTo("Box-Lay_Cyl") == 0)
                                 destLayout = SphereData.SphereLayout.Column_X;
-                           
+
 
                             sphereData.setMainLayout(destLayout);
                             mainMenu.updateLayout();
                         }
                     }
-                    else if(activeBeamInterceptObj.name.CompareTo("Box-Show_Conn") == 0)
+                    else if (activeBeamInterceptObj.name.CompareTo("Box-Show_Conn") == 0)
                     {
                         sphereData.toggleEdgesAlwaysOn();
                         mainMenu.updateLayout();
@@ -411,11 +409,11 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
                         else if (activeBeamInterceptObj.name.CompareTo("Box-Cat_Pub") == 0) destCategory = SphereData.MainRingCategory.Publisher;
                         else if (activeBeamInterceptObj.name.CompareTo("Box-Cat_Studio") == 0) destCategory = SphereData.MainRingCategory.Studio;
                         else if (activeBeamInterceptObj.name.CompareTo("Box-Cat_Year") == 0) destCategory = SphereData.MainRingCategory.Year;
-                        
+
                         sphereData.SetMainRingCategory(destCategory);
                         mainMenu.updateLayout();
                     }
-                    else if(activeBeamInterceptObj.name.CompareTo("Quad_Slider_Point") == 0 )
+                    else if (activeBeamInterceptObj.name.CompareTo("Quad_Slider_Point") == 0)
                     {
                         updateSlider = true;
 
@@ -462,11 +460,15 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
                     {
                         t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
                         sbs.readyForSubmit = true;
+                        fmh_script.currentSliderValue = Mathf.RoundToInt((radioButtonOffset + 10) / 10);
+                        Debug.Log("first");
                     }
                     else if ((radioButtonOffset == 0 && fmh_script.amountScrolled < 10) || (fmh_script.amountScrolled > 70 && radioButtonOffset == 60))
                     {
                         t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
                         sbs.readyForSubmit = true;
+                        Debug.Log(radioButtonOffset);
+                        Debug.Log("second");
                     }
                     else
                     {
@@ -474,18 +476,28 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
                     }
                     fmh.UpdateMaterial();
 
-                }               
+                }
+
             }
+
         }
         radioButtonOffset = 70;
     }
     void handleStateChanges()
     {
-        
-        // enter survey question answer
+
+        if (Input.GetKeyUp(KeyCode.Keypad1))
+        {
+            Debug.Log("asdf");
+            GameObject.FindObjectOfType<PivotSceneController>().SwitchScenes("SphereScene");
+        }
+        if (Input.GetKeyUp(KeyCode.Keypad2))
+        {
+            GameObject.FindObjectOfType<PivotSceneController>().SwitchScenes("NodeGraph");
+        }
         if (padClicked() && !isCollidingWithRing)
         {
-            //udch.HandleUserInput();
+
 
         }
         bool stateIsValid = vrSystem.GetControllerState((uint)index, ref state);
@@ -505,12 +517,12 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
             }
 
             if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) != 0 &&
-                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) == 0 )
+                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) == 0)
             {
                 sphereData.grabSphereWithObject(gameObject);
             }
             else if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) == 0 &&
-                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) != 0 )
+                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) != 0)
             {
                 sphereData.releaseSphereWithObject(gameObject);
             }
@@ -534,7 +546,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
                         udch.minimzed = !udch.minimzed;
                     }
                 }
-                if( activeNodeMenu != null )
+                if (activeNodeMenu != null)
                 {
                     reduceSizeOfActiveMenu();
                     activeNodeMenu = null;
@@ -549,7 +561,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
             }
 
             if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
-                prevState.rAxis1.x < 1.0f && state.rAxis1.x == 1.0f )
+                prevState.rAxis1.x < 1.0f && state.rAxis1.x == 1.0f)
             {
 
                 triggerActiverBeamObject();
@@ -560,10 +572,18 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
 
                     if (udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput || udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
                     {
-                        udch.PromptUserInput(m.name);
+                        m.nodeState.toggleSelected();
+                        m.nodeState.updateColor();
+                        if (m.nodeState.isSelected)
+                        {
+                            udch.PromptUserInput(m.name);
+                        }
+                        else
+                        {
+                            udch.RemoveAnswer(m.name);
+                        }
                     }
-                    m.nodeState.toggleSelected();
-                    m.nodeState.updateColor();
+
 
                     HashSet<EdgeInfo> edgeSet = m.getEdges();
                     if (m.nodeState.getIsSelected()) foreach (EdgeInfo info in edgeSet) info.select();
@@ -574,20 +594,20 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
 
 
             prevState = state;
-        }      
-                if ((state.ulButtonTouched) == 4294967296) // if the touchpad is touched 
-                {           
-                  handleSlider();
-                }
+        }
+        if ((state.ulButtonTouched) == 4294967296) // if the touchpad is touched 
+        {
+            handleSlider();
+        }
 
 
         if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) != 0)
         {
             padJustPressedDown = true;
-            if(ringsInCollision.Count < 1)
+            if (ringsInCollision.Count < 1)
             {
                 Vector2 vec;
-                if( Mathf.Abs(state.rAxis0.x) > Mathf.Abs(state.rAxis0.y ) )
+                if (Mathf.Abs(state.rAxis0.x) > Mathf.Abs(state.rAxis0.y))
                 {
                     vec = new Vector2(state.rAxis0.x, 0f);
                     sphereData.rotateGraph(vec);
@@ -597,7 +617,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
                     vec = new Vector2(0f, state.rAxis0.y);
                     sphereData.rotateGraph(vec);
                 }
-                
+
             }
             else
             {
@@ -635,19 +655,19 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
                 info.hightlight();
             }
 
-            if ( !ns.getIsSelected() )
+            if (!ns.getIsSelected())
             {
                 sphereData.connectMoviesByActors(mo.cmData);
             }
 
             connectionMovieObjectMap.Add(key, mo);
         }
-        
+
     }
 
     void OnCollisionStay(Collision col)
     {
-       
+
     }
 
     void OnCollisionExit(Collision col)
@@ -662,31 +682,31 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
             mo.nodeState.updateColor();
 
             HashSet<EdgeInfo> edgeSet = mo.getEdges();
-            foreach(EdgeInfo info in edgeSet)
+            foreach (EdgeInfo info in edgeSet)
             {
                 info.unhightlight();
             }
 
-            if( !mo.nodeState.getIsSelected() )
+            if (!mo.nodeState.getIsSelected())
             {
                 mo.connManager.ForceClearAllConnections();
             }
 
             connectionMovieObjectMap.Remove(key);
         }
-        
+
     }
 
     void UpdateConnections()
     {
-      
+
         Dictionary<string, MovieObject>.KeyCollection keys = connectionMovieObjectMap.Keys;
 
         if (keys.Count < 1) return;
         MovieObject mo;
-        foreach ( string key in keys )
+        foreach (string key in keys)
         {
-            if( connectionMovieObjectMap.TryGetValue(key, out mo) )
+            if (connectionMovieObjectMap.TryGetValue(key, out mo))
             {
                 mo.connManager.ForceClearAllConnections();
                 sphereData.connectMoviesByActors(mo.cmData);
@@ -714,7 +734,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
     {
         menuActive = true;
         otherTrackedObjScript.menuActive = false;
-        
+
 
         menuObject.transform.SetParent(gameObject.transform);
 
@@ -731,5 +751,5 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
         menuObject.SetActive(false);
     }
 
-    
+
 }

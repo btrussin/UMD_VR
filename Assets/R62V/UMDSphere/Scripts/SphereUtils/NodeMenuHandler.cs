@@ -54,8 +54,8 @@ public class NodeMenuHandler : MonoBehaviour
             case NodeMenuHandlerType.ToggleActor:
   
                 role.active = !role.active;
-                UpdateMaterial();
-                FindObjectOfType<UserDataCollectionHandler>().PromptUserInput(role.actor);
+                UpdateMaterial();              
+             
                 break;
             default:
                 break;

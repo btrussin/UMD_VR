@@ -8,6 +8,7 @@ using Valve.VR;
 
 public class PivotSceneController : SteamVR_TrackedObject
 {
+
     public SceneAsset sphereScene;
     public SceneAsset nodeLinkScene;
     private AssetBundle loadedAssets;
@@ -46,7 +47,7 @@ public class PivotSceneController : SteamVR_TrackedObject
 	
 	// Update is called once per frame
 	void Update () {
-
+        
         Quaternion rayRotation = Quaternion.AngleAxis(60.0f, transform.right);
 
         deviceRay.origin = transform.position;
@@ -63,7 +64,7 @@ public class PivotSceneController : SteamVR_TrackedObject
         }
         else hitObj.SetActive(false);
 
-
+        
 
         bool stateIsValid = vrSystem.GetControllerState((uint)index, ref currState);
 
@@ -107,6 +108,13 @@ public class PivotSceneController : SteamVR_TrackedObject
             prevState = currState;
         }
 
+    }
+
+    public void SwitchScenes(string scene)
+    {
+        Debug.Log("here");
+        SceneParams.setParamValue("ShowEdges", "false");
+        SceneManager.LoadScene(scene, LoadSceneMode.Single);
     }
 }
 

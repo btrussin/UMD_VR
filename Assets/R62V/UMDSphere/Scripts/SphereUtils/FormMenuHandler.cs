@@ -10,7 +10,7 @@ using Debug = UnityEngine.Debug;
 
 public class FormMenuHandler : BaseMenuHandler
 {
-    
+
     public bool materialStatus;
     public bool readyForSubmit;
 
@@ -29,6 +29,7 @@ public class FormMenuHandler : BaseMenuHandler
     private FormMenuHandler FormMenu;
     private GameObject selectText;
     private SubmitButtonScript sbs;
+    public int currentSliderValue;
     public enum FormMenuHandlerType
     {
         ToggleCheckbox,
@@ -63,12 +64,12 @@ public class FormMenuHandler : BaseMenuHandler
             //public int NumberOfAnswers;
             public List<String> possible_answers = new List<String>();
 
-            
+
 
 
         }
         public int QuestionIndex;
-        public  List<Question> questions = new List<Question>();
+        public List<Question> questions = new List<Question>();
         public List<String> surveyResponses = new List<String>();
         //public String[] answers;
 
@@ -102,7 +103,7 @@ public class FormMenuHandler : BaseMenuHandler
         }
         catch (NullReferenceException)
         {
-            
+
         }
 
         foreach (TextMesh text in gameObject.GetComponentsInChildren<TextMesh>())
@@ -166,15 +167,15 @@ public class FormMenuHandler : BaseMenuHandler
                     {
                         if (FormMenu.current_question_text.text.Substring(60)[i] == ' ')
                         {
-                            
-                            current_question_text.text = current_question_text.text.Substring(0, 60+i) + Environment.NewLine + current_question_text.text.Substring(60+i);
+
+                            current_question_text.text = current_question_text.text.Substring(0, 60 + i) + Environment.NewLine + current_question_text.text.Substring(60 + i);
                             break;
                         }
                     }
                 }
             }
 
-            
+
             if (currentQuestion.QuestionType == QuestionTypes.CheckBoxes)
             {
                 GenCheckBox();
@@ -197,10 +198,10 @@ public class FormMenuHandler : BaseMenuHandler
     }
 
     public void GenCheckBox()
-    { 
+    {
         float offset_y = 0.0675f;
         float yOffsetPerLine = 0.12f;
-         
+
         List<GameObject> interactableObjects = new List<GameObject>();
         int menuLayerMask = LayerMask.NameToLayer("Menus");
 
@@ -218,8 +219,8 @@ public class FormMenuHandler : BaseMenuHandler
             rend.transform.localScale = new Vector3(0.1f, 0.1f, 1.0f);
             rend.transform.localRotation = Quaternion.identity;
             rend.transform.localPosition = Vector3.zero;
-            rend.transform.localPosition = new Vector3(-0.44f,0.31f,0.887f);
-            rend.transform.localPosition -= new Vector3(0,offset_y,0);
+            rend.transform.localPosition = new Vector3(-0.44f, 0.31f, 0.887f);
+            rend.transform.localPosition -= new Vector3(0, offset_y, 0);
 
             quad.AddComponent<FormMenuHandler>();
             FormMenuHandler menuHandler = quad.GetComponent<FormMenuHandler>();
@@ -237,7 +238,7 @@ public class FormMenuHandler : BaseMenuHandler
             optionText.transform.SetParent(quad.transform);
             optionText.transform.localRotation = Quaternion.identity;
             optionText.transform.localPosition = new Vector3(.69f, .48f, -.0015f);
-            optionText.transform.localScale = new Vector3(.5f,.5f,203); ;
+            optionText.transform.localScale = new Vector3(.5f, .5f, 203); ;
 
 
             menuHandler.baseMaterial = BoxMaterial;
@@ -250,10 +251,10 @@ public class FormMenuHandler : BaseMenuHandler
         offset_y += yOffsetPerLine;
     }
 
-    
+
     public void GenRadioButton()
     {  // by RK, check for Alex and Mike
-        
+
         float offset_y = 0.0675f;
         float yOffsetPerLine = 0.12f;
         List<GameObject> interactableObjects = new List<GameObject>();
@@ -268,7 +269,7 @@ public class FormMenuHandler : BaseMenuHandler
             quad.transform.SetParent(transform);
 
             MeshRenderer rend = quad.GetComponent<MeshRenderer>();
-           
+
             rend.transform.localScale = new Vector3(0.1f, 0.1f, 1.0f);
             rend.transform.localRotation = Quaternion.identity;
             rend.transform.localPosition = Vector3.zero;
@@ -311,13 +312,13 @@ public class FormMenuHandler : BaseMenuHandler
         {
             int numberofCheckBoxSelected = 0;
             foreach (FormMenuHandler fmh in FormMenu.GetComponentsInChildren<FormMenuHandler>())
-            {  
+            {
                 if ((fmh.tag == "CheckBox") && fmh.materialStatus)
                 {
                     numberofCheckBoxSelected++;
                 }
             }
-            AddToList(FormMenu.form_questions.QuestionIndex + 1, numberofCheckBoxSelected);
+            AddToList(FormMenu.form_questions.QuestionIndex + 1, numberofCheckBoxSelected.ToString());
 
         }
         else if (FormMenu.currentQuestion.QuestionType == QuestionTypes.RadioButtons)
@@ -332,18 +333,9 @@ public class FormMenuHandler : BaseMenuHandler
         }
         else if (FormMenu.currentQuestion.QuestionType == QuestionTypes.Slider)
         {
-            int numberofButtonSelected = 0;
-            foreach (FormMenuHandler fmh in FormMenu.GetComponentsInChildren<FormMenuHandler>())
-            {
-
-                if ((fmh.tag == "Slider") && fmh.materialStatus)
-                {
-                    numberofButtonSelected++;
-                }
-            }
-            AddToList(FormMenu.form_questions.QuestionIndex + 1, numberofButtonSelected);
+            AddToList(FormMenu.form_questions.QuestionIndex + 1, currentSliderValue.ToString());
         }
-        
+
         FormMenu.form_questions.QuestionIndex++;
         FormMenu.SetQuestion();
 
@@ -351,13 +343,13 @@ public class FormMenuHandler : BaseMenuHandler
 
     public void AnsInput(String answer)
     {
-        
+
     }
 
 
     public void GenSlider()
     {   // by RK, check for Alex and Mike, as requested this is the radio button slider.
-        
+
         float offset_y = -0.75f;
         float yOffsetPerLine = 0.12f;
         int number = 1;
@@ -378,7 +370,7 @@ public class FormMenuHandler : BaseMenuHandler
             rend.transform.localRotation = Quaternion.identity;
             rend.transform.localPosition = Vector3.zero;
             rend.transform.localPosition = new Vector3(-0.16f, 0.24f, 0.88f);
-            rend.transform.localPosition -= new Vector3(offset_y, 0, 0); 
+            rend.transform.localPosition -= new Vector3(offset_y, 0, 0);
 
             quad.AddComponent<FormMenuHandler>();
             FormMenuHandler menuHandler = quad.GetComponent<FormMenuHandler>();
@@ -392,13 +384,14 @@ public class FormMenuHandler : BaseMenuHandler
                 optionText.GetComponent<TextMesh>().text = FormMenu.currentQuestion.possible_answers[toggleInd];
             }
 
-            optionText.GetComponent<TextMesh>().fontSize = 16;
+            optionText.GetComponent<TextMesh>().fontSize = 50;
+            optionText.GetComponent<TextMesh>().characterSize = 0.35f;
             optionText.name = "Option Text";
             optionText.transform.SetParent(quad.transform);
             optionText.transform.localRotation = Quaternion.identity;
             optionText.transform.localPosition = new Vector3(-0.5f, -0.71f, -.0003f);
             optionText.transform.localScale = new Vector3(.5f, .5f, 203); ;
-            
+
             menuHandler.baseMaterial = CircleMaterial;
             menuHandler.inputInteractMaterial = sliderPointMaterial;
             if (number == 4)
@@ -412,14 +405,14 @@ public class FormMenuHandler : BaseMenuHandler
             number += 1;
         }
         offset_y += yOffsetPerLine;
-        }
-    
+    }
+
 
     public void clearSelection()
     {
-        foreach (Transform t in GetComponentsInChildren<Transform>() )
+        foreach (Transform t in GetComponentsInChildren<Transform>())
         {
-            if (t.tag == ("RadioButton") || (t.tag ==  "CheckBox") || (t.tag == "Slider"))
+            if (t.tag == ("RadioButton") || (t.tag == "CheckBox") || (t.tag == "Slider"))
             {
                 Destroy(t.gameObject);
             }
@@ -442,9 +435,9 @@ public class FormMenuHandler : BaseMenuHandler
                 allActiveGOs.Add(transform.parent.gameObject.GetComponent<TextMesh>().text);
             }
             catch (MissingComponentException)
-            {   
+            {
             }
-            
+
         }
         else
         {
@@ -457,34 +450,26 @@ public class FormMenuHandler : BaseMenuHandler
         }
     }
 
-    public void AddToList(int QNum, int value)
+    public void AddToList(int QNum, string value)
     {
-        // TODO : save to cv file every time subject hits submit
+        QNum = FormMenu.form_questions.QuestionIndex;
 
+        List<String> data = new List<string>();
+        data.Add("QNumS:" + QNum + " " + "Input Value:" + value);
+        Debug.Log("saved survey");
+        SaveOutputData(data);
 
-        // just adds the incoming variables in a list
-        /*
-        FormMenu.form_questions.surveyResponses.Add("QNumS:" + QNum + " " + "Input Value:" + value);
-        if (FormMenu.form_questions.QuestionIndex == FormMenu.form_questions.questions.Count -2)
+        if (QNum == form_questions.questions.Count - 2)
         {
-            List<String> data = new List<string>();
-            foreach (string s in GameObject.FindObjectOfType<UserDataCollectionHandler>().form_questions.surveyResponses)
-            {
-                data.Add(s);
-            }
-            foreach (string s in FormMenu.form_questions.surveyResponses)
-            {
-                data.Add(s);
-            }
-            SaveOutputData(data);
-        }*/
+            saveFile(data);
+        }
     }
 
 
 
     public override void handleTrigger()
     {
-        
+
         switch (handlerType)
         {
             case FormMenuHandlerType.ToggleCheckbox:
@@ -506,41 +491,50 @@ public class FormMenuHandler : BaseMenuHandler
                 }
                 break;
             case FormMenuHandlerType.SubmitForm:
-                
+
                 FindObjectOfType<UMD_Sphere_TrackedObject>().hideMainMenu();
                 CSVEntries.SaveOutputData(allActiveGOs, startTime);
                 allActiveGOs.Clear();
                 baseState.DestroyMenu();
-         
+
                 break;
-            case FormMenuHandlerType.SubmitQuestionAnswer:             
+            case FormMenuHandlerType.SubmitQuestionAnswer:
                 SubmitQuestionAnswer();
                 break;
             default:
                 break;
         }
     }
-    /*
-    // converts String[] arrays to List<String>
-    public static List<String> ArrayToList(String[] array)
+
+
+    public void saveFile(List<string> selectInformation)
     {
-        List<String> newList = new List<String>();
-        foreach (String i in array)
+        long endTime = DateTime.Now.ToFileTime();
+        string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        string path = pathDesktop + "\\mycsvfile.csv";
+
+        Debug.Log("hello");
+        using (var w = new StreamWriter(path, true))
         {
-            newList.Add(i);
+            for (int i = 0; i < selectInformation.Count; i++)
+            {
+                var first = selectInformation[i];
+                string line = string.Format("{0}", first); //using string interpolation
+                w.WriteLine(line);
+
+            }
+
+            DateTime startDate = DateTime.FromFileTime(startTime);
+            DateTime endDate = DateTime.FromFileTime(endTime);
+
+            string lastLine = string.Format("{0},{1}", "Time Elapsed", endDate - startDate);
+            w.WriteLine(lastLine);
+
+            string startToEnd = string.Format("{0},{1}", startDate, endDate);
+            w.WriteLine(startToEnd);
         }
-        return newList;
+
     }
-
-    // sends the answers to the survey questions to the SaveOutputData function
-    public void SubmitForm()
-    {
-        SaveOutputData(ArrayToList(form_questions.answers),startTime);
-    }
-
-    */
-
-
 
 
     public void SaveOutputData(List<string> selectInformation)
@@ -548,45 +542,21 @@ public class FormMenuHandler : BaseMenuHandler
         long endTime = DateTime.Now.ToFileTime();
         string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         string path = pathDesktop + "\\mycsvfile.csv";
-        /*
-        System.Random rnd = new System.Random();
-        int index = 0;
 
-        if (!File.Exists(path))
+        using (var w = new StreamWriter(path, true))
         {
-            
-            File.Create(path).Close();
-        }
-        else
-        {
-            path = pathDesktop + "\\user" + index + ".csv";
-            while (File.Exists(path))
-            {
-                index++;
-                path = pathDesktop + "\\user" + index + ".csv";
-            }
-        }
-        */
-        using (var w = new StreamWriter(path,true))
-        {
-            for (int i =0; i < selectInformation.Count; i++)
+            for (int i = 0; i < selectInformation.Count; i++)
             {
                 var first = selectInformation[i];
                 string line = string.Format("{0}", first); //using string interpolation
                 w.WriteLine(line);
-                //w.Flush();                
             }
 
             DateTime startDate = DateTime.FromFileTime(startTime);
             DateTime endDate = DateTime.FromFileTime(endTime);
 
-            string startToEnd = string.Format("{0},{1}", startDate, endDate);
-            w.WriteLine(startToEnd);
-            //w.Flush();
-
             string lastLine = string.Format("{0},{1}", "Time Elapsed", endDate - startDate);
             w.WriteLine(lastLine);
-            //w.Flush();
         }
     }
 }

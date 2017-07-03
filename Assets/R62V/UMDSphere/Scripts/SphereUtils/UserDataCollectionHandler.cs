@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 
 public class UserDataCollectionHandler : MonoBehaviour
@@ -21,36 +22,39 @@ public class UserDataCollectionHandler : MonoBehaviour
     private List<String> currentAnswersList;
     private TextMesh QuestionText;
     private bool questionLoaded = false;
+    public long startTime;
 
     // public GameObject NextPart;
 
     // Use this for initialization
-    void Start ()
-	{
+    void Start()
+    {
+        startTime = DateTime.Now.ToFileTime();
         currentAnswersList = new List<string>();
         ExpandedPopUpMenu = GameObject.FindGameObjectWithTag("ExpandedPopUpMenu");
         ConfirmationPopUp = GameObject.FindGameObjectWithTag("ConfirmationPopUp");
         ConfirmationPopUp.SetActive(false);
         movieObject = FindObjectOfType<NodeState>().GetComponent<MovieObject>();
-	    QuestionText = GameObject.FindGameObjectWithTag("CurrentQuestionText").GetComponent<TextMesh>();
+        QuestionText = GameObject.FindGameObjectWithTag("CurrentQuestionText").GetComponent<TextMesh>();
         // NextPart = GameObject.FindGameObjectWithTag("NextPart");
         CircleMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/circ_mat.mat");
         sliderPointMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/sliderpnt_mat.mat");
 
         formState = GetComponent<FormState>();
-	    sbs = GameObject.FindObjectOfType<SubmitButtonScript>();
+        sbs = GameObject.FindObjectOfType<SubmitButtonScript>();
 
-	}
+    }
     Dictionary<string, MovieObject> connectionMovieObjectMap = new Dictionary<string, MovieObject>();
 
     public FormMenuHandler.FormQuestions form_questions = new FormMenuHandler.FormQuestions();
 
 
     // Update is called once per frame
-    void Update () {
-        
+    void Update()
+    {
+
         SetQuestion();
-	}
+    }
 
 
     public void GenYesNoRadioButtons()
@@ -111,10 +115,10 @@ public class UserDataCollectionHandler : MonoBehaviour
         {
             currentQuestion = form_questions.questions[form_questions.QuestionIndex];
             QuestionText.text = currentQuestion.QuestionText;
-            if ((currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.RadioButtons) &&(questionLoaded==false) )
+            if ((currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.RadioButtons) && (questionLoaded == false))
             {
-               GenYesNoRadioButtons();
-                questionLoaded = true;               
+                GenYesNoRadioButtons();
+                questionLoaded = true;
             }
 
         }
@@ -131,7 +135,11 @@ public class UserDataCollectionHandler : MonoBehaviour
         movieObject = m;
     }
 
-
+    public void RemoveAnswer(string dataSelected)
+    {
+        TextMesh text = ConfirmationPopUp.GetComponent<TextMesh>();
+        text.text = text.text.Replace(dataSelected, "");
+    }
     public void PromptUserInput(string dataSelected)
     {
         ConfirmationPopUp.SetActive(true);
@@ -150,50 +158,95 @@ public class UserDataCollectionHandler : MonoBehaviour
 
     public void HandleUserInput()
     {
-        if (currentAnswerSelected != null)
+        if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput ||
+            currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.RadioButtons)
         {
-            sbs.readyForSubmit = false;
-            form_questions.surveyResponses.Add("QNumT:" + form_questions.QuestionIndex + " Input Value:" +
-                                               currentAnswerSelected);
-            /* foreach (string s in form_questions.surveyResponses)
-             {
-                 Debug.Log(s);
-             }*/
-            form_questions.QuestionIndex++;
-            questionLoaded = false;
-            currentAnswerSelected = null;
-
-            if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.RadioButtons)
+            if (currentAnswerSelected != null)
             {
-                foreach (Transform t in GetComponentsInChildren<Transform>())
+                AddToList(form_questions.QuestionIndex, currentAnswerSelected);
+
+                if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.RadioButtons)
                 {
-                    if (t.tag == "RadioButton")
+                    foreach (Transform t in GetComponentsInChildren<Transform>())
                     {
-                        Destroy(t.gameObject);
+                        if (t.tag == "RadioButton")
+                        {
+                            Destroy(t.gameObject);
+                        }
                     }
                 }
             }
-            
-            ConfirmationPopUp.SetActive(false);
-            foreach (MovieObject m in GameObject.FindObjectsOfType<MovieObject>())
+        }
+        else if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
+        {
+
+            string test = "";
+            foreach (string s in currentAnswersList)
             {
-                if (m.nodeState.isSelected)
-                {
-                    //m.nodeState.isSelected = false;
-                    m.nodeState.toggleSelected();
-                    m.nodeState.updateColor();
-
-                    // added by Brian; the following is consistent with the controller
-                    HashSet<EdgeInfo> edgeSet = m.getEdges();
-                    if (m.nodeState.getIsSelected()) foreach (EdgeInfo info in edgeSet) info.select();
-                    else foreach (EdgeInfo info in edgeSet) info.unselect();
-
-                    m.connManager.ForceClearAllConnections();
-                }
+                test += s;
             }
-            currentAnswersList.Clear();
-            ConfirmationPopUp.GetComponent<TextMesh>().text = "";
+            AddToList(form_questions.QuestionIndex, test);
+        }
+        sbs.readyForSubmit = false;
 
+        form_questions.QuestionIndex++;
+        questionLoaded = false;
+        currentAnswerSelected = null;
+
+
+        ConfirmationPopUp.SetActive(false);
+        foreach (MovieObject m in GameObject.FindObjectsOfType<MovieObject>())
+        {
+            if (m.nodeState.isSelected)
+            {
+                //m.nodeState.isSelected = false;
+                m.nodeState.toggleSelected();
+                m.nodeState.updateColor();
+
+                // added by Brian; the following is consistent with the controller
+                HashSet<EdgeInfo> edgeSet = m.getEdges();
+                if (m.nodeState.getIsSelected()) foreach (EdgeInfo info in edgeSet) info.select();
+                else foreach (EdgeInfo info in edgeSet) info.unselect();
+
+                m.connManager.ForceClearAllConnections();
+            }
+        }
+
+        currentAnswersList.Clear();
+        ConfirmationPopUp.GetComponent<TextMesh>().text = "";
+
+    }
+
+
+    public void AddToList(int QNum, string value)
+    {
+        List<String> data = new List<string>();
+        if (FindObjectOfType<UserDataCollectionHandler>() != null)
+        {
+            data.Add("QNumT:" + QNum + " " + "Input Value:" + value);
+            Debug.Log("saved");
+            SaveOutputData(data);
+        }
+    }
+    public void SaveOutputData(List<string> selectInformation)
+    {
+        long endTime = DateTime.Now.ToFileTime();
+        string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        string path = pathDesktop + "\\mycsvfile.csv";
+
+        using (var w = new StreamWriter(path, true))
+        {
+            for (int i = 0; i < selectInformation.Count; i++)
+            {
+                var first = selectInformation[i];
+                string line = string.Format("{0}", first);
+                w.WriteLine(line);
+            }
+            DateTime startDate = DateTime.FromFileTime(startTime);
+            DateTime endDate = DateTime.FromFileTime(endTime);
+
+            string lastLine = string.Format("{0},{1}", "Time Elapsed", endDate - startDate);
+            w.WriteLine(lastLine);
         }
     }
 }
