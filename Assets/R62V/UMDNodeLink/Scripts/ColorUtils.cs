@@ -7,7 +7,15 @@ public class ColorUtils {
     private static Color[] palette = null;
     private static ColorHSL[] paletteHSL = null;
 
-    public static void randomizeColorPalette(Color[] orig, int seed = 44356)
+    private static int standardSeed = 44356;
+
+    public static void randomizeColorPalette(Color[] orig)
+    {
+        //randomizeColorPalette(orig, standardSeed);
+        randomizeColorPalette(orig, 7);
+    }
+
+    public static void randomizeColorPalette(Color[] orig, int seed )
     {
         Random.InitState(seed);
         int size = orig.Length;

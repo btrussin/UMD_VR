@@ -4,8 +4,8 @@ using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.SceneManagement;
 using Valve.VR;
-
 public class UMD_Sphere_TrackedObject : BaseSteamController
 {
     public GameObject dataObj;
@@ -138,6 +138,15 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
 
     void Update()
     {
+        if (Input.GetKeyUp(KeyCode.Keypad1))
+        {
+            Debug.Log("asdf");
+        }
+        if (Input.GetKeyUp(KeyCode.Keypad2))
+        {
+            SceneManager.LoadScene("NodeGraph", LoadSceneMode.Single);
+            return;
+        }
         currPosition = transform.position;
         currRightVec = transform.right;
         currUpVec = transform.up;
@@ -485,16 +494,8 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
     }
     void handleStateChanges()
     {
+        
 
-        if (Input.GetKeyUp(KeyCode.Keypad1))
-        {
-            Debug.Log("asdf");
-            GameObject.FindObjectOfType<PivotSceneController>().SwitchScenes("SphereScene");
-        }
-        if (Input.GetKeyUp(KeyCode.Keypad2))
-        {
-            GameObject.FindObjectOfType<PivotSceneController>().SwitchScenes("NodeGraph");
-        }
         if (padClicked() && !isCollidingWithRing)
         {
 
