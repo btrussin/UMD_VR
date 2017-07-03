@@ -52,7 +52,7 @@ public class SphereData : MonoBehaviour {
     [Header("Line Connector Info", order = 3)]
     float bundlingStrength = 0.5f;
 
-    public bool enableSingleHandTranslation = true;
+    public bool enableSingleHandTranslation = false;
 
     
     public float BundlingStrength

@@ -31,6 +31,8 @@ public class ForceDirLayout : GraphGenerator
     Quaternion initialRotation;
     Vector3 inititalOffset = Vector3.zero;
 
+    public bool enableSingleHandTranslation = false;
+
     bool activeScale = false;
     bool activeMove = false;
 
@@ -616,7 +618,7 @@ public class ForceDirLayout : GraphGenerator
 
     void updateMove()
     {
-        if (activeMove)
+        if (enableSingleHandTranslation && activeMove)
         {
             gameObject.transform.rotation = activeGrabObject.transform.rotation * initialRotation;
 
