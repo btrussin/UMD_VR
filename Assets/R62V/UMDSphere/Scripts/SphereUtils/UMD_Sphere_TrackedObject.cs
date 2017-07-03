@@ -138,15 +138,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
 
     void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Keypad1))
-        {
-            Debug.Log("asdf");
-        }
-        if (Input.GetKeyUp(KeyCode.Keypad2))
-        {
-            SceneManager.LoadScene("NodeGraph", LoadSceneMode.Single);
-            return;
-        }
+
         currPosition = transform.position;
         currRightVec = transform.right;
         currUpVec = transform.up;

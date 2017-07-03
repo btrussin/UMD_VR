@@ -22,11 +22,38 @@ public class BaseSteamController : SteamVR_TrackedObject
 	
 	// Update is called once per frame
 	void Update () {
-        
+
     }
 
     protected void FixedUpdate()
     {
+        // Menu Code Start
+        if (Input.GetKeyUp(KeyCode.Keypad1))
+        {
+            SceneParams.setParamValue("ShowEdges", "false");
+            SceneManager.LoadScene("SphereScene", LoadSceneMode.Single);
+            return;
+        }
+        if (Input.GetKeyUp(KeyCode.Keypad2))
+        {
+            SceneParams.setParamValue("ShowEdges", "false");
+            SceneManager.LoadScene("NodeGraph", LoadSceneMode.Single);
+            return;
+        }
+        if (Input.GetKeyUp(KeyCode.Keypad4))
+        {
+            SceneParams.setParamValue("ShowEdges", "true");
+            SceneManager.LoadScene("NodeGraph", LoadSceneMode.Single);
+            return;
+        }
+        if (Input.GetKeyUp(KeyCode.Keypad5))
+        {
+            SceneParams.setParamValue("ShowEdges", "true");
+            SceneManager.LoadScene("SphereScene", LoadSceneMode.Single);
+            return;
+        }
+
+        // Menu Code End
         if (__vrSystem == null) __vrSystem = OpenVR.System;
 
         if (__vrSystem.GetControllerState((uint)index, ref __currState))
