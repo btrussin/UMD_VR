@@ -1,33 +1,218 @@
 ﻿using System;
+using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using Valve.VR;
 using UnityEngine.SceneManagement;
 
 public class BaseSteamController : SteamVR_TrackedObject
 {
-    private int __prevStateHash = 0;
-    private VRControllerState_t __currState;
-    private CVRSystem __vrSystem;
+    protected int __prevStateHash = 0;
+    protected VRControllerState_t __currState;
+    protected CVRSystem __vrSystem;
 
-    private int __frameCount = 0;
+    protected int __frameCount = 0;
 
     protected int __parentSceneFrameCount = 200;
 
     protected bool __goToParentScene = false;
 
-    // Use this for initialization
-    void Start () {
-        __vrSystem = OpenVR.System;
-    }
-	
-	// Update is called once per frame
-	void Update () {
+    public GameObject otherController;
+    protected BaseSteamController otherTrackedObjScript;
 
+    public GameObject menuObject;
+    public bool menuActive = false;
+    public static bool animationLayout = true;
+
+    public Ray deviceRay;
+    public Vector3 currPosition;
+    public Vector3 currRightVec;
+    public Vector3 currUpVec;
+    public Vector3 currForwardVec;
+    public Quaternion currRotation;
+
+    public GameObject trackpadArrowObject;
+
+    //List<GameObject> connectionList = new List<GameObject>();
+
+    public Dictionary<string, MovieObject> connectionMovieObjectMap = new Dictionary<string, MovieObject>();
+
+    protected VRControllerState_t state;
+    protected VRControllerState_t prevState;
+
+    Quaternion currRingBaseRotation;
+
+    protected GameObject beam;
+    protected GameObject activeBeamInterceptObj = null;
+    protected GameObject activeNodeMenu = null;
+    protected GameObject activeActorText = null;
+    protected Vector3 actorTextNormalScale = Vector3.one * 0.1f;
+    //Vector3 actorTextLargeScale = Vector3.one * 0.15f;
+    protected Vector3 actorTextLargeScale = Vector3.one * 0.1f;
+
+    private GameObject submitButton;
+    private SubmitButtonScript sbs;
+    public float amount_scrolled = 0;
+
+
+    protected bool useBeam = false;
+
+    protected int menusLayerMask;
+
+    protected float currRayAngle = 60.0f;
+
+    //bool trackpadArrowsAreActive = false;
+    protected int prevNumRingsInCollision = 0;
+
+    public GameObject sliderLeftPnt;
+    public GameObject sliderRightPnt;
+    public GameObject sliderPoint;
+
+    protected float sliderPointDistance = 0.0f;
+    protected bool updateSlider = false;
+
+    private bool isCollidingWithRing;
+    public bool padJustPressedDown;
+
+    protected UserDataCollectionHandler udch;
+
+    // reference to instance of FormQuestions class
+    private FormMenuHandler.FormQuestions form_questions;
+    // reference to form menu script
+    public FormMenuHandler fmh_script;
+
+    // Use this for initialization
+    protected void Start()
+    {
+        __vrSystem = OpenVR.System;
+        beam = new GameObject();
+        beam.AddComponent<LineRenderer>();
+        LineRenderer lineRend = beam.GetComponent<LineRenderer>();
+        lineRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+        lineRend.receiveShadows = false;
+        lineRend.motionVectors = false;
+        lineRend.material = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/BeamMaterial.mat");
+        lineRend.SetWidth(0.003f, 0.003f);
+        beam.SetActive(false);
+
+        menusLayerMask = 1 << LayerMask.NameToLayer("Menus");
+
+        udch = FindObjectOfType<UserDataCollectionHandler>();
+
+        //form_questions = fmh_script.form_questions;
+        submitButton = GameObject.FindGameObjectWithTag("SubmitButton");
+        // this is null because there are two TrackedObject scripts
+        if (submitButton != null)
+        {
+            sbs = submitButton.GetComponent<SubmitButtonScript>();
+        }
+    }
+
+    protected void Update()
+    {
+
+        currPosition = transform.position;
+        currRightVec = transform.right;
+        currUpVec = transform.up;
+        currForwardVec = transform.forward;
+        currRotation = transform.rotation;
+        deviceRay.origin = currPosition;
+
+        Quaternion rayRotation = Quaternion.AngleAxis(currRayAngle, currRightVec);
+
+        deviceRay.direction = rayRotation * currForwardVec;
+
+        //sphereCollider.center = new Vector3(0.0f, 0.0f, 0.03f);
+
+        HandleStateChanges();
+    }
+
+     void HandleStateChanges()
+    {
+        bool stateIsValid = __vrSystem.GetControllerState((uint) index, ref state);
+
+        //if (!stateIsValid) Debug.Log("Invalid State for Idx: " + index);
+
+        if (stateIsValid && state.GetHashCode() != prevState.GetHashCode())
+        {
+           ApplyStateChanges();
+        }
+    }
+
+    //Put stuff that both classes need in this base function 
+    protected virtual void ApplyStateChanges()
+    {
+
+        if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.ApplicationMenu) != 0 &&
+        (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.ApplicationMenu) == 0)
+        {
+         
+            //sphereData.toggleMainLayout();
+            ToggleMenu();
+        }
+
+
+        if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
+            (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
+        {
+            // activate beam
+            beam.SetActive(true);
+            useBeam = true;
+        }
+
+        if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
+        prevState.rAxis1.x < 1.0f && state.rAxis1.x == 1.0f)
+        {
+            
+            TriggerActiverBeamObject();
+
+            // toggle connections with all movies
+            foreach (MovieObject m in connectionMovieObjectMap.Values)
+            {
+                m.nodeState.toggleSelected();
+                m.nodeState.updateColor();
+                if (udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput || udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
+                {
+                    if (m.nodeState.isSelected)
+                    {
+                        udch.PromptUserInput(m.name);
+                    }
+                    else
+                    {
+                        udch.RemoveAnswer(m.name);
+                    }
+                }
+
+
+                HashSet<EdgeInfo> edgeSet = m.getEdges();
+                if (m.nodeState.getIsSelected()) foreach (EdgeInfo info in edgeSet) info.select();
+                else foreach (EdgeInfo info in edgeSet) info.unselect();
+            }
+
+        }
+
+
+        if ((state.ulButtonTouched) == 4294967296) // if the touchpad is touched 
+        {
+            if (fmh_script != null)
+            {
+                handleSlider();
+            }
+        }
+    }
+
+    protected void LateUpdate()
+    {
+        if (submitButton != null)
+        {
+            submitButton.SetActive(sbs.readyForSubmit);
+        }
     }
 
     protected void FixedUpdate()
     {
         // Menu Code Start
+
         if (Input.GetKeyUp(KeyCode.Keypad1))
         {
             SceneParams.setParamValue("ShowEdges", "false");
@@ -78,4 +263,193 @@ public class BaseSteamController : SteamVR_TrackedObject
 
         //Debug.Log("Go to Parent Scene: " + sceneName + " [" + __frameCount + "]");
     }
+
+
+    /***************************************** MENU *****************************************************/
+    protected void IncreaseSizeOfActiveMenu()
+    {
+        if (activeNodeMenu != null)
+        {
+            NodeMenuUtils menuUtils = GetFirstNodeMenuUtilsOfParents(activeNodeMenu);
+            if (menuUtils != null)
+            {
+                menuUtils.makeLarge();
+            }
+        }
+    }
+
+
+    NodeMenuUtils GetFirstNodeMenuUtilsOfParents(GameObject obj)
+    {
+
+        GameObject tObj = obj;
+        NodeMenuUtils menuUtils = null;
+
+        while (tObj != null)
+        {
+            menuUtils = tObj.GetComponent<NodeMenuUtils>();
+            if (menuUtils != null)
+            {
+                return menuUtils;
+            }
+
+            if (tObj.transform.parent != null) tObj = tObj.transform.parent.gameObject;
+            else tObj = null;
+        }
+
+        return null;
+    }
+
+    protected void ReduceSizeOfActiveMenu()
+    {
+        if (activeNodeMenu != null)
+        {
+            NodeMenuUtils menuUtils = GetFirstNodeMenuUtilsOfParents(activeNodeMenu);
+            if (menuUtils != null)
+            {
+                menuUtils.makeSmall();
+            }
+        }
+
+        if (activeActorText != null)
+        {
+            activeActorText.transform.localScale = actorTextNormalScale;
+            activeActorText = null;
+        }
+    }
+
+    void ToggleMenu()
+    {
+        if (menuActive) HideMainMenu();
+        else ShowMainMenu();
+    }
+
+    protected void ShowMainMenu()
+    {
+        Debug.Log("on");
+        menuActive = true;
+        otherTrackedObjScript.menuActive = false;
+
+        
+        menuObject.transform.SetParent(gameObject.transform);
+
+        menuObject.transform.localPosition = new Vector3(0.0f, 0.02f, 0.0f);
+        menuObject.transform.localRotation = Quaternion.Euler(new Vector3(90.0f, 0.0f, 0.0f));
+        menuObject.transform.localScale = new Vector3(0.25f, 0.25f, 1.0f);
+        
+        menuObject.SetActive(true);
+        Debug.Log(menuObject);
+    }
+
+    public void HideMainMenu()
+    {
+        Debug.Log("off");
+        menuActive = false;
+        menuObject.SetActive(false);
+    }
+
+
+    /***************************************** BEAM OBJECT *********************************************/
+    protected virtual void TriggerActiverBeamObject()
+    {
+        Debug.Log(activeBeamInterceptObj);
+        if (activeBeamInterceptObj != null)
+        {
+
+            FormMenuHandler formMenuHandler = activeBeamInterceptObj.GetComponent<FormMenuHandler>();
+            if (formMenuHandler != null)
+            {
+                formMenuHandler.handleTrigger();  
+            }
+
+            if (activeBeamInterceptObj.tag == "CloseButton")
+            {
+                activeBeamInterceptObj.transform.parent.gameObject.SetActive(false);
+             
+                // All purpose blind close button code: sets direct parent of button inactive
+            }
+
+            if (activeBeamInterceptObj.tag == "RadioButton")
+            {
+                udch.PromptUserInput(activeBeamInterceptObj.GetComponentInChildren<TextMesh>().text);
+                FormMenuHandler fmh = activeBeamInterceptObj.GetComponentInChildren<FormMenuHandler>();
+                fmh.UpdateMaterial();
+            }
+            if (activeBeamInterceptObj.tag == "SubmitButton")
+            {
+                sbs = activeBeamInterceptObj.GetComponent<SubmitButtonScript>();
+                submitButton = activeBeamInterceptObj;
+                if (udch.gameObject.activeSelf)
+                {
+                    udch.HandleUserInput();
+                }
+                else
+                {
+                    fmh_script.SubmitQuestionAnswer();
+                }
+            }
+
+            if (activeBeamInterceptObj.name.Contains("Text"))
+            {
+                activeBeamInterceptObj.transform.GetComponentInChildren<FormMenuHandler>().handleTrigger();
+            }
+        }
+    }
+
+
+    protected void handleSlider()
+    {
+        if (fmh_script.amountScrolled < 70 && state.rAxis0.x >= 0)
+        {
+            fmh_script.amountScrolled += state.rAxis0.x;
+        }
+
+        else if (fmh_script.amountScrolled >= 0 && state.rAxis0.x < 0)
+        {
+            fmh_script.amountScrolled += state.rAxis0.x;
+        }
+        else if (fmh_script.amountScrolled <= 70 && fmh_script.amountScrolled >= 0)
+        {
+            fmh_script.amountScrolled += state.rAxis0.x;
+        }
+
+        GameObject formMenu = GameObject.FindGameObjectWithTag("FormMenu");
+        float radioButtonOffset = 70;
+        if (formMenu != null)
+        {
+            foreach (Transform t in formMenu.GetComponentsInChildren<Transform>())
+            {
+                if (t.tag == "Slider")
+                {
+                    radioButtonOffset -= 10f;
+
+                    FormMenuHandler fmh = t.GetComponent<FormMenuHandler>();
+                    if (radioButtonOffset < fmh_script.amountScrolled && radioButtonOffset > fmh_script.amountScrolled - 10)
+                    {
+                        t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
+                        sbs.readyForSubmit = true;
+                        fmh_script.currentSliderValue = Mathf.RoundToInt((radioButtonOffset + 10) / 10);
+                        Debug.Log("first");
+                    }
+                    else if ((radioButtonOffset == 0 && fmh_script.amountScrolled < 10) || (fmh_script.amountScrolled > 70 && radioButtonOffset == 60))
+                    {
+                        t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
+                        sbs.readyForSubmit = true;
+                        Debug.Log(radioButtonOffset);
+                        Debug.Log("second");
+                    }
+                    else
+                    {
+                        t.gameObject.GetComponent<FormMenuHandler>().materialStatus = false;
+                    }
+                    fmh.UpdateMaterial();
+
+                }
+
+            }
+
+        }
+        radioButtonOffset = 70;
+    }
+
 }

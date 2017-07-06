@@ -55,7 +55,6 @@ public class NodeLinkDataLoader {
 
 
         string[] vals = cmLoader.getAllPublishers();
-        Debug.Log("Have " + vals.Length + " publishers");
         List<CMData>[] lists = new List<CMData>[vals.Length];
         for (int i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForPublisher(vals[i]);
 
@@ -73,9 +72,6 @@ public class NodeLinkDataLoader {
 
 
         nodes = new NLNode[numNodes];
-
-        Debug.Log("Have " + nodes.Length + " nodes");
-
         int idx = 0;
         for (int i = 0; i < vals.Length; i++)
         {
@@ -95,8 +91,6 @@ public class NodeLinkDataLoader {
 
         List<NLLink> tList = new List<NLLink>();
         CMData[] cmData = cmLoader.getComicMovieData();
-
-        Debug.Log("Have " + cmData.Length + " CMData");
 
         int numConnections = 0;
 

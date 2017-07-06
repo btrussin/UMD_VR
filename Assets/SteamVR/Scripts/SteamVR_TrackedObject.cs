@@ -9,6 +9,14 @@ using Valve.VR;
 
 public class SteamVR_TrackedObject : MonoBehaviour
 {
+    protected void Start()
+    {
+        
+    }
+    protected void Update()
+    {
+        Debug.Log("here");
+    }
 	public enum EIndex
 	{
 		None = -1,
