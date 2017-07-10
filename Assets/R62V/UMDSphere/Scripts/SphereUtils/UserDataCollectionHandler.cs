@@ -24,6 +24,7 @@ public class UserDataCollectionHandler : MonoBehaviour
     private TextMesh QuestionText;
     private bool questionLoaded = false;
     public long startTime;
+    public bool startCountingTime;
 
     // public GameObject NextPart;
 
@@ -31,7 +32,7 @@ public class UserDataCollectionHandler : MonoBehaviour
     void Start()
     {
 
-        startTime = DateTime.Now.ToFileTime();
+        //startTime = DateTime.Now.ToFileTime();
         currentAnswersList = new List<string>();
         ExpandedPopUpMenu = GameObject.FindGameObjectWithTag("ExpandedPopUpMenu");
         ConfirmationPopUp = GameObject.FindGameObjectWithTag("ConfirmationPopUp");
@@ -66,7 +67,10 @@ public class UserDataCollectionHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (startCountingTime && startTime == 0)
+        {
+            startTime = DateTime.Now.ToFileTime();
+        }
         SetQuestion();
     }
 
@@ -204,13 +208,19 @@ public class UserDataCollectionHandler : MonoBehaviour
             AddToList(form_questions.QuestionIndex, test);
         }
         sbs.readyForSubmit = false;
-
         form_questions.QuestionIndex++;
         questionLoaded = false;
         currentAnswerSelected = null;
 
 
         ConfirmationPopUp.SetActive(false);
+        ForceDirLayout fDirScript = GameObject.FindObjectOfType<ForceDirLayout>();
+        foreach (GameObject g in GameObject.FindGameObjectsWithTag("MovieNode"))
+        {
+            NodeInfo info = fDirScript.getNodeInfo(g.name);
+            info.interState = NodeInteractionState.NONE;
+        }
+        
         foreach (MovieObject m in GameObject.FindObjectsOfType<MovieObject>())
         {
             if (m.nodeState.isSelected)

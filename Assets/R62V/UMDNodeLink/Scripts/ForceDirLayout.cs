@@ -269,6 +269,7 @@ public class ForceDirLayout : GraphGenerator
 
             GameObject point = (GameObject)Instantiate(nodeObject);
             point.name = entry.Value.id;
+            point.tag = "MovieNode";  // rk and alex added this to keep track of nodes in node graph
             point.transform.localPosition = entry.Value.pos3d;
             point.transform.localScale = new Vector3(0.03f, 0.03f, 0.03f);
             entry.Value.nodeObj = point;

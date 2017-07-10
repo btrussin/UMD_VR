@@ -92,13 +92,11 @@ public class ForceDirTrackedObject : BaseSteamController
         RaycastHit hitInfo;
         if (updateSlider)
         {
-            Debug.Log(1);
             beam.SetActive(true);
             beamDist = sliderPointDistance;
         }
         else if (menuManager.useNodePointers && updateNodeSelectedPosition)
         {
-            Debug.Log(2);
             beam.SetActive(true);
             beamDist = nodePointDistance;
         }
@@ -106,7 +104,6 @@ public class ForceDirTrackedObject : BaseSteamController
         {
             activeBeamInterceptObj = hitInfo.collider.gameObject;
             beamDist = hitInfo.distance;
-            Debug.Log(3);
             beam.SetActive(true);
 
             currMenuSubObject = activeBeamInterceptObj;
@@ -127,8 +124,8 @@ public class ForceDirTrackedObject : BaseSteamController
         {
             
             currNodeSelected = hitInfo.collider.gameObject;
+            
             beamDist = hitInfo.distance;
-            Debug.Log(4);
             beam.SetActive(true);
             if (triggerPulled)
             {
@@ -138,7 +135,6 @@ public class ForceDirTrackedObject : BaseSteamController
         }
         else if(castBeamAnyway)
         {
-            Debug.Log(5);
             beam.SetActive(true);
             currMenuSubObject = null;
             currNodeSelected = null;
@@ -162,12 +158,36 @@ public class ForceDirTrackedObject : BaseSteamController
             castBeamAnyway = true;
             triggerPulled = true;
 
+            // THIS CODE IS VERY BROKEN
+            // TODO: FIX IT
             if( currNodeCollided != null )
             {
                 updateNodeCollidedPosition = true;
                 currNodeCollided.GetComponentInChildren<Collider>().enabled = false;
                 NodeInfo info = fDirScript.getNodeInfo(currNodeCollided.name);
+                udch.startCountingTime = true;
                 info.positionIsStationary = true;
+
+                if (udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput ||
+                    udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
+                {
+                    udch.PromptUserInput(currNodeCollided.name);
+                }
+
+                foreach (GameObject g in GameObject.FindGameObjectsWithTag("MovieNode"))
+                {
+                    if (udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput ||
+                        udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
+                    {
+                        NodeInfo Ninfo = fDirScript.getNodeInfo(g.name);
+                        if (Ninfo.interState != NodeInteractionState.SELECTED && g != currNodeCollided)
+                        {
+                            
+                            udch.RemoveAnswer(g.name);
+                        }
+                    }
+                }
+                
             }
         }
 
@@ -176,9 +196,7 @@ public class ForceDirTrackedObject : BaseSteamController
             prevState.rAxis1.x < 1.0f && state.rAxis1.x == 1.0f)
         {
             
-            //activeBeamInterceptObj = GameObject.FindGameObjectWithTag("RadioButton");
-            Debug.Log(GameObject.FindGameObjectWithTag("RadioButton"));
-            TriggerActiverBeamObject();
+            //TriggerActiverBeamObject();
         }
 
 

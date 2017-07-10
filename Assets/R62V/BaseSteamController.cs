@@ -98,7 +98,7 @@ public class BaseSteamController : SteamVR_TrackedObject
         menusLayerMask = 1 << LayerMask.NameToLayer("Menus");
 
         udch = FindObjectOfType<UserDataCollectionHandler>();
-
+        fmh_script = GameObject.FindGameObjectWithTag("FormMenuParent").GetComponentInChildren<FormMenuHandler>(true);
         //form_questions = fmh_script.form_questions;
         submitButton = GameObject.FindGameObjectWithTag("SubmitButton");
         // this is null because there are two TrackedObject scripts
@@ -167,10 +167,13 @@ public class BaseSteamController : SteamVR_TrackedObject
             TriggerActiverBeamObject();
 
             // toggle connections with all movies
+            udch.startCountingTime = true;
+            
             foreach (MovieObject m in connectionMovieObjectMap.Values)
             {
                 m.nodeState.toggleSelected();
                 m.nodeState.updateColor();
+                
                 if (udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput || udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
                 {
                     if (m.nodeState.isSelected)
@@ -228,13 +231,13 @@ public class BaseSteamController : SteamVR_TrackedObject
         if (Input.GetKeyUp(KeyCode.Keypad4))
         {
             SceneParams.setParamValue("ShowEdges", "true");
-            SceneManager.LoadScene("NodeGraph", LoadSceneMode.Single);
+            SceneManager.LoadScene("SphereScene", LoadSceneMode.Single);
             return;
         }
         if (Input.GetKeyUp(KeyCode.Keypad5))
         {
             SceneParams.setParamValue("ShowEdges", "true");
-            SceneManager.LoadScene("SphereScene", LoadSceneMode.Single);
+            SceneManager.LoadScene("NodeGraph", LoadSceneMode.Single);
             return;
         }
 
@@ -352,7 +355,6 @@ public class BaseSteamController : SteamVR_TrackedObject
     /***************************************** BEAM OBJECT *********************************************/
     protected virtual void TriggerActiverBeamObject()
     {
-        Debug.Log(activeBeamInterceptObj);
         if (activeBeamInterceptObj != null)
         {
 
@@ -369,13 +371,13 @@ public class BaseSteamController : SteamVR_TrackedObject
                 // All purpose blind close button code: sets direct parent of button inactive
             }
 
-            if (activeBeamInterceptObj.tag == "RadioButton")
+            else if (activeBeamInterceptObj.tag == "RadioButton")
             {
                 udch.PromptUserInput(activeBeamInterceptObj.GetComponentInChildren<TextMesh>().text);
                 FormMenuHandler fmh = activeBeamInterceptObj.GetComponentInChildren<FormMenuHandler>();
                 fmh.UpdateMaterial();
             }
-            if (activeBeamInterceptObj.tag == "SubmitButton")
+            else if (activeBeamInterceptObj.tag == "SubmitButton")
             {
                 sbs = activeBeamInterceptObj.GetComponent<SubmitButtonScript>();
                 submitButton = activeBeamInterceptObj;
@@ -429,14 +431,14 @@ public class BaseSteamController : SteamVR_TrackedObject
                         t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
                         sbs.readyForSubmit = true;
                         fmh_script.currentSliderValue = Mathf.RoundToInt((radioButtonOffset + 10) / 10);
-                        Debug.Log("first");
+
                     }
                     else if ((radioButtonOffset == 0 && fmh_script.amountScrolled < 10) || (fmh_script.amountScrolled > 70 && radioButtonOffset == 60))
                     {
                         t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
                         sbs.readyForSubmit = true;
-                        Debug.Log(radioButtonOffset);
-                        Debug.Log("second");
+
+
                     }
                     else
                     {
