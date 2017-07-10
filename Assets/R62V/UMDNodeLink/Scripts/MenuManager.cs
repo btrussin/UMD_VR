@@ -25,6 +25,8 @@ public class MenuManager : MonoBehaviour {
     // Use this for initialization
     void Start () {
         //fDirScript = forceDirLayoutObj.GetComponent<ForceDirLayout>();
+
+        setSliderLocalPosition(1f);
     }
 	
 	// Update is called once per frame

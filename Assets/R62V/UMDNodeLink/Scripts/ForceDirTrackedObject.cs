@@ -335,13 +335,10 @@ public class ForceDirTrackedObject : BaseSteamController
         info.interState = info.prevInterState;
         fDirScript.numHighlighed--;
         highlightGrp = -1;
-
-
-
+        
         currNodeCollided = null;
         updateNodeCollidedPosition = false;
-
-
+        
     }
     
 }

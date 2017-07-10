@@ -36,12 +36,15 @@ public class ForceDirLayout : GraphGenerator
     bool activeScale = false;
     bool activeMove = false;
 
-    bool alwaysShowLines = false;
+    //bool alwaysShowLines = false;
 
     public float edgeBrightness_selected = 0.75f;
     public float edgeBrightness_highlighted = 0.95f;
     public float edgeBrightness_none = 0.0f;   // 0.5 (orig)
     public float edgeBrightness_dimmed = 0.0f;    // 0.35 (orig)
+
+    float origEdgeBright_none;
+    float origEdgeBright_dimmed;
 
     public float nodeBrightness_selected = 0.75f;
     public float nodeBrightness_highlighted = 0.95f;
@@ -54,12 +57,22 @@ public class ForceDirLayout : GraphGenerator
     ForceDirTrackedObject leftContManager;
     ForceDirTrackedObject rightContManager;
 
+    bool alwaysShowLines;
+
     // Use this for initialization
     void Start () {
 
         string pVal = SceneParams.getParamValue("ShowEdges");
-        if (pVal.Equals("true")) drawEdges = true;
-        else drawEdges = false;
+        if (pVal.Equals("true")) alwaysShowLines = true;
+        else alwaysShowLines = false;
+
+        origEdgeBright_none = edgeBrightness_none;
+        origEdgeBright_dimmed = edgeBrightness_dimmed;
+
+        if (!alwaysShowLines) edgeBrightness_none = edgeBrightness_dimmed = 0.0f;
+
+        // this is the default value, but it can change later
+        drawEdges = alwaysShowLines;
 
         sphereCenter = gameObject.transform.position;
 
@@ -84,8 +97,8 @@ public class ForceDirLayout : GraphGenerator
         if ( updateForceLayout )
         {
             recalcPositions();
-            updateNodePositions();
- 
+            updateGroupLabels();
+
             if (Time.frameCount == maxFramesForLayout)
             {
                 updateForceLayout = false;
@@ -97,6 +110,7 @@ public class ForceDirLayout : GraphGenerator
         updateInfoBasedOnNodeMovementInWorld();
 
         updateLineEdges();
+        updateNodePositions();
     }
 
     public NodeInfo getNodeInfo(string nodeName)
@@ -271,30 +285,31 @@ public class ForceDirLayout : GraphGenerator
             point.name = entry.Value.id;
             point.tag = "MovieNode";  // rk and alex added this to keep track of nodes in node graph
             point.transform.localPosition = entry.Value.pos3d;
-            point.transform.localScale = new Vector3(0.03f, 0.03f, 0.03f);
+            point.transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
             entry.Value.nodeObj = point;
 
             MeshRenderer rend = point.GetComponent<MeshRenderer>();
             rend.material.color = entry.Value.color;
+
+            Vector3 dir = graphCenter - entry.Value.pos3d;
+            dir.Normalize();
 
             GameObject nodeLabel = new GameObject();
             nodeLabel.transform.SetParent(point.transform);
             nodeLabel.AddComponent<MeshRenderer>();
             nodeLabel.AddComponent<TextMesh>();
             nodeLabel.AddComponent<CameraOriented>();
-
-            Vector3 dir = graphCenter - entry.Value.pos3d;
-            dir.Normalize();
-            nodeLabel.transform.position = entry.Value.pos3d + dir * 0.1f;
-            nodeLabel.transform.localScale = Vector3.one * 0.5f;
-
             TextMesh textMesh = nodeLabel.GetComponent<TextMesh>();
+            textMesh.name = "MovieLabel: " + entry.Value.id;
             textMesh.anchor = TextAnchor.MiddleCenter;
             textMesh.alignment = TextAlignment.Center;
             textMesh.text = entry.Value.id;
             textMesh.color = entry.Value.color;
+            nodeLabel.transform.localScale = Vector3.one;
+            nodeLabel.transform.position = entry.Value.pos3d + dir * 0.1f;
             textMesh.characterSize = 0.1f;
             textMesh.fontSize = 100;
+
 
             point.transform.SetParent(gameObject.transform);
 
@@ -348,7 +363,7 @@ public class ForceDirLayout : GraphGenerator
             textMesh.alignment = TextAlignment.Center;
             textMesh.text = kvPair.Key;
             //textMesh.color = Color.red;
-            textMesh.characterSize = 0.01f;
+            textMesh.characterSize = 0.1f;
             textMesh.fontSize = 100;
 
            
@@ -423,8 +438,6 @@ public class ForceDirLayout : GraphGenerator
                 break;
         }
 
-        updateGroupLabels();
-
     }
 
     void updateGroupLabels()
@@ -468,14 +481,13 @@ public class ForceDirLayout : GraphGenerator
             groupLabelMap.TryGetValue(entry.Key, out labelObj);
             labelObj.transform.SetParent(closestObj.transform);
             labelObj.transform.position = closestObj.transform.position + offset;
+            labelObj.transform.localScale = 3f * Vector3.one;
 
         }
     }
 
     void updateLineEdges()
     {
-        if (!drawEdges) return;
-
         NodeInfo startInfo, endInfo;
         float sphereCircumference = 2.0f * Mathf.PI * sphereRadius;
 
@@ -652,17 +664,17 @@ public class ForceDirLayout : GraphGenerator
 
     public bool getShowLines()
     {
-        return alwaysShowLines;
+        return drawEdges;
     }
 
     public void toggleShowLines()
     {
-        alwaysShowLines = !alwaysShowLines;
+        drawEdges = !drawEdges;
 
-        if( alwaysShowLines )
+        if(drawEdges && alwaysShowLines)
         {
-            edgeBrightness_none = 0.5f;
-            edgeBrightness_dimmed = 0.35f;
+            edgeBrightness_none = origEdgeBright_none;
+            edgeBrightness_dimmed = origEdgeBright_dimmed;
         }
         else
         {
