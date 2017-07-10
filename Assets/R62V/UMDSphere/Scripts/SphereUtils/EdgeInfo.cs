@@ -102,7 +102,7 @@ public class EdgeInfo : MonoBehaviour {
     Color[] startColors = new Color[4];
     Color[] endColors = { Color.white, Color.white, Color.white, Color.white };
 
-    bool useHSL = true;
+    bool useHSL = false;
 
     void setColors()
     {
@@ -135,11 +135,11 @@ public class EdgeInfo : MonoBehaviour {
         {
             ColorHSL tmpHsl;
             tmpHsl = new ColorHSL(startColor);
-            tmpHsl.l = amt;
+            tmpHsl.l *= amt;
             startColors[(int)idx] = tmpHsl.getRGBColor();
 
             tmpHsl = new ColorHSL(endColor);
-            tmpHsl.l = amt;
+            tmpHsl.l *= amt;
             endColors[(int)idx] = tmpHsl.getRGBColor();
         }
         else

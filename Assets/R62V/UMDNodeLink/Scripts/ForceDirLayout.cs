@@ -99,7 +99,7 @@ public class ForceDirLayout : GraphGenerator
             recalcPositions();
             updateGroupLabels();
 
-            if (Time.frameCount == maxFramesForLayout)
+            if (Time.frameCount >= maxFramesForLayout)
             {
                 updateForceLayout = false;
             }
