@@ -49,22 +49,26 @@ public class RingState : MonoBehaviour
 
         if (doHighlight)
         {
-            lRend.material.color = ringColor * highlightAmt;
+            //lRend.material.color = ringColor * highlightAmt;
+            lRend.SetColors(ringColor * highlightAmt, ringColor * highlightAmt);
             doHighlight = false;
         }
         else if (connectionCount > 0)
         {
-            lRend.material.color = ringColor * selectedAmt;
+            //lRend.material.color = ringColor * selectedAmt;
+            lRend.SetColors(ringColor * selectedAmt, ringColor * selectedAmt);
 
         }
         else if (doDim)
         {
-            lRend.material.color = ringColor * dimAmt;
+            //lRend.material.color = ringColor * dimAmt;
+            lRend.SetColors(ringColor * dimAmt, ringColor * dimAmt);
             doDim = false;
         }
         else
         {
-            lRend.material.color = ringColor * noneAmt;
+            //lRend.material.color = ringColor * noneAmt;
+            lRend.SetColors(ringColor * noneAmt, ringColor * noneAmt);
         }
 
         tMesh.color = ringColor;

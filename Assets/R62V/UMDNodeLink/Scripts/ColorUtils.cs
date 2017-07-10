@@ -11,8 +11,8 @@ public class ColorUtils {
 
     public static void randomizeColorPalette(Color[] orig)
     {
-        //randomizeColorPalette(orig, standardSeed);
-        randomizeColorPalette(orig, 7);
+        randomizeColorPalette(orig, standardSeed);
+        //randomizeColorPalette(orig, 7);
     }
 
     public static void randomizeColorPalette(Color[] orig, int seed )
