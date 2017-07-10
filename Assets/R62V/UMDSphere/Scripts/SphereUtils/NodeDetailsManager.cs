@@ -78,6 +78,7 @@ public class NodeDetailsManager : MonoBehaviour {
         foreach (KeyValuePair<string, GameObject> kv in detailsMap)
         {
             GameObject currObj = kv.Value;
+            if (currObj == null) continue;
             NodeMenuUtils menuUtils = currObj.GetComponent<NodeMenuUtils>();
 
             switch(currVecIdx)

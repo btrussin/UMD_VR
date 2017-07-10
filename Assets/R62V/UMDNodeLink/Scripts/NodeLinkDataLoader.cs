@@ -74,8 +74,6 @@ public class NodeLinkDataLoader {
 
         nodes = new NLNode[numNodes];
 
-        Debug.Log("Have " + nodes.Length + " nodes");
-
         int idx = 0;
         for (int i = 0; i < vals.Length; i++)
         {
@@ -95,8 +93,6 @@ public class NodeLinkDataLoader {
 
         List<NLLink> tList = new List<NLLink>();
         CMData[] cmData = cmLoader.getComicMovieData();
-
-        Debug.Log("Have " + cmData.Length + " CMData");
 
         int numConnections = 0;
 

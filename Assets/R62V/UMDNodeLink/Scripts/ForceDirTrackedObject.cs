@@ -357,17 +357,13 @@ public class ForceDirTrackedObject : BaseSteamController
         GameObject obj = col.gameObject;
         NodeInfo info = fDirScript.getNodeInfo(obj.name);
         if (info == null) return;
-        Debug.Log("Setting state to previous state for " + obj.name  + " to " + info.prevInterState);
         info.interState = info.prevInterState;
         fDirScript.numHighlighed--;
         highlightGrp = -1;
-
-
-
+        
         currNodeCollided = null;
         updateNodeCollidedPosition = false;
-
-
+        
     }
     
 }
