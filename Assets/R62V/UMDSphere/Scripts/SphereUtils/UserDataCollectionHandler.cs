@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 
 public class UserDataCollectionHandler : MonoBehaviour
 {
@@ -29,19 +30,32 @@ public class UserDataCollectionHandler : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
         startTime = DateTime.Now.ToFileTime();
         currentAnswersList = new List<string>();
         ExpandedPopUpMenu = GameObject.FindGameObjectWithTag("ExpandedPopUpMenu");
         ConfirmationPopUp = GameObject.FindGameObjectWithTag("ConfirmationPopUp");
         ConfirmationPopUp.SetActive(false);
-        movieObject = FindObjectOfType<NodeState>().GetComponent<MovieObject>();
+
         QuestionText = GameObject.FindGameObjectWithTag("CurrentQuestionText").GetComponent<TextMesh>();
-        // NextPart = GameObject.FindGameObjectWithTag("NextPart");
         CircleMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/circ_mat.mat");
         sliderPointMaterial = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/sliderpnt_mat.mat");
 
         formState = GetComponent<FormState>();
         sbs = GameObject.FindObjectOfType<SubmitButtonScript>();
+        if (SceneManager.GetActiveScene().name == "SphereScene")
+        {
+            movieObject = FindObjectOfType<NodeState>().GetComponent<MovieObject>();
+        }
+        else if (SceneManager.GetActiveScene().name == "NodeGraph")
+        {
+
+        }
+        
+
+       
+        // NextPart = GameObject.FindGameObjectWithTag("NextPart");
+       
 
     }
     Dictionary<string, MovieObject> connectionMovieObjectMap = new Dictionary<string, MovieObject>();
@@ -114,7 +128,7 @@ public class UserDataCollectionHandler : MonoBehaviour
         if (form_questions.QuestionIndex <= form_questions.questions.Count - 1)
         {
             currentQuestion = form_questions.questions[form_questions.QuestionIndex];
-            QuestionText.text = currentQuestion.QuestionText;
+           QuestionText.text = currentQuestion.QuestionText;
             if ((currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.RadioButtons) && (questionLoaded == false))
             {
                 GenYesNoRadioButtons();
@@ -124,7 +138,8 @@ public class UserDataCollectionHandler : MonoBehaviour
         }
         else
         {
-            GameObject.FindGameObjectWithTag("MainCamera").GetComponentInChildren<FormMenuHandler>(true).gameObject.SetActive(true);
+            
+            GameObject.FindGameObjectWithTag("FormMenuParent").GetComponentInChildren<FormMenuHandler>(true).gameObject.SetActive(true);
             gameObject.SetActive(false);
         }
     }
@@ -138,7 +153,8 @@ public class UserDataCollectionHandler : MonoBehaviour
     public void RemoveAnswer(string dataSelected)
     {
         TextMesh text = ConfirmationPopUp.GetComponent<TextMesh>();
-        text.text = text.text.Replace(dataSelected, "");
+        text.text = text.text.Replace(Environment.NewLine+dataSelected,"");
+
     }
     public void PromptUserInput(string dataSelected)
     {
@@ -223,8 +239,11 @@ public class UserDataCollectionHandler : MonoBehaviour
         List<String> data = new List<string>();
         if (FindObjectOfType<UserDataCollectionHandler>() != null)
         {
+            if (QNum == 0)
+            {
+                data.Add(SceneManager.GetActiveScene().name + SceneParams.getParamValue("ShowEdges"));
+            }
             data.Add("QNumT:" + QNum + " " + "Input Value:" + value);
-            Debug.Log("saved");
             SaveOutputData(data);
         }
     }

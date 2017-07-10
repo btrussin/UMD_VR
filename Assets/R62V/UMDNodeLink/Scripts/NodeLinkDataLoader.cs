@@ -55,7 +55,6 @@ public class NodeLinkDataLoader {
 
 
         string[] vals = cmLoader.getAllPublishers();
-        Debug.Log("Have " + vals.Length + " publishers");
         List<CMData>[] lists = new List<CMData>[vals.Length];
         for (int i = 0; i < vals.Length; i++) lists[i] = cmLoader.getCMDataForPublisher(vals[i]);
 

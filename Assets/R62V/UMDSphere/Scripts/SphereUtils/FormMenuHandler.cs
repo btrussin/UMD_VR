@@ -80,6 +80,7 @@ public class FormMenuHandler : BaseMenuHandler
 
     void Start()
     {
+        
         if (tag == "FormMenu")
         {
             sbs = GameObject.FindObjectOfType<SubmitButtonScript>();
@@ -491,8 +492,8 @@ public class FormMenuHandler : BaseMenuHandler
                 }
                 break;
             case FormMenuHandlerType.SubmitForm:
-
-                FindObjectOfType<UMD_Sphere_TrackedObject>().hideMainMenu();
+       
+                FindObjectOfType<UMD_Sphere_TrackedObject>().HideMainMenu();
                 CSVEntries.SaveOutputData(allActiveGOs, startTime);
                 allActiveGOs.Clear();
                 baseState.DestroyMenu();

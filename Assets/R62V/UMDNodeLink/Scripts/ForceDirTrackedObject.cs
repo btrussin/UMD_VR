@@ -6,23 +6,10 @@ using Valve.VR;
 
 public class ForceDirTrackedObject : BaseSteamController
 {
-    public GameObject otherController;
-    ForceDirTrackedObject otherTrackedObjScript;
-
-    public GameObject menuObject;
     GameObject currMenuSubObject = null;
     MenuManager menuManager;
-    public bool menuActive = false;
 
-    public GameObject sliderLeftPnt;
-    public GameObject sliderRightPnt;
-    public GameObject sliderPoint;
-    float sliderPointDistance = 0.0f;
-    bool updateSlider = false;
     bool triggerPulled = false;
-
-
-    public Ray deviceRay;
 
     int nodeLayerMask;
     int menuSliderMask;
@@ -34,13 +21,7 @@ public class ForceDirTrackedObject : BaseSteamController
     float nodePointDistance = 0.0f;
 
     GameObject currNodeInContact = null;
-
-    public GameObject beam;
     bool castBeamAnyway = false;
-
-    CVRSystem vrSystem;
-    VRControllerState_t state;
-    VRControllerState_t prevState;
 
     public GameObject forceDirLayoutObj;
     ForceDirLayout fDirScript;
@@ -48,19 +29,19 @@ public class ForceDirTrackedObject : BaseSteamController
     public int highlightGrp = -1;
 
     // Use this for initialization
-    void Start () {
-        vrSystem = OpenVR.System;
-
+    new void Start ()
+    {
+        base.Start();
         menuManager = menuObject.GetComponent<MenuManager>();
 
         //menuSliderMask = 1 << LayerMask.NameToLayer("MenuSlider");
         menuSliderMask = 1 << LayerMask.NameToLayer("Menus");
         nodeLayerMask = 1 << LayerMask.NameToLayer("NodeLayer");
-        beam.SetActive(false);
 
         otherTrackedObjScript = otherController.GetComponent<ForceDirTrackedObject>();
 
         fDirScript = forceDirLayoutObj.GetComponent<ForceDirLayout>();
+        beam.SetActive(false);
     }
 
     
@@ -75,20 +56,14 @@ public class ForceDirTrackedObject : BaseSteamController
     
 
     // Update is called once per frame
-    void Update () { 
-
-        // update the device ray per frame
-        Quaternion rayRotation = Quaternion.AngleAxis(60.0f, transform.right);
-        deviceRay.direction = rayRotation * transform.forward;
-
+    new void Update ()
+    {
+        //ShowMainMenu();
+        base.Update();
         deviceRay.origin = transform.position + deviceRay.direction * 0.07f;
 
-
-        handleStateChanges();
         projectBeam();
-
-
-
+        ApplyStateChanges();
         if (updateSlider)
         { 
             // get proposted position of the slider point in world space
@@ -97,7 +72,7 @@ public class ForceDirTrackedObject : BaseSteamController
         }
         else if( updateNodeSelectedPosition )
         {
-            calcNodePosition();
+            CalcNodePosition();
         }
 
         if(updateNodeCollidedPosition)
@@ -114,40 +89,46 @@ public class ForceDirTrackedObject : BaseSteamController
     {
         float beamDist = 10.0f;
 
-        beam.SetActive(false);
-
         RaycastHit hitInfo;
         if (updateSlider)
         {
+            Debug.Log(1);
             beam.SetActive(true);
             beamDist = sliderPointDistance;
         }
         else if (menuManager.useNodePointers && updateNodeSelectedPosition)
         {
+            Debug.Log(2);
             beam.SetActive(true);
             beamDist = nodePointDistance;
         }
         else if (Physics.Raycast(deviceRay.origin, deviceRay.direction, out hitInfo, beamDist, menuSliderMask))
         {
-            GameObject obj = hitInfo.collider.gameObject;
+            activeBeamInterceptObj = hitInfo.collider.gameObject;
             beamDist = hitInfo.distance;
+            Debug.Log(3);
             beam.SetActive(true);
 
-            currMenuSubObject = obj;
-
-            if (triggerPulled && obj.name.Equals("Quad_Slider_Point"))
+            currMenuSubObject = activeBeamInterceptObj;
+            if (triggerPulled)
             {
-                sliderPointDistance = beamDist;
-                updateSlider = true;
-            }
-            else updateSlider = false;
+                if (activeBeamInterceptObj.name.Equals("Quad_Slider_Point"))
+                {
+                    sliderPointDistance = beamDist;
+                    updateSlider = true;
+                }
+                
+                else updateSlider = false;
 
+            }
+            else beam.SetActive(false);
         }
         else if (menuManager.useNodePointers && Physics.Raycast(deviceRay.origin, deviceRay.direction, out hitInfo, beamDist, nodeLayerMask))
         {
             
             currNodeSelected = hitInfo.collider.gameObject;
             beamDist = hitInfo.distance;
+            Debug.Log(4);
             beam.SetActive(true);
             if (triggerPulled)
             {
@@ -157,6 +138,7 @@ public class ForceDirTrackedObject : BaseSteamController
         }
         else if(castBeamAnyway)
         {
+            Debug.Log(5);
             beam.SetActive(true);
             currMenuSubObject = null;
             currNodeSelected = null;
@@ -169,110 +151,107 @@ public class ForceDirTrackedObject : BaseSteamController
         lineRend.SetPosition(1, end);
     }
 
-    void handleStateChanges()
+    protected override void ApplyStateChanges()
     {
-        bool stateIsValid = vrSystem.GetControllerState((uint)index, ref state);
+        base.ApplyStateChanges();
 
-        if (!stateIsValid) Debug.Log("Invalid State for Idx: " + index);
-
-        if (stateIsValid && state.GetHashCode() != prevState.GetHashCode())
+        if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
+            (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
         {
-            if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.ApplicationMenu) != 0 &&
-                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.ApplicationMenu) == 0)
+            // just pulled the trigger
+            castBeamAnyway = true;
+            triggerPulled = true;
+
+            if( currNodeCollided != null )
             {
-                toggleMenu();
+                updateNodeCollidedPosition = true;
+                currNodeCollided.GetComponentInChildren<Collider>().enabled = false;
+                NodeInfo info = fDirScript.getNodeInfo(currNodeCollided.name);
+                info.positionIsStationary = true;
             }
-
-
-            if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
-                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
-            {
-                // just pulled the trigger
-                castBeamAnyway = true;
-                triggerPulled = true;
-
-                if( currNodeCollided != null )
-                {
-
-                    updateNodeCollidedPosition = true;
-                    currNodeCollided.GetComponentInChildren<Collider>().enabled = false;
-                    NodeInfo info = fDirScript.getNodeInfo(currNodeCollided.name);
-                    info.positionIsStationary = true;
-                }
-            }
-            else if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0 &&
-                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0)
-            {
-                // just released the trigger
-                castBeamAnyway = false;
-                updateSlider = false;
-                updateNodeSelectedPosition = false;
-                triggerPulled = false;
-
-                if(currNodeSelected != null)
-                {
-                    NodeInfo info = fDirScript.getNodeInfo(currNodeSelected.name);
-                    if (info != null)
-                    {
-                        info.positionIsStationary = false;
-                        info.interState = NodeInteractionState.NONE;
-                        fDirScript.numHighlighed--;
-                    }
-
-                    currNodeSelected = null;
-                }
-
-                if (currNodeCollided != null)
-                {
-                    updateNodeCollidedPosition = false;
-                    currNodeCollided.GetComponentInChildren<Collider>().enabled = true;
-                    NodeInfo info = fDirScript.getNodeInfo(currNodeCollided.name);
-                    info.positionIsStationary = false;
-                }
-            }
-
-            if (prevState.rAxis1.x < 1.0f && state.rAxis1.x == 1.0f)
-            {
-                // just pulled the trigger in all the way
-                if (currNodeCollided != null)
-                {
-                    NodeInfo info = fDirScript.getNodeInfo(currNodeCollided.name);
-                    if (info.prevInterState == NodeInteractionState.SELECTED) info.prevInterState = NodeInteractionState.NONE;
-                    else info.prevInterState = NodeInteractionState.SELECTED;
-                }
-                else if(currMenuSubObject != null)
-                {
-                    if (currMenuSubObject.name.Equals("ForceBox")) menuManager.toggleForce();
-                    else if (currMenuSubObject.name.Equals("ShowLinesBox")) menuManager.toggleShowLines();
-                    else if (currMenuSubObject.name.Equals("NodePointerBox")) menuManager.toggleNodePointers();
-                }
-                    
-            }
-
-
-            if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) != 0 &&
-                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) == 0)
-            {
-                fDirScript.grabSphereWithObject(gameObject);
-            }
-            else if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) == 0 &&
-                     (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) != 0)
-            {
-                fDirScript.releaseSphereWithObject(gameObject);
-            }
-
-
-
-            prevState = state;
         }
 
 
-        if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) != 0 )
+        if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
+            prevState.rAxis1.x < 1.0f && state.rAxis1.x == 1.0f)
+        {
+            
+            //activeBeamInterceptObj = GameObject.FindGameObjectWithTag("RadioButton");
+            Debug.Log(GameObject.FindGameObjectWithTag("RadioButton"));
+            TriggerActiverBeamObject();
+        }
+
+
+        if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0 &&
+            (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0)
+        {
+            beam.SetActive(false);
+            // just released the trigger
+            castBeamAnyway = false;
+            updateSlider = false;
+            updateNodeSelectedPosition = false;
+            triggerPulled = false;
+            if (currNodeSelected != null)
+            {
+                NodeInfo info = fDirScript.getNodeInfo(currNodeSelected.name);
+                if (info != null)
+                {
+                    info.positionIsStationary = false;
+                    info.interState = NodeInteractionState.NONE;
+                    fDirScript.numHighlighed--;
+                }
+
+                currNodeSelected = null;
+            }
+
+            if (currNodeCollided != null)
+            {
+                updateNodeCollidedPosition = false;
+                currNodeCollided.GetComponentInChildren<Collider>().enabled = true;
+                NodeInfo info = fDirScript.getNodeInfo(currNodeCollided.name);
+                info.positionIsStationary = false;
+            }
+           
+        }
+
+        if (prevState.rAxis1.x < 1.0f && state.rAxis1.x == 1.0f)
+        {
+            // just pulled the trigger in all the way
+            if (currNodeCollided != null)
+            {
+                NodeInfo info = fDirScript.getNodeInfo(currNodeCollided.name);
+                if (info.prevInterState == NodeInteractionState.SELECTED) info.prevInterState = NodeInteractionState.NONE;
+                else info.prevInterState = NodeInteractionState.SELECTED;
+            }
+            else if(currMenuSubObject != null)
+            {
+                if (currMenuSubObject.name.Equals("ForceBox")) menuManager.toggleForce();
+                else if (currMenuSubObject.name.Equals("ShowLinesBox")) menuManager.toggleShowLines();
+                else if (currMenuSubObject.name.Equals("NodePointerBox")) menuManager.toggleNodePointers();
+            }
+                    
+        }
+
+
+        if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) != 0 &&
+            (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) == 0)
+        {
+            fDirScript.grabSphereWithObject(gameObject);
+        }
+        else if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) == 0 &&
+                    (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) != 0)
+        {
+            fDirScript.releaseSphereWithObject(gameObject);
+        }
+
+
+
+        if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) != 0)
         {
             float h = state.rAxis0.x;
             float v = state.rAxis0.y;
 
-            if( Mathf.Abs(h) > Mathf.Abs(v) )
+            if (Mathf.Abs(h) > Mathf.Abs(v))
             {
                 fDirScript.rotateGraphHorizontal(h);
             }
@@ -280,11 +259,13 @@ public class ForceDirTrackedObject : BaseSteamController
             {
                 fDirScript.rotateGraphVertical(v);
             }
-            
+
         }
+
+        prevState = state;
     }
 
-    void calcNodePosition()
+    void CalcNodePosition()
     {
         Vector3 pos = deviceRay.GetPoint(nodePointDistance);
         currNodeSelected.transform.position = pos;
@@ -298,37 +279,13 @@ public class ForceDirTrackedObject : BaseSteamController
         }
     }
 
-
-    public void toggleMenu()
+    new void ShowMainMenu()
     {
-        if (menuActive) hideMainMenu();
-        else showMainMenu();
-    }
-
-    public void showMainMenu()
-    {
-        menuActive = true;
-        otherTrackedObjScript.menuActive = false;
-
-
-        menuObject.transform.SetParent(gameObject.transform);
-
-        menuObject.transform.localPosition = new Vector3(0.00f, 0.03f, 0.05f);
-        menuObject.transform.localRotation = Quaternion.Euler(new Vector3(90.0f, 0.0f, 0.0f));
-        menuObject.transform.localScale = new Vector3(0.25f, 0.25f, 1.0f);
-
-        menuObject.SetActive(true);
+        base.ShowMainMenu();
 
         menuManager.updateInterface();
     }
 
-    public void hideMainMenu()
-    {
-        menuActive = false;
-        menuObject.SetActive(false);
-    }
-
-    
     void OnCollisionEnter(Collision col)
     {
         GameObject obj = col.gameObject;

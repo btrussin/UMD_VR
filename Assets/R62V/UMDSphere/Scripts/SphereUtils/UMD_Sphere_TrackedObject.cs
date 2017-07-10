@@ -8,123 +8,24 @@ using UnityEngine.SceneManagement;
 using Valve.VR;
 public class UMD_Sphere_TrackedObject : BaseSteamController
 {
+
+    private List<GameObject> ringsInCollision;
+    private SphereCollider sphereCollider;
+    private SphereData sphereData;
+
     public GameObject dataObj;
 
-    public GameObject otherController;
-    UMD_Sphere_TrackedObject otherTrackedObjScript;
-
-    public GameObject menuObject;
-    public bool menuActive = false;
-    public static bool animationLayout = true;
-
-    SphereData sphereData;
-
-    public Ray deviceRay;
-    public Vector3 currPosition;
-    public Vector3 currRightVec;
-    public Vector3 currUpVec;
-    public Vector3 currForwardVec;
-    public Quaternion currRotation;
-
-    public GameObject trackpadArrowObject;
-    public float amount_scrolled = 0;
-
-    SphereCollider sphereCollider;
-
-    //List<GameObject> connectionList = new List<GameObject>();
-
-    public Dictionary<string, MovieObject> connectionMovieObjectMap = new Dictionary<string, MovieObject>();
-
-    CVRSystem vrSystem;
-
-    VRControllerState_t state;
-    VRControllerState_t prevState;
-
-    Quaternion currRingBaseRotation;
-
-    List<GameObject> ringsInCollision;
-
-    GameObject beam;
-    GameObject activeBeamInterceptObj = null;
-    GameObject activeNodeMenu = null;
-    GameObject activeActorText = null;
-    Vector3 actorTextNormalScale = Vector3.one * 0.1f;
-    //Vector3 actorTextLargeScale = Vector3.one * 0.15f;
-    Vector3 actorTextLargeScale = Vector3.one * 0.1f;
-
-    private GameObject submitButton;
-    private SubmitButtonScript sbs;
-    bool useBeam = false;
-
-    int menusLayerMask;
-
-    float currRayAngle = 60.0f;
-
-    //bool trackpadArrowsAreActive = false;
-    int prevNumRingsInCollision = 0;
-
-    public GameObject sliderLeftPnt;
-    public GameObject sliderRightPnt;
-    public GameObject sliderPoint;
-
-    float sliderPointDistance = 0.0f;
-    bool updateSlider = false;
-
-    private bool isCollidingWithRing;
-    public bool padJustPressedDown;
-
-    private UserDataCollectionHandler udch;
-    // returns true on touchpad click up
-    public bool padClicked()
+    new void Start()
     {
+        base.Start();
 
-        if (padJustPressedDown && (state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) == 0)
-        {
-            padJustPressedDown = false;
-            return true;
-        }
-        return false;
-    }
-    // reference to instance of FormQuestions class
-    private FormMenuHandler.FormQuestions form_questions;
-    // reference to form menu script
-    public FormMenuHandler fmh_script;
-
-    void Start()
-    {
-        vrSystem = OpenVR.System;
-
+        sphereData = dataObj.GetComponent<SphereData>();
         sphereCollider = gameObject.GetComponent<SphereCollider>();
         sphereCollider.transform.SetParent(gameObject.transform);
 
-        sphereData = dataObj.GetComponent<SphereData>();
-
-        beam = new GameObject();
-        beam.AddComponent<LineRenderer>();
-        LineRenderer lineRend = beam.GetComponent<LineRenderer>();
-        lineRend.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
-        lineRend.receiveShadows = false;
-        lineRend.motionVectors = false;
-        lineRend.material = AssetDatabase.LoadAssetAtPath<Material>("Assets/R62V/UMDSphere/Materials/BeamMaterial.mat");
-        lineRend.SetWidth(0.003f, 0.003f);
-        beam.SetActive(false);
-
-        menusLayerMask = 1 << LayerMask.NameToLayer("Menus");
-        //menuObject.SetActive(false);
-
         otherTrackedObjScript = otherController.GetComponent<UMD_Sphere_TrackedObject>();
-        udch = FindObjectOfType<UserDataCollectionHandler>();
-        /*
-        sphereData.setMainLayout(SphereData.SphereLayout.Sphere);
-        sphereData.SetMainRingCategory(SphereData.MainRingCategory.Year);
-        */
 
         setSliderLocalPosition(sphereData.BundlingStrength);
-
-        form_questions = fmh_script.form_questions;
-        submitButton = GameObject.FindGameObjectWithTag("SubmitButton");
-        // this is null because there are two TrackedObject scripts
-        sbs = submitButton.GetComponent<SubmitButtonScript>();
     }
 
     new void FixedUpdate()
@@ -136,56 +37,53 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
         }
     }
 
-    void Update()
-    {
-
-        currPosition = transform.position;
-        currRightVec = transform.right;
-        currUpVec = transform.up;
-        currForwardVec = transform.forward;
-        currRotation = transform.rotation;
-        deviceRay.origin = currPosition;
-
-        Quaternion rayRotation = Quaternion.AngleAxis(currRayAngle, currRightVec);
-
-        deviceRay.direction = rayRotation * currForwardVec;
-
-        //sphereCollider.center = new Vector3(0.0f, 0.0f, 0.03f);
-
-        handleStateChanges();
-
-
+   new void Update()
+   {
+        base.Update();
+       //if (sphereData == null)
+       //{
+       //     sphereData = dataObj.GetComponent<SphereData>();  // this conditional was to fix a null reference on line 47 that only happens sometimes.  TODO: figure out why
+       // }
         ringsInCollision = sphereData.getRingsInCollision(currPosition + (currForwardVec - currUpVec) * (0.03f + sphereCollider.radius), sphereCollider.radius * 2.0f);
         if (ringsInCollision.Count > 0)
         {
             sphereData.addActiveRings(ringsInCollision);
-            if (prevNumRingsInCollision == 0) showTrackpadArrows();
+            if (prevNumRingsInCollision == 0) ShowTrackpadArrows();
         }
         else if (prevNumRingsInCollision > 0 && (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
         {
-            hideTrackpadArrows();
+            HideTrackpadArrows();
         }
 
         prevNumRingsInCollision = ringsInCollision.Count;
 
-        if (useBeam) projectBeam();
+        if (useBeam) ProjectBeam();
 
         if (updateSlider)
         {
-            calcSliderPosition();
+            CalcSliderPosition();
             sphereData.updateAllConnections();
         }
     }
 
-    void LateUpdate()
+    void ShowTrackpadArrows()
     {
-        if (submitButton != null)
-        {
-            submitButton.SetActive(sbs.readyForSubmit);
-        }
+        trackpadArrowObject.SetActive(true);
     }
 
-    void calcSliderPosition()
+    void HideTrackpadArrows()
+    {
+        trackpadArrowObject.SetActive(false);
+    }
+
+
+    new void LateUpdate()
+    {
+        base.LateUpdate();
+    }
+
+    //TODO - Call the MenuManager for both Sphere and ForceDirTrackedObj, instead of this one
+    void CalcSliderPosition()
     {
         // get proposted position of the slider point in world space
         Vector3 tVec = deviceRay.GetPoint(sliderPointDistance);
@@ -213,7 +111,8 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
         sphereData.BundlingStrength = tDist;
     }
 
-    void projectBeam()
+
+    void ProjectBeam()
     {
         float beamDist = 10.0f;
 
@@ -227,9 +126,9 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
 
             if (activeBeamInterceptObj != activeNodeMenu)
             {
-                reduceSizeOfActiveMenu();
+                ReduceSizeOfActiveMenu();
                 activeNodeMenu = activeBeamInterceptObj;
-                increaseSizeOfActiveMenu();
+                IncreaseSizeOfActiveMenu();
             }
 
             if (activeBeamInterceptObj.name.Contains("Actor:") && activeBeamInterceptObj != activeActorText)
@@ -241,7 +140,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
         }
         else
         {
-            reduceSizeOfActiveMenu();
+            ReduceSizeOfActiveMenu();
 
             activeNodeMenu = null;
             activeBeamInterceptObj = null;
@@ -254,83 +153,11 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
         lineRend.SetPosition(1, end);
     }
 
-    void increaseSizeOfActiveMenu()
-    {
-        if (activeNodeMenu != null)
-        {
-            NodeMenuUtils menuUtils = getFirstNodeMenuUtilsOfParents(activeNodeMenu);
-            if (menuUtils != null)
-            {
-                menuUtils.makeLarge();
-            }
-        }
-    }
-
-    void reduceSizeOfActiveMenu()
-    {
-        if (activeNodeMenu != null)
-        {
-            NodeMenuUtils menuUtils = getFirstNodeMenuUtilsOfParents(activeNodeMenu);
-            if (menuUtils != null)
-            {
-                menuUtils.makeSmall();
-            }
-        }
-
-        if (activeActorText != null)
-        {
-            activeActorText.transform.localScale = actorTextNormalScale;
-            activeActorText = null;
-        }
-    }
-
-
-    NodeMenuUtils getFirstNodeMenuUtilsOfParents(GameObject obj)
-    {
-
-        GameObject tObj = obj;
-        NodeMenuUtils menuUtils = null;
-
-        while (tObj != null)
-        {
-            menuUtils = tObj.GetComponent<NodeMenuUtils>();
-            if (menuUtils != null)
-            {
-                return menuUtils;
-            }
-
-            if (tObj.transform.parent != null) tObj = tObj.transform.parent.gameObject;
-            else tObj = null;
-        }
-
-        return null;
-    }
-
-    void triggerActiverBeamObject()
+    protected override void TriggerActiverBeamObject()
     {
         if (activeBeamInterceptObj != null)
         {
-            if (activeBeamInterceptObj.tag == "CloseButton")
-            {
-                activeBeamInterceptObj.transform.parent.gameObject.SetActive(false); // All purpose blind close button code: sets direct parent of button inactive
-            }
-            else if (activeBeamInterceptObj.tag == "RadioButton")
-            {
-                udch.PromptUserInput(activeBeamInterceptObj.GetComponentInChildren<TextMesh>().text);
-            }
-            else if (activeBeamInterceptObj.tag == "SubmitButton")
-            {
-                sbs = activeBeamInterceptObj.GetComponent<SubmitButtonScript>();
-                submitButton = activeBeamInterceptObj;
-                if (udch.gameObject.activeSelf)
-                {
-                    udch.HandleUserInput();
-                }
-                else
-                {
-                    fmh_script.SubmitQuestionAnswer();
-                }
-            }
+            base.TriggerActiverBeamObject();    
             NodeMenuHandler menuHandler = activeBeamInterceptObj.GetComponent<NodeMenuHandler>();
 
             if (menuHandler != null)
@@ -342,27 +169,6 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
                 MovieObject mo = activeBeamInterceptObj.transform.parent.GetComponent<NodeMenuUtils>().movieObject;
                 sphereData.connectMoviesByActors(mo.cmData);
                 sphereData.updateAllKeptConnections(ringsInCollision);
-            }
-
-            FormMenuHandler formMenuHandler = activeBeamInterceptObj.GetComponent<FormMenuHandler>();
-            if (formMenuHandler != null)
-            {
-
-                formMenuHandler.handleTrigger();
-
-                if (activeBeamInterceptObj != null)
-                {
-                    if (activeBeamInterceptObj.name.CompareTo("Quad_Slider_Point") == 0)
-                    {
-                        //TODO
-                        //formMenuHandler.UpdateSlider(true);
-                    }
-                }
-            }
-
-            if (activeBeamInterceptObj.name.Contains("Text"))
-            {
-                activeBeamInterceptObj.transform.GetComponentInChildren<FormMenuHandler>().handleTrigger();
             }
 
             else
@@ -430,169 +236,40 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
         }
     }
 
-    public void handleSlider()
+    //Put specific state calls in this function
+    protected override void ApplyStateChanges() 
     {
-        if (fmh_script.amountScrolled < 70 && state.rAxis0.x >= 0)
+        base.ApplyStateChanges();
+
+
+        if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) != 0 &&
+            (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) == 0)
         {
-            fmh_script.amountScrolled += state.rAxis0.x;
+            sphereData.grabSphereWithObject(gameObject);
         }
 
-        else if (fmh_script.amountScrolled >= 0 && state.rAxis0.x < 0)
+        else if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) == 0 &&
+            (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) != 0)
         {
-            fmh_script.amountScrolled += state.rAxis0.x;
-        }
-        else if (fmh_script.amountScrolled <= 70 && fmh_script.amountScrolled >= 0)
-        {
-            fmh_script.amountScrolled += state.rAxis0.x;
+            sphereData.releaseSphereWithObject(gameObject);
         }
 
-        GameObject formMenu = GameObject.FindGameObjectWithTag("FormMenu");
-        float radioButtonOffset = 70;
-        if (formMenu != null)
-        {
-            foreach (Transform t in formMenu.GetComponentsInChildren<Transform>())
-            {
-                if (t.tag == "Slider")
-                {
-                    radioButtonOffset -= 10f;
-
-                    FormMenuHandler fmh = t.GetComponent<FormMenuHandler>();
-                    if (radioButtonOffset < fmh_script.amountScrolled && radioButtonOffset > fmh_script.amountScrolled - 10)
-                    {
-                        t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
-                        sbs.readyForSubmit = true;
-                        fmh_script.currentSliderValue = Mathf.RoundToInt((radioButtonOffset + 10) / 10);
-                        Debug.Log("first");
-                    }
-                    else if ((radioButtonOffset == 0 && fmh_script.amountScrolled < 10) || (fmh_script.amountScrolled > 70 && radioButtonOffset == 60))
-                    {
-                        t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
-                        sbs.readyForSubmit = true;
-                        Debug.Log(radioButtonOffset);
-                        Debug.Log("second");
-                    }
-                    else
-                    {
-                        t.gameObject.GetComponent<FormMenuHandler>().materialStatus = false;
-                    }
-                    fmh.UpdateMaterial();
-
-                }
-
-            }
-
-        }
-        radioButtonOffset = 70;
-    }
-    void handleStateChanges()
-    {
-        
-
-        if (padClicked() && !isCollidingWithRing)
-        {
-
-
-        }
-        bool stateIsValid = vrSystem.GetControllerState((uint)index, ref state);
-
-
-        //if (!stateIsValid) Debug.Log("Invalid State for Idx: " + index);
-
-        if (stateIsValid && state.GetHashCode() != prevState.GetHashCode())
-        {
-
-            if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.ApplicationMenu) != 0 &&
-                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.ApplicationMenu) == 0)
-            {
-                //sphereData.toggleMainLayout();
-
-                toggleMenu();
-            }
-
-            if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) != 0 &&
-                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) == 0)
-            {
-                sphereData.grabSphereWithObject(gameObject);
-            }
-            else if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) == 0 &&
-                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Grip) != 0)
-            {
-                sphereData.releaseSphereWithObject(gameObject);
-            }
-
-            if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
-               (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
-            {
-                // activate beam
-                beam.SetActive(true);
-                useBeam = true;
-            }
-
-            else if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0 &&
+        if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0 &&
                (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0)
-            {
-                // deactivate beam
-                if (activeBeamInterceptObj != null)
-                {
-                    if (activeBeamInterceptObj.tag == "ExpandedPopUpMenu" || activeBeamInterceptObj.tag == "PopUpMenu")
-                    {
-                        udch.minimzed = !udch.minimzed;
-                    }
-                }
-                if (activeNodeMenu != null)
-                {
-                    reduceSizeOfActiveMenu();
-                    activeNodeMenu = null;
-                }
-
-                beam.SetActive(false);
-                useBeam = false;
-                activeBeamInterceptObj = null;
-                if (ringsInCollision.Count == 0) hideTrackpadArrows();
-
-                updateSlider = false;
-            }
-
-            if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
-                prevState.rAxis1.x < 1.0f && state.rAxis1.x == 1.0f)
-            {
-
-                triggerActiverBeamObject();
-
-                // toggle connections with all movies
-                foreach (MovieObject m in connectionMovieObjectMap.Values)
-                {
-
-                    if (udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput || udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
-                    {
-                        m.nodeState.toggleSelected();
-                        m.nodeState.updateColor();
-                        if (m.nodeState.isSelected)
-                        {
-                            udch.PromptUserInput(m.name);
-                        }
-                        else
-                        {
-                            udch.RemoveAnswer(m.name);
-                        }
-                    }
-
-
-                    HashSet<EdgeInfo> edgeSet = m.getEdges();
-                    if (m.nodeState.getIsSelected()) foreach (EdgeInfo info in edgeSet) info.select();
-                    else foreach (EdgeInfo info in edgeSet) info.unselect();
-                }
-
-            }
-
-
-            prevState = state;
-        }
-        if ((state.ulButtonTouched) == 4294967296) // if the touchpad is touched 
         {
-            handleSlider();
-        }
+            if (activeNodeMenu != null)
+            {
+                ReduceSizeOfActiveMenu();
+                activeNodeMenu = null;
+            }
 
+            beam.SetActive(false);
+            useBeam = false;
+            activeBeamInterceptObj = null;
+            if (ringsInCollision.Count == 0) HideTrackpadArrows();
+
+            updateSlider = false;
+        }
 
         if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Touchpad) != 0)
         {
@@ -627,6 +304,8 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
                 sphereData.updateAllKeptConnections(ringsInCollision);
             }
         }
+
+        prevState = state;
     }
 
     void OnCollisionEnter(Collision col)
@@ -706,43 +385,5 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
             }
         }
     }
-
-    void showTrackpadArrows()
-    {
-        trackpadArrowObject.SetActive(true);
-    }
-
-    void hideTrackpadArrows()
-    {
-        trackpadArrowObject.SetActive(false);
-    }
-
-    public void toggleMenu()
-    {
-        if (menuActive) hideMainMenu();
-        else showMainMenu();
-    }
-
-    public void showMainMenu()
-    {
-        menuActive = true;
-        otherTrackedObjScript.menuActive = false;
-
-
-        menuObject.transform.SetParent(gameObject.transform);
-
-        menuObject.transform.localPosition = new Vector3(0.0f, 0.02f, 0.0f);
-        menuObject.transform.localRotation = Quaternion.Euler(new Vector3(90.0f, 0.0f, 0.0f));
-        menuObject.transform.localScale = new Vector3(0.25f, 0.25f, 1.0f);
-
-        menuObject.SetActive(true);
-    }
-
-    public void hideMainMenu()
-    {
-        menuActive = false;
-        menuObject.SetActive(false);
-    }
-
 
 }

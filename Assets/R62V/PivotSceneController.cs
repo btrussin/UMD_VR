@@ -31,7 +31,6 @@ public class PivotSceneController : SteamVR_TrackedObject
 	
 	// Update is called once per frame
 	void Update () {
-        
         Quaternion rayRotation = Quaternion.AngleAxis(60.0f, transform.right);
 
         deviceRay.origin = transform.position;
