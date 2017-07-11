@@ -514,7 +514,6 @@ public class FormMenuHandler : BaseMenuHandler
         string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         string path = pathDesktop + "\\mycsvfile.csv";
 
-        Debug.Log("hello");
         using (var w = new StreamWriter(path, true))
         {
             for (int i = 0; i < selectInformation.Count; i++)

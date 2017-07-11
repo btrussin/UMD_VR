@@ -208,6 +208,12 @@ public class BaseSteamController : SteamVR_TrackedObject
     {
         if (submitButton != null)
         {
+            if (!udch.gameObject.activeSelf)
+            {
+                GameObject FormMenu = GameObject.FindGameObjectWithTag("FormMenu");
+                sbs = FormMenu.GetComponentInChildren<SubmitButtonScript>(true);
+                submitButton = sbs.gameObject;
+            }
             submitButton.SetActive(sbs.readyForSubmit);
         }
     }
@@ -379,6 +385,8 @@ public class BaseSteamController : SteamVR_TrackedObject
             }
             else if (activeBeamInterceptObj.tag == "SubmitButton")
             {
+                
+                //Debug.Log(activeBeamInterceptObj);
                 sbs = activeBeamInterceptObj.GetComponent<SubmitButtonScript>();
                 submitButton = activeBeamInterceptObj;
                 if (udch.gameObject.activeSelf)

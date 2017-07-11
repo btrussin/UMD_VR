@@ -2,6 +2,7 @@
 using UnityEditor;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using Valve.VR;
 
 public class ForceDirTrackedObject : BaseSteamController
@@ -111,6 +112,7 @@ public class ForceDirTrackedObject : BaseSteamController
             {
                 if (activeBeamInterceptObj.name.Equals("Quad_Slider_Point"))
                 {
+                    
                     sliderPointDistance = beamDist;
                     updateSlider = true;
                 }
@@ -129,6 +131,7 @@ public class ForceDirTrackedObject : BaseSteamController
             beam.SetActive(true);
             if (triggerPulled)
             {
+                Debug.Log("here");
                 nodePointDistance = beamDist;
                 updateNodeSelectedPosition = true;
             }
@@ -157,48 +160,29 @@ public class ForceDirTrackedObject : BaseSteamController
             // just pulled the trigger
             castBeamAnyway = true;
             triggerPulled = true;
-
-            // THIS CODE IS VERY BROKEN
-            // TODO: FIX IT
             if( currNodeCollided != null )
             {
                 updateNodeCollidedPosition = true;
                 currNodeCollided.GetComponentInChildren<Collider>().enabled = false;
                 NodeInfo info = fDirScript.getNodeInfo(currNodeCollided.name);
+                
                 udch.startCountingTime = true;
                 info.positionIsStationary = true;
 
                 if (udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput ||
                     udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
                 {
-                    udch.PromptUserInput(currNodeCollided.name);
-                }
-
-                foreach (GameObject g in GameObject.FindGameObjectsWithTag("MovieNode"))
-                {
-                    if (udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput ||
-                        udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
+                    if (info.prevInterState != NodeInteractionState.SELECTED)
                     {
-                        NodeInfo Ninfo = fDirScript.getNodeInfo(g.name);
-                        if (Ninfo.interState != NodeInteractionState.SELECTED && g != currNodeCollided)
-                        {
-                            
-                            udch.RemoveAnswer(g.name);
-                        }
+                        udch.PromptUserInput(currNodeCollided.name);
                     }
-                }
-                
+                    else
+                    {
+                        udch.RemoveAnswer(currNodeCollided.name);
+                    }
+                }                 
             }
         }
-
-
-        if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
-            prevState.rAxis1.x < 1.0f && state.rAxis1.x == 1.0f)
-        {
-            
-            //TriggerActiverBeamObject();
-        }
-
 
         if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0 &&
             (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0)
@@ -229,7 +213,7 @@ public class ForceDirTrackedObject : BaseSteamController
                 NodeInfo info = fDirScript.getNodeInfo(currNodeCollided.name);
                 info.positionIsStationary = false;
             }
-           
+            activeBeamInterceptObj = null;
         }
 
         if (prevState.rAxis1.x < 1.0f && state.rAxis1.x == 1.0f)
