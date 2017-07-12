@@ -33,6 +33,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
         base.FixedUpdate();
         if (__goToParentScene)
         {
+            NodeDetailsManager.removeAllDetails();
             goToParentScene("PivotScene");
         }
     }

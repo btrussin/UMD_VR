@@ -13,14 +13,19 @@ public class NodeDetailsManager : MonoBehaviour {
 
     public static void addDetails(string name, GameObject obj)
     {
-        detailsMap.Add(name, obj);
+        if( !detailsMap.ContainsKey(name) ) detailsMap.Add(name, obj);
         if (circleLayout) adjustSpacingInCircle();
         else adjustSpacingInGrid();
     }
 
+    public static void removeAllDetails()
+    {
+        detailsMap.Clear();
+    }
+
     public static void removeDetails(string name)
     {
-        detailsMap.Remove(name);
+        if (detailsMap.ContainsKey(name)) detailsMap.Remove(name);
         if (circleLayout) adjustSpacingInCircle();
         else adjustSpacingInGrid();
     }

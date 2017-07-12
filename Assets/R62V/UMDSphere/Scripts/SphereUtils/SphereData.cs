@@ -367,8 +367,8 @@ public class SphereData : MonoBehaviour {
 
         mainCMDataLists = lists;
 
-        Color[] palette = MovieDBUtils.getColorPalette();
-        palette = MovieDBUtils.randomizeColorPalette(palette);
+        Color[] palette = ColorUtils.getColorPalette();
+        ColorUtils.randomizeColorPalette(palette);
 
         Random.InitState(6);
 
@@ -489,8 +489,8 @@ public class SphereData : MonoBehaviour {
         mainCMDataLists = lists;
 
 
-        Color[] palette = MovieDBUtils.getColorPalette();
-        palette = MovieDBUtils.randomizeColorPalette(palette);
+        Color[] palette = ColorUtils.getColorPalette();
+        ColorUtils.randomizeColorPalette(palette);
 
         Random.InitState(97);
 

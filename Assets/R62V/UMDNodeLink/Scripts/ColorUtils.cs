@@ -75,7 +75,11 @@ public class ColorUtils {
             palette[i++] = new Color32(255, 255, 51, 255);
         }
 
-        return palette;
+        Color[] tmpPalette = new Color[24];
+
+        palette.CopyTo(tmpPalette, 0);
+
+        return tmpPalette;
     }
 
     public static ColorHSL[] getColorPaletteHSL()

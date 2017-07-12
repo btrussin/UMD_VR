@@ -162,6 +162,9 @@ public class ForceDirTrackedObject : BaseSteamController
             triggerPulled = true;
             if( currNodeCollided != null )
             {
+                Collider collider = gameObject.GetComponent<Collider>();
+                collider.enabled = false;
+
                 updateNodeCollidedPosition = true;
                 currNodeCollided.GetComponentInChildren<Collider>().enabled = false;
                 NodeInfo info = fDirScript.getNodeInfo(currNodeCollided.name);
@@ -195,6 +198,7 @@ public class ForceDirTrackedObject : BaseSteamController
             triggerPulled = false;
             if (currNodeSelected != null)
             {
+                
                 NodeInfo info = fDirScript.getNodeInfo(currNodeSelected.name);
                 if (info != null)
                 {
@@ -208,6 +212,9 @@ public class ForceDirTrackedObject : BaseSteamController
 
             if (currNodeCollided != null)
             {
+                Collider collider = gameObject.GetComponent<Collider>();
+                collider.enabled = true;
+
                 updateNodeCollidedPosition = false;
                 currNodeCollided.GetComponentInChildren<Collider>().enabled = true;
                 NodeInfo info = fDirScript.getNodeInfo(currNodeCollided.name);
@@ -290,6 +297,7 @@ public class ForceDirTrackedObject : BaseSteamController
 
     void OnCollisionEnter(Collision col)
     {
+        // prevent grabbing multiple nodes
         GameObject obj = col.gameObject;
         NodeInfo info = fDirScript.getNodeInfo(obj.name);
         if (info == null) return;
