@@ -192,7 +192,7 @@ public class UserDataCollectionHandler : MonoBehaviour
     public void RemoveAnswer(string dataSelected)
     {
         TextMesh text = ConfirmationPopUp.GetComponent<TextMesh>();
-        text.text = text.text.Replace(Environment.NewLine+dataSelected,"");
+        text.text = text.text.Replace(dataSelected + Environment.NewLine, "");
 
     }
     public void PromptUserInput(string dataSelected)
@@ -206,13 +206,9 @@ public class UserDataCollectionHandler : MonoBehaviour
         else if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
         {
             currentAnswersList.Add(dataSelected);
-            if (currentAnswersList.Count == 0)
+            if (currentAnswersList.Count != 0)
             {
-                ConfirmationPopUp.GetComponent<TextMesh>().text += Environment.NewLine + dataSelected;
-            }
-            else
-            {
-                ConfirmationPopUp.GetComponent<TextMesh>().text += dataSelected;
+                ConfirmationPopUp.GetComponent<TextMesh>().text += dataSelected + Environment.NewLine;
             }
         }
         currentAnswerSelected = dataSelected;
