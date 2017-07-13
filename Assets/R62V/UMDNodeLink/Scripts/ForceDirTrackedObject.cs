@@ -169,7 +169,7 @@ public class ForceDirTrackedObject : BaseSteamController
                 currNodeCollided.GetComponentInChildren<Collider>().enabled = false;
                 NodeInfo info = fDirScript.getNodeInfo(currNodeCollided.name);
                 
-                udch.startCountingTime = true;
+                //udch.startCountingTime = true;  // redundant code?????
                 info.positionIsStationary = true;
 
                 if (udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput ||

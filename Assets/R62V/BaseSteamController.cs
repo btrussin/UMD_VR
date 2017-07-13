@@ -167,7 +167,8 @@ public class BaseSteamController : SteamVR_TrackedObject
             TriggerActiverBeamObject();
 
             // toggle connections with all movies
-            udch.startCountingTime = true;
+
+            //udch.startCountingTime = true;   // UNCOMMENT THIS LINE IF YOU WANT THE TIME TO START UPON FIRST NODE CLICK
             
             foreach (MovieObject m in connectionMovieObjectMap.Values)
             {
@@ -220,8 +221,14 @@ public class BaseSteamController : SteamVR_TrackedObject
 
     protected void FixedUpdate()
     {
-        // Menu Code Start
+        // USEFUL HOTKEYS
+        if (Input.GetKeyUp(KeyCode.KeypadMinus))
+        {
+            udch.startCountingTime = true;
+        }
 
+        // END USEFUL HOTKEYS
+        // Menu Code Start
         if (Input.GetKeyUp(KeyCode.Keypad1))
         {
             SceneParams.setParamValue("ShowEdges", "false");
@@ -246,7 +253,6 @@ public class BaseSteamController : SteamVR_TrackedObject
             SceneManager.LoadScene("NodeGraph", LoadSceneMode.Single);
             return;
         }
-
         // Menu Code End
         if (__vrSystem == null) __vrSystem = OpenVR.System;
 

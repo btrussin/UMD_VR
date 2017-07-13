@@ -48,12 +48,8 @@ public class UserDataCollectionHandler : MonoBehaviour
         {
             movieObject = FindObjectOfType<NodeState>().GetComponent<MovieObject>();
         }
-        else if (SceneManager.GetActiveScene().name == "NodeGraph")
-        {
-
-        }
         
-
+        ExpandedPopUpMenu.SetActive(false);
        
         // NextPart = GameObject.FindGameObjectWithTag("NextPart");
        
@@ -69,7 +65,9 @@ public class UserDataCollectionHandler : MonoBehaviour
     {
         if (startCountingTime && startTime == 0)
         {
+            Debug.Log("Timer Start");
             startTime = DateTime.Now.ToFileTime();
+            ExpandedPopUpMenu.SetActive(true);
         }
         SetQuestion();
     }
@@ -132,7 +130,36 @@ public class UserDataCollectionHandler : MonoBehaviour
         if (form_questions.QuestionIndex <= form_questions.questions.Count - 1)
         {
             currentQuestion = form_questions.questions[form_questions.QuestionIndex];
-           QuestionText.text = currentQuestion.QuestionText;
+            if (currentQuestion.QuestionText.Length >= 55)
+            {
+                if (currentQuestion.QuestionText[54] == (char)32)
+                {
+                    QuestionText.text = currentQuestion.QuestionText.Substring(0, 55) + Environment.NewLine +
+                                        currentQuestion.QuestionText.Substring(55);
+                }
+                else
+                {
+                    int index_of_blank_space = 0;
+                    int index = 0;
+                    foreach (char c in currentQuestion.QuestionText.Substring(55))
+                    {
+                        if (c == " ".ToCharArray()[0])
+                        {
+                            index_of_blank_space = index;
+                            break;
+                        }
+                        index++;
+                        Debug.Log(index);
+                    }
+                    QuestionText.text = currentQuestion.QuestionText.Substring(0, index_of_blank_space+55) + Environment.NewLine +
+                    currentQuestion.QuestionText.Substring(index_of_blank_space+55);
+                }
+            }
+            else
+            {
+                QuestionText.text = currentQuestion.QuestionText;
+            }
+
             if ((currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.RadioButtons) && (questionLoaded == false))
             {
                 GenYesNoRadioButtons();
@@ -144,6 +171,14 @@ public class UserDataCollectionHandler : MonoBehaviour
         {
             
             GameObject.FindGameObjectWithTag("FormMenuParent").GetComponentInChildren<FormMenuHandler>(true).gameObject.SetActive(true);
+            if (SceneManager.GetActiveScene().name == "NodeGraph")
+            {
+                GameObject.FindObjectOfType<ForceDirLayout>().gameObject.SetActive(false);
+            }
+            else if (SceneManager.GetActiveScene().name == "SphereScene")
+            {
+                GameObject.FindObjectOfType<SphereData>().gameObject.SetActive(false);
+            }
             gameObject.SetActive(false);
         }
     }
@@ -171,7 +206,14 @@ public class UserDataCollectionHandler : MonoBehaviour
         else if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
         {
             currentAnswersList.Add(dataSelected);
-            ConfirmationPopUp.GetComponent<TextMesh>().text += Environment.NewLine + dataSelected;
+            if (currentAnswersList.Count == 0)
+            {
+                ConfirmationPopUp.GetComponent<TextMesh>().text += Environment.NewLine + dataSelected;
+            }
+            else
+            {
+                ConfirmationPopUp.GetComponent<TextMesh>().text += dataSelected;
+            }
         }
         currentAnswerSelected = dataSelected;
     }
