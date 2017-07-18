@@ -17,6 +17,7 @@ public class BaseSteamController : SteamVR_TrackedObject
 
     protected bool __goToParentScene = false;
 
+    public bool justReleasedTrigger = true;
     public bool collidedWithNode;
     public GameObject otherController;
     protected BaseSteamController otherTrackedObjScript;
@@ -406,22 +407,31 @@ public class BaseSteamController : SteamVR_TrackedObject
             }
             else if (activeBeamInterceptObj.tag == "SubmitButton")
             {
-                //sbs = activeBeamInterceptObj.GetComponent<SubmitButtonScript>();
-                submitButton = activeBeamInterceptObj;
-                if (udch.gameObject.activeSelf)
+                if (justReleasedTrigger)
                 {
-                    udch.HandleUserInput();
+                    //sbs = activeBeamInterceptObj.GetComponent<SubmitButtonScript>();
+                    submitButton = activeBeamInterceptObj;
+                    if (udch.gameObject.activeSelf)
+                    {
+                        udch.HandleUserInput();
+                    }
+                    else
+                    {
+                        fmh_script.SubmitQuestionAnswer();
+                    }
+
+
+                    if (activeBeamInterceptObj.name.Contains("Text"))
+                    {
+
+                        activeBeamInterceptObj.transform.GetComponentInChildren<FormMenuHandler>().handleTrigger();
+                    }
                 }
-                else
+                
+                if (SceneManager.GetActiveScene().name == "NodeGraph")
                 {
-                    fmh_script.SubmitQuestionAnswer();
+                    justReleasedTrigger = false;
                 }
-            }
-
-            if (activeBeamInterceptObj.name.Contains("Text"))
-            {
-
-                activeBeamInterceptObj.transform.GetComponentInChildren<FormMenuHandler>().handleTrigger();
             }
         }
     }
@@ -429,6 +439,8 @@ public class BaseSteamController : SteamVR_TrackedObject
 
     protected void handleSlider()
     {
+        //            THIS FUNCTION HAS BEEN KNOWN TO THROW NULL REFERENCE ON SBS
+        //            IN THE EVENT THAT THIS OCCURS, PUT NULL CHECKS ON THE LINES IT THROWS ERRORS ON
         if (fmh_script != null)
         {
             if (fmh_script.gameObject.activeSelf)

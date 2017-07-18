@@ -7,6 +7,7 @@ using Valve.VR;
 
 public class ForceDirTrackedObject : BaseSteamController
 {
+    
     GameObject currMenuSubObject = null;
     MenuManager menuManager;
 
@@ -163,6 +164,7 @@ public class ForceDirTrackedObject : BaseSteamController
         if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
                     prevState.rAxis1.x < 1.0f && state.rAxis1.x == 1.0f)
         {
+
             // just pulled the trigger
             castBeamAnyway = true;
             triggerPulled = true;
@@ -202,6 +204,7 @@ public class ForceDirTrackedObject : BaseSteamController
         {
             beam.SetActive(false);
             // just released the trigger
+            justReleasedTrigger = true;
             castBeamAnyway = false;
             updateSlider = false;
             updateNodeSelectedPosition = false;
@@ -237,18 +240,18 @@ public class ForceDirTrackedObject : BaseSteamController
         {
             // just pulled the trigger in all the way
             if (currNodeCollided != null)
-            {
-                NodeInfo info = fDirScript.getNodeInfo(currNodeCollided.name);
-                if (info.prevInterState == NodeInteractionState.SELECTED) info.prevInterState = NodeInteractionState.NONE;
-                else info.prevInterState = NodeInteractionState.SELECTED;
-            }
-            else if(currMenuSubObject != null)
-            {
-                if (currMenuSubObject.name.Equals("ForceBox")) menuManager.toggleForce();
-                else if (currMenuSubObject.name.Equals("ShowLinesBox")) menuManager.toggleShowLines();
-                else if (currMenuSubObject.name.Equals("NodePointerBox")) menuManager.toggleNodePointers();
-            }
-                    
+                {
+                    NodeInfo info = fDirScript.getNodeInfo(currNodeCollided.name);
+                    if (info.prevInterState == NodeInteractionState.SELECTED)
+                        info.prevInterState = NodeInteractionState.NONE;
+                    else info.prevInterState = NodeInteractionState.SELECTED;
+                }
+                else if (currMenuSubObject != null)
+                {
+                    if (currMenuSubObject.name.Equals("ForceBox")) menuManager.toggleForce();
+                    else if (currMenuSubObject.name.Equals("ShowLinesBox")) menuManager.toggleShowLines();
+                    else if (currMenuSubObject.name.Equals("NodePointerBox")) menuManager.toggleNodePointers();
+                }
         }
 
 
