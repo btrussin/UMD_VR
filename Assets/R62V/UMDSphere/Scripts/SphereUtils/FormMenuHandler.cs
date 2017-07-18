@@ -143,7 +143,6 @@ public class FormMenuHandler : BaseMenuHandler
 
     public void SetQuestion()    // generates the text and the radio buttons or checkboxes or slider
     {
-
         if (form_questions.QuestionIndex < form_questions.questions.Count)
         {
             clearSelection();
@@ -188,7 +187,7 @@ public class FormMenuHandler : BaseMenuHandler
             }
             if (currentQuestion.QuestionType == QuestionTypes.Slider)
             {
-                GenSlider();
+                GenNewSlider();
             }
             if (currentQuestion.QuestionType == QuestionTypes.AnsInput)
             {
@@ -348,11 +347,60 @@ public class FormMenuHandler : BaseMenuHandler
 
     }
 
+    public void GenNewSlider()
+    {
+        float offset_x = 0.0675f;
+        float yOffsetPerLine = 0.12f;
+        List<GameObject> interactableObjects = new List<GameObject>();
+        int menuLayerMask = LayerMask.NameToLayer("Menus");
 
-    public void GenSlider()
+        for (int toggleInd = 0; toggleInd < currentQuestion.possible_answers.Count; toggleInd++)
+        {
+            GameObject quad = GameObject.CreatePrimitive(PrimitiveType.Quad);
+            quad.tag = "RadioButton";
+            quad.name = "Best Option";
+            quad.layer = menuLayerMask;
+            quad.transform.SetParent(transform);
+
+            MeshRenderer rend = quad.GetComponent<MeshRenderer>();
+
+            rend.transform.localScale = new Vector3(0.1f, 0.1f, 1.0f);
+            rend.transform.localRotation = Quaternion.identity;
+            rend.transform.localPosition = Vector3.zero;
+            rend.transform.localPosition = new Vector3(-0.3f, 0.31f, 0.88f);
+            rend.transform.localPosition += new Vector3(offset_x, 0, 0);
+
+            quad.AddComponent<FormMenuHandler>();
+            FormMenuHandler menuHandler = quad.GetComponent<FormMenuHandler>();
+            menuHandler.baseState = formState;
+            menuHandler.handlerType = FormMenuHandler.FormMenuHandlerType.ToggleRadio;
+
+            GameObject optionText = new GameObject("");
+            optionText.AddComponent<TextMesh>();
+            if (FormMenu.currentQuestion.possible_answers.Count >= toggleInd)
+            {
+                optionText.GetComponent<TextMesh>().text = FormMenu.currentQuestion.possible_answers[toggleInd];
+            }
+            optionText.GetComponent<TextMesh>().fontSize = 35;
+            optionText.GetComponent<TextMesh>().characterSize = 0.35f;
+            optionText.name = "Option Text";
+            optionText.transform.SetParent(quad.transform);
+            optionText.transform.localRotation = Quaternion.identity;
+            optionText.transform.localPosition = new Vector3(-1.69f, -0.71f, -.0003f);
+            optionText.transform.localScale = new Vector3(.5f, .5f, 203);
+
+            menuHandler.baseMaterial = CircleMaterial;
+            menuHandler.inputInteractMaterial = sliderPointMaterial;
+            menuHandler.UpdateMaterial();
+
+            offset_x += yOffsetPerLine;
+        }
+        offset_x += yOffsetPerLine;
+    }
+    public void GenOldSlider()
     {   // by RK, check for Alex and Mike, as requested this is the radio button slider.
 
-        float offset_y = -0.75f;
+        float offset_y = -0.8f;
         float yOffsetPerLine = 0.12f;
         int number = 1;
         List<GameObject> interactableObjects = new List<GameObject>();
@@ -368,7 +416,7 @@ public class FormMenuHandler : BaseMenuHandler
 
             MeshRenderer rend = quad.GetComponent<MeshRenderer>();
 
-            rend.transform.localScale = new Vector3(0.1f, 0.1f, 1.0f);
+            rend.transform.localScale = new Vector3(0.15f, 0.15f, 1.0f);
             rend.transform.localRotation = Quaternion.identity;
             rend.transform.localPosition = Vector3.zero;
             rend.transform.localPosition = new Vector3(-0.16f, 0.24f, 0.88f);
@@ -386,12 +434,12 @@ public class FormMenuHandler : BaseMenuHandler
                 optionText.GetComponent<TextMesh>().text = FormMenu.currentQuestion.possible_answers[toggleInd];
             }
 
-            optionText.GetComponent<TextMesh>().fontSize = 50;
+            optionText.GetComponent<TextMesh>().fontSize = 35;
             optionText.GetComponent<TextMesh>().characterSize = 0.35f;
             optionText.name = "Option Text";
             optionText.transform.SetParent(quad.transform);
             optionText.transform.localRotation = Quaternion.identity;
-            optionText.transform.localPosition = new Vector3(-0.5f, -0.71f, -.0003f);
+            optionText.transform.localPosition = new Vector3(-1.69f, -0.71f, -.0003f);
             optionText.transform.localScale = new Vector3(.5f, .5f, 203); ;
 
             menuHandler.baseMaterial = CircleMaterial;

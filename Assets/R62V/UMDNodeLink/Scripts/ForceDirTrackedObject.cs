@@ -62,8 +62,11 @@ public class ForceDirTrackedObject : BaseSteamController
         //ShowMainMenu();
         base.Update();
         deviceRay.origin = transform.position + deviceRay.direction * 0.07f;
+        if (!collidedWithNode)
+        {
+            projectBeam();
+        }
 
-        projectBeam();
         ApplyStateChanges();
         if (updateSlider)
         { 
@@ -89,65 +92,68 @@ public class ForceDirTrackedObject : BaseSteamController
     void projectBeam()
     {
         float beamDist = 10.0f;
-
-        RaycastHit hitInfo;
-        if (updateSlider)
+        if (menuManager != null)
         {
-            beam.SetActive(true);
-            beamDist = sliderPointDistance;
-        }
-        else if (menuManager.useNodePointers && updateNodeSelectedPosition)
-        {
-            beam.SetActive(true);
-            beamDist = nodePointDistance;
-        }
-        else if (Physics.Raycast(deviceRay.origin, deviceRay.direction, out hitInfo, beamDist, menuSliderMask))
-        {
-            activeBeamInterceptObj = hitInfo.collider.gameObject;
-            beamDist = hitInfo.distance;
-            beam.SetActive(true);
-
-            currMenuSubObject = activeBeamInterceptObj;
-            if (triggerPulled)
+            RaycastHit hitInfo;
+            if (updateSlider)
             {
-                if (activeBeamInterceptObj.name.Equals("Quad_Slider_Point"))
+                beam.SetActive(true);
+                beamDist = sliderPointDistance;
+            }
+            else if (menuManager.useNodePointers && updateNodeSelectedPosition)
+            {
+                beam.SetActive(true);
+                beamDist = nodePointDistance;
+            }
+            else if (Physics.Raycast(deviceRay.origin, deviceRay.direction, out hitInfo, beamDist, menuSliderMask))
+            {
+                activeBeamInterceptObj = hitInfo.collider.gameObject;
+                beamDist = hitInfo.distance;
+                beam.SetActive(true);
+
+                currMenuSubObject = activeBeamInterceptObj;
+                if (triggerPulled)
                 {
-                    
-                    sliderPointDistance = beamDist;
-                    updateSlider = true;
+                    if (activeBeamInterceptObj.name.Equals("Quad_Slider_Point"))
+                    {
+
+                        sliderPointDistance = beamDist;
+                        updateSlider = true;
+                    }
+
+                    else updateSlider = false;
+
                 }
-                
-                else updateSlider = false;
-
+                else beam.SetActive(false);
             }
-            else beam.SetActive(false);
-        }
-        else if (menuManager.useNodePointers && Physics.Raycast(deviceRay.origin, deviceRay.direction, out hitInfo, beamDist, nodeLayerMask))
-        {
-            
-            currNodeSelected = hitInfo.collider.gameObject;
-            
-            beamDist = hitInfo.distance;
-            beam.SetActive(true);
-            if (triggerPulled)
+            else if (menuManager.useNodePointers &&
+                     Physics.Raycast(deviceRay.origin, deviceRay.direction, out hitInfo, beamDist, nodeLayerMask))
             {
-                Debug.Log("here");
-                nodePointDistance = beamDist;
-                updateNodeSelectedPosition = true;
+
+                currNodeSelected = hitInfo.collider.gameObject;
+
+                beamDist = hitInfo.distance;
+                // beam.SetActive(true);
+                if (triggerPulled)
+                {
+                    Debug.Log("here");
+                    nodePointDistance = beamDist;
+                    updateNodeSelectedPosition = true;
+                }
             }
-        }
-        else if(castBeamAnyway)
-        {
-            beam.SetActive(true);
-            currMenuSubObject = null;
-            currNodeSelected = null;
-        }
+            else if (castBeamAnyway)
+            {
+                //beam.SetActive(true);
+                currMenuSubObject = null;
+                currNodeSelected = null;
+            }
 
-        LineRenderer lineRend = beam.GetComponent<LineRenderer>();
-        Vector3 end = deviceRay.GetPoint(beamDist);
+            LineRenderer lineRend = beam.GetComponent<LineRenderer>();
+            Vector3 end = deviceRay.GetPoint(beamDist);
 
-        lineRend.SetPosition(0, deviceRay.origin);
-        lineRend.SetPosition(1, end);
+            lineRend.SetPosition(0, deviceRay.origin);
+            lineRend.SetPosition(1, end);
+        }
     }
 
     protected override void ApplyStateChanges()
@@ -155,13 +161,14 @@ public class ForceDirTrackedObject : BaseSteamController
         base.ApplyStateChanges();
 
         if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
-            (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
+                    prevState.rAxis1.x < 1.0f && state.rAxis1.x == 1.0f)
         {
             // just pulled the trigger
             castBeamAnyway = true;
             triggerPulled = true;
             if( currNodeCollided != null )
             {
+                
                 Collider collider = gameObject.GetComponent<Collider>();
                 collider.enabled = false;
 
@@ -171,19 +178,22 @@ public class ForceDirTrackedObject : BaseSteamController
                 
                 //udch.startCountingTime = true;  // redundant code?????
                 info.positionIsStationary = true;
-
-                if (udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput ||
-                    udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
+                
+                
                 {
-                    if (info.prevInterState != NodeInteractionState.SELECTED)
+                    if (udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput ||
+                        udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
                     {
-                        udch.PromptUserInput(currNodeCollided.name);
+                        if (info.prevInterState != NodeInteractionState.SELECTED)
+                        {
+                            udch.PromptUserInput(currNodeCollided.name);
+                        }
+                        else
+                        {
+                            udch.RemoveAnswer(currNodeCollided.name);
+                        }
                     }
-                    else
-                    {
-                        udch.RemoveAnswer(currNodeCollided.name);
-                    }
-                }                 
+                }
             }
         }
 
@@ -297,6 +307,7 @@ public class ForceDirTrackedObject : BaseSteamController
 
     void OnCollisionEnter(Collision col)
     {
+        collidedWithNode = true;
         // prevent grabbing multiple nodes
         GameObject obj = col.gameObject;
         NodeInfo info = fDirScript.getNodeInfo(obj.name);
@@ -321,6 +332,7 @@ public class ForceDirTrackedObject : BaseSteamController
 
     void OnCollisionExit(Collision col)
     {
+        collidedWithNode = false;
         GameObject obj = col.gameObject;
         NodeInfo info = fDirScript.getNodeInfo(obj.name);
         if (info == null) return;

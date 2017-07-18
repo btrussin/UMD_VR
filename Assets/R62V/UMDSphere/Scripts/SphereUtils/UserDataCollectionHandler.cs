@@ -181,6 +181,7 @@ public class UserDataCollectionHandler : MonoBehaviour
             }
             gameObject.SetActive(false);
         }
+        //sbs.readyForSubmit = false;
     }
 
 
@@ -244,6 +245,7 @@ public class UserDataCollectionHandler : MonoBehaviour
                 test += s;
             }
             AddToList(form_questions.QuestionIndex, test);
+            
         }
         sbs.readyForSubmit = false;
         form_questions.QuestionIndex++;
@@ -289,6 +291,7 @@ public class UserDataCollectionHandler : MonoBehaviour
         {
             if (QNum == 0)
             {
+
                 data.Add(SceneManager.GetActiveScene().name + SceneParams.getParamValue("ShowEdges"));
             }
             data.Add("QNumT:" + QNum + " " + "Input Value:" + value);
@@ -301,10 +304,21 @@ public class UserDataCollectionHandler : MonoBehaviour
         string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         string path = pathDesktop + "\\mycsvfile.csv";
 
-        using (var w = new StreamWriter(path, true))
+        string participant_number_text = "";
+        List<int> participant_instance_list = new List<int>();
+        if (File.ReadAllText(path).Contains("PARTICIPANT"))
         {
+            
+        }
+        else
+        {
+            participant_number_text = "PARTICIPANT1";
+        }
+        using (var w = new StreamWriter(path, true))
+        {   
+            w.WriteLine(participant_number_text);
             for (int i = 0; i < selectInformation.Count; i++)
-            {
+            {               
                 var first = selectInformation[i];
                 string line = string.Format("{0}", first);
                 w.WriteLine(line);

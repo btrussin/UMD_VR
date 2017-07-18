@@ -14,7 +14,6 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
     private SphereData sphereData;
 
     public GameObject dataObj;
-
     new void Start()
     {
         base.Start();
@@ -121,7 +120,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
 
         if (Physics.Raycast(deviceRay.origin, deviceRay.direction, out hitInfo, 30.0f, menusLayerMask))
         {
-
+            beam.SetActive(true);
             activeBeamInterceptObj = hitInfo.collider.gameObject;
             beamDist = hitInfo.distance;
 
@@ -311,6 +310,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
 
     void OnCollisionEnter(Collision col)
     {
+        collidedWithNode = true;
         GameObject obj = col.gameObject;
         if (obj.name.Contains("MovieNode"))
         {
@@ -345,6 +345,7 @@ public class UMD_Sphere_TrackedObject : BaseSteamController
 
     void OnCollisionExit(Collision col)
     {
+        collidedWithNode = false;
         GameObject obj = col.gameObject;
         if (obj.name.Contains("MovieNode"))
         {

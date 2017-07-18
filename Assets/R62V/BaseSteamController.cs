@@ -17,6 +17,7 @@ public class BaseSteamController : SteamVR_TrackedObject
 
     protected bool __goToParentScene = false;
 
+    public bool collidedWithNode;
     public GameObject otherController;
     protected BaseSteamController otherTrackedObjScript;
 
@@ -111,11 +112,13 @@ public class BaseSteamController : SteamVR_TrackedObject
     protected void Update()
     {
 
+        
         currPosition = transform.position;
         currRightVec = transform.right;
         currUpVec = transform.up;
         currForwardVec = transform.forward;
         currRotation = transform.rotation;
+        
         deviceRay.origin = currPosition;
 
         Quaternion rayRotation = Quaternion.AngleAxis(currRayAngle, currRightVec);
@@ -125,6 +128,7 @@ public class BaseSteamController : SteamVR_TrackedObject
         //sphereCollider.center = new Vector3(0.0f, 0.0f, 0.03f);
 
         HandleStateChanges();
+        handleSlider(); // new slider code
     }
 
      void HandleStateChanges()
@@ -156,14 +160,17 @@ public class BaseSteamController : SteamVR_TrackedObject
             (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
         {
             // activate beam
-            beam.SetActive(true);
-            useBeam = true;
+            if (!collidedWithNode)
+            {
+                beam.SetActive(true);
+                useBeam = true;
+            }
         }
 
         if ((state.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) != 0 &&
         prevState.rAxis1.x < 1.0f && state.rAxis1.x == 1.0f)
         {
-            
+           
             TriggerActiverBeamObject();
 
             // toggle connections with all movies
@@ -177,6 +184,7 @@ public class BaseSteamController : SteamVR_TrackedObject
                 
                 if (udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.AnsInput || udch.currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
                 {
+                    
                     if (m.nodeState.isSelected)
                     {
                         udch.PromptUserInput(m.name);
@@ -198,10 +206,12 @@ public class BaseSteamController : SteamVR_TrackedObject
 
         if ((state.ulButtonTouched) == 4294967296) // if the touchpad is touched 
         {
+            /*       OLD SLIDER CODE
+            
             if (fmh_script != null)
             {
                 handleSlider();
-            }
+            }*/
         }
     }
 
@@ -213,6 +223,7 @@ public class BaseSteamController : SteamVR_TrackedObject
             {
                 GameObject FormMenu = GameObject.FindGameObjectWithTag("FormMenu");
                 sbs = FormMenu.GetComponentInChildren<SubmitButtonScript>(true);
+
                 submitButton = sbs.gameObject;
             }
             submitButton.SetActive(sbs.readyForSubmit);
@@ -226,7 +237,10 @@ public class BaseSteamController : SteamVR_TrackedObject
         {
             udch.startCountingTime = true;
         }
-
+        if (Input.GetKeyUp(KeyCode.KeypadDivide))
+        {
+            udch.form_questions.QuestionIndex = 5;
+        }
         // END USEFUL HOTKEYS
         // Menu Code Start
         if (Input.GetKeyUp(KeyCode.Keypad1))
@@ -388,12 +402,11 @@ public class BaseSteamController : SteamVR_TrackedObject
                 udch.PromptUserInput(activeBeamInterceptObj.GetComponentInChildren<TextMesh>().text);
                 FormMenuHandler fmh = activeBeamInterceptObj.GetComponentInChildren<FormMenuHandler>();
                 fmh.UpdateMaterial();
+                
             }
             else if (activeBeamInterceptObj.tag == "SubmitButton")
             {
-                
-                //Debug.Log(activeBeamInterceptObj);
-                sbs = activeBeamInterceptObj.GetComponent<SubmitButtonScript>();
+                //sbs = activeBeamInterceptObj.GetComponent<SubmitButtonScript>();
                 submitButton = activeBeamInterceptObj;
                 if (udch.gameObject.activeSelf)
                 {
@@ -407,6 +420,7 @@ public class BaseSteamController : SteamVR_TrackedObject
 
             if (activeBeamInterceptObj.name.Contains("Text"))
             {
+
                 activeBeamInterceptObj.transform.GetComponentInChildren<FormMenuHandler>().handleTrigger();
             }
         }
@@ -415,57 +429,84 @@ public class BaseSteamController : SteamVR_TrackedObject
 
     protected void handleSlider()
     {
-        if (fmh_script.amountScrolled < 70 && state.rAxis0.x >= 0)
+        if (fmh_script != null)
         {
-            fmh_script.amountScrolled += state.rAxis0.x;
-        }
-
-        else if (fmh_script.amountScrolled >= 0 && state.rAxis0.x < 0)
-        {
-            fmh_script.amountScrolled += state.rAxis0.x;
-        }
-        else if (fmh_script.amountScrolled <= 70 && fmh_script.amountScrolled >= 0)
-        {
-            fmh_script.amountScrolled += state.rAxis0.x;
-        }
-
-        GameObject formMenu = GameObject.FindGameObjectWithTag("FormMenu");
-        float radioButtonOffset = 70;
-        if (formMenu != null)
-        {
-            foreach (Transform t in formMenu.GetComponentsInChildren<Transform>())
+            if (fmh_script.gameObject.activeSelf)
             {
-                if (t.tag == "Slider")
+                //if (sbs.readyForSubmit == false)     // probably irrelevant
+                bool found_active = false;
+                foreach (FormMenuHandler fmh in fmh_script.GetComponentsInChildren<FormMenuHandler>())
                 {
-                    radioButtonOffset -= 10f;
-
-                    FormMenuHandler fmh = t.GetComponent<FormMenuHandler>();
-                    if (radioButtonOffset < fmh_script.amountScrolled && radioButtonOffset > fmh_script.amountScrolled - 10)
+                    if ((fmh.tag == "RadioButton") && fmh.materialStatus)
                     {
-                        t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
                         sbs.readyForSubmit = true;
-                        fmh_script.currentSliderValue = Mathf.RoundToInt((radioButtonOffset + 10) / 10);
-
+                        fmh.UpdateMaterial();
+                        found_active = true;
+                        break;
                     }
-                    else if ((radioButtonOffset == 0 && fmh_script.amountScrolled < 10) || (fmh_script.amountScrolled > 70 && radioButtonOffset == 60))
-                    {
-                        t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
-                        sbs.readyForSubmit = true;
+                }
+                if (!found_active)
+                {
+                    sbs.readyForSubmit = false;
+                }
+            }
+        }
 
 
-                    }
-                    else
-                    {
-                        t.gameObject.GetComponent<FormMenuHandler>().materialStatus = false;
-                    }
-                    fmh.UpdateMaterial();
-
+        //OLD SLIDER CODE
+                /* 
+                if (fmh_script.amountScrolled < 70 && state.rAxis0.x >= 0)
+                {
+                    fmh_script.amountScrolled += state.rAxis0.x;
                 }
 
+                else if (fmh_script.amountScrolled >= 0 && state.rAxis0.x < 0)
+                {
+                    fmh_script.amountScrolled += state.rAxis0.x;
+                }
+                else if (fmh_script.amountScrolled <= 70 && fmh_script.amountScrolled >= 0)
+                {
+                    fmh_script.amountScrolled += state.rAxis0.x;
+                }
+
+                GameObject formMenu = GameObject.FindGameObjectWithTag("FormMenu");
+                float radioButtonOffset = 70;
+                if (formMenu != null)
+                {
+                    foreach (Transform t in formMenu.GetComponentsInChildren<Transform>())
+                    {
+                        if (t.tag == "Slider")
+                        {
+                            radioButtonOffset -= 10f;
+
+                            FormMenuHandler fmh = t.GetComponent<FormMenuHandler>();
+                            if (radioButtonOffset < fmh_script.amountScrolled && radioButtonOffset > fmh_script.amountScrolled - 10)
+                            {
+                                t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
+                                sbs.readyForSubmit = true;
+                                fmh_script.currentSliderValue = Mathf.RoundToInt((radioButtonOffset + 10) / 10);
+
+                            }
+                            else if ((radioButtonOffset == 0 && fmh_script.amountScrolled < 10) || (fmh_script.amountScrolled > 70 && radioButtonOffset == 60))
+                            {
+                                t.gameObject.GetComponent<FormMenuHandler>().materialStatus = true;
+                                sbs.readyForSubmit = true;
+
+
+                            }
+                            else
+                            {
+                                t.gameObject.GetComponent<FormMenuHandler>().materialStatus = false;
+                            }
+                            fmh.UpdateMaterial();
+
+                        }
+
+                    }
+
+                }
+                radioButtonOffset = 70;
+            */
             }
-
-        }
-        radioButtonOffset = 70;
-    }
-
+    
 }
