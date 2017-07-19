@@ -194,6 +194,10 @@ public class FormMenuHandler : BaseMenuHandler
                 AnsInput("");
             }
         }
+        else
+        {
+
+        }
         sbs.readyForSubmit = false;
         amountScrolled = 35;
     }

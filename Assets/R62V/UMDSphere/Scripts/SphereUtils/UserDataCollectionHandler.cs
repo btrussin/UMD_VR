@@ -3,6 +3,8 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine.SceneManagement;
 
@@ -179,12 +181,20 @@ public class UserDataCollectionHandler : MonoBehaviour
             {
                 GameObject.FindObjectOfType<SphereData>().gameObject.SetActive(false);
             }
+            CollectTrash();
             gameObject.SetActive(false);
         }
         //sbs.readyForSubmit = false;
     }
 
-
+    public void CollectTrash()
+    {
+        foreach (LineRenderer lr in GameObject.FindObjectsOfType<LineRenderer>())
+        {
+            lr.gameObject.SetActive(false);
+        }
+    }
+    
     public void RefreshMovieObject(MovieObject m)
     {
         movieObject = m;
@@ -291,7 +301,41 @@ public class UserDataCollectionHandler : MonoBehaviour
         {
             if (QNum == 0)
             {
+                string participant_number_text = "";
+                string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                string path = pathDesktop + "\\mycsvfile.csv";
 
+                int ScenesCompleted = 0;
+                if (File.ReadAllText(path).Contains("PARTICIPANT"))
+                {
+                    using (var w = new StreamReader(path, true))
+                    {
+
+                        string pattern = @"PARTICIPANT\d";
+
+                        string fileString;
+                        fileString = w.ReadToEnd();
+                        Match m = Regex.Match(fileString, pattern,RegexOptions.RightToLeft);
+
+                        ScenesCompleted += Regex.Matches(fileString.Substring(m.Index),"SphereScene").Count;
+                        ScenesCompleted += Regex.Matches(fileString.Substring(m.Index), "NodeGraph").Count;
+
+
+                        string g = m.ToString();
+                        int participant_number = Int32.Parse(Regex.Split(g, "PARTICIPANT")[1]);
+                        participant_number++;
+                        participant_number_text = "PARTICIPANT" + participant_number;
+                    }
+                }
+                else
+                {
+                    participant_number_text = "PARTICIPANT1";
+                    data.Add(participant_number_text);
+                }
+                if (ScenesCompleted >= 2)
+                {
+                    data.Add(participant_number_text);
+                }
                 data.Add(SceneManager.GetActiveScene().name + SceneParams.getParamValue("ShowEdges"));
             }
             data.Add("QNumT:" + QNum + " " + "Input Value:" + value);
@@ -304,19 +348,12 @@ public class UserDataCollectionHandler : MonoBehaviour
         string pathDesktop = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         string path = pathDesktop + "\\mycsvfile.csv";
 
-        string participant_number_text = "";
-        List<int> participant_instance_list = new List<int>();
-        if (File.ReadAllText(path).Contains("PARTICIPANT"))
-        {
-            
-        }
-        else
-        {
-            participant_number_text = "PARTICIPANT1";
-        }
+
+        
         using (var w = new StreamWriter(path, true))
         {   
-            w.WriteLine(participant_number_text);
+            
+            //w.WriteLine(participant_number_text);
             for (int i = 0; i < selectInformation.Count; i++)
             {               
                 var first = selectInformation[i];
