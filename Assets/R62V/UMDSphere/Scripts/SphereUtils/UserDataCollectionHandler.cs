@@ -204,6 +204,7 @@ public class UserDataCollectionHandler : MonoBehaviour
     {
         TextMesh text = ConfirmationPopUp.GetComponent<TextMesh>();
         text.text = text.text.Replace(dataSelected + Environment.NewLine, "");
+        currentAnswersList.Remove(dataSelected);
 
     }
     public void PromptUserInput(string dataSelected)
@@ -248,10 +249,14 @@ public class UserDataCollectionHandler : MonoBehaviour
         }
         else if (currentQuestion.QuestionType == FormMenuHandler.QuestionTypes.MultipleInput)
         {
-
+            if (!currentAnswersList.Any())
+            {
+                return;             // careful not to change the order of this function
+            }                       // because this return might break it if you do
             string test = "";
             foreach (string s in currentAnswersList)
             {
+                Debug.Log(s);
                 test += s;
             }
             AddToList(form_questions.QuestionIndex, test);
@@ -332,7 +337,7 @@ public class UserDataCollectionHandler : MonoBehaviour
                     participant_number_text = "PARTICIPANT1";
                     data.Add(participant_number_text);
                 }
-                if (ScenesCompleted >= 2)
+                if (ScenesCompleted >= 2)     // WARNING: THIS CODE WILL INTERPRET QUESTION SUBMISSIONS ON MORE THAN TWO SCENES AS AN ADDITIONAL PARTICIPANT.  DO NOT HAVE PARTICIPANTS ANSWER QUESTIONS IN MORE THAN TWO SCENES.
                 {
                     data.Add(participant_number_text);
                 }
