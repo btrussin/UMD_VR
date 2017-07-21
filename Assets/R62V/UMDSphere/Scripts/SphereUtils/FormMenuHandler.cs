@@ -31,6 +31,7 @@ public class FormMenuHandler : BaseMenuHandler
     private GameObject selectText;
     private SubmitButtonScript sbs;
     public int currentSliderValue;
+    public int slider_radio_button_number;
     public enum FormMenuHandlerType
     {
         ToggleCheckbox,
@@ -338,6 +339,17 @@ public class FormMenuHandler : BaseMenuHandler
         }
         else if (FormMenu.currentQuestion.QuestionType == QuestionTypes.Slider)
         {
+            foreach (GameObject g in GameObject.FindGameObjectsWithTag("RadioButton"))
+            {
+                if (g.GetComponent<FormMenuHandler>() != null)
+                {
+                    FormMenuHandler f = g.GetComponent<FormMenuHandler>();
+                    if (f.materialStatus)
+                    {
+                        currentSliderValue = f.slider_radio_button_number;
+                    }
+                }
+            }
             AddToList(FormMenu.form_questions.QuestionIndex + 1, currentSliderValue.ToString());
         }
 
@@ -396,6 +408,7 @@ public class FormMenuHandler : BaseMenuHandler
             menuHandler.baseMaterial = CircleMaterial;
             menuHandler.inputInteractMaterial = sliderPointMaterial;
             menuHandler.UpdateMaterial();
+            menuHandler.slider_radio_button_number = toggleInd;
 
             offset_x += yOffsetPerLine;
         }

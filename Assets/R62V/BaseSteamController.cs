@@ -242,8 +242,8 @@ public class BaseSteamController : SteamVR_TrackedObject
         if (Input.GetKeyUp(KeyCode.KeypadDivide))
         {                                                       // developer hotkey
             udch.form_questions.QuestionIndex = 5;
-        }*/
-
+        }
+        */
 
         // END USEFUL HOTKEYS
         // Menu Code Start
