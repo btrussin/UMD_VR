@@ -161,7 +161,7 @@ public class BaseSteamController : SteamVR_TrackedObject
             (prevState.ulButtonPressed & SteamVR_Controller.ButtonMask.Trigger) == 0)
         {
             // activate beam
-            if (!collidedWithNode)
+            if (!collidedWithNode & udch.startCountingTime)
             {
                 beam.SetActive(true);
                 useBeam = true;
