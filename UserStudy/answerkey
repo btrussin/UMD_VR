@@ -1,0 +1,35 @@
+1. Which publisher has produced the most movies?
+	Marvel	43
+	DC	22
+
+2. Which movie has the most connections with other movies?
+	Avengers: Age of Ultron (2015)			17	Marvel
+	Captain America: The First Avenger (2011)	16	Marvel
+	Avengers (2012) 				13	Marvel
+	Fantastic Four: Rise of the Silver Surfer (2007)13	Marvel
+
+3. Which movie has no connections with other movies?
+	Myster Men (1999)	Dark Horse
+	Watchment (2009)	DC
+	Fantastic Four (2015)	Marvel
+	Howard the Duck (1986)	Marvel
+	Punisher (1989)		Marvel
+	From Hell (2001)	Top Shelf
+	League of Extraordinary Gentlement (2003)	Wildstorm
+
+4. Which movie is connected to the most publishers?
+	Captain America: The First Avenger (2011)	5	Marvel
+	Guardians of the Galazy (2014)			5	Marvel
+	Jonah Hex (2010)				5	DC
+	Batman Forever (1995)				4	DC
+	The Dark Knight Rises (2012)			4	DC
+	Kick-ass 2 (2013)				4	Icon
+	Men In Black 2 (2002)				4	Aircell
+	Red (2010)					4	Wildstorm
+	Red 2 (2013)					4	Wildstorm
+	Sin City 2 (2013)				4	Dark Horse
+	X-Men: Days of Future Past (2014)		4	Marvel
+	X-Men: Age of Apocalypse (2016)			4	Marvel
+
+5. What is the shortest path between Batman Begins (DC) and Avengers (2012) (Marvel)?	
+	
