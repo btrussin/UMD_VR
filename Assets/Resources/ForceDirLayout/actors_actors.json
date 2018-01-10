@@ -1,0 +1,2479 @@
+{
+  "nodes": [
+    {
+      "id": "Morgan Freeman",
+      "group": 1
+    },
+    {
+      "id": "Evan Peters",
+      "group": 1
+    },
+    {
+      "id": "Haruhiko Yamanouchi",
+      "group": 1
+    },
+    {
+      "id": "Glenn Ford",
+      "group": 1
+    },
+    {
+      "id": "Hank Azaria",
+      "group": 1
+    },
+    {
+      "id": "Zoe Saldana",
+      "group": 1
+    },
+    {
+      "id": "Live Schreiber",
+      "group": 1
+    },
+    {
+      "id": "Alice Eve",
+      "group": 1
+    },
+    {
+      "id": "Colin Salmon",
+      "group": 1
+    },
+    {
+      "id": "Jackie Cooper",
+      "group": 1
+    },
+    {
+      "id": "Wesley Snipes",
+      "group": 1
+    },
+    {
+      "id": "Donal Logue",
+      "group": 1
+    },
+    {
+      "id": "Ian Holm",
+      "group": 1
+    },
+    {
+      "id": "Antje Traue",
+      "group": 1
+    },
+    {
+      "id": "Jeremy Howard",
+      "group": 1
+    },
+    {
+      "id": "David Warner",
+      "group": 1
+    },
+    {
+      "id": "Udo Kier",
+      "group": 1
+    },
+    {
+      "id": "Josh Lucas",
+      "group": 1
+    },
+    {
+      "id": "Tony Curran",
+      "group": 1
+    },
+    {
+      "id": "Will Arnett",
+      "group": 1
+    },
+    {
+      "id": "Amy Adams",
+      "group": 1
+    },
+    {
+      "id": "Alison Pill",
+      "group": 1
+    },
+    {
+      "id": "Stan Lee",
+      "group": 1
+    },
+    {
+      "id": "Dolph Lundgren",
+      "group": 1
+    },
+    {
+      "id": "Kevin Nash",
+      "group": 1
+    },
+    {
+      "id": "Famke Jannsen",
+      "group": 1
+    },
+    {
+      "id": "Carla Gugiino",
+      "group": 1
+    },
+    {
+      "id": "Michael Cera",
+      "group": 1
+    },
+    {
+      "id": "Pat Hingle",
+      "group": 1
+    },
+    {
+      "id": "Liam Neeson",
+      "group": 1
+    },
+    {
+      "id": "TJ Miller",
+      "group": 1
+    },
+    {
+      "id": "Rip Torn",
+      "group": 1
+    },
+    {
+      "id": "Kris Kristofferson",
+      "group": 1
+    },
+    {
+      "id": "Christopher Reeve",
+      "group": 1
+    },
+    {
+      "id": "Stuart Townsend",
+      "group": 1
+    },
+    {
+      "id": "Geoffrey Rush",
+      "group": 1
+    },
+    {
+      "id": "Robert Downey Jr",
+      "group": 1
+    },
+    {
+      "id": "Rosario Dawson",
+      "group": 1
+    },
+    {
+      "id": "Dane DeHaan",
+      "group": 1
+    },
+    {
+      "id": "Oscar Isaac",
+      "group": 1
+    },
+    {
+      "id": "Powers Boothe",
+      "group": 1
+    },
+    {
+      "id": "Jeffrey Tambor",
+      "group": 1
+    },
+    {
+      "id": "Parker Posey",
+      "group": 1
+    },
+    {
+      "id": "Joseph Gordon-Levitt",
+      "group": 1
+    },
+    {
+      "id": "Christopher Walken",
+      "group": 1
+    },
+    {
+      "id": "Fan Bingbing",
+      "group": 1
+    },
+    {
+      "id": "Elijah Wood",
+      "group": 1
+    },
+    {
+      "id": "Thomas Kretschmann",
+      "group": 1
+    },
+    {
+      "id": "Josh Pais",
+      "group": 1
+    },
+    {
+      "id": "Adrienne Barbeau",
+      "group": 1
+    },
+    {
+      "id": "Reg Kathey",
+      "group": 1
+    },
+    {
+      "id": "Toby Kebbell",
+      "group": 1
+    },
+    {
+      "id": "Mary-Louise Parker",
+      "group": 1
+    },
+    {
+      "id": "Clark Gregg",
+      "group": 1
+    },
+    {
+      "id": "Booboo Stewart",
+      "group": 1
+    },
+    {
+      "id": "Topher Grace",
+      "group": 1
+    },
+    {
+      "id": "Billy Crudup",
+      "group": 1
+    },
+    {
+      "id": "Terrence Howard",
+      "group": 1
+    },
+    {
+      "id": "Caleb Landry Jones",
+      "group": 1
+    },
+    {
+      "id": "Ned Beatty",
+      "group": 1
+    },
+    {
+      "id": "Richard Roxburgh",
+      "group": 1
+    },
+    {
+      "id": "Faye Dunaway",
+      "group": 1
+    },
+    {
+      "id": "Kevin Spacey",
+      "group": 1
+    },
+    {
+      "id": "Jeroen Krabbe",
+      "group": 1
+    },
+    {
+      "id": "Michael Shannon",
+      "group": 1
+    },
+    {
+      "id": "Miles Teller",
+      "group": 1
+    },
+    {
+      "id": "Hugh Jackman",
+      "group": 1
+    },
+    {
+      "id": "Anna Paquin",
+      "group": 1
+    },
+    {
+      "id": "Tobey Maguire",
+      "group": 1
+    },
+    {
+      "id": "Terrence Stamp",
+      "group": 1
+    },
+    {
+      "id": "Chloe Grace Moretz",
+      "group": 1
+    },
+    {
+      "id": "Kate Mara",
+      "group": 1
+    },
+    {
+      "id": "Adan Canto",
+      "group": 1
+    },
+    {
+      "id": "Chadwick Boseman",
+      "group": 1
+    },
+    {
+      "id": "Angelina Jolie",
+      "group": 1
+    },
+    {
+      "id": "Dylan Baker",
+      "group": 1
+    },
+    {
+      "id": "Viola Davis",
+      "group": 1
+    },
+    {
+      "id": "Devon Aoki",
+      "group": 1
+    },
+    {
+      "id": "Max von Sydow",
+      "group": 1
+    },
+    {
+      "id": "Dominic Purcell",
+      "group": 1
+    },
+    {
+      "id": "Jaimie Alexander",
+      "group": 1
+    },
+    {
+      "id": "Peter Sarsgaard",
+      "group": 1
+    },
+    {
+      "id": "Heather Graham",
+      "group": 1
+    },
+    {
+      "id": "Josh Helman",
+      "group": 1
+    },
+    {
+      "id": "Chris Hemsworth",
+      "group": 1
+    },
+    {
+      "id": "Renee Russo",
+      "group": 1
+    },
+    {
+      "id": "Michael B Jordan",
+      "group": 1
+    },
+    {
+      "id": "Annette O\u0027Toole",
+      "group": 1
+    },
+    {
+      "id": "Henry Cavill",
+      "group": 1
+    },
+    {
+      "id": "Jurgen Prochnow",
+      "group": 1
+    },
+    {
+      "id": "Keita Saito",
+      "group": 1
+    },
+    {
+      "id": "Naseeruddin Shah",
+      "group": 1
+    },
+    {
+      "id": "Dominic Cooper",
+      "group": 1
+    },
+    {
+      "id": "Armand Assante",
+      "group": 1
+    },
+    {
+      "id": "Bradley Cooper",
+      "group": 1
+    },
+    {
+      "id": "Tadanobu Asano",
+      "group": 1
+    },
+    {
+      "id": "Stephen Rhea",
+      "group": 1
+    },
+    {
+      "id": "Chip Zien",
+      "group": 1
+    },
+    {
+      "id": "Johnny Whitworth",
+      "group": 1
+    },
+    {
+      "id": "Danny Huston",
+      "group": 1
+    },
+    {
+      "id": "Jennifer Biel",
+      "group": 1
+    },
+    {
+      "id": "Claire Forlani",
+      "group": 1
+    },
+    {
+      "id": "Edi Gathegi",
+      "group": 1
+    },
+    {
+      "id": "Denis Leary",
+      "group": 1
+    },
+    {
+      "id": "Louis Gossett Jr",
+      "group": 1
+    },
+    {
+      "id": "Gerard Butler",
+      "group": 1
+    },
+    {
+      "id": "Jesse Eisenberg",
+      "group": 1
+    },
+    {
+      "id": "Jermaine Clement",
+      "group": 1
+    },
+    {
+      "id": "Sharon Stone",
+      "group": 1
+    },
+    {
+      "id": "John Slattery",
+      "group": 1
+    },
+    {
+      "id": "Richard Pryor",
+      "group": 1
+    },
+    {
+      "id": "Adam Carl",
+      "group": 1
+    },
+    {
+      "id": "Chris Pratt",
+      "group": 1
+    },
+    {
+      "id": "Angela Basset",
+      "group": 1
+    },
+    {
+      "id": "James McAvoy",
+      "group": 1
+    },
+    {
+      "id": "Tyler Perry",
+      "group": 1
+    },
+    {
+      "id": "Marc Pillow",
+      "group": 1
+    },
+    {
+      "id": "Christopher Mintz-Plasse",
+      "group": 1
+    },
+    {
+      "id": "Tom Hiddleston",
+      "group": 1
+    },
+    {
+      "id": "Linda Fiorentino",
+      "group": 1
+    },
+    {
+      "id": "Aaron Stanford",
+      "group": 1
+    },
+    {
+      "id": "Alexis Bledel",
+      "group": 1
+    },
+    {
+      "id": "Peter Stormare",
+      "group": 1
+    },
+    {
+      "id": "Julian McMahon",
+      "group": 1
+    },
+    {
+      "id": "Lara Flynn Boyle",
+      "group": 1
+    },
+    {
+      "id": "Dash Mihok",
+      "group": 1
+    },
+    {
+      "id": "Mickey Rourke",
+      "group": 1
+    },
+    {
+      "id": "Laurence Fishburne",
+      "group": 1
+    },
+    {
+      "id": "Augustus Prew",
+      "group": 1
+    },
+    {
+      "id": "Theresa Randle",
+      "group": 1
+    },
+    {
+      "id": "Matthew Goode",
+      "group": 1
+    },
+    {
+      "id": "John Hurt",
+      "group": 1
+    },
+    {
+      "id": "Jennifer Connelly",
+      "group": 1
+    },
+    {
+      "id": "Jason Flemyng",
+      "group": 1
+    },
+    {
+      "id": "Val Kilmer",
+      "group": 1
+    },
+    {
+      "id": "Geroge Clooney",
+      "group": 1
+    },
+    {
+      "id": "Louis Jourdan",
+      "group": 1
+    },
+    {
+      "id": "Rachel Weisz",
+      "group": 1
+    },
+    {
+      "id": "Katie Holmes",
+      "group": 1
+    },
+    {
+      "id": "Vin Diesel",
+      "group": 1
+    },
+    {
+      "id": "Olivia Munn",
+      "group": 1
+    },
+    {
+      "id": "Sebastian Stan",
+      "group": 1
+    },
+    {
+      "id": "Common",
+      "group": 1
+    },
+    {
+      "id": "Kevin Bacon",
+      "group": 1
+    },
+    {
+      "id": "Norman Reedus",
+      "group": 1
+    },
+    {
+      "id": "Rila Fukushima",
+      "group": 1
+    },
+    {
+      "id": "Sam Huntington",
+      "group": 1
+    },
+    {
+      "id": "Helen Slater",
+      "group": 1
+    },
+    {
+      "id": "Rosemary Harris",
+      "group": 1
+    },
+    {
+      "id": "Michael Stuhlbarg",
+      "group": 1
+    },
+    {
+      "id": "Rodrigo Santoro",
+      "group": 1
+    },
+    {
+      "id": "Olivia Williams",
+      "group": 1
+    },
+    {
+      "id": "Kelly Hu",
+      "group": 1
+    },
+    {
+      "id": "Cliff Robertson",
+      "group": 1
+    },
+    {
+      "id": "Thomas Haden Church",
+      "group": 1
+    },
+    {
+      "id": "Jai Courtney",
+      "group": 1
+    },
+    {
+      "id": "Johnny Knoxville",
+      "group": 1
+    },
+    {
+      "id": "Nancy Everhard",
+      "group": 1
+    },
+    {
+      "id": "Michael Caine",
+      "group": 1
+    },
+    {
+      "id": "Jackie Earle Haley",
+      "group": 1
+    },
+    {
+      "id": "Alan Cumming",
+      "group": 1
+    },
+    {
+      "id": "Brian Cox",
+      "group": 1
+    },
+    {
+      "id": "Ben Affleck",
+      "group": 1
+    },
+    {
+      "id": "Alfred Molina",
+      "group": 1
+    },
+    {
+      "id": "Brian Tochi",
+      "group": 1
+    },
+    {
+      "id": "Brandon Routh",
+      "group": 1
+    },
+    {
+      "id": "Kevin Clash",
+      "group": 1
+    },
+    {
+      "id": "Rose Byrne",
+      "group": 1
+    },
+    {
+      "id": "Will Smith",
+      "group": 1
+    },
+    {
+      "id": "Andrew Garfield",
+      "group": 1
+    },
+    {
+      "id": "Margot Robbie",
+      "group": 1
+    },
+    {
+      "id": "Laura Harring",
+      "group": 1
+    },
+    {
+      "id": "Lynn Collins",
+      "group": 1
+    },
+    {
+      "id": "Danny Devito",
+      "group": 1
+    },
+    {
+      "id": "Marlon Brando",
+      "group": 1
+    },
+    {
+      "id": "Laurie Faso",
+      "group": 1
+    },
+    {
+      "id": "Edward Norton",
+      "group": 1
+    },
+    {
+      "id": "Malin Akerman",
+      "group": 1
+    },
+    {
+      "id": "Stephen Dorff",
+      "group": 1
+    },
+    {
+      "id": "Noel Fisher",
+      "group": 1
+    },
+    {
+      "id": "Kevin Costner",
+      "group": 1
+    },
+    {
+      "id": "Benjamin Bratt",
+      "group": 1
+    },
+    {
+      "id": "Ioan Gruffudd",
+      "group": 1
+    },
+    {
+      "id": "Chris Evans",
+      "group": 1
+    },
+    {
+      "id": "Karel Rodan",
+      "group": 1
+    },
+    {
+      "id": "Wes Bentley",
+      "group": 1
+    },
+    {
+      "id": "Kim Basinger",
+      "group": 1
+    },
+    {
+      "id": "Will Yun Lee",
+      "group": 1
+    },
+    {
+      "id": "Liv Tyler",
+      "group": 1
+    },
+    {
+      "id": "Kieran Culkin",
+      "group": 1
+    },
+    {
+      "id": "Brittney Murphy",
+      "group": 1
+    },
+    {
+      "id": "Ron Perlman",
+      "group": 1
+    },
+    {
+      "id": "James Spader",
+      "group": 1
+    },
+    {
+      "id": "Colin Firth",
+      "group": 1
+    },
+    {
+      "id": "Ben Kingsley",
+      "group": 1
+    },
+    {
+      "id": "Anthony Hopkins",
+      "group": 1
+    },
+    {
+      "id": "Corey Feldman",
+      "group": 1
+    },
+    {
+      "id": "Michael Gough",
+      "group": 1
+    },
+    {
+      "id": "Taron Egerton",
+      "group": 1
+    },
+    {
+      "id": "Bill Duke",
+      "group": 1
+    },
+    {
+      "id": "Todd Freeman",
+      "group": 1
+    },
+    {
+      "id": "Michelle Pfeiffer",
+      "group": 1
+    },
+    {
+      "id": "Marisa Tomei",
+      "group": 1
+    },
+    {
+      "id": "Elias Koteas",
+      "group": 1
+    },
+    {
+      "id": "Emma Stone",
+      "group": 1
+    },
+    {
+      "id": "Sophie Turner",
+      "group": 1
+    },
+    {
+      "id": "Sarah Douglas",
+      "group": 1
+    },
+    {
+      "id": "Karen Fukuhara",
+      "group": 1
+    },
+    {
+      "id": "Roy Dotrice",
+      "group": 1
+    },
+    {
+      "id": "David Wenham",
+      "group": 1
+    },
+    {
+      "id": "Daniel Cudmore",
+      "group": 1
+    },
+    {
+      "id": "Stefan Kapucic",
+      "group": 1
+    },
+    {
+      "id": "Nicholas Hoult",
+      "group": 1
+    },
+    {
+      "id": "Lee Pace",
+      "group": 1
+    },
+    {
+      "id": "Wes Studi",
+      "group": 1
+    },
+    {
+      "id": "James Franco",
+      "group": 1
+    },
+    {
+      "id": "Ryan Reynolds",
+      "group": 1
+    },
+    {
+      "id": "Clive Owen",
+      "group": 1
+    },
+    {
+      "id": "Kat Dennings",
+      "group": 1
+    },
+    {
+      "id": "January Jones",
+      "group": 1
+    },
+    {
+      "id": "Kevin Durand",
+      "group": 1
+    },
+    {
+      "id": "Nicol Williamson",
+      "group": 1
+    },
+    {
+      "id": "Olivia Thirlby",
+      "group": 1
+    },
+    {
+      "id": "Zachary Levi",
+      "group": 1
+    },
+    {
+      "id": "Jack O\u0027Halloran",
+      "group": 1
+    },
+    {
+      "id": "Rebecca Romijn-Stamos",
+      "group": 1
+    },
+    {
+      "id": "Jack Nicholson",
+      "group": 1
+    },
+    {
+      "id": "Jeremy Piven",
+      "group": 1
+    },
+    {
+      "id": "Vinnie Jones",
+      "group": 1
+    },
+    {
+      "id": "Ray Park",
+      "group": 1
+    },
+    {
+      "id": "John Leguizamo",
+      "group": 1
+    },
+    {
+      "id": "Stephen Fry",
+      "group": 1
+    },
+    {
+      "id": "Tohoru Masamune",
+      "group": 1
+    },
+    {
+      "id": "Ellen Page",
+      "group": 1
+    },
+    {
+      "id": "Nick Nolte",
+      "group": 1
+    },
+    {
+      "id": "Jamie Bell",
+      "group": 1
+    },
+    {
+      "id": "Neil McDonough",
+      "group": 1
+    },
+    {
+      "id": "Michael Douglas",
+      "group": 1
+    },
+    {
+      "id": "Jennifer Garner",
+      "group": 1
+    },
+    {
+      "id": "Djimon Hounsou",
+      "group": 1
+    },
+    {
+      "id": "Lucas Till",
+      "group": 1
+    },
+    {
+      "id": "Svetlana Khodchenkova",
+      "group": 1
+    },
+    {
+      "id": "Thomas Jane",
+      "group": 1
+    },
+    {
+      "id": "Tim Robbins",
+      "group": 1
+    },
+    {
+      "id": "Jaime King",
+      "group": 1
+    },
+    {
+      "id": "Satya Bhabha",
+      "group": 1
+    },
+    {
+      "id": "Lena Headey",
+      "group": 1
+    },
+    {
+      "id": "Jason Schwartzman",
+      "group": 1
+    },
+    {
+      "id": "Michael Chiklis",
+      "group": 1
+    },
+    {
+      "id": "Tyler Mane",
+      "group": 1
+    },
+    {
+      "id": "Tye Sheridan",
+      "group": 1
+    },
+    {
+      "id": "Frank Langella",
+      "group": 1
+    },
+    {
+      "id": "Joel Kinnaman",
+      "group": 1
+    },
+    {
+      "id": "Patrick Stewart",
+      "group": 1
+    },
+    {
+      "id": "Peta Wilson",
+      "group": 1
+    },
+    {
+      "id": "Josh Dallas",
+      "group": 1
+    },
+    {
+      "id": "John Malkovich",
+      "group": 1
+    },
+    {
+      "id": "Jeremy Irons",
+      "group": 1
+    },
+    {
+      "id": "Kirsten Dunst",
+      "group": 1
+    },
+    {
+      "id": "Rhys Ifans",
+      "group": 1
+    },
+    {
+      "id": "Jeremy Renner",
+      "group": 1
+    },
+    {
+      "id": "Terence Stamp",
+      "group": 1
+    },
+    {
+      "id": "Stephen Amell",
+      "group": 1
+    },
+    {
+      "id": "Ben Foster",
+      "group": 1
+    },
+    {
+      "id": "Benicio Del Toro",
+      "group": 1
+    },
+    {
+      "id": "Jaime Foxx",
+      "group": 1
+    },
+    {
+      "id": "Natalie Portman",
+      "group": 1
+    },
+    {
+      "id": "Shane West",
+      "group": 1
+    },
+    {
+      "id": "Colin Farrel",
+      "group": 1
+    },
+    {
+      "id": "Omar Sy",
+      "group": 1
+    },
+    {
+      "id": "Ben Hardy",
+      "group": 1
+    },
+    {
+      "id": "Mads Mikkelsen",
+      "group": 1
+    },
+    {
+      "id": "Chris Cooper",
+      "group": 1
+    },
+    {
+      "id": "Hiroyuki Sanada",
+      "group": 1
+    },
+    {
+      "id": "Cillian Murphy",
+      "group": 1
+    },
+    {
+      "id": "Tilda Swinton",
+      "group": 1
+    },
+    {
+      "id": "Gavin Rossdale",
+      "group": 1
+    },
+    {
+      "id": "Aaron Taylor-Johnson",
+      "group": 1
+    },
+    {
+      "id": "Jay Hernandez",
+      "group": 1
+    },
+    {
+      "id": "Bryan Marshall",
+      "group": 1
+    },
+    {
+      "id": "Willem Dafoe",
+      "group": 1
+    },
+    {
+      "id": "Johnny Depp",
+      "group": 1
+    },
+    {
+      "id": "Eva Mendes",
+      "group": 1
+    },
+    {
+      "id": "Jessica Alba",
+      "group": 1
+    },
+    {
+      "id": "Sofia Boutella",
+      "group": 1
+    },
+    {
+      "id": "Don Cheadle",
+      "group": 1
+    },
+    {
+      "id": "Emily VanCamp",
+      "group": 1
+    },
+    {
+      "id": "Seth Green",
+      "group": 1
+    },
+    {
+      "id": "Luke Goss",
+      "group": 1
+    },
+    {
+      "id": "Christopher Lloyd",
+      "group": 1
+    },
+    {
+      "id": "Megan Fox",
+      "group": 1
+    },
+    {
+      "id": "Maggie Gyllenhaal",
+      "group": 1
+    },
+    {
+      "id": "David Bautista",
+      "group": 1
+    },
+    {
+      "id": "Jeffrey Jones",
+      "group": 1
+    },
+    {
+      "id": "Morena Baccarin",
+      "group": 1
+    },
+    {
+      "id": "Emma Thomspon",
+      "group": 1
+    },
+    {
+      "id": "Kim Myori",
+      "group": 1
+    },
+    {
+      "id": "Christian Bale",
+      "group": 1
+    },
+    {
+      "id": "Catherine Zeta-Jones",
+      "group": 1
+    },
+    {
+      "id": "Anna Walton",
+      "group": 1
+    },
+    {
+      "id": "Will Patton",
+      "group": 1
+    },
+    {
+      "id": "Mary Elizabeth Olsen",
+      "group": 1
+    },
+    {
+      "id": "Janeane Garofalo",
+      "group": 1
+    },
+    {
+      "id": "Bruce Willis",
+      "group": 1
+    },
+    {
+      "id": "Francois Chau",
+      "group": 1
+    },
+    {
+      "id": "Ray Wise",
+      "group": 1
+    },
+    {
+      "id": "Elizabeth Olsen",
+      "group": 1
+    },
+    {
+      "id": "Cameron Diaz",
+      "group": 1
+    },
+    {
+      "id": "Zoe Kravitz",
+      "group": 1
+    },
+    {
+      "id": "Gwyneth Paltrow",
+      "group": 1
+    },
+    {
+      "id": "Byung-hun Lee",
+      "group": 1
+    },
+    {
+      "id": "Sally Fields",
+      "group": 1
+    },
+    {
+      "id": "Christopher Eccleston",
+      "group": 1
+    },
+    {
+      "id": "Marc McClure",
+      "group": 1
+    },
+    {
+      "id": "Tim Kelleher",
+      "group": 1
+    },
+    {
+      "id": "William Fichtner",
+      "group": 1
+    },
+    {
+      "id": "Lou Ferrigno",
+      "group": 1
+    },
+    {
+      "id": "Iain Glen",
+      "group": 1
+    },
+    {
+      "id": "James Cromwell",
+      "group": 1
+    },
+    {
+      "id": "Shawn Ashmore",
+      "group": 1
+    },
+    {
+      "id": "Nicole Kidman",
+      "group": 1
+    },
+    {
+      "id": "Robert Redford",
+      "group": 1
+    },
+    {
+      "id": "Karen Gillen",
+      "group": 1
+    },
+    {
+      "id": "Blake Lively",
+      "group": 1
+    },
+    {
+      "id": "William H Macy",
+      "group": 1
+    },
+    {
+      "id": "Donnie Yen",
+      "group": 1
+    },
+    {
+      "id": "Doug Jones",
+      "group": 1
+    },
+    {
+      "id": "Jamie Chung",
+      "group": 1
+    },
+    {
+      "id": "Aaron Ekhart",
+      "group": 1
+    },
+    {
+      "id": "Mary Elizabeth Winstead",
+      "group": 1
+    },
+    {
+      "id": "Mae Whitman",
+      "group": 1
+    },
+    {
+      "id": "Ellen Wong",
+      "group": 1
+    },
+    {
+      "id": "Paul Bettany",
+      "group": 1
+    },
+    {
+      "id": "Alexandra Shipp",
+      "group": 1
+    },
+    {
+      "id": "Mark Hamill",
+      "group": 1
+    },
+    {
+      "id": "Margot Kidder",
+      "group": 1
+    },
+    {
+      "id": "Ezra Miller",
+      "group": 1
+    },
+    {
+      "id": "Peter Dinklage",
+      "group": 1
+    },
+    {
+      "id": "Robert Vaughn",
+      "group": 1
+    },
+    {
+      "id": "Sam Rockwell",
+      "group": 1
+    },
+    {
+      "id": "James Marsden",
+      "group": 1
+    },
+    {
+      "id": "Ben Stiller",
+      "group": 1
+    },
+    {
+      "id": "Ayelet Zurer",
+      "group": 1
+    },
+    {
+      "id": "Sylvester Stallone",
+      "group": 1
+    },
+    {
+      "id": "Christopher Meloni",
+      "group": 1
+    },
+    {
+      "id": "Famke Janssen",
+      "group": 1
+    },
+    {
+      "id": "Julie Benz",
+      "group": 1
+    },
+    {
+      "id": "Shota Saito",
+      "group": 1
+    },
+    {
+      "id": "Anthony Mackie",
+      "group": 1
+    },
+    {
+      "id": "Doug Hutchinson",
+      "group": 1
+    },
+    {
+      "id": "Tony Shaloub",
+      "group": 1
+    },
+    {
+      "id": "Kelsey Grammer",
+      "group": 1
+    },
+    {
+      "id": "Tommy Lee Jones",
+      "group": 1
+    },
+    {
+      "id": "Gary Oldman",
+      "group": 1
+    },
+    {
+      "id": "Tao Okamoto",
+      "group": 1
+    },
+    {
+      "id": "Stellan Skarsgaard",
+      "group": 1
+    },
+    {
+      "id": "Ray Stevenson",
+      "group": 1
+    },
+    {
+      "id": "Tim Roth",
+      "group": 1
+    },
+    {
+      "id": "Carla Gugino",
+      "group": 1
+    },
+    {
+      "id": "Phyllis Thaxter",
+      "group": 1
+    },
+    {
+      "id": "Anne Hathaway",
+      "group": 1
+    },
+    {
+      "id": "Colm Feore",
+      "group": 1
+    },
+    {
+      "id": "Ed Skrein",
+      "group": 1
+    },
+    {
+      "id": "Kodi Smit-McPhee",
+      "group": 1
+    },
+    {
+      "id": "Tom Holland",
+      "group": 1
+    },
+    {
+      "id": "Alan Ritchson",
+      "group": 1
+    },
+    {
+      "id": "Ray Liotta",
+      "group": 1
+    },
+    {
+      "id": "Josh Brolin",
+      "group": 1
+    },
+    {
+      "id": "Eva Marie Saint",
+      "group": 1
+    },
+    {
+      "id": "Benedict Wong",
+      "group": 1
+    },
+    {
+      "id": "Gal Gadot",
+      "group": 1
+    },
+    {
+      "id": "Paige Turco",
+      "group": 1
+    },
+    {
+      "id": "Kate Bosworth",
+      "group": 1
+    },
+    {
+      "id": "Fergus Riordan",
+      "group": 1
+    },
+    {
+      "id": "Arnold Schwarzenegger",
+      "group": 1
+    },
+    {
+      "id": "Hugo Weaving",
+      "group": 1
+    },
+    {
+      "id": "Samuel L Jackson",
+      "group": 1
+    },
+    {
+      "id": "Jon Cryer",
+      "group": 1
+    },
+    {
+      "id": "Hayley Atwell",
+      "group": 1
+    },
+    {
+      "id": "Eva Green",
+      "group": 1
+    },
+    {
+      "id": "Jim Carrey",
+      "group": 1
+    },
+    {
+      "id": "Lena Olin",
+      "group": 1
+    },
+    {
+      "id": "Mickey Roarke",
+      "group": 1
+    },
+    {
+      "id": "Kel Mitchell",
+      "group": 1
+    },
+    {
+      "id": "Annie Ross",
+      "group": 1
+    },
+    {
+      "id": "Benedict Cumberbatch",
+      "group": 1
+    },
+    {
+      "id": "Heather Locklear",
+      "group": 1
+    },
+    {
+      "id": "John Travolta",
+      "group": 1
+    },
+    {
+      "id": "Dominic West",
+      "group": 1
+    },
+    {
+      "id": "Heath Ledger",
+      "group": 1
+    },
+    {
+      "id": "Russel Crowe",
+      "group": 1
+    },
+    {
+      "id": "Jennifer Lawrence",
+      "group": 1
+    },
+    {
+      "id": "Mark Ruffalo",
+      "group": 1
+    },
+    {
+      "id": "Brad Garret",
+      "group": 1
+    },
+    {
+      "id": "Ernie Reyes Jr",
+      "group": 1
+    },
+    {
+      "id": "Rebecca Romijn",
+      "group": 1
+    },
+    {
+      "id": "Nicolas Cage",
+      "group": 1
+    },
+    {
+      "id": "Dick Durock",
+      "group": 1
+    },
+    {
+      "id": "Michael Madsen",
+      "group": 1
+    },
+    {
+      "id": "Marion Cotillard",
+      "group": 1
+    },
+    {
+      "id": "Scarlett Johansson",
+      "group": 1
+    },
+    {
+      "id": "Karl Urban",
+      "group": 1
+    },
+    {
+      "id": "Corey Stoll",
+      "group": 1
+    },
+    {
+      "id": "Guy Pearce",
+      "group": 1
+    },
+    {
+      "id": "Martin Sheen",
+      "group": 1
+    },
+    {
+      "id": "Sophie Cookson",
+      "group": 1
+    },
+    {
+      "id": "Sean Connery",
+      "group": 1
+    },
+    {
+      "id": "Rob Schneider",
+      "group": 1
+    },
+    {
+      "id": "Ian McKellen",
+      "group": 1
+    },
+    {
+      "id": "Greg Kinnear",
+      "group": 1
+    },
+    {
+      "id": "Uma Thurman",
+      "group": 1
+    },
+    {
+      "id": "Alicia Silverstone",
+      "group": 1
+    },
+    {
+      "id": "James Murray",
+      "group": 1
+    },
+    {
+      "id": "Shia LaBeouf",
+      "group": 1
+    },
+    {
+      "id": "James Saito",
+      "group": 1
+    },
+    {
+      "id": "Diane Lane",
+      "group": 1
+    },
+    {
+      "id": "Selma Blair",
+      "group": 1
+    },
+    {
+      "id": "Paul Rudd",
+      "group": 1
+    },
+    {
+      "id": "Valerie Perrine",
+      "group": 1
+    },
+    {
+      "id": "Mark Strong",
+      "group": 1
+    },
+    {
+      "id": "Halle Berry",
+      "group": 1
+    },
+    {
+      "id": "Michael Fassbender",
+      "group": 1
+    },
+    {
+      "id": "Patrick Wilson",
+      "group": 1
+    },
+    {
+      "id": "Eric Dane",
+      "group": 1
+    },
+    {
+      "id": "Brian Tee",
+      "group": 1
+    },
+    {
+      "id": "Billy Dee Williams",
+      "group": 1
+    },
+    {
+      "id": "Helen Mirren",
+      "group": 1
+    },
+    {
+      "id": "Jeff Bridges",
+      "group": 1
+    },
+    {
+      "id": "William Hurt",
+      "group": 1
+    },
+    {
+      "id": "Vincent D\u0027Onnofrio",
+      "group": 1
+    },
+    {
+      "id": "Eric Bana",
+      "group": 1
+    },
+    {
+      "id": "Peter Green",
+      "group": 1
+    },
+    {
+      "id": "Rebecca Hall",
+      "group": 1
+    },
+    {
+      "id": "Chris O\u0027Donnel",
+      "group": 1
+    },
+    {
+      "id": "Tom Hardy",
+      "group": 1
+    },
+    {
+      "id": "Rachel McAdams",
+      "group": 1
+    },
+    {
+      "id": "Bryce Dallas Howard",
+      "group": 1
+    },
+    {
+      "id": "Sam Elliot",
+      "group": 1
+    },
+    {
+      "id": "Michael Clarke Duncan",
+      "group": 1
+    },
+    {
+      "id": "Chiwetel Ejiofor",
+      "group": 1
+    },
+    {
+      "id": "Ciaran Hinds",
+      "group": 1
+    },
+    {
+      "id": "Jared Leto",
+      "group": 1
+    },
+    {
+      "id": "Michael Rooker",
+      "group": 1
+    },
+    {
+      "id": "Dennis Haysbert",
+      "group": 1
+    },
+    {
+      "id": "Jeffrey Dean Morgan",
+      "group": 1
+    },
+    {
+      "id": "Robbie Rist",
+      "group": 1
+    },
+    {
+      "id": "Lea Thompson",
+      "group": 1
+    },
+    {
+      "id": "Paul Reubens",
+      "group": 1
+    },
+    {
+      "id": "Michael Jai White",
+      "group": 1
+    },
+    {
+      "id": "Judith Hoag",
+      "group": 1
+    },
+    {
+      "id": "Keanu Reeves",
+      "group": 1
+    },
+    {
+      "id": "Michael Keaton",
+      "group": 1
+    },
+    {
+      "id": "Evangeline Lily",
+      "group": 1
+    },
+    {
+      "id": "Adewale Akinnuoye-Agbaje",
+      "group": 1
+    },
+    {
+      "id": "Idris Elba",
+      "group": 1
+    },
+    {
+      "id": "Cara Delevingne",
+      "group": 1
+    },
+    {
+      "id": "John Favreau",
+      "group": 1
+    },
+    {
+      "id": "Gene Hackman",
+      "group": 1
+    }
+  ],
+  "links": [
+    {
+      "source": "Evan Peters",
+      "target": "Aaron Taylor-Johnson",
+      "value": 1
+    },
+    {
+      "source": "Jackie Cooper",
+      "target": "Laurence Fishburne",
+      "value": 1
+    },
+    {
+      "source": "Jeremy Howard",
+      "target": "Adam Carl",
+      "value": 1
+    },
+    {
+      "source": "Jeremy Howard",
+      "target": "Corey Feldman",
+      "value": 1
+    },
+    {
+      "source": "Famke Jannsen",
+      "target": "Famke Janssen",
+      "value": 1
+    },
+    {
+      "source": "Famke Jannsen",
+      "target": "Sophie Turner",
+      "value": 1
+    },
+    {
+      "source": "Carla Gugiino",
+      "target": "Malin Akerman",
+      "value": 1
+    },
+    {
+      "source": "Christopher Reeve",
+      "target": "Henry Cavill",
+      "value": 1
+    },
+    {
+      "source": "Josh Pais",
+      "target": "Laurie Faso",
+      "value": 1
+    },
+    {
+      "source": "Josh Pais",
+      "target": "Tim Kelleher",
+      "value": 1
+    },
+    {
+      "source": "Toby Kebbell",
+      "target": "Julian McMahon",
+      "value": 1
+    },
+    {
+      "source": "Kevin Spacey",
+      "target": "Gene Hackman",
+      "value": 1
+    },
+    {
+      "source": "Tobey Maguire",
+      "target": "Andrew Garfield",
+      "value": 1
+    },
+    {
+      "source": "Kate Mara",
+      "target": "Jessica Alba",
+      "value": 1
+    },
+    {
+      "source": "Viola Davis",
+      "target": "Angela Basset",
+      "value": 1
+    },
+    {
+      "source": "Josh Helman",
+      "target": "Brian Cox",
+      "value": 1
+    },
+    {
+      "source": "Josh Helman",
+      "target": "Danny Huston",
+      "value": 1
+    },
+    {
+      "source": "Michael B Jordan",
+      "target": "Chris Evans",
+      "value": 1
+    },
+    {
+      "source": "Dominic Cooper",
+      "target": "John Slattery",
+      "value": 1
+    },
+    {
+      "source": "Chip Zien",
+      "target": "Seth Green",
+      "value": 1
+    },
+    {
+      "source": "Jesse Eisenberg",
+      "target": "Kevin Spacey",
+      "value": 1
+    },
+    {
+      "source": "Jesse Eisenberg",
+      "target": "Gene Hackman",
+      "value": 1
+    },
+    {
+      "source": "Adam Carl",
+      "target": "Corey Feldman",
+      "value": 1
+    },
+    {
+      "source": "Tyler Perry",
+      "target": "Todd Freeman",
+      "value": 1
+    },
+    {
+      "source": "Val Kilmer",
+      "target": "Michael Keaton",
+      "value": 1
+    },
+    {
+      "source": "Geroge Clooney",
+      "target": "Val Kilmer",
+      "value": 1
+    },
+    {
+      "source": "Geroge Clooney",
+      "target": "Michael Keaton",
+      "value": 1
+    },
+    {
+      "source": "Katie Holmes",
+      "target": "Maggie Gyllenhaal",
+      "value": 1
+    },
+    {
+      "source": "Sam Huntington",
+      "target": "Marc McClure",
+      "value": 1
+    },
+    {
+      "source": "Olivia Williams",
+      "target": "Rose Byrne",
+      "value": 1
+    },
+    {
+      "source": "Johnny Knoxville",
+      "target": "Brian Tochi",
+      "value": 1
+    },
+    {
+      "source": "Michael Caine",
+      "target": "Jeremy Irons",
+      "value": 1
+    },
+    {
+      "source": "Brian Cox",
+      "target": "Danny Huston",
+      "value": 1
+    },
+    {
+      "source": "Ben Affleck",
+      "target": "Christian Bale",
+      "value": 1
+    },
+    {
+      "source": "Ben Affleck",
+      "target": "Val Kilmer",
+      "value": 1
+    },
+    {
+      "source": "Ben Affleck",
+      "target": "Geroge Clooney",
+      "value": 1
+    },
+    {
+      "source": "Ben Affleck",
+      "target": "Michael Keaton",
+      "value": 1
+    },
+    {
+      "source": "Brandon Routh",
+      "target": "Christopher Reeve",
+      "value": 1
+    },
+    {
+      "source": "Brandon Routh",
+      "target": "Henry Cavill",
+      "value": 1
+    },
+    {
+      "source": "Kevin Clash",
+      "target": "Tony Shaloub",
+      "value": 1
+    },
+    {
+      "source": "Kevin Clash",
+      "target": "James Murray",
+      "value": 1
+    },
+    {
+      "source": "Laurie Faso",
+      "target": "Tim Kelleher",
+      "value": 1
+    },
+    {
+      "source": "Edward Norton",
+      "target": "Mark Ruffalo",
+      "value": 1
+    },
+    {
+      "source": "Kevin Costner",
+      "target": "Glenn Ford",
+      "value": 1
+    },
+    {
+      "source": "Ioan Gruffudd",
+      "target": "Miles Teller",
+      "value": 1
+    },
+    {
+      "source": "Liv Tyler",
+      "target": "Jennifer Connelly",
+      "value": 1
+    },
+    {
+      "source": "Ben Kingsley",
+      "target": "Guy Pearce",
+      "value": 1
+    },
+    {
+      "source": "Michael Gough",
+      "target": "Michael Caine",
+      "value": 1
+    },
+    {
+      "source": "Michael Gough",
+      "target": "Jeremy Irons",
+      "value": 1
+    },
+    {
+      "source": "Marisa Tomei",
+      "target": "Sally Fields",
+      "value": 1
+    },
+    {
+      "source": "Marisa Tomei",
+      "target": "Rosemary Harris",
+      "value": 1
+    },
+    {
+      "source": "Elias Koteas",
+      "target": "Stephen Amell",
+      "value": 1
+    },
+    {
+      "source": "Daniel Cudmore",
+      "target": "Stefan Kapucic",
+      "value": 1
+    },
+    {
+      "source": "Nicholas Hoult",
+      "target": "Kelsey Grammer",
+      "value": 1
+    },
+    {
+      "source": "Jack Nicholson",
+      "target": "Heath Ledger",
+      "value": 1
+    },
+    {
+      "source": "Jack Nicholson",
+      "target": "Jared Leto",
+      "value": 1
+    },
+    {
+      "source": "Jeremy Piven",
+      "target": "Michael Madsen",
+      "value": 1
+    },
+    {
+      "source": "Tohoru Masamune",
+      "target": "Francois Chau",
+      "value": 1
+    },
+    {
+      "source": "Tohoru Masamune",
+      "target": "James Saito",
+      "value": 1
+    },
+    {
+      "source": "Michael Douglas",
+      "target": "Paul Rudd",
+      "value": 1
+    },
+    {
+      "source": "Thomas Jane",
+      "target": "Dolph Lundgren",
+      "value": 1
+    },
+    {
+      "source": "Michael Chiklis",
+      "target": "Jamie Bell",
+      "value": 1
+    },
+    {
+      "source": "Tyler Mane",
+      "target": "Live Schreiber",
+      "value": 1
+    },
+    {
+      "source": "Tye Sheridan",
+      "target": "James Marsden",
+      "value": 1
+    },
+    {
+      "source": "Frank Langella",
+      "target": "Jackie Cooper",
+      "value": 1
+    },
+    {
+      "source": "Frank Langella",
+      "target": "Laurence Fishburne",
+      "value": 1
+    },
+    {
+      "source": "Patrick Stewart",
+      "target": "James McAvoy",
+      "value": 1
+    },
+    {
+      "source": "Josh Dallas",
+      "target": "Zachary Levi",
+      "value": 1
+    },
+    {
+      "source": "Ben Hardy",
+      "target": "Ben Foster",
+      "value": 1
+    },
+    {
+      "source": "Willem Dafoe",
+      "target": "Dane DeHaan",
+      "value": 1
+    },
+    {
+      "source": "Don Cheadle",
+      "target": "Terrence Howard",
+      "value": 1
+    },
+    {
+      "source": "Megan Fox",
+      "target": "Judith Hoag",
+      "value": 1
+    },
+    {
+      "source": "Emma Thomspon",
+      "target": "Alice Eve",
+      "value": 1
+    },
+    {
+      "source": "Christian Bale",
+      "target": "Val Kilmer",
+      "value": 1
+    },
+    {
+      "source": "Christian Bale",
+      "target": "Geroge Clooney",
+      "value": 1
+    },
+    {
+      "source": "Christian Bale",
+      "target": "Michael Keaton",
+      "value": 1
+    },
+    {
+      "source": "Mary Elizabeth Olsen",
+      "target": "Elizabeth Olsen",
+      "value": 1
+    },
+    {
+      "source": "Francois Chau",
+      "target": "James Saito",
+      "value": 1
+    },
+    {
+      "source": "Sally Fields",
+      "target": "Rosemary Harris",
+      "value": 1
+    },
+    {
+      "source": "Lou Ferrigno",
+      "target": "Stan Lee",
+      "value": 1
+    },
+    {
+      "source": "James Cromwell",
+      "target": "Denis Leary",
+      "value": 1
+    },
+    {
+      "source": "Doug Jones",
+      "target": "Laurence Fishburne",
+      "value": 1
+    },
+    {
+      "source": "Jamie Chung",
+      "target": "Devon Aoki",
+      "value": 1
+    },
+    {
+      "source": "Aaron Ekhart",
+      "target": "Tommy Lee Jones",
+      "value": 1
+    },
+    {
+      "source": "Margot Kidder",
+      "target": "Kate Bosworth",
+      "value": 1
+    },
+    {
+      "source": "Margot Kidder",
+      "target": "Amy Adams",
+      "value": 1
+    },
+    {
+      "source": "Peter Dinklage",
+      "target": "Bill Duke",
+      "value": 1
+    },
+    {
+      "source": "Famke Janssen",
+      "target": "Sophie Turner",
+      "value": 1
+    },
+    {
+      "source": "Tony Shaloub",
+      "target": "James Murray",
+      "value": 1
+    },
+    {
+      "source": "Gary Oldman",
+      "target": "Pat Hingle",
+      "value": 1
+    },
+    {
+      "source": "Ray Stevenson",
+      "target": "Thomas Jane",
+      "value": 1
+    },
+    {
+      "source": "Ray Stevenson",
+      "target": "Dolph Lundgren",
+      "value": 1
+    },
+    {
+      "source": "Phyllis Thaxter",
+      "target": "Diane Lane",
+      "value": 1
+    },
+    {
+      "source": "Anne Hathaway",
+      "target": "Michelle Pfeiffer",
+      "value": 1
+    },
+    {
+      "source": "Kodi Smit-McPhee",
+      "target": "Alan Cumming",
+      "value": 1
+    },
+    {
+      "source": "Tom Holland",
+      "target": "Tobey Maguire",
+      "value": 1
+    },
+    {
+      "source": "Tom Holland",
+      "target": "Andrew Garfield",
+      "value": 1
+    },
+    {
+      "source": "Alan Ritchson",
+      "target": "Josh Pais",
+      "value": 1
+    },
+    {
+      "source": "Alan Ritchson",
+      "target": "Laurie Faso",
+      "value": 1
+    },
+    {
+      "source": "Alan Ritchson",
+      "target": "Tim Kelleher",
+      "value": 1
+    },
+    {
+      "source": "Josh Brolin",
+      "target": "Clive Owen",
+      "value": 1
+    },
+    {
+      "source": "Josh Brolin",
+      "target": "Tommy Lee Jones",
+      "value": 1
+    },
+    {
+      "source": "Eva Marie Saint",
+      "target": "Phyllis Thaxter",
+      "value": 1
+    },
+    {
+      "source": "Eva Marie Saint",
+      "target": "Diane Lane",
+      "value": 1
+    },
+    {
+      "source": "Paige Turco",
+      "target": "Megan Fox",
+      "value": 1
+    },
+    {
+      "source": "Paige Turco",
+      "target": "Judith Hoag",
+      "value": 1
+    },
+    {
+      "source": "Kate Bosworth",
+      "target": "Amy Adams",
+      "value": 1
+    },
+    {
+      "source": "Heath Ledger",
+      "target": "Jared Leto",
+      "value": 1
+    },
+    {
+      "source": "Russel Crowe",
+      "target": "Marlon Brando",
+      "value": 1
+    },
+    {
+      "source": "Jennifer Lawrence",
+      "target": "Rebecca Romijn-Stamos",
+      "value": 1
+    },
+    {
+      "source": "Dick Durock",
+      "target": "Ray Wise",
+      "value": 1
+    },
+    {
+      "source": "Karl Urban",
+      "target": "Sylvester Stallone",
+      "value": 1
+    },
+    {
+      "source": "Martin Sheen",
+      "target": "Cliff Robertson",
+      "value": 1
+    },
+    {
+      "source": "Ian McKellen",
+      "target": "Michael Fassbender",
+      "value": 1
+    },
+    {
+      "source": "Halle Berry",
+      "target": "Alexandra Shipp",
+      "value": 1
+    },
+    {
+      "source": "Halle Berry",
+      "target": "Anne Hathaway",
+      "value": 1
+    },
+    {
+      "source": "Halle Berry",
+      "target": "Michelle Pfeiffer",
+      "value": 1
+    },
+    {
+      "source": "Brian Tee",
+      "target": "Tohoru Masamune",
+      "value": 1
+    },
+    {
+      "source": "Brian Tee",
+      "target": "Francois Chau",
+      "value": 1
+    },
+    {
+      "source": "Brian Tee",
+      "target": "James Saito",
+      "value": 1
+    },
+    {
+      "source": "Billy Dee Williams",
+      "target": "Aaron Ekhart",
+      "value": 1
+    },
+    {
+      "source": "Billy Dee Williams",
+      "target": "Tommy Lee Jones",
+      "value": 1
+    },
+    {
+      "source": "William Hurt",
+      "target": "Sam Elliot",
+      "value": 1
+    },
+    {
+      "source": "Eric Bana",
+      "target": "Edward Norton",
+      "value": 1
+    },
+    {
+      "source": "Eric Bana",
+      "target": "Mark Ruffalo",
+      "value": 1
+    },
+    {
+      "source": "Bryce Dallas Howard",
+      "target": "Emma Stone",
+      "value": 1
+    },
+    {
+      "source": "Dennis Haysbert",
+      "target": "Michael Clarke Duncan",
+      "value": 1
+    },
+    {
+      "source": "Robbie Rist",
+      "target": "Noel Fisher",
+      "value": 1
+    }
+  ],
+  "coords" : {"Morgan Freeman":{"x":733.6593999684885,"y":610.6132774002617},"Evan Peters":{"x":906.5900167471711,"y":-301.82198041046246},"Haruhiko Yamanouchi":{"x":592.9375385994084,"y":305.1011923047202},"Glenn Ford":{"x":836.578397151137,"y":-165.81935177302626},"Hank Azaria":{"x":493.7535381461798,"y":312.31891969453767},"Zoe Saldana":{"x":1028.5212235602507,"y":454.36800997211117},"Live Schreiber":{"x":1183.420587430706,"y":992.3126384725662},"Alice Eve":{"x":396.3885543568432,"y":-399.74064041801984},"Colin Salmon":{"x":1058.0303300236424,"y":559.8934431726411},"Jackie Cooper":{"x":262.81914426613054,"y":253.26211299686557},"Wesley Snipes":{"x":958.5951123866646,"y":2.443501370387766},"Donal Logue":{"x":826.0814878382919,"y":784.3397029409892},"Ian Holm":{"x":262.3027555452652,"y":388.1833759589886},"Antje Traue":{"x":1108.087177463417,"y":294.2966765270184},"Jeremy Howard":{"x":573.2895419435176,"y":446.8141185416175},"David Warner":{"x":734.8171077076348,"y":2.7916684569476033},"Udo Kier":{"x":981.946897313792,"y":752.0662515582425},"Josh Lucas":{"x":225.32656193758305,"y":455.97087958883515},"Tony Curran":{"x":1069.6734933499547,"y":7.903713221957566},"Will Arnett":{"x":580.9721045274722,"y":838.9069836861177},"Amy Adams":{"x":1553.2103262543085,"y":414.721708699825},"Alison Pill":{"x":1198.4249115903185,"y":499.15207352155113},"Stan Lee":{"x":273.59709142204395,"y":-265.8920989646604},"Dolph Lundgren":{"x":911.1419541365849,"y":285.60629314696916},"Kevin Nash":{"x":944.6047637898793,"y":837.8880440417075},"Famke Jannsen":{"x":387.86621999684627,"y":278.4960741436715},"Carla Gugiino":{"x":482.8647604282075,"y":-147.75119299983504},"Michael Cera":{"x":508.5088484531302,"y":854.106926491571},"Pat Hingle":{"x":986.1823877915476,"y":-449.5516878893259},"Liam Neeson":{"x":1167.412123602037,"y":609.2160272666715},"TJ Miller":{"x":251.72842677037414,"y":526.1738702407105},"Rip Torn":{"x":1044.9520633534967,"y":-85.8899949302515},"Kris Kristofferson":{"x":808.7961011151202,"y":903.8839177343233},"Christopher Reeve":{"x":843.6002501032157,"y":102.15704971237602},"Stuart Townsend":{"x":1308.6657444381156,"y":382.5311331580529},"Geoffrey Rush":{"x":240.26026412641048,"y":775.7595032988074},"Robert Downey Jr":{"x":708.0936308773443,"y":-217.83322495749252},"Rosario Dawson":{"x":1087.9702757950552,"y":875.5925772654203},"Dane DeHaan":{"x":1254.8982680950096,"y":115.40335362752602},"Oscar Isaac":{"x":1223.4436632571144,"y":-6.143992639658192},"Powers Boothe":{"x":596.0609882415422,"y":966.415045966391},"Jeffrey Tambor":{"x":342.79714144460155,"y":14.827894593547798},"Parker Posey":{"x":1290.4975122123603,"y":534.3502127216518},"Joseph Gordon-Levitt":{"x":141.4362902875396,"y":711.7464513542129},"Christopher Walken":{"x":1005.9098581136564,"y":-159.0769507492617},"Fan Bingbing":{"x":986.710323201273,"y":998.1357754283191},"Elijah Wood":{"x":79.71000405780788,"y":207.9431462199082},"Thomas Kretschmann":{"x":1389.9228753455543,"y":199.94100834935136},"Josh Pais":{"x":794.9132947136118,"y":410.05679205773663},"Adrienne Barbeau":{"x":540.1480770615061,"y":-348.3533843855907},"Reg Kathey":{"x":1203.6830177336346,"y":830.4134940203817},"Toby Kebbell":{"x":886.2437652352286,"y":527.6376921034363},"Mary-Louise Parker":{"x":1165.4709066119333,"y":-105.61672566047656},"Clark Gregg":{"x":758.2809545863457,"y":1068.778950151629},"Booboo Stewart":{"x":153.60851341767537,"y":-2.517568079118491},"Topher Grace":{"x":1397.4172347623357,"y":414.17470635018447},"Billy Crudup":{"x":149.63183669490505,"y":821.984131751441},"Terrence Howard":{"x":1214.8639166118717,"y":-416.6242056477347},"Caleb Landry Jones":{"x":1082.7562869382352,"y":1019.0379739039333},"Ned Beatty":{"x":48.61556502114999,"y":327.2060416168693},"Richard Roxburgh":{"x":1338.256985575871,"y":6.068278915674602},"Faye Dunaway":{"x":449.60125931938126,"y":993.8834448229544},"Kevin Spacey":{"x":-195.47806140994064,"y":124.9658199794319},"Jeroen Krabbe":{"x":1322.9904630403335,"y":697.470589767561},"Michael Shannon":{"x":40.903988430086855,"y":706.9854368341958},"Miles Teller":{"x":196.14553150180717,"y":88.7641905367018},"Hugh Jackman":{"x":936.466585943716,"y":1098.8137935018615},"Anna Paquin":{"x":27.303755238039642,"y":36.81394302018107},"Tobey Maguire":{"x":1230.452359735,"y":286.43162744477496},"Terrence Stamp":{"x":217.73551714847642,"y":937.2339413594558},"Chloe Grace Moretz":{"x":673.4354652963497,"y":-398.22358034003287},"Kate Mara":{"x":1444.4013094109275,"y":1069.4284922700763},"Adan Canto":{"x":18.792040552630663,"y":413.6109288752364},"Chadwick Boseman":{"x":1236.0098673493424,"y":-162.02435638324775},"Angelina Jolie":{"x":664.8437195667047,"y":1079.1999430654073},"Dylan Baker":{"x":173.58320716939443,"y":-278.3478911599354},"Viola Davis":{"x":1364.0025145939328,"y":867.0178161266687},"Devon Aoki":{"x":1082.100186865173,"y":119.97766779625883},"Max von Sydow":{"x":988.2887441722096,"y":-237.1672356592309},"Dominic Purcell":{"x":1091.6810579251355,"y":1117.8479804471972},"Jaimie Alexander":{"x":-23.850788959367726,"y":187.3163558947249},"Peter Sarsgaard":{"x":1469.263580093358,"y":121.28328871607891},"Heather Graham":{"x":294.86991365287946,"y":1016.993264557923},"Josh Helman":{"x":222.7446131827837,"y":-145.08513385827493},"Chris Hemsworth":{"x":1285.9708808374462,"y":831.09069881979},"Renee Russo":{"x":-65.72670156751185,"y":597.6056852298329},"Michael B Jordan":{"x":1396.8957370045866,"y":-289.63001184273713},"Annette O'Toole":{"x":856.5048568988585,"y":1168.4376659854745},"Henry Cavill":{"x":833.3377603168998,"y":69.94376871720833},"Jurgen Prochnow":{"x":1501.9769948982291,"y":290.80447679573547},"Keita Saito":{"x":92.87571954053915,"y":909.273722406214},"Naseeruddin Shah":{"x":803.0465819771499,"y":-402.35163269031386},"Dominic Cooper":{"x":633.8310362764425,"y":535.6687787199364},"Armand Assante":{"x":-119.10879740942121,"y":269.58438630197367},"Bradley Cooper":{"x":1463.5554183674296,"y":12.537223544074898},"Tadanobu Asano":{"x":512.805580451521,"y":1166.8415437993622},"Stephen Rhea":{"x":262.8757558893556,"y":-386.53774553179557},"Chip Zien":{"x":622.6404567763473,"y":-108.54435704594509},"Johnny Whitworth":{"x":-33.51598465343552,"y":776.1523838453513},"Danny Huston":{"x":255.85544838299575,"y":-139.81908751750262},"Jennifer Biel":{"x":1073.8321977107983,"y":1200.4626818841602},"Claire Forlani":{"x":-76.04511473249164,"y":81.62916126483964},"Edi Gathegi":{"x":1547.6868299154535,"y":190.7035244032518},"Denis Leary":{"x":-188.90148277533453,"y":867.9037471166429},"Louis Gossett Jr":{"x":538.7469972955889,"y":-487.37344948560974},"Gerard Butler":{"x":1381.0850860773296,"y":975.2379470997053},"Jesse Eisenberg":{"x":-214.04263276267,"y":153.14226295855707},"Jermaine Clement":{"x":1365.5005969697288,"y":-200.30528160996647},"Sharon Stone":{"x":734.3431051121783,"y":1221.1140485319584},"John Slattery":{"x":601.893864552511,"y":537.816880916178},"Richard Pryor":{"x":1564.654568522299,"y":523.3508451776847},"Adam Carl":{"x":540.3164533954433,"y":439.87733287355593},"Chris Pratt":{"x":878.5013837642759,"y":-523.663602149953},"Angela Basset":{"x":1342.7517250640872,"y":891.0176804827605},"James McAvoy":{"x":-168.5812248893843,"y":-113.25588550860718},"Tyler Perry":{"x":534.7040325398775,"y":627.5934713318131},"Marc Pillow":{"x":339.4818491737197,"y":1106.023384976394},"Christopher Mintz-Plasse":{"x":446.3258132586154,"y":-490.7083268820981},"Tom Hiddleston":{"x":1509.9731973587122,"y":785.2604626645604},"Linda Fiorentino":{"x":-156.0638720166544,"y":716.325116053929},"Aaron Stanford":{"x":1241.997160198477,"y":-318.6164463703996},"Alexis Bledel":{"x":962.0295176307739,"y":1247.3948495818902},"Peter Stormare":{"x":-48.112526750099896,"y":-41.46883104107491},"Julian McMahon":{"x":917.7634707780717,"y":532.2642397774697},"Lara Flynn Boyle":{"x":103.6810225474932,"y":1028.1195418508692},"Dash Mihok":{"x":764.9697314439445,"y":-494.60436961708024},"Mickey Rourke":{"x":1309.1544444279448,"y":1108.891426809161},"Laurence Fishburne":{"x":231.68085009911692,"y":239.58028721814884},"Augustus Prew":{"x":1504.0139700722002,"y":-178.6327534617563},"Theresa Randle":{"x":624.121530983084,"y":1272.0298109435385},"Matthew Goode":{"x":80.79540296532117,"y":-228.74838660032918},"John Hurt":{"x":1592.811347908773,"y":619.8948303099345},"Jennifer Connelly":{"x":428.8917597119488,"y":80.4713112046493},"Jason Flemyng":{"x":993.7375367007904,"y":-564.5559254151173},"Val Kilmer":{"x":407.3780498374513,"y":812.2714838621943},"Geroge Clooney":{"x":372.54688003201545,"y":787.556542621944},"Louis Jourdan":{"x":1596.9330682114391,"y":84.77593411108943},"Rachel Weisz":{"x":190.2392144537954,"y":1091.6253405598852},"Katie Holmes":{"x":994.887141080268,"y":653.8825564755311},"Vin Diesel":{"x":1489.0162834603286,"y":928.8949158417305},"Olivia Munn":{"x":-327.173807262487,"y":509.003249199294},"Sebastian Stan":{"x":1418.085481319597,"y":-389.892427943025},"Common":{"x":872.8124380382691,"y":1285.610169569142},"Kevin Bacon":{"x":12.354078604443325,"y":-144.13598433162406},"Norman Reedus":{"x":1695.9318337873092,"y":406.50710731636934},"Rila Fukushima":{"x":-12.100750776178714,"y":908.6473076159001},"Sam Huntington":{"x":89.73148372929835,"y":-360.5469878196709},"Helen Slater":{"x":1264.0456022867338,"y":1201.865137330259},"Rosemary Harris":{"x":724.2215328144857,"y":187.2156504337964},"Michael Stuhlbarg":{"x":1582.8374392521112,"y":-100.22012292605487},"Rodrigo Santoro":{"x":403.9085467361859,"y":1388.5310843565196},"Olivia Williams":{"x":652.8643946475207,"y":-535.3517546042505},"Kelly Hu":{"x":1605.0750553949476,"y":757.5834864131963},"Cliff Robertson":{"x":-43.12348027423871,"y":1187.437529980952},"Thomas Haden Church":{"x":1152.315290332179,"y":-515.7556172748831},"Jai Courtney":{"x":1035.040553318083,"y":1319.0237693938398},"Johnny Knoxville":{"x":-78.4221887076937,"y":-216.25519207730073},"Nancy Everhard":{"x":1705.8058783347983,"y":165.26046275958188},"Michael Caine":{"x":777.4045438957673,"y":1364.4742811605981},"Jackie Earle Haley":{"x":642.2213563977621,"y":-615.1558748754729},"Alan Cumming":{"x":599.6781746494582,"y":158.67009314932417},"Brian Cox":{"x":234.5323856462794,"y":-113.68919591783987},"Ben Affleck":{"x":399.2447509644527,"y":786.8150915779352},"Alfred Molina":{"x":648.8046236974202,"y":1394.0552805754933},"Brian Tochi":{"x":-73.79230435605834,"y":-247.81752185143108},"Brandon Routh":{"x":866.0765958815128,"y":77.59409158837614},"Kevin Clash":{"x":-166.29219847462687,"y":388.2991761077444},"Rose Byrne":{"x":683.8947751393221,"y":-543.4304754917903},"Will Smith":{"x":1218.3247086951242,"y":1284.0425285995395},"Andrew Garfield":{"x":1218.7165249797058,"y":254.86327009484697},"Margot Robbie":{"x":1644.7341518690116,"y":-16.706988330543915},"Laura Harring":{"x":265.59262974953526,"y":1390.6139682342987},"Lynn Collins":{"x":415.25647851045954,"y":-598.0722473822956},"Danny Devito":{"x":1582.4343744362845,"y":908.2929509239473},"Marlon Brando":{"x":1071.0270341633263,"y":368.0324424503096},"Laurie Faso":{"x":773.3384879766012,"y":373.1794720376157},"Edward Norton":{"x":701.2181263124953,"y":817.8450703654241},"Malin Akerman":{"x":469.4486785772484,"y":-118.65793363908746},"Stephen Dorff":{"x":1688.6941796764577,"y":261.5909861883455},"Noel Fisher":{"x":1166.419097429262,"y":732.6598701621716},"Kevin Costner":{"x":824.2368355020188,"y":-195.2707966053955},"Benjamin Bratt":{"x":1374.2590895153853,"y":1213.4907154815535},"Ioan Gruffudd":{"x":164.4268039576986,"y":93.34631912456727},"Chris Evans":{"x":1428.8404497071515,"y":-287.0096918080956},"Karel Rodan":{"x":509.57201600166405,"y":1435.9339953158114},"Wes Bentley":{"x":214.85961925352854,"y":-471.82338137204795},"Kim Basinger":{"x":1676.6824273158504,"y":654.355173059021},"Will Yun Lee":{"x":-241.4938016696851,"y":776.8879375267276},"Liv Tyler":{"x":451.8141253051858,"y":58.198672400412235},"Kieran Culkin":{"x":1133.8312317202863,"y":1326.8986371283256},"Brittney Murphy":{"x":-242.70182594024118,"y":-1.4911273872126263},"Ron Perlman":{"x":1740.5951432314057,"y":75.90780464088115},"James Spader":{"x":128.39895929849396,"y":1235.9925381314022},"Colin Firth":{"x":500.5613551017313,"y":-667.2124357263746},"Ben Kingsley":{"x":1781.100374919721,"y":336.4200837815029},"Anthony Hopkins":{"x":-402.4118374502889,"y":443.73052707278305},"Corey Feldman":{"x":563.5190872615067,"y":415.18164499348416},"Michael Gough":{"x":785.3414087156538,"y":1397.1235961481163},"Taron Egerton":{"x":-87.34238622974483,"y":-379.10909128805605},"Bill Duke":{"x":1136.63908282231,"y":-285.0456458968538},"Todd Freeman":{"x":503.42361057131046,"y":620.6834091084197},"Michelle Pfeiffer":{"x":-188.69837127639013,"y":492.3591326511073},"Marisa Tomei":{"x":757.6053994756282,"y":191.1959790632496},"Elias Koteas":{"x":752.2282246522238,"y":694.7732408914638},"Emma Stone":{"x":374.9005383075527,"y":-140.16437791252127},"Sophie Turner":{"x":408.7354494161389,"y":304.53713233361526},"Sarah Douglas":{"x":325.16994480431754,"y":-644.4044319126172},"Karen Fukuhara":{"x":1680.4437423329705,"y":887.2858309926697},"Roy Dotrice":{"x":-379.1020489453393,"y":772.5439736579036},"David Wenham":{"x":1272.3331645590936,"y":-529.0411767106134},"Daniel Cudmore":{"x":289.8423257714983,"y":619.20914835711},"Stefan Kapucic":{"x":257.8990167479964,"y":621.0412199780666},"Nicholas Hoult":{"x":1798.7508659761818,"y":598.8608246953066},"Lee Pace":{"x":49.85615343373033,"y":1166.3543165726387},"Wes Studi":{"x":639.3521451489274,"y":-678.597617301556},"James Franco":{"x":1491.087261124319,"y":1207.1056748792262},"Ryan Reynolds":{"x":-392.62173294510205,"y":339.45830821091465},"Clive Owen":{"x":358.4986864602376,"y":1222.5712046773924},"Kat Dennings":{"x":614.1961562796821,"y":1494.9294961262665},"January Jones":{"x":-29.32024592402484,"y":-477.738266401742},"Kevin Durand":{"x":1752.4871790283898,"y":716.0565653527108},"Nicol Williamson":{"x":-252.44354975038823,"y":967.9402813395043},"Olivia Thirlby":{"x":1011.829972559473,"y":-656.9591881697737},"Zachary Levi":{"x":498.58648951777576,"y":1303.2920718460982},"Jack O'Halloran":{"x":-353.42322609670555,"y":119.84490537534155},"Rebecca Romijn-Stamos":{"x":893.8829296527423,"y":956.9567538545847},"Jack Nicholson":{"x":-364.60292745549657,"y":662.2827374876669},"Jeremy Piven":{"x":1393.6651642246618,"y":-95.64085135069735},"Vinnie Jones":{"x":1629.9412027649212,"y":999.8943305158718},"Ray Park":{"x":-471.5846440508481,"y":580.367313377392},"John Leguizamo":{"x":1473.2860048170924,"y":-462.8156473011202},"Stephen Fry":{"x":895.2346281842647,"y":1472.1299134164813},"Tohoru Masamune":{"x":1420.1693703539522,"y":590.0955074407315},"Ellen Page":{"x":1874.6024078168248,"y":343.302952378347},"Nick Nolte":{"x":-162.49517061791838,"y":1080.72987873733},"Jamie Bell":{"x":722.658947091843,"y":-721.1682736959934},"Neil McDonough":{"x":1372.2929760478187,"y":1315.919950262555},"Michael Douglas":{"x":-71.95773561513606,"y":1000.3426519824588},"Jennifer Garner":{"x":1632.1820234581874,"y":-217.95463100886593},"Djimon Hounsou":{"x":409.15261995557404,"y":1506.0884570202486},"Lucas Till":{"x":226.96687862748803,"y":-640.5796993702528},"Svetlana Khodchenkova":{"x":1749.4748180478614,"y":812.0800755111173},"Thomas Jane":{"x":923.7069293562995,"y":316.92244883842034},"Tim Robbins":{"x":1137.3421798072188,"y":-626.7242026080503},"Jaime King":{"x":1100.2847367196218,"y":1431.618623489728},"Satya Bhabha":{"x":-284.6275137148623,"y":-134.63470836282752},"Lena Headey":{"x":1849.0054775295407,"y":68.1485241240252},"Jason Schwartzman":{"x":62.590094731443436,"y":1334.30015113145},"Michael Chiklis":{"x":693.9488483218174,"y":-735.6630210202618},"Tyler Mane":{"x":1202.1717227319257,"y":1018.1489897775787},"Tye Sheridan":{"x":610.123629299471,"y":-270.69701949083566},"Frank Langella":{"x":259.78854751951803,"y":220.08450071387418},"Joel Kinnaman":{"x":708.7237026517314,"y":1539.447883244587},"Patrick Stewart":{"x":-173.37828876023323,"y":-144.86991827311164},"Peta Wilson":{"x":1860.9054813567886,"y":487.98839084345155},"Josh Dallas":{"x":468.1256839327872,"y":1293.8694055725239},"John Malkovich":{"x":933.3848093445441,"y":-715.7603816648483},"Jeremy Irons":{"x":809.6493923400429,"y":1374.0430521514995},"Kirsten Dunst":{"x":-411.8612828093102,"y":183.3058969174942},"Rhys Ifans":{"x":1740.9388370656425,"y":-36.888199779101946},"Jeremy Renner":{"x":275.08607654442636,"y":1481.556689485614},"Terence Stamp":{"x":326.2516479982989,"y":-745.8583784029653},"Stephen Amell":{"x":783.9192411104108,"y":689.9043202763949},"Ben Foster":{"x":525.6762896323876,"y":1075.8314600456345},"Benicio Del Toro":{"x":1367.2559990742388,"y":-551.6225714010625},"Jaime Foxx":{"x":986.5542867747942,"y":1493.7391861793383},"Natalie Portman":{"x":-220.76404428041295,"y":-283.5059721621824},"Shane West":{"x":1892.6932627690085,"y":172.56592164286047},"Colin Farrel":{"x":-127.2257560008176,"y":1236.8404410732846},"Omar Sy":{"x":733.9791373213496,"y":-813.1028740632678},"Ben Hardy":{"x":555.2854833833106,"y":1088.0211155739032},"Mads Mikkelsen":{"x":-507.0430783677652,"y":320.26979481172003},"Chris Cooper":{"x":1592.316582310361,"y":-324.20030843360684},"Hiroyuki Sanada":{"x":488.65784725214706,"y":1577.3736336014517},"Cillian Murphy":{"x":26.9372784321213,"y":-637.1381949497226},"Tilda Swinton":{"x":1902.6764213703852,"y":630.4367894874039},"Gavin Rossdale":{"x":-378.4993741311576,"y":924.1699740878214},"Aaron Taylor-Johnson":{"x":932.8974372891796,"y":-319.95944488959174},"Jay Hernandez":{"x":1204.9874296825567,"y":1457.0661458449786},"Bryan Marshall":{"x":-466.21669194512356,"y":-51.37055424362395},"Willem Dafoe":{"x":1286.547916057732,"y":111.10601182529295},"Johnny Depp":{"x":115.76298123731515,"y":1449.891598058312},"Eva Mendes":{"x":434.98156839899997,"y":-784.3966008322981},"Jessica Alba":{"x":1476.1824122507596,"y":1072.4897458927164},"Sofia Boutella":{"x":-530.5672074588779,"y":534.2930510457713},"Don Cheadle":{"x":1246.7866639398108,"y":-414.0609986934763},"Emily VanCamp":{"x":818.405416499713,"y":1576.1320604676473},"Seth Green":{"x":590.8470088223561,"y":-111.61782087744211},"Luke Goss":{"x":1939.6579959878288,"y":409.447244671708},"Christopher Lloyd":{"x":-240.32907557854912,"y":1178.4067264510509},"Megan Fox":{"x":132.51907718154666,"y":-535.5775891423378},"Maggie Gyllenhaal":{"x":1025.5768434679228,"y":662.8655965791087},"David Bautista":{"x":-498.5310207780909,"y":212.3050097689939},"Jeffrey Jones":{"x":1785.7094420877377,"y":-219.73129873830158},"Morena Baccarin":{"x":345.18272848332566,"y":1587.8511483040595},"Emma Thomspon":{"x":373.25722456858267,"y":-421.8875673531368},"Kim Myori":{"x":1814.5488222250751,"y":896.2919961023009},"Christian Bale":{"x":364.62429785203017,"y":813.2019095649313},"Catherine Zeta-Jones":{"x":1282.2491755362926,"y":-635.4673429426546},"Anna Walton":{"x":1094.5331451971495,"y":1533.290899669493},"Will Patton":{"x":-356.2282482896275,"y":-226.83729623871446},"Mary Elizabeth Olsen":{"x":1791.3863884822492,"y":-112.9499204143579},"Janeane Garofalo":{"x":-47.40633252114329,"y":1383.2092680507878},"Bruce Willis":{"x":540.9268520989813,"y":-820.6759258572421},"Francois Chau":{"x":1411.0898531140542,"y":618.7364743511457},"Ray Wise":{"x":-380.0811900688846,"y":-17.544213623278278},"Elizabeth Olsen":{"x":1763.7389118869798,"y":-129.16726729919583},"Cameron Diaz":{"x":593.888223650397,"y":1609.7007369258881},"Zoe Kravitz":{"x":-76.34629298837902,"y":-582.5079092341027},"Gwyneth Paltrow":{"x":1967.657916298534,"y":556.8188792639827},"Byung-hun Lee":{"x":-348.0389598333605,"y":1019.0447849652287},"Sally Fields":{"x":744.301449738619,"y":160.33188449889917},"Christopher Eccleston":{"x":1289.9271067085651,"y":1448.4037548572967},"Marc McClure":{"x":62.921800109088664,"y":-343.19846106782614},"Tim Kelleher":{"x":802.3840352493912,"y":380.92206157288706},"William Fichtner":{"x":178.1621628236589,"y":1550.209395250323},"Lou Ferrigno":{"x":302.4847073087859,"y":-279.5014439249102},"Iain Glen":{"x":1771.270403417683,"y":1037.185342958343},"James Cromwell":{"x":-220.8597027206411,"y":869.4232874927015},"Shawn Ashmore":{"x":1450.388053547516,"y":-583.2000495373953},"Nicole Kidman":{"x":922.5634441697072,"y":1609.4104604730403},"Robert Redford":{"x":-232.18314031950652,"y":-381.81998353735895},"Karen Gillen":{"x":1959.220356188657,"y":248.30029433406352},"Blake Lively":{"x":-192.68959309191789,"y":1291.4417297622824},"William H Macy":{"x":822.9177364205428,"y":-806.0698152319636},"Donnie Yen":{"x":1499.1545072061322,"y":1318.0056650092213},"Doug Jones":{"x":201.622244120746,"y":252.55273674216264},"Jamie Chung":{"x":1109.4049845772702,"y":103.37892073147528},"Aaron Ekhart":{"x":269.7566101804971,"y":1271.9828642660411},"Mary Elizabeth Winstead":{"x":101.34830013806031,"y":-712.2875675089481},"Mae Whitman":{"x":1908.9509143118928,"y":770.868131740933},"Ellen Wong":{"x":-464.7979061497888,"y":880.8590852246566},"Paul Bettany":{"x":1147.1627711485617,"y":-733.8830497179592},"Alexandra Shipp":{"x":-197.13816917656513,"y":553.2153757586987},"Mark Hamill":{"x":-467.210341554053,"y":-159.85635289081577},"Margot Kidder":{"x":1577.3659764737824,"y":391.3998108712124},"Ezra Miller":{"x":13.423082959508289,"y":1497.0314878146237},"Peter Dinklage":{"x":1114.6830286453028,"y":-308.2669048882892},"Robert Vaughn":{"x":1682.5516658753068,"y":1197.8768119709978},"Sam Rockwell":{"x":-576.2539581765037,"y":466.384724411829},"James Marsden":{"x":637.2774069946998,"y":-287.65678966217394},"Ben Stiller":{"x":746.991978575255,"y":1659.1989249000865},"Ayelet Zurer":{"x":-155.70058752718674,"y":-521.390998164229},"Sylvester Stallone":{"x":1657.7686531179595,"y":1096.3089781964961},"Christopher Meloni":{"x":-314.35429261332285,"y":1117.2696346190985},"Famke Janssen":{"x":420.45757275910313,"y":272.3179348030169},"Julie Benz":{"x":1378.2383100046025,"y":1435.907095728641},"Shota Saito":{"x":-553.7370897828304,"y":123.51511437330619},"Anthony Mackie":{"x":1909.6866526912102,"y":-134.25938517589657},"Doug Hutchinson":{"x":234.69222249630891,"y":1640.6827887780894},"Tony Shaloub":{"x":-142.35505140607336,"y":365.43715745783715},"Kelsey Grammer":{"x":1808.610993369733,"y":629.2970772562193},"Tommy Lee Jones":{"x":292.2491098295623,"y":1245.1202051567989},"Gary Oldman":{"x":1017.139815803482,"y":-457.44258044743395},"Tao Okamoto":{"x":1034.3434116275532,"y":1630.8173139386597},"Stellan Skarsgaard":{"x":-361.5636656719963,"y":-322.8716168042622},"Ray Stevenson":{"x":944.2451115803221,"y":290.2115757200934},"Tim Roth":{"x":-158.63223333799954,"y":1395.484421037632},"Carla Gugino":{"x":637.6187379567427,"y":-884.0512186169359},"Phyllis Thaxter":{"x":79.39237553485785,"y":562.957648552201},"Anne Hathaway":{"x":-222.04658582358428,"y":491.44963915172127},"Colm Feore":{"x":1675.5548450178721,"y":-373.1425423710896},"Ed Skrein":{"x":473.89427980218,"y":1693.0908032732664},"Kodi Smit-McPhee":{"x":581.3712191754339,"y":132.572430559388},"Tom Holland":{"x":1251.8498343919664,"y":260.71079773656214},"Alan Ritchson":{"x":765.8588141982364,"y":402.3576573216818},"Ray Liotta":{"x":1079.823491323311,"y":-793.6016782072523},"Josh Brolin":{"x":326.91542016352304,"y":1232.9289625786887},"Eva Marie Saint":{"x":49.33540794971924,"y":548.1125152801652},"Benedict Wong":{"x":1949.054342712805,"y":-7.3054738409770685},"Gal Gadot":{"x":81.1092339430472,"y":1595.4894532999149},"Paige Turco":{"x":101.59123414380501,"y":-548.3979589685049},"Kate Bosworth":{"x":1585.5924576562372,"y":423.9703220791643},"Fergus Riordan":{"x":-608.7019541792074,"y":610.3673892139592},"Arnold Schwarzenegger":{"x":1529.752654184832,"y":-586.6677442475108},"Hugo Weaving":{"x":854.699769662714,"y":1713.9118973107759},"Samuel L Jackson":{"x":-262.17543966510084,"y":-481.0238078608096},"Jon Cryer":{"x":2026.2615289651503,"y":344.7546285281827},"Hayley Atwell":{"x":-286.9258206735508,"y":1301.7806550860464},"Eva Green":{"x":864.6529401781679,"y":-872.5993175079053},"Jim Carrey":{"x":1505.8110452856456,"y":1416.5451437868523},"Lena Olin":{"x":-614.6973645289431,"y":239.4034592937813},"Mickey Roarke":{"x":1853.1137138735241,"y":-271.78270870785724},"Kel Mitchell":{"x":341.9856833300274,"y":1694.2988972143412},"Annie Ross":{"x":150.35930113693635,"y":-785.6054359199923},"Benedict Cumberbatch":{"x":1928.8863252329163,"y":870.6836527733957},"Heather Locklear":{"x":-549.5829945597134,"y":847.0651024567378},"John Travolta":{"x":1237.55040925035,"y":-736.7903116851139},"Dominic West":{"x":1136.575800021389,"y":1644.703274535983},"Heath Ledger":{"x":-382.7948113410216,"y":634.1481663757062},"Russel Crowe":{"x":1097.346237387759,"y":386.35438912095645},"Jennifer Lawrence":{"x":869.1891782036623,"y":977.3325323022215},"Mark Ruffalo":{"x":668.0758990774822,"y":813.6724639284108},"Brad Garret":{"x":1665.7743705977966,"y":1278.6962511882693},"Ernie Reyes Jr":{"x":-632.3638446221977,"y":401.2892371350008},"Rebecca Romijn":{"x":1618.1519548579074,"y":-477.06957756562986},"Nicolas Cage":{"x":643.0071374853566,"y":1688.2525618138866},"Dick Durock":{"x":-368.42327728667794,"y":-47.33438304080619},"Michael Madsen":{"x":1424.8421885239886,"y":-88.5295321825949},"Marion Cotillard":{"x":-421.5043291478956,"y":1109.0301740996672},"Scarlett Johansson":{"x":991.7027772659069,"y":-843.6738063653479},"Karl Urban":{"x":1631.52394872962,"y":1114.6020640447316},"Corey Stoll":{"x":-584.592866244965,"y":34.16157891124031},"Guy Pearce":{"x":1788.3928842706102,"y":305.2163396272996},"Martin Sheen":{"x":-33.70993570759143,"y":1218.0966914626167},"Sophie Cookson":{"x":310.23414900329766,"y":-861.4496013659939},"Sean Connery":{"x":1862.5019326765282,"y":1058.3015496971277},"Rob Schneider":{"x":-589.7092085928161,"y":723.49685988168},"Ian McKellen":{"x":1337.3748310459637,"y":-750.765916768179},"Greg Kinnear":{"x":981.7653482488689,"y":1721.4390709482811},"Uma Thurman":{"x":-363.9614140572996,"y":-431.2387212232231},"Alicia Silverstone":{"x":2031.4043663103187,"y":190.52699357425175},"James Murray":{"x":-133.39123229923848,"y":397.71968062887237},"Shia LaBeouf":{"x":740.0944895368921,"y":-948.8036460700213},"James Saito":{"x":1439.588487310031,"y":628.3198710862475},"Diane Lane":{"x":51.42753720956014,"y":581.7018249963697},"Selma Blair":{"x":1790.3544131676038,"y":-360.95560806222466},"Paul Rudd":{"x":-45.15985660590442,"y":1017.7608370933998},"Valerie Perrine":{"x":-3.187552354154979,"y":-759.685462350742},"Mark Strong":{"x":2007.9001326473685,"y":752.3924179561366},"Halle Berry":{"x":-205.80762417439811,"y":521.6840381728766},"Michael Fassbender":{"x":1319.609379920671,"y":-777.4537949811174},"Patrick Wilson":{"x":1228.704915456052,"y":1612.87263013438},"Eric Dane":{"x":-556.3410006920528,"y":-123.7079028458332},"Brian Tee":{"x":1448.7495330513607,"y":599.5179136172408},"Billy Dee Williams":{"x":257.40708273717024,"y":1241.4233872264133},"Helen Mirren":{"x":428.0314245767521,"y":-906.6369772724993},"Jeff Bridges":{"x":1795.8305780799392,"y":1188.998681201827},"William Hurt":{"x":627.9107563355803,"y":-4.310823414674131},"Vincent D'Onnofrio":{"x":1611.9464487351463,"y":-597.3863250273489},"Eric Bana":{"x":681.5093399505434,"y":844.8971557415399},"Peter Green":{"x":-245.6914097267058,"y":-587.0397761100265},"Rebecca Hall":{"x":2055.2135011971463,"y":455.36666424633364},"Chris O'Donnel":{"x":-373.980036069135,"y":1239.8844248929697},"Tom Hardy":{"x":920.1171729219756,"y":-937.4708530957934},"Rachel McAdams":{"x":1459.220699162657,"y":1508.900178522993},"Bryce Dallas Howard":{"x":363.06525339972717,"y":-110.32304049395465},"Sam Elliot":{"x":654.6786649213542,"y":-21.960798758529076},"Michael Clarke Duncan":{"x":626.0267013961005,"y":1772.0405734005367},"Chiwetel Ejiofor":{"x":196.45733449563494,"y":-859.3700285869243},"Ciaran Hinds":{"x":1931.6610709677143,"y":966.8917845416213},"Jared Leto":{"x":-398.30255684093436,"y":663.9637320346515},"Michael Rooker":{"x":1424.7191511801482,"y":-776.2109300943237},"Dennis Haysbert":{"x":658.1056927662452,"y":1773.6238314897919},"Jeffrey Dean Morgan":{"x":-467.51826138380795,"y":-308.60093891729315},"Robbie Rist":{"x":1192.2226071032364,"y":713.75061848267},"Lea Thompson":{"x":-129.74920414979135,"y":1486.3752268983449},"Paul Reubens":{"x":572.7851287278754,"y":-955.1706150764493},"Michael Jai White":{"x":1637.8572743734865,"y":1362.1923173457944},"Judith Hoag":{"x":105.68421081788836,"y":-515.0853749670531},"Keanu Reeves":{"x":1730.9040347714206,"y":-474.5867641222304},"Michael Keaton":{"x":386.4157979471705,"y":828.7765877692465},"Evangeline Lily":{"x":-116.864824142708,"y":-688.6714978552029},"Adewale Akinnuoye-Agbaje":{"x":2042.3818435299831,"y":623.6438258999217},"Idris Elba":{"x":-497.11615227728925,"y":1032.7528914844465},"Cara Delevingne":{"x":1097.1451655369008,"y":-899.2367023443549},"John Favreau":{"x":1330.4967646530783,"y":1578.4912046394634},"Gene Hackman":{"x":-228.9506909044169,"y":123.13173904468985}}
+}

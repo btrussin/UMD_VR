@@ -129,7 +129,7 @@
         },
         {
           "role": "Black Widow",
-          "actor": "Scarlett Johannson",
+          "actor": "Scarlett Johansson",
           "name": "Natasha Romanoff"
         },
         {
@@ -192,7 +192,7 @@
         },
         {
           "role": "Black Widow",
-          "actor": "Scarlett Johannson",
+          "actor": "Scarlett Johansson",
           "name": "Natasha Romanoff"
         },
         {
@@ -757,7 +757,7 @@
         },
         {
           "role": "Nick Fury",
-          "actor": "Samuel Jackson",
+          "actor": "Samuel L Jackson",
           "name": "Nick Fury"
         },
         {
@@ -790,7 +790,7 @@
         },
         {
           "role": "Black Widow",
-          "actor": "Scarlett Johannson",
+          "actor": "Scarlett Johansson",
           "name": "Natasha Romanoff"
         },
         {
@@ -1103,6 +1103,59 @@
           "role": "Weasel",
           "actor": "TJ Miller",
           "name": "Weasel"
+        }
+      ]
+    },
+    {
+      "comic": "Doctor Strange",
+      "movie": "Doctor Strange",
+      "year": 2016,
+      "publisher": "Marvel",
+      "grouping": "MCU",
+      "distributor": "Walt Disney",
+      "studios": [
+        "Marvel"
+      ],
+      "roles": [
+        {
+          "role": "Doctor Strange",
+          "actor": "Benedict Cumberbatch",
+          "name": "Stephen Strange"
+        },
+        {
+          "role": "Baron Mordo",
+          "actor": "Chiwetel Ejiofor",
+          "name": "Karl Mordo"
+        },
+        {
+          "role": "Christine Palmer",
+          "actor": "Rachel McAdams",
+          "name": "Christine Palmer"
+        },
+        {
+          "role": "Wong",
+          "actor": "Benedict Wong",
+          "name": "Wong"
+        },
+        {
+          "role": "Nicodemus West",
+          "actor": "Michael Stuhlbarg",
+          "name": "Nicodemus West"
+        },
+        {
+          "role": "Jonathan Pangborn",
+          "actor": "Benjamin Bratt",
+          "name": "Jonathan Pangborn"
+        },
+        {
+          "role": "Kaecilius",
+          "actor": "Mads Mikkelsen",
+          "name": "Kaecilius"
+        },
+        {
+          "role": "Ancient One",
+          "actor": "Tilda Swinton",
+          "name": "Ancient One"
         }
       ]
     },
@@ -1780,7 +1833,7 @@
         },
         {
           "role": "Black Widow",
-          "actor": "Scarlett Johannson",
+          "actor": "Scarlett Johansson",
           "name": "Natasha Romanoff"
         },
         {
@@ -2299,7 +2352,7 @@
       "comic": "Men In Black",
       "movie": "Men In Black 3",
       "year": 2012,
-      "publisher": "Airecell",
+      "publisher": "Aircell",
       "grouping": "MiB",
       "distributor": "Columbia Pictures",
       "studios": [
@@ -2538,6 +2591,109 @@
       ]
     },
     {
+      "comic": "Red",
+      "movie": "Red",
+      "year": 2010,
+      "publisher": "Wildstorm",
+      "grouping": "Red",
+      "distributor": "Summit Entertainment",
+      "studios": [
+        "DC Entertainment",
+        "di Bonaventura Pictures"
+      ],
+      "roles": [
+        {
+          "role": "Frank Moses",
+          "actor": "Bruce Willis",
+          "name": "Frank Moses"
+        },
+        {
+          "role": "Sarah Walsh",
+          "actor": "Mary-Louise Parker",
+          "name": "Sarah Walsh"
+        },
+        {
+          "role": "Joe Matheson",
+          "actor": "Morgan Freeman",
+          "name": "Joe Matheson"
+        },
+        {
+          "role": "William Cooper",
+          "actor": "Karl Urban",
+          "name": "William Cooper"
+        },
+        {
+          "role": "Marvin Boggs",
+          "actor": "John Malkovich",
+          "name": "Marvin Boggs"
+        },
+        {
+          "role": "Victoria",
+          "actor": "Helen Mirren",
+          "name": "Victoria"
+        }
+      ]
+    },
+    {
+      "comic": "Red",
+      "movie": "Red 2",
+      "year": 2013,
+      "publisher": "Wildstorm",
+      "grouping": "Red",
+      "distributor": "Lionsgate",
+      "studios": [
+        "DC Entertainment",
+        "di Bonaventura Pictures"
+      ],
+      "roles": [
+        {
+          "role": "Frank Moses",
+          "actor": "Bruce Willis",
+          "name": "Frank Moses"
+        },
+        {
+          "role": "Sarah Walsh",
+          "actor": "Mary-Louise Parker",
+          "name": "Sarah Walsh"
+        },
+        {
+          "role": "Joe Matheson",
+          "actor": "Morgan Freeman",
+          "name": "Joe Matheson"
+        },
+        {
+          "role": "Marvin Boggs",
+          "actor": "John Malkovich",
+          "name": "Marvin Boggs"
+        },
+        {
+          "role": "Victoria",
+          "actor": "Helen Mirren",
+          "name": "Victoria"
+        },
+        {
+          "role": "Katja",
+          "actor": "Catherine Zeta-Jones",
+          "name": "Katja"
+        },
+        {
+          "role": "Edward Bailey",
+          "actor": "Anthony Hopkins",
+          "name": "Edward Bailey"
+        },
+        {
+          "role": "Jack Horton",
+          "actor": "Neil McDonough",
+          "name": "Jack Horton"
+        },
+        {
+          "role": "Han Cho-Bai",
+          "actor": "Byung-hun Lee",
+          "name": "Han Cho-Bai"
+        }
+      ]
+    },
+    {
       "comic": "Scott Pilgrim",
       "movie": "Scott Pilgrim vs the World",
       "year": 2010,
@@ -2618,7 +2774,8 @@
       "grouping": "Sin City",
       "distributor": "Miramax Films",
       "studios": [
-        "Troublemaker Studios"
+        "Troublemaker Studios",
+        "Dimension Films"
       ],
       "roles": [
         {
@@ -2685,6 +2842,94 @@
           "role": "Kevin",
           "actor": "Elijah Wood",
           "name": "Kevin"
+        }
+      ]
+    },
+    {
+      "comic": "Sin City",
+      "movie": "Sin City 2",
+      "year": 2013,
+      "publisher": "Dark Horse",
+      "grouping": "Sin City",
+      "distributor": "Miramax Films",
+      "studios": [
+        "The Weinstein  Company"
+      ],
+      "roles": [
+        {
+          "role": "Marv",
+          "actor": "Mickey Roarke",
+          "name": "Marv"
+        },
+        {
+          "role": "Nancy Callahan",
+          "actor": "Jessica Alba",
+          "name": "Nancy Callahan"
+        },
+        {
+          "role": "Dwight McCarthy",
+          "actor": "Josh Brolin",
+          "name": "Dwight McCarthy"
+        },
+        {
+          "role": "Johnny",
+          "actor": "Joseph Gordon-Levitt",
+          "name": "Johnny"
+        },
+        {
+          "role": "Gail",
+          "actor": "Rosario Dawson",
+          "name": "Gail"
+        },
+        {
+          "role": "John Hartigan",
+          "actor": "Bruce Willis",
+          "name": "John Hartigan"
+        },
+        {
+          "role": "Ava Lord",
+          "actor": "Eva Green",
+          "name": "Ava Lord"
+        },
+        {
+          "role": "Senator Roarke",
+          "actor": "Powers Boothe",
+          "name": "Senator Roarke"
+        },
+        {
+          "role": "Manute",
+          "actor": "Dennis Haysbert",
+          "name": "Manute"
+        },
+        {
+          "role": "Joey",
+          "actor": "Ray Liotta",
+          "name": "Joey"
+        },
+        {
+          "role": "Goldie",
+          "actor": "Jaime King",
+          "name": "Goldie"
+        },
+        {
+          "role": "Koenig",
+          "actor": "Christopher Lloyd",
+          "name": "Koenig"
+        },
+        {
+          "role": "Miho",
+          "actor": "Jamie Chung",
+          "name": "Miho"
+        },
+        {
+          "role": "Bob",
+          "actor": "Jeremy Piven",
+          "name": "Bob"
+        },
+        {
+          "role": "Mort",
+          "actor": "Christopher Meloni",
+          "name": "Mort"
         }
       ]
     },
@@ -4169,7 +4414,7 @@
         },
         {
           "role": "Sabertooth",
-          "actor": "Live Schreiber",
+          "actor": "Liev Schreiber",
           "name": "Victor Creed"
         },
         {

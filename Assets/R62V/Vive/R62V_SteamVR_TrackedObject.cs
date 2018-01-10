@@ -174,12 +174,12 @@ public class R62V_SteamVR_TrackedObject : MonoBehaviour
             return;
         }
 
-        SteamVR_Utils.Event.Listen("new_poses", OnNewPoses);
+        //SteamVR_Utils.Event.Listen("new_poses", OnNewPoses);
     }
 
     void OnDisable()
     {
-        SteamVR_Utils.Event.Remove("new_poses", OnNewPoses);
+        //SteamVR_Utils.Event.Remove("new_poses", OnNewPoses);
         isValid = false;
     }
 

@@ -1,0 +1,29 @@
+Need to edit SteamVR_Render.cs and SteamVR_UpdatePoses.cs
+
+SteamVR_UpdatePoses.cs
+```
+void Awake()
+{
+      var camera = GetComponent<Camera>();
+      camera.stereoTargetEye = StereoTargetEyeMask.None;
+      camera.clearFlags = CameraClearFlags.Nothing;
+      camera.useOcclusionCulling = false;
+      camera.cullingMask = 0;
+      camera.depth = -9999;
+}
+
+//Comment all the stuff above out
+
+```
+
+SteamVR_Render.cs
+```
+if (poseUpdater == null)
+{
+     var go = new GameObject("poseUpdater");
+     go.transform.parent = transform;
+     poseUpdater = go.AddComponent<SteamVR_UpdatePoses>();
+}
+
+//Comment all the stuff above out
+```
