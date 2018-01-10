@@ -1,0 +1,53 @@
+DEMOGRAPHICS <- read.csv("~/UMDVR/data/demographics.csv")
+PERFORMANCE <- read.csv("~/UMDVR/data/performance.csv")
+QUESTIONNAIRE <- read.csv("~/UMDVR/data/questionnaire.csv")
+RESPONSES <- read.delim("~/UMDVR/data/responses.tsv")
+
+# Are there differences in post-block survey between VIZ conditions?
+boxplot(RESPONSES$Q1 ~ RESPONSES$VIZ)
+boxplot(RESPONSES$Q2 ~ RESPONSES$VIZ)
+boxplot(RESPONSES$Q3 ~ RESPONSES$VIZ)
+boxplot(RESPONSES$Q4 ~ RESPONSES$VIZ)
+boxplot(RESPONSES$Q5 ~ RESPONSES$VIZ)
+boxplot(RESPONSES$Q6 ~ RESPONSES$VIZ)
+boxplot(RESPONSES$Q7 ~ RESPONSES$VIZ)
+boxplot(RESPONSES$Q8 ~ RESPONSES$VIZ)
+boxplot(RESPONSES$Q9 ~ RESPONSES$VIZ)
+boxplot(RESPONSES$Q10 ~ RESPONSES$VIZ)
+
+summary(lm(RESPONSES$Q1 ~ RESPONSES$VIZ))
+summary(lm(RESPONSES$Q2 ~ RESPONSES$VIZ))
+summary(lm(RESPONSES$Q3 ~ RESPONSES$VIZ))
+summary(lm(RESPONSES$Q4 ~ RESPONSES$VIZ))
+summary(lm(RESPONSES$Q5 ~ RESPONSES$VIZ))
+summary(lm(RESPONSES$Q6 ~ RESPONSES$VIZ))
+summary(lm(RESPONSES$Q7 ~ RESPONSES$VIZ))
+summary(lm(RESPONSES$Q8 ~ RESPONSES$VIZ))
+summary(lm(RESPONSES$Q9 ~ RESPONSES$VIZ))
+summary(lm(RESPONSES$Q10 ~ RESPONSES$VIZ))
+
+# Are there differences in post-block survey between LINK conditions
+
+summary(lm(RESPONSES$Q1 ~ RESPONSES$LINKS))
+summary(lm(RESPONSES$Q2 ~ RESPONSES$LINKS))
+summary(lm(RESPONSES$Q3 ~ RESPONSES$LINKS))
+summary(lm(RESPONSES$Q4 ~ RESPONSES$LINKS))
+summary(lm(RESPONSES$Q5 ~ RESPONSES$LINKS))
+summary(lm(RESPONSES$Q6 ~ RESPONSES$LINKS))
+summary(lm(RESPONSES$Q7 ~ RESPONSES$LINKS))
+summary(lm(RESPONSES$Q8 ~ RESPONSES$LINKS))
+summary(lm(RESPONSES$Q9 ~ RESPONSES$LINKS))
+summary(lm(RESPONSES$Q10 ~ RESPONSES$LINKS))
+
+# Are there interactions in post-block survey between VIZ and LINK conditions
+
+summary(lm(RESPONSES$Q1 ~ RESPONSES$VIZ + RESPONSES$LINKS))
+summary(lm(RESPONSES$Q2 ~ RESPONSES$VIZ + RESPONSES$LINKS))
+summary(lm(RESPONSES$Q3 ~ RESPONSES$VIZ + RESPONSES$LINKS))
+summary(lm(RESPONSES$Q4 ~ RESPONSES$VIZ + RESPONSES$LINKS))
+summary(lm(RESPONSES$Q5 ~ RESPONSES$VIZ + RESPONSES$LINKS))
+summary(lm(RESPONSES$Q6 ~ RESPONSES$VIZ + RESPONSES$LINKS))
+summary(lm(RESPONSES$Q7 ~ RESPONSES$VIZ + RESPONSES$LINKS))
+summary(lm(RESPONSES$Q8 ~ RESPONSES$VIZ + RESPONSES$LINKS))
+summary(lm(RESPONSES$Q9 ~ RESPONSES$VIZ + RESPONSES$LINKS))
+summary(lm(RESPONSES$Q10 ~ RESPONSES$VIZ + RESPONSES$LINKS))

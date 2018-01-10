@@ -1,0 +1,2874 @@
+PARTICIPANT1,
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:39.4
+QNumT:1 Input Value:Movie: X-Men: Days of Future Past (2014),
+Time Elapsed,07:27.2
+QNumT:2 Input Value:Movie: From Hell (2001)Movie: Mystery Men (1999)Movie: Fantastic Four (2015)Movie: Punisher (1989)Movie: Watchmen (2009)Movie: Howard the Duck (1986)Movie: League of Extraordinary Gentlemen (2003),
+Time Elapsed,11:47.6
+QNumT:3 Input Value:Movie: Fantastic Four: Rise of the Silver Surfer (2007),
+Time Elapsed,21:27.3
+QNumT:4 Input Value:Movie: Kingsman: The Secret Service (2015),
+Time Elapsed,33:46.8
+QNumS:0 Input Value:6,
+Time Elapsed,00:22.1
+QNumS:1 Input Value:3,
+Time Elapsed,01:00.6
+QNumS:2 Input Value:6,
+Time Elapsed,01:10.7
+QNumS:3 Input Value:6,
+Time Elapsed,01:29.6
+QNumS:4 Input Value:3,
+Time Elapsed,02:05.5
+QNumS:5 Input Value:6,
+Time Elapsed,02:14.9
+QNumS:6 Input Value:5,
+Time Elapsed,02:29.2
+QNumS:7 Input Value:6,
+Time Elapsed,02:42.2
+QNumS:8 Input Value:6,
+Time Elapsed,03:10.3
+QNumS:9 Input Value:6,
+Time Elapsed,03:30.1
+QNumS:9 Input Value:6,
+Time Elapsed,03:30.1
+7/21/2017 13:09,7/21/2017 13:13
+PARTICIPANT2,
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,04:56.1
+QNumT:1 Input Value:Movie: Avengers (2012),
+Time Elapsed,08:21.3
+QNumT:2 Input Value:Movie: Punisher (1989)Movie: Howard the Duck (1986)Movie: From Hell (2001)Movie: Mystery Men (1999)Movie: Watchmen (2009)Movie: League of Extraordinary Gentlemen (2003),
+Time Elapsed,12:19.8
+QNumT:3 Input Value:Movie: Captain America: the First Avenger (2011),
+Time Elapsed,16:34.0
+QNumT:4 Input Value:Movie: Avengers (2012)Movie: Kingsman: The Secret Service (2015),
+Time Elapsed,17:43.6
+QNumS:0 Input Value:5,
+Time Elapsed,00:19.8
+QNumS:1 Input Value:2,
+Time Elapsed,00:28.6
+QNumS:2 Input Value:6,
+Time Elapsed,00:35.0
+QNumS:3 Input Value:4,
+Time Elapsed,00:39.9
+QNumS:4 Input Value:1,
+Time Elapsed,00:45.3
+QNumS:5 Input Value:6,
+Time Elapsed,00:50.5
+QNumS:6 Input Value:5,
+Time Elapsed,00:55.3
+QNumS:7 Input Value:5,
+Time Elapsed,01:00.5
+QNumS:8 Input Value:6,
+Time Elapsed,01:05.8
+QNumS:9 Input Value:6,
+Time Elapsed,01:13.5
+QNumS:9 Input Value:6,
+Time Elapsed,01:13.5
+7/21/2017 14:29,7/21/2017 14:30
+PARTICIPANT2
+NodeGraphfalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:37.7
+QNumT:1 Input Value:Captain America: the First Avenger 2011,
+Time Elapsed,02:28.2
+QNumT:2 Input Value:Punisher 1989Howard the Duck 1986Fantastic Four 2015,
+Time Elapsed,02:54.7
+QNumT:3 Input Value:Guardians of the Galaxy 2014,
+Time Elapsed,05:40.1
+QNumT:4 Input Value:Kingsman: The Secret Service 2015,
+Time Elapsed,06:59.6
+QNumS:0 Input Value:4,
+Time Elapsed,00:07.2
+QNumS:1 Input Value:4,
+Time Elapsed,00:11.6
+QNumS:2 Input Value:3,
+Time Elapsed,00:15.3
+QNumS:3 Input Value:6,
+Time Elapsed,00:19.2
+QNumS:4 Input Value:4,
+Time Elapsed,00:24.0
+QNumS:5 Input Value:4,
+Time Elapsed,00:30.7
+QNumS:6 Input Value:3,
+Time Elapsed,00:33.8
+QNumS:7 Input Value:4,
+Time Elapsed,00:39.4
+QNumS:8 Input Value:4,
+Time Elapsed,00:45.3
+QNumS:9 Input Value:5,
+Time Elapsed,00:49.9
+QNumS:9 Input Value:5,
+Time Elapsed,00:49.9
+7/21/2017 14:48,7/21/2017 14:49
+PARTICIPANT3,
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,03:59.3
+QNumT:1 Input Value:Avengers: Age of Ultron 2015,
+Time Elapsed,05:08.1
+QNumT:2 Input Value:Avengers: Age of Ultron 2015Batman Forever 1995,
+Time Elapsed,05:40.7
+QNumT:3 Input Value:The Dark Knight Rises 2012,
+Time Elapsed,08:36.7
+QNumT:4 Input Value:Batman 1989The Dark Knight Rises 2012Scott Pilgrim vs the World 2010,
+Time Elapsed,13:50.7
+QNumS:0 Input Value:4,
+Time Elapsed,00:19.9
+QNumS:1 Input Value:1,
+Time Elapsed,00:29.8
+QNumS:2 Input Value:5,
+Time Elapsed,00:39.4
+QNumS:3 Input Value:5,
+Time Elapsed,00:46.4
+QNumS:4 Input Value:1,
+Time Elapsed,00:53.1
+QNumS:5 Input Value:6,
+Time Elapsed,00:59.0
+QNumS:6 Input Value:5,
+Time Elapsed,01:02.6
+QNumS:7 Input Value:5,
+Time Elapsed,01:11.7
+QNumS:8 Input Value:1,
+Time Elapsed,01:17.8
+QNumS:9 Input Value:5,
+Time Elapsed,01:25.9
+QNumS:9 Input Value:5,
+Time Elapsed,01:25.9
+7/24/2017 11:14,7/24/2017 11:15
+PARTICIPANT3
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:20.4
+QNumT:1 Input Value:Movie: Captain America: Civil War (2016),
+Time Elapsed,02:05.4
+QNumT:2 Input Value:Movie: From Hell (2001),
+Time Elapsed,02:22.7
+QNumT:3 Input Value:Movie: Scott Pilgrim vs the World (2010),
+Time Elapsed,03:54.3
+QNumT:4 Input Value:Movie: The Dark Knight (2008)Movie: Scott Pilgrim vs the World (2010)Movie: Wanted (2008),
+Time Elapsed,05:44.6
+QNumS:0 Input Value:5,
+Time Elapsed,00:03.9
+QNumS:1 Input Value:4,
+Time Elapsed,00:09.8
+QNumS:2 Input Value:6,
+Time Elapsed,00:13.7
+QNumS:3 Input Value:5,
+Time Elapsed,00:19.1
+QNumS:4 Input Value:2,
+Time Elapsed,00:24.9
+QNumS:5 Input Value:6,
+Time Elapsed,00:28.6
+QNumS:6 Input Value:6,
+Time Elapsed,00:32.3
+QNumS:7 Input Value:5,
+Time Elapsed,00:35.8
+QNumS:8 Input Value:5,
+Time Elapsed,00:39.6
+QNumS:9 Input Value:4,
+Time Elapsed,00:44.8
+QNumS:9 Input Value:4,
+Time Elapsed,00:44.8
+7/24/2017 11:26,7/24/2017 11:27
+PARTICIPANT4,
+NodeGraphfalse,
+QNumT:0 Input Value:DC,
+Time Elapsed,12:04.3
+QNumT:1 Input Value:X-Men: Age of Apocalypse 2016,
+Time Elapsed,20:18.9
+QNumT:2 Input Value:Batman Forever 1995,
+Time Elapsed,20:30.5
+QNumT:3 Input Value:Sin City 2005,
+Time Elapsed,22:14.8
+QNumT:4 Input Value:Scott Pilgrim vs the World 2010,
+Time Elapsed,36:36.2
+QNumS:0 Input Value:5,
+Time Elapsed,00:24.2
+QNumS:1 Input Value:4,
+Time Elapsed,00:35.3
+QNumS:2 Input Value:4,
+Time Elapsed,00:44.6
+QNumS:3 Input Value:4,
+Time Elapsed,00:53.9
+QNumS:4 Input Value:3,
+Time Elapsed,01:00.6
+QNumS:5 Input Value:5,
+Time Elapsed,01:07.1
+QNumS:6 Input Value:4,
+Time Elapsed,01:13.2
+QNumS:7 Input Value:4,
+Time Elapsed,01:21.5
+QNumS:8 Input Value:5,
+Time Elapsed,01:29.3
+QNumS:9 Input Value:5,
+Time Elapsed,01:36.0
+QNumS:9 Input Value:5,
+Time Elapsed,01:36.0
+7/24/2017 12:54,7/24/2017 12:56
+PARTICIPANT4
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:45.3
+QNumT:1 Input Value:Movie: Avengers: Age of Ultron (2015),
+Time Elapsed,05:48.6
+QNumT:2 Input Value:Movie: League of Extraordinary Gentlemen (2003),
+Time Elapsed,06:34.1
+QNumT:2 Input Value:Movie: League of Extraordinary Gentlemen (2003)Movie: Watchmen (2009)Movie: From Hell (2001)Movie: Mystery Men (1999),
+Time Elapsed,10:37.9
+QNumT:3 Input Value:Movie: Avengers: Age of Ultron (2015),
+Time Elapsed,10:55.2
+QNumT:4 Input Value:Movie: Scott Pilgrim vs the World (2010),
+Time Elapsed,11:58.2
+QNumS:0 Input Value:5,
+Time Elapsed,00:07.2
+QNumS:1 Input Value:1,
+Time Elapsed,00:15.5
+QNumS:2 Input Value:5,
+Time Elapsed,00:21.4
+QNumS:3 Input Value:5,
+Time Elapsed,00:31.3
+QNumS:4 Input Value:1,
+Time Elapsed,01:04.6
+QNumS:5 Input Value:5,
+Time Elapsed,01:16.8
+QNumS:6 Input Value:5,
+Time Elapsed,01:33.2
+QNumS:7 Input Value:5,
+Time Elapsed,01:42.0
+QNumS:8 Input Value:6,
+Time Elapsed,01:55.7
+QNumS:9 Input Value:6,
+Time Elapsed,02:11.3
+QNumS:9 Input Value:6,
+Time Elapsed,02:11.3
+7/24/2017 13:12,7/24/2017 13:14
+PARTICIPANT5,
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:15.4
+QNumT:1 Input Value:Movie: Green Lantern (2011),
+Time Elapsed,02:23.2
+QNumT:2 Input Value:Movie: Dredd (2012),
+Time Elapsed,03:00.0
+QNumT:3 Input Value:Movie: X-Men: Age of Apocalypse (2016),
+Time Elapsed,03:07.7
+QNumT:4 Input Value:Movie: Avengers (2012),
+Time Elapsed,03:55.1
+QNumS:0 Input Value:3,
+Time Elapsed,00:13.1
+QNumS:1 Input Value:2,
+Time Elapsed,00:25.0
+QNumS:2 Input Value:4,
+Time Elapsed,00:37.3
+QNumS:3 Input Value:4,
+Time Elapsed,00:49.9
+QNumS:4 Input Value:3,
+Time Elapsed,01:04.3
+QNumS:5 Input Value:3,
+Time Elapsed,01:12.5
+QNumS:6 Input Value:4,
+Time Elapsed,01:17.5
+QNumS:7 Input Value:5,
+Time Elapsed,01:26.2
+QNumS:8 Input Value:4,
+Time Elapsed,01:41.1
+QNumS:9 Input Value:2,
+Time Elapsed,01:50.0
+QNumS:9 Input Value:2,
+Time Elapsed,01:50.0
+7/25/2017 12:22,7/25/2017 12:24
+PARTICIPANT5
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:11.1
+QNumT:1 Input Value:Fantastic Four: Rise of the Silver Surfer 2007,
+Time Elapsed,00:47.8
+QNumT:2 Input Value:Teenage Mutant Ninja Turtles 2: the Secret of the Ooze 1991,
+Time Elapsed,01:40.4
+QNumT:3 Input Value:Ghost Rider: Spirit of Vengeance 2012,
+Time Elapsed,02:07.8
+QNumT:4 Input Value:Batman and Robin 1997,
+Time Elapsed,03:01.1
+QNumS:0 Input Value:3,
+Time Elapsed,00:08.0
+QNumS:1 Input Value:5,
+Time Elapsed,00:23.2
+QNumS:2 Input Value:2,
+Time Elapsed,00:34.9
+QNumS:3 Input Value:6,
+Time Elapsed,00:40.1
+QNumS:4 Input Value:5,
+Time Elapsed,00:45.9
+QNumS:5 Input Value:4,
+Time Elapsed,00:51.2
+QNumS:6 Input Value:5,
+Time Elapsed,00:55.3
+QNumS:7 Input Value:5,
+Time Elapsed,01:01.0
+QNumS:8 Input Value:4,
+Time Elapsed,01:08.4
+QNumS:9 Input Value:1,
+Time Elapsed,01:16.0
+QNumS:9 Input Value:1,
+Time Elapsed,01:16.0
+7/25/2017 12:30,7/25/2017 12:31
+PARTICIPANT6,
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,04:01.3
+QNumT:1 Input Value:Movie: Avengers (2012),
+Time Elapsed,10:09.3
+QNumT:2 Input Value:Movie: League of Extraordinary Gentlemen (2003)Movie: Mystery Men (1999)Movie: From Hell (2001),
+Time Elapsed,13:52.9
+QNumT:3 Input Value:Movie: Avengers (2012),
+Time Elapsed,16:22.3
+QNumT:4 Input Value:Movie: The Dark Knight (2008)Movie: Scott Pilgrim vs the World (2010)Movie: Superman Returns (2006),
+Time Elapsed,22:18.6
+QNumS:0 Input Value:2,
+Time Elapsed,00:15.4
+QNumS:1 Input Value:5,
+Time Elapsed,00:32.4
+QNumS:2 Input Value:6,
+Time Elapsed,00:41.6
+QNumS:3 Input Value:6,
+Time Elapsed,00:55.6
+QNumS:4 Input Value:2,
+Time Elapsed,01:17.3
+QNumS:5 Input Value:6,
+Time Elapsed,01:23.3
+QNumS:6 Input Value:5,
+Time Elapsed,01:29.4
+QNumS:7 Input Value:4,
+Time Elapsed,01:47.3
+QNumS:8 Input Value:4,
+Time Elapsed,02:29.1
+QNumS:9 Input Value:5,
+Time Elapsed,02:49.8
+QNumS:9 Input Value:5,
+Time Elapsed,02:49.8
+7/25/2017 14:47,7/25/2017 14:50
+PARTICIPANT6
+NodeGraphfalse,
+QNumT:0 Input Value:DC,
+Time Elapsed,03:35.3
+QNumT:1 Input Value:Avengers 2012,
+Time Elapsed,07:03.0
+QNumT:2 Input Value:From Hell 2001,
+Time Elapsed,10:08.9
+QNumT:3 Input Value:Men In Black 2 2002,
+Time Elapsed,11:42.0
+QNumT:4 Input Value:The Dark Knight 2008Scott Pilgrim vs the World 2010Captain America: the Winter Soldier 2014Batman Begins 2005,
+Time Elapsed,16:25.5
+QNumS:0 Input Value:6,
+Time Elapsed,00:12.7
+QNumS:1 Input Value:6,
+Time Elapsed,00:19.0
+QNumS:2 Input Value:5,
+Time Elapsed,00:26.2
+QNumS:3 Input Value:6,
+Time Elapsed,00:30.5
+QNumS:4 Input Value:1,
+Time Elapsed,00:44.4
+QNumS:5 Input Value:6,
+Time Elapsed,00:49.1
+QNumS:6 Input Value:6,
+Time Elapsed,00:53.1
+QNumS:7 Input Value:5,
+Time Elapsed,01:03.2
+QNumS:8 Input Value:6,
+Time Elapsed,01:16.5
+QNumS:9 Input Value:6,
+Time Elapsed,01:24.6
+QNumS:9 Input Value:6,
+Time Elapsed,01:24.6
+7/25/2017 15:11,7/25/2017 15:13
+PARTICIPANT7,
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:20.2
+QNumT:1 Input Value:X-Men: Days of Future Past 2014,
+Time Elapsed,02:13.6
+QNumT:2 Input Value:Fantastic Four 2015From Hell 2001League of Extraordinary Gentlemen 2003,
+Time Elapsed,04:30.7
+QNumT:3 Input Value:Captain America: the First Avenger 2011,
+Time Elapsed,06:37.4
+QNumT:4 Input Value:Scott Pilgrim vs the World 2010The Dark Knight 2008The Dark Knight Rises 2012,
+Time Elapsed,10:13.5
+QNumS:0 Input Value:3,
+Time Elapsed,00:11.6
+QNumS:1 Input Value:4,
+Time Elapsed,00:18.6
+QNumS:2 Input Value:3,
+Time Elapsed,00:24.5
+QNumS:3 Input Value:5,
+Time Elapsed,00:29.3
+QNumS:4 Input Value:2,
+Time Elapsed,00:36.2
+QNumS:5 Input Value:5,
+Time Elapsed,00:40.6
+QNumS:6 Input Value:4,
+Time Elapsed,00:45.6
+QNumS:7 Input Value:4,
+Time Elapsed,00:53.0
+QNumS:8 Input Value:5,
+Time Elapsed,01:01.3
+QNumS:9 Input Value:3,
+Time Elapsed,01:09.9
+QNumS:9 Input Value:3,
+Time Elapsed,01:09.9
+7/26/2017 10:27,7/26/2017 10:28
+PARTICIPANT7
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:09.4
+QNumT:1 Input Value:Movie: Avengers: Age of Ultron (2015),
+Time Elapsed,02:08.7
+QNumT:2 Input Value:Movie: From Hell (2001)Movie: League of Extraordinary Gentlemen (2003)Movie: Mystery Men (1999),
+Time Elapsed,04:01.7
+QNumT:3 Input Value:Movie: Sin City 2 (2013),
+Time Elapsed,05:34.3
+QNumT:4 Input Value:Movie: Scott Pilgrim vs the World (2010)Movie: The Dark Knight (2008)Movie: Kingsman: The Secret Service (2015)Movie: Iron Man 2 (2010),
+Time Elapsed,07:16.3
+QNumS:0 Input Value:3,
+Time Elapsed,00:07.0
+QNumS:1 Input Value:4,
+Time Elapsed,00:13.2
+QNumS:2 Input Value:5,
+Time Elapsed,00:18.8
+QNumS:3 Input Value:5,
+Time Elapsed,00:23.1
+QNumS:4 Input Value:2,
+Time Elapsed,00:29.0
+QNumS:5 Input Value:5,
+Time Elapsed,00:32.4
+QNumS:6 Input Value:4,
+Time Elapsed,00:37.7
+QNumS:7 Input Value:5,
+Time Elapsed,00:44.3
+QNumS:8 Input Value:5,
+Time Elapsed,00:48.6
+QNumS:9 Input Value:5,
+Time Elapsed,00:55.8
+QNumS:9 Input Value:5,
+Time Elapsed,00:55.8
+7/26/2017 10:38,7/26/2017 10:39
+PARTICIPANT8,
+NodeGraphfalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,04:11.3
+QNumT:1 Input Value:300 2006,
+Time Elapsed,07:27.6
+QNumT:2 Input Value:Avengers: Age of Ultron 2015,
+Time Elapsed,07:33.8
+QNumT:3 Input Value:Kingsman: The Secret Service 2015,
+Time Elapsed,09:22.2
+QNumT:4 Input Value:Avengers 2012Kingsman: The Secret Service 2015Batman Begins 2005,
+Time Elapsed,31:20.2
+QNumS:0 Input Value:4,
+Time Elapsed,00:09.3
+QNumS:1 Input Value:4,
+Time Elapsed,00:15.8
+QNumS:2 Input Value:4,
+Time Elapsed,00:21.8
+QNumS:3 Input Value:5,
+Time Elapsed,00:31.8
+QNumS:4 Input Value:3,
+Time Elapsed,00:39.6
+QNumS:5 Input Value:6,
+Time Elapsed,00:47.1
+QNumS:6 Input Value:4,
+Time Elapsed,00:52.1
+QNumS:7 Input Value:4,
+Time Elapsed,00:56.8
+QNumS:8 Input Value:3,
+Time Elapsed,01:04.8
+QNumS:9 Input Value:5,
+Time Elapsed,01:10.8
+QNumS:9 Input Value:5,
+Time Elapsed,01:10.8
+7/26/2017 12:48,7/26/2017 12:49
+PARTICIPANT8
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:31.1
+QNumT:1 Input Value:Movie: Avengers: Age of Ultron (2015),
+Time Elapsed,04:30.5
+QNumT:2 Input Value:Movie: Mystery Men (1999)Movie: From Hell (2001)Movie: Punisher (1989)Movie: Howard the Duck (1986)Movie: League of Extraordinary Gentlemen (2003)Movie: Watchmen (2009),
+Time Elapsed,09:12.7
+QNumT:3 Input Value:Movie: The Dark Knight Rises (2012),
+Time Elapsed,11:23.3
+QNumT:4 Input Value:Movie: The Dark Knight (2008)Movie: Scott Pilgrim vs the World (2010)Movie: Kingsman: The Secret Service (2015)Movie: Captain America: the First Avenger (2011),
+Time Elapsed,13:25.7
+QNumS:0 Input Value:5,
+Time Elapsed,00:13.0
+QNumS:1 Input Value:3,
+Time Elapsed,00:19.4
+QNumS:2 Input Value:4,
+Time Elapsed,00:35.4
+QNumS:3 Input Value:6,
+Time Elapsed,00:39.5
+QNumS:4 Input Value:2,
+Time Elapsed,00:48.1
+QNumS:5 Input Value:6,
+Time Elapsed,00:51.9
+QNumS:6 Input Value:5,
+Time Elapsed,00:58.0
+QNumS:7 Input Value:5,
+Time Elapsed,01:05.4
+QNumS:8 Input Value:5,
+Time Elapsed,01:08.9
+QNumS:9 Input Value:5,
+Time Elapsed,01:14.2
+QNumS:9 Input Value:5,
+Time Elapsed,01:14.2
+7/26/2017 13:06,7/26/2017 13:07
+PARTICIPANT9,
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:09.2
+QNumT:1 Input Value:Movie: Iron Man (2008),
+Time Elapsed,04:43.0
+QNumT:2 Input Value:Movie: Watchmen (2009)Movie: League of Extraordinary Gentlemen (2003)Movie: From Hell (2001),
+Time Elapsed,09:05.1
+QNumT:3 Input Value:Movie: Men In Black 2 (2002),
+Time Elapsed,11:43.0
+QNumT:4 Input Value:Movie: Wanted (2008),
+Time Elapsed,16:47.9
+QNumS:0 Input Value:3,
+Time Elapsed,00:29.0
+QNumS:1 Input Value:1,
+Time Elapsed,00:37.1
+QNumS:2 Input Value:4,
+Time Elapsed,00:46.5
+QNumS:3 Input Value:4,
+Time Elapsed,00:54.8
+QNumS:4 Input Value:4,
+Time Elapsed,01:05.7
+QNumS:5 Input Value:5,
+Time Elapsed,01:12.2
+QNumS:6 Input Value:4,
+Time Elapsed,01:20.5
+QNumS:7 Input Value:4,
+Time Elapsed,01:32.3
+QNumS:8 Input Value:4,
+Time Elapsed,01:51.0
+QNumS:9 Input Value:5,
+Time Elapsed,02:03.3
+QNumS:9 Input Value:5,
+Time Elapsed,02:03.3
+7/26/2017 14:38,7/26/2017 14:40
+PARTICIPANT9
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,02:49.8
+QNumT:1 Input Value:Avengers: Age of Ultron 2015,
+Time Elapsed,04:18.5
+QNumT:2 Input Value:League of Extraordinary Gentlemen 2003From Hell 2001Punisher 1989,
+Time Elapsed,06:35.6
+QNumT:3 Input Value:Iron Man 2 2010,
+Time Elapsed,08:26.5
+QNumT:4 Input Value:Red 2010,
+Time Elapsed,14:52.8
+QNumS:0 Input Value:2,
+Time Elapsed,00:15.9
+QNumS:1 Input Value:1,
+Time Elapsed,00:25.7
+QNumS:2 Input Value:2,
+Time Elapsed,00:42.0
+QNumS:3 Input Value:3,
+Time Elapsed,00:54.7
+QNumS:4 Input Value:4,
+Time Elapsed,01:00.6
+QNumS:5 Input Value:5,
+Time Elapsed,01:09.8
+QNumS:6 Input Value:3,
+Time Elapsed,01:18.3
+QNumS:7 Input Value:2,
+Time Elapsed,01:27.6
+QNumS:8 Input Value:3,
+Time Elapsed,01:39.2
+QNumS:9 Input Value:6,
+Time Elapsed,01:53.4
+QNumS:9 Input Value:6,
+Time Elapsed,01:53.4
+7/26/2017 14:58,7/26/2017 15:00
+PARTICIPANT10,
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:04.1
+QNumT:1 Input Value:Movie: The Dark Knight Rises (2012),
+Time Elapsed,01:45.2
+QNumT:2 Input Value:Movie: Punisher (1989),
+Time Elapsed,02:29.5
+QNumT:3 Input Value:Movie: X-Men: Age of Apocalypse (2016),
+Time Elapsed,03:29.0
+QNumT:4 Input Value:Movie: Superman Returns (2006),
+Time Elapsed,04:51.8
+QNumS:0 Input Value:5,
+Time Elapsed,00:06.0
+QNumS:1 Input Value:1,
+Time Elapsed,00:12.0
+QNumS:2 Input Value:4,
+Time Elapsed,00:19.4
+QNumS:3 Input Value:5,
+Time Elapsed,00:22.8
+QNumS:4 Input Value:2,
+Time Elapsed,00:27.3
+QNumS:5 Input Value:4,
+Time Elapsed,00:34.1
+QNumS:6 Input Value:5,
+Time Elapsed,00:37.8
+QNumS:7 Input Value:5,
+Time Elapsed,00:41.8
+QNumS:8 Input Value:4,
+Time Elapsed,00:50.2
+QNumS:9 Input Value:4,
+Time Elapsed,00:56.6
+QNumS:9 Input Value:4,
+Time Elapsed,00:56.6
+7/27/2017 12:47,7/27/2017 12:48
+PARTICIPANT10
+NodeGraphfalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:07.7
+QNumT:1 Input Value:X-Men Origins: Wolverine 2009,
+Time Elapsed,01:33.1
+QNumT:2 Input Value:Fantastic Four 2015,
+Time Elapsed,02:53.4
+QNumT:3 Input Value:X-Men Origins: Wolverine 2009,
+Time Elapsed,03:21.4
+QNumT:4 Input Value:Scott Pilgrim vs the World 2010Superman Returns 2006,
+Time Elapsed,04:11.0
+QNumS:0 Input Value:3,
+Time Elapsed,00:04.6
+QNumS:1 Input Value:1,
+Time Elapsed,00:10.5
+QNumS:2 Input Value:4,
+Time Elapsed,00:14.7
+QNumS:3 Input Value:4,
+Time Elapsed,00:18.5
+QNumS:4 Input Value:1,
+Time Elapsed,00:20.9
+QNumS:5 Input Value:4,
+Time Elapsed,00:23.5
+QNumS:6 Input Value:5,
+Time Elapsed,00:26.1
+QNumS:7 Input Value:3,
+Time Elapsed,00:28.4
+QNumS:8 Input Value:3,
+Time Elapsed,00:37.2
+QNumS:9 Input Value:4,
+Time Elapsed,00:41.1
+QNumS:9 Input Value:4,
+Time Elapsed,00:41.1
+7/27/2017 12:53,7/27/2017 12:54
+PARTICIPANT11,
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,03:28.5
+QNumT:1 Input Value:X-Men: Age of Apocalypse 2016,
+Time Elapsed,05:10.3
+QNumT:2 Input Value:Fantastic Four: Rise of the Silver Surfer 2007,
+Time Elapsed,07:01.5
+QNumT:3 Input Value:Avengers: Age of Ultron 2015,
+Time Elapsed,13:17.7
+QNumT:4 Input Value:Fantastic Four 2005Ghost Rider 2007,
+Time Elapsed,15:28.8
+QNumS:0 Input Value:1,
+Time Elapsed,00:10.4
+QNumS:1 Input Value:3,
+Time Elapsed,00:26.3
+QNumS:2 Input Value:1,
+Time Elapsed,00:34.5
+QNumS:3 Input Value:4,
+Time Elapsed,00:40.6
+QNumS:4 Input Value:3,
+Time Elapsed,00:49.5
+QNumS:5 Input Value:4,
+Time Elapsed,00:59.6
+QNumS:6 Input Value:3,
+Time Elapsed,01:05.1
+QNumS:7 Input Value:2,
+Time Elapsed,01:14.9
+QNumS:8 Input Value:1,
+Time Elapsed,01:32.8
+QNumS:9 Input Value:4,
+Time Elapsed,01:41.3
+QNumS:9 Input Value:4,
+Time Elapsed,01:41.3
+7/27/2017 14:27,7/27/2017 14:29
+PARTICIPANT11
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:23.9
+QNumT:1 Input Value:Movie: X-Men: Days of Future Past (2014),
+Time Elapsed,02:42.4
+QNumT:2 Input Value:Movie: League of Extraordinary Gentlemen (2003),
+Time Elapsed,02:54.6
+QNumT:3 Input Value:Movie: Jonah Hex (2010),
+Time Elapsed,05:33.4
+QNumT:4 Input Value:Movie: Suicide Squad (2016),
+Time Elapsed,08:05.2
+QNumS:0 Input Value:4,
+Time Elapsed,00:10.3
+QNumS:1 Input Value:2,
+Time Elapsed,00:15.9
+QNumS:2 Input Value:5,
+Time Elapsed,00:22.3
+QNumS:3 Input Value:5,
+Time Elapsed,00:26.7
+QNumS:4 Input Value:2,
+Time Elapsed,00:37.8
+QNumS:5 Input Value:4,
+Time Elapsed,00:43.3
+QNumS:6 Input Value:5,
+Time Elapsed,00:48.8
+QNumS:7 Input Value:5,
+Time Elapsed,00:56.1
+QNumS:8 Input Value:6,
+Time Elapsed,01:05.9
+QNumS:9 Input Value:4,
+Time Elapsed,01:13.2
+QNumS:9 Input Value:4,
+Time Elapsed,01:13.2
+7/27/2017 14:39,7/27/2017 14:40
+PARTICIPANT12,
+NodeGraphfalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,02:15.9
+QNumT:1 Input Value:X-Men: Age of Apocalypse 2016,
+Time Elapsed,03:36.6
+QNumT:2 Input Value:Amazing Spiderman 2 2014Hulk 2003Punisher 2004The Incredible Hulk 2008Swamp Thing 1982,
+Time Elapsed,09:08.0
+QNumT:3 Input Value:Iron Man 2008,
+Time Elapsed,12:51.1
+QNumT:4 Input Value:The Dark Knight Rises 2012Kingsman: The Secret Service 2015Captain America: the Winter Soldier 2014,
+Time Elapsed,24:08.3
+QNumS:0 Input Value:1,
+Time Elapsed,00:21.1
+QNumS:1 Input Value:4,
+Time Elapsed,00:36.6
+QNumS:2 Input Value:3,
+Time Elapsed,00:50.2
+QNumS:3 Input Value:4,
+Time Elapsed,01:03.0
+QNumS:4 Input Value:5,
+Time Elapsed,01:12.7
+QNumS:5 Input Value:5,
+Time Elapsed,01:26.2
+QNumS:6 Input Value:4,
+Time Elapsed,01:34.6
+QNumS:7 Input Value:4,
+Time Elapsed,01:42.4
+QNumS:8 Input Value:2,
+Time Elapsed,02:05.6
+QNumS:9 Input Value:4,
+Time Elapsed,02:26.5
+QNumS:9 Input Value:4,
+Time Elapsed,02:26.5
+7/28/2017 14:58,7/28/2017 15:01
+PARTICIPANT12
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:36.5
+QNumT:1 Input Value:Movie: Avengers: Age of Ultron (2015),
+Time Elapsed,02:52.4
+QNumT:2 Input Value:Movie: Watchmen (2009)Movie: Mystery Men (1999)Movie: From Hell (2001)Movie: League of Extraordinary Gentlemen (2003),
+Time Elapsed,09:45.3
+QNumT:3 Input Value:Movie: Captain America: the First Avenger (2011),
+Time Elapsed,13:57.5
+QNumT:4 Input Value:Movie: Scott Pilgrim vs the World (2010)Movie: The Dark Knight Rises (2012)Movie: Captain America: the Winter Soldier (2014)Movie: Kingsman: The Secret Service (2015),
+Time Elapsed,17:18.2
+QNumS:0 Input Value:5,
+Time Elapsed,00:12.9
+QNumS:1 Input Value:3,
+Time Elapsed,00:44.7
+QNumS:2 Input Value:4,
+Time Elapsed,00:58.6
+QNumS:3 Input Value:5,
+Time Elapsed,01:05.7
+QNumS:4 Input Value:1,
+Time Elapsed,01:20.3
+QNumS:5 Input Value:4,
+Time Elapsed,01:27.1
+QNumS:6 Input Value:4,
+Time Elapsed,01:41.8
+QNumS:7 Input Value:5,
+Time Elapsed,01:53.3
+QNumS:8 Input Value:2,
+Time Elapsed,02:06.6
+QNumS:9 Input Value:4,
+Time Elapsed,02:19.9
+QNumS:9 Input Value:4,
+Time Elapsed,02:20.0
+7/28/2017 15:19,7/28/2017 15:22
+PARTICIPANT13,
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:09.2
+QNumT:1 Input Value:Movie: Men In Black 3 (2012),
+Time Elapsed,01:30.0
+QNumT:2 Input Value:Movie: From Hell (2001),
+Time Elapsed,01:38.9
+QNumT:3 Input Value:Movie: Teenage Mutant Ninja Turtles (1990),
+Time Elapsed,03:08.7
+QNumT:4 Input Value:Movie: Red 2 (2013),
+Time Elapsed,07:26.1
+QNumS:0 Input Value:2,
+Time Elapsed,00:06.7
+QNumS:1 Input Value:1,
+Time Elapsed,00:12.6
+QNumS:2 Input Value:2,
+Time Elapsed,00:16.8
+QNumS:3 Input Value:4,
+Time Elapsed,00:20.4
+QNumS:4 Input Value:1,
+Time Elapsed,00:27.1
+QNumS:5 Input Value:6,
+Time Elapsed,00:30.3
+QNumS:6 Input Value:5,
+Time Elapsed,00:34.1
+QNumS:7 Input Value:4,
+Time Elapsed,00:37.7
+QNumS:8 Input Value:2,
+Time Elapsed,00:42.9
+QNumS:9 Input Value:4,
+Time Elapsed,00:48.0
+QNumS:9 Input Value:4,
+Time Elapsed,00:48.0
+8/7/2017 10:33,8/7/2017 10:34
+PARTICIPANT13
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:32.9
+QNumT:1 Input Value:Avengers 2012,
+Time Elapsed,01:51.3
+QNumT:2 Input Value:Fantastic Four 2015Punisher 1989From Hell 2001Howard the Duck 1986,
+Time Elapsed,05:03.4
+QNumT:3 Input Value:Sin City 2 2013,
+Time Elapsed,06:32.9
+QNumT:4 Input Value:Red 2010Fantastic Four 2005,
+Time Elapsed,20:09.5
+QNumS:0 Input Value:3,
+Time Elapsed,00:08.2
+QNumS:1 Input Value:2,
+Time Elapsed,00:11.0
+QNumS:2 Input Value:4,
+Time Elapsed,00:13.8
+QNumS:3 Input Value:5,
+Time Elapsed,00:15.9
+QNumS:4 Input Value:1,
+Time Elapsed,00:19.0
+QNumS:5 Input Value:5,
+Time Elapsed,00:21.7
+QNumS:6 Input Value:6,
+Time Elapsed,00:24.0
+QNumS:7 Input Value:5,
+Time Elapsed,00:26.5
+QNumS:8 Input Value:4,
+Time Elapsed,00:31.6
+QNumS:9 Input Value:2,
+Time Elapsed,00:36.4
+QNumS:9 Input Value:2,
+Time Elapsed,00:36.4
+8/7/2017 10:56,8/7/2017 10:57
+PARTICIPANT14,
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:25.2
+QNumT:1 Input Value:Movie: Superman 2 (1980),
+Time Elapsed,03:26.4
+QNumT:2 Input Value:Movie: V for Vendetta (2006)Movie: Constantine (2005)Movie: Kick-ass 2 (2013)Movie: Judge Dredd (1995)Movie: Wanted (2008)Movie: League of Extraordinary Gentlemen (2003)Movie: Dredd (2012)Movie: Men In Black (1997)Movie: Scott Pilgrim vs the World (2010),
+Time Elapsed,07:33.2
+QNumT:3 Input Value:Movie: Amazing Spiderman 2 (2014),
+Time Elapsed,08:38.1
+QNumT:4 Input Value:Movie: Batman Forever (1995),
+Time Elapsed,11:27.8
+QNumS:0 Input Value:5,
+Time Elapsed,00:10.4
+QNumS:1 Input Value:3,
+Time Elapsed,00:23.6
+QNumS:2 Input Value:6,
+Time Elapsed,00:28.1
+QNumS:3 Input Value:6,
+Time Elapsed,00:33.6
+QNumS:4 Input Value:1,
+Time Elapsed,00:40.0
+QNumS:5 Input Value:5,
+Time Elapsed,00:45.1
+QNumS:6 Input Value:5,
+Time Elapsed,00:50.0
+QNumS:7 Input Value:6,
+Time Elapsed,00:57.1
+QNumS:8 Input Value:5,
+Time Elapsed,01:04.5
+QNumS:9 Input Value:5,
+Time Elapsed,01:14.9
+QNumS:9 Input Value:5,
+Time Elapsed,01:14.9
+8/7/2017 12:35,8/7/2017 12:36
+PARTICIPANT14
+NodeGraphfalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:30.0
+QNumT:1 Input Value:Avengers 2012,
+Time Elapsed,04:37.4
+QNumT:2 Input Value:Howard the Duck 1986,
+Time Elapsed,09:39.0
+QNumT:3 Input Value:X-Men: Days of Future Past 2014,
+Time Elapsed,11:08.9
+QNumT:4 Input Value:Superman Returns 2006,
+Time Elapsed,16:51.8
+QNumS:0 Input Value:5,
+Time Elapsed,00:06.0
+QNumS:1 Input Value:1,
+Time Elapsed,00:11.5
+QNumS:2 Input Value:6,
+Time Elapsed,00:15.0
+QNumS:3 Input Value:6,
+Time Elapsed,00:20.9
+QNumS:4 Input Value:1,
+Time Elapsed,00:24.6
+QNumS:5 Input Value:5,
+Time Elapsed,00:30.1
+QNumS:6 Input Value:6,
+Time Elapsed,00:34.2
+QNumS:7 Input Value:6,
+Time Elapsed,00:39.4
+QNumS:8 Input Value:5,
+Time Elapsed,00:45.3
+QNumS:9 Input Value:5,
+Time Elapsed,00:52.7
+QNumS:9 Input Value:5,
+Time Elapsed,00:52.7
+8/7/2017 12:54,8/7/2017 12:55
+PARTICIPANT15,
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:51.9
+QNumT:1 Input Value:Captain America: Civil War 2016,
+Time Elapsed,02:00.5
+QNumT:2 Input Value:Kick-ass 2010Dredd 2012Punisher 2004Hulk 2003,
+Time Elapsed,04:23.7
+QNumT:3 Input Value:Avengers: Age of Ultron 2015,
+Time Elapsed,06:07.4
+QNumT:4 Input Value:Scott Pilgrim vs the World 2010Captain America: the Winter Soldier 2014Avengers: Age of Ultron 2015,
+Time Elapsed,13:25.3
+QNumS:0 Input Value:5,
+Time Elapsed,00:14.6
+QNumS:1 Input Value:3,
+Time Elapsed,00:20.2
+QNumS:2 Input Value:4,
+Time Elapsed,00:28.4
+QNumS:3 Input Value:5,
+Time Elapsed,00:36.6
+QNumS:4 Input Value:2,
+Time Elapsed,00:44.7
+QNumS:5 Input Value:4,
+Time Elapsed,00:52.3
+QNumS:6 Input Value:5,
+Time Elapsed,00:58.1
+QNumS:7 Input Value:3,
+Time Elapsed,01:03.0
+QNumS:8 Input Value:2,
+Time Elapsed,01:11.1
+QNumS:9 Input Value:2,
+Time Elapsed,01:17.3
+QNumS:9 Input Value:2,
+Time Elapsed,01:17.3
+8/8/2017 12:28,8/8/2017 12:29
+PARTICIPANT15
+SphereScenetrue,
+QNumT:0 Input Value:Dark Horse,
+Time Elapsed,00:52.0
+QNumT:1 Input Value:Movie: Avengers (2012),
+Time Elapsed,05:52.9
+QNumT:2 Input Value:Movie: Spawn (1997)Movie: Constantine (2005)Movie: From Hell (2001)Movie: League of Extraordinary Gentlemen (2003),
+Time Elapsed,10:58.3
+QNumT:3 Input Value:Movie: Supergirl (1984),
+Time Elapsed,13:50.0
+QNumT:4 Input Value:Movie: Red 2 (2013)Movie: Superman Returns (2006)Movie: The Dark Knight Rises (2012)Movie: Red (2010)Movie: Wanted (2008),
+Time Elapsed,20:29.3
+QNumS:0 Input Value:5,
+Time Elapsed,00:07.0
+QNumS:1 Input Value:2,
+Time Elapsed,00:16.9
+QNumS:2 Input Value:5,
+Time Elapsed,00:21.6
+QNumS:3 Input Value:5,
+Time Elapsed,00:29.9
+QNumS:4 Input Value:3,
+Time Elapsed,00:35.5
+QNumS:5 Input Value:5,
+Time Elapsed,00:40.0
+QNumS:6 Input Value:5,
+Time Elapsed,00:43.6
+QNumS:7 Input Value:4,
+Time Elapsed,00:48.4
+QNumS:8 Input Value:3,
+Time Elapsed,00:54.0
+QNumS:9 Input Value:3,
+Time Elapsed,01:00.3
+QNumS:9 Input Value:3,
+Time Elapsed,01:00.3
+8/8/2017 12:53,8/8/2017 12:54
+PARTICIPANT16,
+NodeGraphfalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:46.1
+QNumT:1 Input Value:Avengers: Age of Ultron 2015,
+Time Elapsed,06:02.3
+QNumT:2 Input Value:From Hell 2001League of Extraordinary Gentlemen 2003,
+Time Elapsed,08:17.3
+QNumT:3 Input Value:X-Men: Days of Future Past 2014,
+Time Elapsed,13:37.8
+QNumT:4 Input Value:Scott Pilgrim vs the World 2010The Dark Knight 2008Avengers 2012Thor 2011,
+Time Elapsed,20:03.4
+QNumS:0 Input Value:4,
+Time Elapsed,00:13.0
+QNumS:1 Input Value:4,
+Time Elapsed,00:19.9
+QNumS:2 Input Value:4,
+Time Elapsed,00:27.2
+QNumS:3 Input Value:2,
+Time Elapsed,00:34.3
+QNumS:4 Input Value:2,
+Time Elapsed,00:41.7
+QNumS:5 Input Value:5,
+Time Elapsed,00:45.9
+QNumS:6 Input Value:3,
+Time Elapsed,00:51.3
+QNumS:7 Input Value:3,
+Time Elapsed,00:57.2
+QNumS:8 Input Value:2,
+Time Elapsed,01:03.1
+QNumS:9 Input Value:5,
+Time Elapsed,01:08.9
+QNumS:9 Input Value:5,
+Time Elapsed,01:08.9
+8/9/2017 10:36,8/9/2017 10:37
+PARTICIPANT16
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:12.4
+QNumT:1 Input Value:Movie: X2 (2003),
+Time Elapsed,05:48.1
+QNumT:2 Input Value:Movie: Mystery Men (1999)Movie: From Hell (2001)Movie: Howard the Duck (1986)Movie: Punisher (1989)Movie: Fantastic Four (2015)Movie: League of Extraordinary Gentlemen (2003)Movie: Watchmen (2009),
+Time Elapsed,10:46.5
+QNumT:3 Input Value:Movie: Jonah Hex (2010),
+Time Elapsed,14:35.0
+QNumT:4 Input Value:Movie: Scott Pilgrim vs the World (2010)Movie: The Dark Knight (2008)Movie: Kingsman: The Secret Service (2015),
+Time Elapsed,20:30.6
+QNumS:0 Input Value:4,
+Time Elapsed,00:07.2
+QNumS:1 Input Value:5,
+Time Elapsed,00:12.5
+QNumS:2 Input Value:5,
+Time Elapsed,00:16.1
+QNumS:3 Input Value:5,
+Time Elapsed,00:22.3
+QNumS:4 Input Value:1,
+Time Elapsed,00:28.2
+QNumS:5 Input Value:4,
+Time Elapsed,00:32.3
+QNumS:6 Input Value:4,
+Time Elapsed,00:35.2
+QNumS:7 Input Value:4,
+Time Elapsed,00:39.2
+QNumS:8 Input Value:5,
+Time Elapsed,00:46.7
+QNumS:9 Input Value:5,
+Time Elapsed,00:50.6
+QNumS:9 Input Value:5,
+Time Elapsed,00:50.6
+8/9/2017 11:01,8/9/2017 11:02
+PARTICIPANT17,
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,05:08.1
+QNumT:1 Input Value:Movie: X-Men: Days of Future Past (2014),
+Time Elapsed,07:25.9
+QNumT:2 Input Value:Movie: Watchmen (2009)Movie: From Hell (2001)Movie: Mystery Men (1999)Movie: League of Extraordinary Gentlemen (2003)Movie: Fantastic Four (2015)Movie: Howard the Duck (1986),
+Time Elapsed,09:35.3
+QNumT:3 Input Value:Movie: Jonah Hex (2010),
+Time Elapsed,13:33.6
+QNumT:4 Input Value:Movie: The Dark Knight (2008)Movie: Scott Pilgrim vs the World (2010)Movie: Captain America: Civil War (2016)Movie: Kingsman: The Secret Service (2015)Movie: Captain America: the First Avenger (2011),
+Time Elapsed,23:45.4
+QNumS:0 Input Value:3,
+Time Elapsed,00:13.3
+QNumS:1 Input Value:3,
+Time Elapsed,00:26.6
+QNumS:2 Input Value:5,
+Time Elapsed,00:33.3
+QNumS:3 Input Value:2,
+Time Elapsed,00:40.0
+QNumS:4 Input Value:1,
+Time Elapsed,00:47.5
+QNumS:5 Input Value:4,
+Time Elapsed,00:53.5
+QNumS:6 Input Value:2,
+Time Elapsed,01:07.5
+QNumS:7 Input Value:3,
+Time Elapsed,01:13.7
+QNumS:8 Input Value:2,
+Time Elapsed,01:22.9
+QNumS:9 Input Value:4,
+Time Elapsed,01:35.0
+QNumS:9 Input Value:4,
+Time Elapsed,01:35.0
+8/9/2017 12:40,8/9/2017 12:42
+PARTICIPANT17
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:31.6
+QNumT:1 Input Value:Avengers: Age of Ultron 2015,
+Time Elapsed,03:17.0
+QNumT:2 Input Value:Mystery Men 1999From Hell 2001Punisher 1989Watchmen 2009League of Extraordinary Gentlemen 2003,
+Time Elapsed,05:00.9
+QNumT:3 Input Value:Kingsman: The Secret Service 2015,
+Time Elapsed,07:16.7
+QNumT:4 Input Value:Scott Pilgrim vs the World 2010The Dark Knight Rises 2012Sin City 2 2013Sin City 2005Fantastic Four 2005,
+Time Elapsed,09:37.9
+QNumS:0 Input Value:5,
+Time Elapsed,00:05.1
+QNumS:1 Input Value:2,
+Time Elapsed,00:11.5
+QNumS:2 Input Value:4,
+Time Elapsed,00:21.1
+QNumS:3 Input Value:3,
+Time Elapsed,00:28.8
+QNumS:4 Input Value:1,
+Time Elapsed,00:35.0
+QNumS:5 Input Value:5,
+Time Elapsed,00:42.0
+QNumS:6 Input Value:4,
+Time Elapsed,00:46.5
+QNumS:7 Input Value:3,
+Time Elapsed,00:53.8
+QNumS:8 Input Value:3,
+Time Elapsed,01:03.7
+QNumS:9 Input Value:4,
+Time Elapsed,01:07.8
+QNumS:9 Input Value:4,
+Time Elapsed,01:07.8
+8/9/2017 12:53,8/9/2017 12:54
+PARTICIPANT18,
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:50.8
+QNumT:1 Input Value:Movie: X-Men: First Class (2011),
+Time Elapsed,04:47.2
+QNumT:2 Input Value:Movie: Watchmen (2009)Movie: League of Extraordinary Gentlemen (2003)Movie: Howard the Duck (1986)Movie: Punisher (1989)Movie: Mystery Men (1999)Movie: From Hell (2001),
+Time Elapsed,10:40.6
+QNumT:3 Input Value:Movie: Captain America: the First Avenger (2011),
+Time Elapsed,13:37.9
+QNumT:4 Input Value:Movie: The Dark Knight (2008)Movie: Scott Pilgrim vs the World (2010),
+Time Elapsed,26:48.9
+QNumS:0 Input Value:2,
+Time Elapsed,00:10.1
+QNumS:1 Input Value:1,
+Time Elapsed,00:18.9
+QNumS:2 Input Value:2,
+Time Elapsed,00:32.2
+QNumS:3 Input Value:3,
+Time Elapsed,00:40.5
+QNumS:4 Input Value:4,
+Time Elapsed,00:46.4
+QNumS:5 Input Value:3,
+Time Elapsed,00:53.8
+QNumS:6 Input Value:1,
+Time Elapsed,01:00.2
+QNumS:7 Input Value:2,
+Time Elapsed,01:08.5
+QNumS:8 Input Value:4,
+Time Elapsed,01:22.4
+QNumS:9 Input Value:4,
+Time Elapsed,01:31.1
+QNumS:9 Input Value:4,
+Time Elapsed,01:31.2
+8/10/2017 14:39,8/10/2017 14:41
+PARTICIPANT18
+NodeGraphfalse,
+QNumT:0 Input Value:Mirage,
+Time Elapsed,05:58.6
+QNumT:1 Input Value:Fantastic Four: Rise of the Silver Surfer 2007,
+Time Elapsed,08:53.2
+QNumT:2 Input Value:Punisher 1989Fantastic Four 2015From Hell 2001League of Extraordinary Gentlemen 2003,
+Time Elapsed,11:32.7
+QNumT:3 Input Value:X-Men: First Class 2011,
+Time Elapsed,16:11.8
+QNumT:4 Input Value:Scott Pilgrim vs the World 2010The Dark Knight 2008Kingsman: The Secret Service 2015Batman Begins 2005The Dark Knight Rises 2012Avengers: Age of Ultron 2015Captain America: the Winter Soldier 2014Fantastic Four: Rise of the Silver Surfer 2007Captain America: Civil War 2016,
+Time Elapsed,26:31.7
+QNumS:0 Input Value:2,
+Time Elapsed,00:11.2
+QNumS:1 Input Value:2,
+Time Elapsed,00:18.0
+QNumS:2 Input Value:3,
+Time Elapsed,00:25.5
+QNumS:3 Input Value:3,
+Time Elapsed,00:31.3
+QNumS:4 Input Value:4,
+Time Elapsed,00:38.8
+QNumS:5 Input Value:5,
+Time Elapsed,00:42.1
+QNumS:6 Input Value:4,
+Time Elapsed,00:45.6
+QNumS:7 Input Value:3,
+Time Elapsed,00:53.1
+QNumS:8 Input Value:4,
+Time Elapsed,00:59.4
+QNumS:9 Input Value:4,
+Time Elapsed,01:02.4
+QNumS:9 Input Value:4,
+Time Elapsed,01:02.4
+8/10/2017 15:11,8/10/2017 15:12
+PARTICIPANT19,
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:59.1
+QNumT:1 Input Value:Iron Man 2008,
+Time Elapsed,02:22.6
+QNumT:2 Input Value:From Hell 2001,
+Time Elapsed,02:47.1
+QNumT:3 Input Value:Men In Black 3 2012,
+Time Elapsed,04:32.7
+QNumT:4 Input Value:Wanted 2008X-Men: Days of Future Past 2014Superman Returns 2006Kingsman: The Secret Service 2015Scott Pilgrim vs the World 2010,
+Time Elapsed,13:58.7
+QNumS:0 Input Value:1,
+Time Elapsed,00:14.5
+QNumS:1 Input Value:3,
+Time Elapsed,00:24.3
+QNumS:2 Input Value:4,
+Time Elapsed,00:31.3
+QNumS:3 Input Value:6,
+Time Elapsed,00:37.1
+QNumS:4 Input Value:2,
+Time Elapsed,00:44.8
+QNumS:5 Input Value:4,
+Time Elapsed,00:49.6
+QNumS:6 Input Value:5,
+Time Elapsed,00:53.3
+QNumS:7 Input Value:5,
+Time Elapsed,00:57.8
+QNumS:8 Input Value:3,
+Time Elapsed,01:04.7
+QNumS:9 Input Value:4,
+Time Elapsed,01:12.4
+QNumS:9 Input Value:4,
+Time Elapsed,01:12.4
+8/14/2017 14:27,8/14/2017 14:28
+PARTICIPANT19
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:47.7
+QNumT:1 Input Value:Movie: Iron Man (2008),
+Time Elapsed,02:10.2
+QNumT:2 Input Value:Movie: From Hell (2001),
+Time Elapsed,02:24.7
+QNumT:3 Input Value:Movie: Jonah Hex (2010),
+Time Elapsed,05:10.6
+QNumT:4 Input Value:Movie: Superman Returns (2006),
+Time Elapsed,17:27.7
+QNumS:0 Input Value:2,
+Time Elapsed,00:05.2
+QNumS:1 Input Value:4,
+Time Elapsed,00:11.4
+QNumS:2 Input Value:1,
+Time Elapsed,00:19.8
+QNumS:3 Input Value:2,
+Time Elapsed,00:24.1
+QNumS:4 Input Value:4,
+Time Elapsed,00:30.4
+QNumS:5 Input Value:4,
+Time Elapsed,00:34.0
+QNumS:6 Input Value:5,
+Time Elapsed,00:37.3
+QNumS:7 Input Value:3,
+Time Elapsed,00:43.3
+QNumS:8 Input Value:2,
+Time Elapsed,00:48.0
+QNumS:9 Input Value:3,
+Time Elapsed,00:51.9
+QNumS:9 Input Value:3,
+Time Elapsed,00:51.9
+8/14/2017 14:48,8/14/2017 14:49
+PARTICIPANT20,
+NodeGraphfalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:27.0
+QNumT:1 Input Value:Avengers 2012,
+Time Elapsed,05:14.6
+QNumT:2 Input Value:Avengers 2012,
+Time Elapsed,05:17.4
+QNumT:3 Input Value:Captain America: the First Avenger 2011,
+Time Elapsed,07:07.7
+QNumT:4 Input Value:Avengers 2012Captain America: the First Avenger 2011Kingsman: The Secret Service 2015Superman Returns 2006Scott Pilgrim vs the World 2010Fantastic Four 2005,
+Time Elapsed,11:30.5
+QNumS:0 Input Value:5,
+Time Elapsed,00:09.7
+QNumS:1 Input Value:3,
+Time Elapsed,00:17.4
+QNumS:2 Input Value:4,
+Time Elapsed,00:26.3
+QNumS:3 Input Value:6,
+Time Elapsed,00:32.0
+QNumS:4 Input Value:4,
+Time Elapsed,00:39.9
+QNumS:5 Input Value:5,
+Time Elapsed,00:49.8
+QNumS:6 Input Value:4,
+Time Elapsed,00:56.2
+QNumS:7 Input Value:5,
+Time Elapsed,01:07.1
+QNumS:8 Input Value:4,
+Time Elapsed,01:18.5
+QNumS:9 Input Value:4,
+Time Elapsed,01:28.2
+QNumS:9 Input Value:4,
+Time Elapsed,01:28.2
+8/22/2017 10:38,8/22/2017 10:39
+PARTICIPANT20
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:38.2
+QNumT:1 Input Value:Movie: Avengers (2012),
+Time Elapsed,03:21.9
+QNumT:2 Input Value:Movie: Mystery Men (1999),
+Time Elapsed,05:28.6
+QNumT:3 Input Value:Movie: Sin City 2 (2013),
+Time Elapsed,06:44.4
+QNumT:4 Input Value:Movie: Scott Pilgrim vs the World (2010)Movie: Avengers (2012)Movie: Avengers: Age of Ultron (2015)Movie: Ant-Man (2015)Movie: Captain America: the First Avenger (2011)Movie: Captain America: the Winter Soldier (2014)Movie: Captain America: Civil War (2016)Movie: Fantastic Four: Rise of the Silver Surfer (2007)Movie: Fantastic Four (2005),
+Time Elapsed,07:28.1
+QNumS:0 Input Value:4,
+Time Elapsed,00:04.2
+QNumS:1 Input Value:2,
+Time Elapsed,00:09.3
+QNumS:2 Input Value:6,
+Time Elapsed,00:13.4
+QNumS:3 Input Value:6,
+Time Elapsed,00:16.8
+QNumS:4 Input Value:5,
+Time Elapsed,00:21.7
+QNumS:5 Input Value:5,
+Time Elapsed,00:25.9
+QNumS:6 Input Value:5,
+Time Elapsed,00:31.9
+QNumS:7 Input Value:5,
+Time Elapsed,00:35.6
+QNumS:8 Input Value:3,
+Time Elapsed,00:43.5
+QNumS:9 Input Value:4,
+Time Elapsed,00:51.0
+QNumS:9 Input Value:4,
+Time Elapsed,00:51.0
+8/22/2017 10:50,8/22/2017 10:51
+PARTICIPANT21,
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:43.3
+QNumT:1 Input Value:Movie: X-Men: Days of Future Past (2014),
+Time Elapsed,02:01.8
+QNumT:2 Input Value:Movie: Watchmen (2009)Movie: League of Extraordinary Gentlemen (2003)Movie: Howard the Duck (1986)Movie: Fantastic Four (2015)Movie: Punisher (1989)Movie: Mystery Men (1999)Movie: From Hell (2001),
+Time Elapsed,07:05.4
+QNumT:3 Input Value:Movie: Sin City 2 (2013),
+Time Elapsed,10:44.4
+QNumT:4 Input Value:Movie: Superman Returns (2006),
+Time Elapsed,14:57.0
+QNumS:0 Input Value:4,
+Time Elapsed,00:12.3
+QNumS:1 Input Value:2,
+Time Elapsed,00:18.6
+QNumS:2 Input Value:6,
+Time Elapsed,00:23.5
+QNumS:3 Input Value:4,
+Time Elapsed,00:26.9
+QNumS:4 Input Value:1,
+Time Elapsed,00:31.1
+QNumS:5 Input Value:5,
+Time Elapsed,00:36.2
+QNumS:6 Input Value:5,
+Time Elapsed,00:40.5
+QNumS:7 Input Value:5,
+Time Elapsed,00:43.9
+QNumS:8 Input Value:5,
+Time Elapsed,00:48.7
+QNumS:9 Input Value:2,
+Time Elapsed,01:01.5
+QNumS:9 Input Value:2,
+Time Elapsed,01:01.5
+8/22/2017 14:38,8/22/2017 14:39
+PARTICIPANT21
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:45.7
+QNumT:1 Input Value:Captain America: the First Avenger 2011,
+Time Elapsed,04:07.1
+QNumT:2 Input Value:Thor 2011Punisher 1989Watchmen 2009Fantastic Four 2015Howard the Duck 1986Mystery Men 1999From Hell 2001League of Extraordinary Gentlemen 2003,
+Time Elapsed,10:17.1
+QNumT:3 Input Value:X-Men: Age of Apocalypse 2016,
+Time Elapsed,21:35.9
+QNumT:4 Input Value:Spawn 1997Ghost Rider 2007Kingsman: The Secret Service 2015Avengers: Age of Ultron 2015Captain America: the First Avenger 2011,
+Time Elapsed,29:46.1
+QNumS:0 Input Value:2,
+Time Elapsed,00:05.7
+QNumS:1 Input Value:1,
+Time Elapsed,00:09.0
+QNumS:2 Input Value:5,
+Time Elapsed,00:12.7
+QNumS:3 Input Value:6,
+Time Elapsed,00:15.6
+QNumS:4 Input Value:1,
+Time Elapsed,00:19.7
+QNumS:5 Input Value:6,
+Time Elapsed,00:23.8
+QNumS:6 Input Value:5,
+Time Elapsed,00:26.0
+QNumS:7 Input Value:5,
+Time Elapsed,00:29.0
+QNumS:8 Input Value:4,
+Time Elapsed,00:33.8
+QNumS:9 Input Value:1,
+Time Elapsed,00:40.4
+QNumS:9 Input Value:1,
+Time Elapsed,00:40.4
+8/22/2017 15:09,8/22/2017 15:10
+PARTICIPANT22,
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,02:57.3
+QNumT:1 Input Value:Movie: Avengers: Age of Ultron (2015),
+Time Elapsed,04:31.8
+QNumT:2 Input Value:Movie: Watchmen (2009)Movie: League of Extraordinary Gentlemen (2003)Movie: Mystery Men (1999),
+Time Elapsed,07:58.8
+QNumT:3 Input Value:Movie: Fantastic Four: Rise of the Silver Surfer (2007),
+Time Elapsed,11:21.9
+QNumT:4 Input Value:Movie: Superman Returns (2006),
+Time Elapsed,22:57.7
+QNumS:0 Input Value:5,
+Time Elapsed,00:19.1
+QNumS:1 Input Value:4,
+Time Elapsed,00:29.6
+QNumS:2 Input Value:4,
+Time Elapsed,00:49.7
+QNumS:3 Input Value:3,
+Time Elapsed,00:58.7
+QNumS:4 Input Value:1,
+Time Elapsed,01:10.1
+QNumS:5 Input Value:5,
+Time Elapsed,01:16.5
+QNumS:6 Input Value:5,
+Time Elapsed,01:23.2
+QNumS:7 Input Value:4,
+Time Elapsed,01:33.4
+QNumS:8 Input Value:3,
+Time Elapsed,01:48.6
+QNumS:9 Input Value:4,
+Time Elapsed,02:06.2
+QNumS:9 Input Value:4,
+Time Elapsed,02:06.2
+8/23/2017 10:47,8/23/2017 10:49
+PARTICIPANT22
+NodeGraphfalse,
+QNumT:0 Input Value:Wildstorm,
+Time Elapsed,05:49.6
+QNumT:1 Input Value:Avengers: Age of Ultron 2015,
+Time Elapsed,09:06.0
+QNumT:2 Input Value:Mystery Men 1999Howard the Duck 1986,
+Time Elapsed,13:19.4
+QNumT:3 Input Value:X-Men: Days of Future Past 2014,
+Time Elapsed,16:59.5
+QNumT:4 Input Value:MirageKingsman: The Secret Service 2015Captain America: the Winter Soldier 2014,
+Time Elapsed,23:49.2
+QNumS:0 Input Value:4,
+Time Elapsed,00:08.2
+QNumS:1 Input Value:3,
+Time Elapsed,00:15.4
+QNumS:2 Input Value:4,
+Time Elapsed,00:20.6
+QNumS:3 Input Value:3,
+Time Elapsed,00:26.5
+QNumS:4 Input Value:2,
+Time Elapsed,00:33.9
+QNumS:5 Input Value:4,
+Time Elapsed,00:38.4
+QNumS:6 Input Value:5,
+Time Elapsed,00:44.4
+QNumS:7 Input Value:3,
+Time Elapsed,00:49.3
+QNumS:8 Input Value:5,
+Time Elapsed,00:54.1
+QNumS:9 Input Value:4,
+Time Elapsed,01:00.3
+QNumS:9 Input Value:4,
+Time Elapsed,01:00.3
+8/23/2017 11:31,8/23/2017 11:32
+PARTICIPANT23,
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,02:11.3
+QNumT:1 Input Value:Captain America: the First Avenger 2011,
+Time Elapsed,03:24.8
+QNumT:2 Input Value:Watchmen 2009,
+Time Elapsed,04:05.5
+QNumT:3 Input Value:Batman 1989,
+Time Elapsed,06:51.9
+QNumT:4 Input Value:Scott Pilgrim vs the World 2010The Dark Knight 2008Batman v Superman: Dawn of Justice 2016,
+Time Elapsed,12:36.9
+QNumS:0 Input Value:4,
+Time Elapsed,00:24.2
+QNumS:1 Input Value:5,
+Time Elapsed,00:30.0
+QNumS:2 Input Value:4,
+Time Elapsed,00:36.4
+QNumS:3 Input Value:3,
+Time Elapsed,00:42.3
+QNumS:4 Input Value:3,
+Time Elapsed,00:51.6
+QNumS:5 Input Value:5,
+Time Elapsed,00:56.1
+QNumS:6 Input Value:4,
+Time Elapsed,01:03.5
+QNumS:7 Input Value:5,
+Time Elapsed,01:13.6
+QNumS:8 Input Value:4,
+Time Elapsed,01:24.1
+QNumS:9 Input Value:3,
+Time Elapsed,01:34.7
+QNumS:9 Input Value:3,
+Time Elapsed,01:34.7
+8/23/2017 12:36,8/23/2017 12:38
+PARTICIPANT23
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:14.0
+QNumT:1 Input Value:Movie: X-Men (2000),
+Time Elapsed,03:05.2
+QNumT:2 Input Value:Movie: From Hell (2001)Movie: Mystery Men (1999)Movie: League of Extraordinary Gentlemen (2003),
+Time Elapsed,04:42.6
+QNumT:3 Input Value:Movie: Superman 2 (1980),
+Time Elapsed,07:57.0
+QNumT:4 Input Value:Movie: Fantastic Four: Rise of the Silver Surfer (2007),
+Time Elapsed,10:36.5
+QNumS:0 Input Value:4,
+Time Elapsed,00:07.3
+QNumS:1 Input Value:4,
+Time Elapsed,00:12.9
+QNumS:2 Input Value:5,
+Time Elapsed,00:19.0
+QNumS:3 Input Value:4,
+Time Elapsed,00:27.3
+QNumS:4 Input Value:1,
+Time Elapsed,00:33.6
+QNumS:5 Input Value:4,
+Time Elapsed,00:40.6
+QNumS:6 Input Value:3,
+Time Elapsed,00:49.8
+QNumS:7 Input Value:4,
+Time Elapsed,01:00.1
+QNumS:8 Input Value:4,
+Time Elapsed,01:14.9
+QNumS:9 Input Value:4,
+Time Elapsed,01:24.7
+QNumS:9 Input Value:4,
+Time Elapsed,01:24.7
+8/23/2017 12:50,8/23/2017 12:51
+PARTICIPANT24,
+NodeGraphfalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:35.7
+QNumT:1 Input Value:Avengers: Age of Ultron 2015,
+Time Elapsed,00:56.2
+QNumT:2 Input Value:Avengers: Age of Ultron 2015,
+Time Elapsed,01:30.1
+QNumT:3 Input Value:Scott Pilgrim vs the World 2010,
+Time Elapsed,03:50.1
+QNumT:4 Input Value:Scott Pilgrim vs the World 2010,
+Time Elapsed,04:45.5
+QNumT:4 Input Value:Scott Pilgrim vs the World 2010Batman Forever 1995Kick-ass 2 2013Captain America: the First Avenger 2011,
+Time Elapsed,05:00.0
+QNumS:0 Input Value:3,
+Time Elapsed,00:17.9
+QNumS:1 Input Value:2,
+Time Elapsed,00:30.3
+QNumS:2 Input Value:3,
+Time Elapsed,00:41.0
+QNumS:3 Input Value:4,
+Time Elapsed,00:47.6
+QNumS:4 Input Value:1,
+Time Elapsed,00:58.1
+QNumS:5 Input Value:5,
+Time Elapsed,01:04.2
+QNumS:6 Input Value:4,
+Time Elapsed,01:13.6
+QNumS:7 Input Value:3,
+Time Elapsed,01:26.4
+QNumS:8 Input Value:2,
+Time Elapsed,01:38.5
+QNumS:9 Input Value:4,
+Time Elapsed,02:00.4
+QNumS:9 Input Value:4,
+Time Elapsed,02:00.4
+8/24/2017 10:39,8/24/2017 10:41
+PARTICIPANT24
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:15.4
+QNumT:1 Input Value:Movie: Avengers: Age of Ultron (2015),
+Time Elapsed,01:52.8
+QNumT:2 Input Value:Movie: From Hell (2001),
+Time Elapsed,02:49.7
+QNumT:3 Input Value:Movie: Sin City 2 (2013),
+Time Elapsed,04:45.6
+QNumT:4 Input Value:Movie: Scott Pilgrim vs the World (2010)Movie: The Dark Knight (2008)Movie: Superman Returns (2006),
+Time Elapsed,08:11.4
+QNumS:0 Input Value:5,
+Time Elapsed,00:06.5
+QNumS:1 Input Value:3,
+Time Elapsed,00:17.9
+QNumS:2 Input Value:5,
+Time Elapsed,00:25.1
+QNumS:3 Input Value:4,
+Time Elapsed,00:31.5
+QNumS:4 Input Value:1,
+Time Elapsed,00:38.4
+QNumS:5 Input Value:6,
+Time Elapsed,00:44.2
+QNumS:6 Input Value:5,
+Time Elapsed,00:51.9
+QNumS:7 Input Value:5,
+Time Elapsed,01:00.3
+QNumS:8 Input Value:4,
+Time Elapsed,01:08.6
+QNumS:9 Input Value:6,
+Time Elapsed,01:19.0
+QNumS:9 Input Value:6,
+Time Elapsed,01:19.0
+8/24/2017 10:51,8/24/2017 10:53
+PARTICIPANT25,
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:19.7
+QNumT:1 Input Value:Movie: Batman and Robin (1997),
+Time Elapsed,01:10.5
+QNumT:2 Input Value:Movie: From Hell (2001),
+Time Elapsed,02:23.3
+QNumT:3 Input Value:Movie: Superman 2 (1980),
+Time Elapsed,03:16.4
+QNumT:4 Input Value:Movie: Batman Begins (2005),
+Time Elapsed,05:44.8
+QNumS:0 Input Value:4,
+Time Elapsed,00:14.0
+QNumS:1 Input Value:1,
+Time Elapsed,00:20.0
+QNumS:2 Input Value:5,
+Time Elapsed,00:25.6
+QNumS:3 Input Value:4,
+Time Elapsed,00:34.7
+QNumS:4 Input Value:4,
+Time Elapsed,00:40.8
+QNumS:5 Input Value:4,
+Time Elapsed,00:44.6
+QNumS:6 Input Value:2,
+Time Elapsed,00:49.2
+QNumS:7 Input Value:4,
+Time Elapsed,00:54.7
+QNumS:8 Input Value:5,
+Time Elapsed,01:09.5
+QNumS:9 Input Value:4,
+Time Elapsed,01:15.2
+QNumS:9 Input Value:4,
+Time Elapsed,01:15.2
+8/24/2017 12:16,8/24/2017 12:18
+PARTICIPANT25
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:53.9
+QNumT:1 Input Value:Fantastic Four: Rise of the Silver Surfer 2007,
+Time Elapsed,02:52.6
+QNumT:2 Input Value:Mystery Men 1999,
+Time Elapsed,03:08.6
+QNumT:3 Input Value:Red 2 2013,
+Time Elapsed,04:32.7
+QNumT:4 Input Value:Teenage Mutant Ninja Turtles 2014Superman 2 1980,
+Time Elapsed,05:06.7
+QNumS:0 Input Value:4,
+Time Elapsed,00:11.9
+QNumS:1 Input Value:1,
+Time Elapsed,00:16.3
+QNumS:2 Input Value:5,
+Time Elapsed,00:22.0
+QNumS:3 Input Value:4,
+Time Elapsed,00:28.7
+QNumS:4 Input Value:4,
+Time Elapsed,00:32.9
+QNumS:5 Input Value:4,
+Time Elapsed,00:37.9
+QNumS:6 Input Value:5,
+Time Elapsed,00:41.2
+QNumS:7 Input Value:3,
+Time Elapsed,00:49.3
+QNumS:8 Input Value:5,
+Time Elapsed,00:55.1
+QNumS:9 Input Value:4,
+Time Elapsed,01:00.1
+QNumS:9 Input Value:4,
+Time Elapsed,01:00.1
+8/24/2017 12:24,8/24/2017 12:25
+PARTICIPANT26,
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,04:30.9
+QNumT:1 Input Value:Movie: X-Men: Days of Future Past (2014),
+Time Elapsed,06:50.7
+QNumT:2 Input Value:Movie: From Hell (2001)Movie: Howard the Duck (1986)Movie: Punisher (1989)Movie: Watchmen (2009),
+Time Elapsed,10:25.5
+QNumT:3 Input Value:Movie: Men In Black 2 (2002),
+Time Elapsed,11:39.7
+QNumT:4 Input Value:Movie: Superman Returns (2006),
+Time Elapsed,15:47.7
+QNumS:0 Input Value:1,
+Time Elapsed,00:09.3
+QNumS:1 Input Value:1,
+Time Elapsed,00:19.2
+QNumS:2 Input Value:2,
+Time Elapsed,00:26.6
+QNumS:3 Input Value:4,
+Time Elapsed,00:31.8
+QNumS:4 Input Value:3,
+Time Elapsed,00:40.7
+QNumS:5 Input Value:3,
+Time Elapsed,00:46.7
+QNumS:6 Input Value:2,
+Time Elapsed,00:52.2
+QNumS:7 Input Value:2,
+Time Elapsed,00:58.6
+QNumS:8 Input Value:4,
+Time Elapsed,01:06.7
+QNumS:9 Input Value:4,
+Time Elapsed,01:12.2
+QNumS:9 Input Value:4,
+Time Elapsed,01:12.2
+8/24/2017 14:47,8/24/2017 14:48
+PARTICIPANT26
+NodeGraphfalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:43.7
+QNumT:1 Input Value:X-Men 2000,
+Time Elapsed,02:01.1
+QNumT:2 Input Value:Mystery Men 1999Howard the Duck 1986Fantastic Four 2015Punisher 1989,
+Time Elapsed,04:40.2
+QNumT:3 Input Value:Blade Trinity 2004,
+Time Elapsed,05:41.8
+QNumT:4 Input Value:Captain America: Civil War 2016,
+Time Elapsed,09:05.4
+QNumS:0 Input Value:1,
+Time Elapsed,00:05.2
+QNumS:1 Input Value:2,
+Time Elapsed,00:10.5
+QNumS:2 Input Value:2,
+Time Elapsed,00:19.5
+QNumS:3 Input Value:2,
+Time Elapsed,00:24.5
+QNumS:4 Input Value:2,
+Time Elapsed,00:30.8
+QNumS:5 Input Value:5,
+Time Elapsed,00:33.9
+QNumS:6 Input Value:2,
+Time Elapsed,00:39.7
+QNumS:7 Input Value:1,
+Time Elapsed,00:44.3
+QNumS:8 Input Value:4,
+Time Elapsed,00:51.3
+QNumS:9 Input Value:3,
+Time Elapsed,00:55.5
+QNumS:9 Input Value:3,
+Time Elapsed,00:55.5
+8/24/2017 14:59,8/24/2017 15:00
+PARTICIPANT27,
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:13.2
+QNumT:1 Input Value:X-Men: Age of Apocalypse 2016,
+Time Elapsed,03:33.6
+QNumT:2 Input Value:The Incredible Hulk 2008,
+Time Elapsed,05:05.0
+QNumT:3 Input Value:Men In Black 3 2012,
+Time Elapsed,06:52.7
+QNumT:4 Input Value:Kingsman: The Secret Service 2015Red 2 2013,
+Time Elapsed,12:04.6
+QNumS:0 Input Value:5,
+Time Elapsed,00:09.8
+QNumS:1 Input Value:5,
+Time Elapsed,00:17.4
+QNumS:2 Input Value:5,
+Time Elapsed,00:26.1
+QNumS:3 Input Value:4,
+Time Elapsed,00:36.6
+QNumS:4 Input Value:2,
+Time Elapsed,00:50.0
+QNumS:5 Input Value:5,
+Time Elapsed,00:54.0
+QNumS:6 Input Value:3,
+Time Elapsed,01:01.7
+QNumS:7 Input Value:5,
+Time Elapsed,01:14.0
+QNumS:8 Input Value:3,
+Time Elapsed,01:26.0
+QNumS:9 Input Value:5,
+Time Elapsed,01:34.2
+QNumS:9 Input Value:5,
+Time Elapsed,01:34.2
+8/25/2017 10:39,8/25/2017 10:41
+PARTICIPANT27
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:03.0
+QNumT:1 Input Value:Movie: Avengers: Age of Ultron (2015),
+Time Elapsed,01:59.1
+QNumT:2 Input Value:Movie: Mystery Men (1999),
+Time Elapsed,02:25.6
+QNumT:3 Input Value:Movie: V for Vendetta (2006),
+Time Elapsed,05:32.3
+QNumT:4 Input Value:Movie: Superman Returns (2006),
+Time Elapsed,08:09.5
+QNumS:0 Input Value:5,
+Time Elapsed,00:09.3
+QNumS:1 Input Value:2,
+Time Elapsed,00:16.2
+QNumS:2 Input Value:5,
+Time Elapsed,00:21.6
+QNumS:3 Input Value:5,
+Time Elapsed,00:26.7
+QNumS:4 Input Value:1,
+Time Elapsed,00:34.0
+QNumS:5 Input Value:5,
+Time Elapsed,00:38.2
+QNumS:6 Input Value:5,
+Time Elapsed,00:42.4
+QNumS:7 Input Value:4,
+Time Elapsed,00:47.2
+QNumS:8 Input Value:5,
+Time Elapsed,00:55.1
+QNumS:9 Input Value:5,
+Time Elapsed,01:05.6
+QNumS:9 Input Value:5,
+Time Elapsed,01:05.6
+8/25/2017 10:50,8/25/2017 10:51
+PARTICIPANT28,
+NodeGraphfalse,
+QNumT:0 Input Value:DC,
+Time Elapsed,03:12.4
+QNumT:1 Input Value:Constantine 2005,
+Time Elapsed,04:42.3
+QNumT:2 Input Value:League of Extraordinary Gentlemen 2003,
+Time Elapsed,06:27.2
+QNumT:3 Input Value:League of Extraordinary Gentlemen 2003,
+Time Elapsed,06:38.7
+QNumT:3 Input Value:X-Men: Days of Future Past 2014,
+Time Elapsed,07:52.6
+QNumT:4 Input Value:Spiderman 3 2007,
+Time Elapsed,27:52.9
+QNumS:0 Input Value:3,
+Time Elapsed,00:11.9
+QNumS:1 Input Value:3,
+Time Elapsed,00:21.7
+QNumS:2 Input Value:3,
+Time Elapsed,00:32.5
+QNumS:3 Input Value:5,
+Time Elapsed,00:39.0
+QNumS:4 Input Value:4,
+Time Elapsed,00:47.8
+QNumS:5 Input Value:5,
+Time Elapsed,00:54.7
+QNumS:6 Input Value:4,
+Time Elapsed,01:02.2
+QNumS:7 Input Value:4,
+Time Elapsed,01:10.9
+QNumS:8 Input Value:4,
+Time Elapsed,01:42.5
+QNumS:9 Input Value:6,
+Time Elapsed,01:49.4
+QNumS:9 Input Value:6,
+Time Elapsed,01:49.4
+8/25/2017 14:50,8/25/2017 14:52
+PARTICIPANT28
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:29.3
+QNumT:1 Input Value:Movie: Kick-ass (2010),
+Time Elapsed,09:09.9
+QNumT:2 Input Value:Movie: From Hell (2001)Movie: Mystery Men (1999),
+Time Elapsed,11:09.4
+QNumT:3 Input Value:Movie: Captain America: the First Avenger (2011),
+Time Elapsed,13:27.5
+QNumT:4 Input Value:Movie: Captain America: Civil War (2016)Movie: Captain America: the Winter Soldier (2014)Movie: Captain America: the First Avenger (2011)Movie: Avengers (2012)Movie: Fantastic Four: Rise of the Silver Surfer (2007)Movie: Fantastic Four (2015),
+Time Elapsed,15:14.5
+QNumS:0 Input Value:5,
+Time Elapsed,00:10.5
+QNumS:1 Input Value:5,
+Time Elapsed,00:16.4
+QNumS:2 Input Value:6,
+Time Elapsed,00:20.3
+QNumS:3 Input Value:5,
+Time Elapsed,00:28.3
+QNumS:4 Input Value:2,
+Time Elapsed,00:34.3
+QNumS:5 Input Value:6,
+Time Elapsed,00:40.4
+QNumS:6 Input Value:5,
+Time Elapsed,00:46.0
+QNumS:7 Input Value:4,
+Time Elapsed,00:53.4
+QNumS:8 Input Value:5,
+Time Elapsed,00:59.8
+QNumS:9 Input Value:5,
+Time Elapsed,01:03.1
+QNumS:9 Input Value:5,
+Time Elapsed,01:03.1
+8/25/2017 15:10,8/25/2017 15:11
+PARTICIPANT29,
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:11.6
+QNumT:1 Input Value:Movie: X-Men (2000),
+Time Elapsed,03:05.4
+QNumT:2 Input Value:Movie: From Hell (2001)Movie: League of Extraordinary Gentlemen (2003)Movie: Mystery Men (1999)Movie: Punisher (1989)Movie: Watchmen (2009),
+Time Elapsed,05:53.2
+QNumT:3 Input Value:Movie: Men In Black 3 (2012),
+Time Elapsed,08:58.4
+QNumT:4 Input Value:Movie: Kick-ass (2010),
+Time Elapsed,14:21.3
+QNumS:0 Input Value:2,
+Time Elapsed,00:11.7
+QNumS:1 Input Value:1,
+Time Elapsed,00:18.1
+QNumS:2 Input Value:4,
+Time Elapsed,00:22.4
+QNumS:3 Input Value:3,
+Time Elapsed,00:26.7
+QNumS:4 Input Value:1,
+Time Elapsed,00:32.4
+QNumS:5 Input Value:5,
+Time Elapsed,00:36.2
+QNumS:6 Input Value:4,
+Time Elapsed,00:40.2
+QNumS:7 Input Value:5,
+Time Elapsed,00:45.4
+QNumS:8 Input Value:4,
+Time Elapsed,00:53.2
+QNumS:9 Input Value:4,
+Time Elapsed,01:01.6
+QNumS:9 Input Value:4,
+Time Elapsed,01:01.6
+9/1/2017 11:52,9/1/2017 11:53
+PARTICIPANT29
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:30.3
+QNumT:1 Input Value:X-Men: Days of Future Past 2014,
+Time Elapsed,03:41.6
+QNumT:2 Input Value:From Hell 2001,
+Time Elapsed,04:30.2
+QNumT:3 Input Value:Sin City 2 2013,
+Time Elapsed,06:53.2
+QNumT:4 Input Value:Superman Returns 2006,
+Time Elapsed,14:03.4
+QNumS:0 Input Value:5,
+Time Elapsed,00:05.2
+QNumS:1 Input Value:1,
+Time Elapsed,00:09.2
+QNumS:2 Input Value:5,
+Time Elapsed,00:12.8
+QNumS:3 Input Value:5,
+Time Elapsed,00:16.9
+QNumS:4 Input Value:3,
+Time Elapsed,00:22.0
+QNumS:5 Input Value:5,
+Time Elapsed,00:26.9
+QNumS:6 Input Value:5,
+Time Elapsed,00:29.2
+QNumS:7 Input Value:5,
+Time Elapsed,00:33.0
+QNumS:8 Input Value:5,
+Time Elapsed,00:37.0
+QNumS:9 Input Value:4,
+Time Elapsed,00:40.9
+QNumS:9 Input Value:4,
+Time Elapsed,00:40.9
+9/1/2017 12:09,9/1/2017 12:10
+PARTICIPANT30,
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:52.6
+QNumT:1 Input Value:Movie: Iron Man 2 (2010),
+Time Elapsed,01:47.5
+QNumT:2 Input Value:Movie: Punisher (1989)Movie: Watchmen (2009)Movie: League of Extraordinary Gentlemen (2003),
+Time Elapsed,05:00.1
+QNumT:3 Input Value:Movie: Sin City 2 (2013),
+Time Elapsed,07:55.7
+QNumT:4 Input Value:Movie: The Dark Knight (2008)Movie: Scott Pilgrim vs the World (2010)Movie: Kingsman: The Secret Service (2015),
+Time Elapsed,14:42.8
+QNumS:0 Input Value:3,
+Time Elapsed,00:16.6
+QNumS:1 Input Value:4,
+Time Elapsed,00:21.1
+QNumS:2 Input Value:2,
+Time Elapsed,00:26.1
+QNumS:3 Input Value:1,
+Time Elapsed,00:30.9
+QNumS:4 Input Value:2,
+Time Elapsed,00:38.5
+QNumS:5 Input Value:6,
+Time Elapsed,00:42.5
+QNumS:6 Input Value:2,
+Time Elapsed,00:46.5
+QNumS:7 Input Value:4,
+Time Elapsed,00:51.3
+QNumS:8 Input Value:1,
+Time Elapsed,00:56.7
+QNumS:9 Input Value:1,
+Time Elapsed,01:05.1
+QNumS:9 Input Value:1,
+Time Elapsed,01:05.1
+9/1/2017 13:31,9/1/2017 13:32
+PARTICIPANT30
+NodeGraphfalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:05.3
+QNumT:1 Input Value:Avengers: Age of Ultron 2015,
+Time Elapsed,02:58.2
+QNumT:2 Input Value:Howard the Duck 1986Mystery Men 1999,
+Time Elapsed,05:36.2
+QNumT:3 Input Value:Suicide Squad 2016,
+Time Elapsed,09:20.2
+QNumT:4 Input Value:Scott Pilgrim vs the World 2010The Dark Knight 2008Avengers 2012Kingsman: The Secret Service 2015,
+Time Elapsed,13:35.1
+QNumS:0 Input Value:5,
+Time Elapsed,00:03.7
+QNumS:1 Input Value:3,
+Time Elapsed,00:10.1
+QNumS:2 Input Value:6,
+Time Elapsed,00:13.1
+QNumS:3 Input Value:4,
+Time Elapsed,00:17.5
+QNumS:4 Input Value:2,
+Time Elapsed,00:20.8
+QNumS:5 Input Value:6,
+Time Elapsed,00:23.1
+QNumS:6 Input Value:6,
+Time Elapsed,00:25.8
+QNumS:7 Input Value:5,
+Time Elapsed,00:29.4
+QNumS:8 Input Value:3,
+Time Elapsed,00:35.4
+QNumS:9 Input Value:4,
+Time Elapsed,00:40.7
+QNumS:9 Input Value:4,
+Time Elapsed,00:40.7
+9/1/2017 13:46,9/1/2017 13:46
+PARTICIPANT31,
+NodeGraphtrue,
+QNumT:0 Input Value:Dark Horse,
+Time Elapsed,04:09.8
+QNumT:1 Input Value:Avengers: Age of Ultron 2015,
+Time Elapsed,06:06.9
+QNumT:2 Input Value:Hulk 2003Swamp Thing 1982Punisher 1989Fantastic Four 2015Judge Dredd 1995,
+Time Elapsed,10:09.1
+QNumT:3 Input Value:X-Men: Age of Apocalypse 2016,
+Time Elapsed,14:20.6
+QNumT:4 Input Value:Sin City 2 2013Fantastic Four: Rise of the Silver Surfer 2007,
+Time Elapsed,20:22.8
+QNumS:0 Input Value:2,
+Time Elapsed,00:14.8
+QNumS:1 Input Value:4,
+Time Elapsed,00:22.7
+QNumS:2 Input Value:4,
+Time Elapsed,00:28.2
+QNumS:3 Input Value:6,
+Time Elapsed,00:32.3
+QNumS:4 Input Value:3,
+Time Elapsed,00:38.8
+QNumS:5 Input Value:4,
+Time Elapsed,00:43.0
+QNumS:6 Input Value:5,
+Time Elapsed,00:46.9
+QNumS:7 Input Value:4,
+Time Elapsed,00:52.2
+QNumS:8 Input Value:5,
+Time Elapsed,00:57.0
+QNumS:9 Input Value:5,
+Time Elapsed,01:09.4
+QNumS:9 Input Value:5,
+Time Elapsed,01:09.5
+11/1/2017 15:04,11/1/2017 15:06
+PARTICIPANT31
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:17.4
+QNumT:1 Input Value:Movie: Men In Black 2 (2002),
+Time Elapsed,02:32.0
+QNumT:2 Input Value:Movie: Mystery Men (1999)Movie: From Hell (2001)Movie: League of Extraordinary Gentlemen (2003),
+Time Elapsed,04:23.7
+QNumT:3 Input Value:Movie: Fantastic Four (2005),
+Time Elapsed,05:23.5
+QNumT:4 Input Value:Movie: The Dark Knight (2008)Movie: Scott Pilgrim vs the World (2010)Movie: Fantastic Four: Rise of the Silver Surfer (2007)Movie: Red (2010)Movie: Avengers: Age of Ultron (2015),
+Time Elapsed,07:48.1
+QNumS:0 Input Value:5,
+Time Elapsed,00:04.7
+QNumS:1 Input Value:5,
+Time Elapsed,00:08.8
+QNumS:2 Input Value:5,
+Time Elapsed,00:15.0
+QNumS:3 Input Value:6,
+Time Elapsed,00:18.7
+QNumS:4 Input Value:1,
+Time Elapsed,00:27.0
+QNumS:5 Input Value:5,
+Time Elapsed,00:31.3
+QNumS:6 Input Value:6,
+Time Elapsed,00:35.1
+QNumS:7 Input Value:5,
+Time Elapsed,00:40.8
+QNumS:8 Input Value:6,
+Time Elapsed,00:45.8
+QNumS:9 Input Value:4,
+Time Elapsed,00:49.7
+QNumS:9 Input Value:4,
+Time Elapsed,00:49.7
+11/1/2017 15:17,11/1/2017 15:18
+PARTICIPANT32,
+NodeGraphfalse,
+QNumT:0 Input Value:Oni Press,
+Time Elapsed,01:27.5
+QNumT:1 Input Value:Captain America: the First Avenger 2011,
+Time Elapsed,02:55.8
+QNumT:2 Input Value:Mystery Men 1999Fantastic Four 2015League of Extraordinary Gentlemen 2003Howard the Duck 1986,
+Time Elapsed,04:22.6
+QNumT:3 Input Value:Ghost Rider: Spirit of Vengeance 2012,
+Time Elapsed,07:47.0
+QNumT:4 Input Value:Captain America: the Winter Soldier 2014The Dark Knight Rises 2012,
+Time Elapsed,09:19.2
+QNumS:0 Input Value:3,
+Time Elapsed,00:07.7
+QNumS:1 Input Value:4,
+Time Elapsed,00:20.1
+QNumS:2 Input Value:2,
+Time Elapsed,00:30.1
+QNumS:3 Input Value:3,
+Time Elapsed,00:37.5
+QNumS:4 Input Value:4,
+Time Elapsed,00:48.8
+QNumS:5 Input Value:3,
+Time Elapsed,00:50.2
+QNumS:6 Input Value:2,
+Time Elapsed,00:57.3
+QNumS:7 Input Value:3,
+Time Elapsed,01:11.9
+QNumS:8 Input Value:5,
+Time Elapsed,01:29.2
+QNumS:9 Input Value:4,
+Time Elapsed,01:30.7
+QNumS:9 Input Value:4,
+Time Elapsed,01:30.7
+11/3/2017 14:44,11/3/2017 14:46
+PARTICIPANT32
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:50.2
+QNumT:1 Input Value:Movie: X-Men: Days of Future Past (2014),
+Time Elapsed,02:40.4
+QNumT:2 Input Value:Movie: From Hell (2001)Movie: Mystery Men (1999),
+Time Elapsed,03:48.9
+QNumT:3 Input Value:Movie: Blade 2 (2002),
+Time Elapsed,05:46.1
+QNumT:4 Input Value:Movie: Scott Pilgrim vs the World (2010)Movie: The Dark Knight (2008),
+Time Elapsed,09:22.4
+QNumS:0 Input Value:2,
+Time Elapsed,00:08.6
+QNumS:1 Input Value:5,
+Time Elapsed,00:19.6
+QNumS:2 Input Value:3,
+Time Elapsed,00:26.8
+QNumS:3 Input Value:2,
+Time Elapsed,00:44.6
+QNumS:4 Input Value:5,
+Time Elapsed,00:52.4
+QNumS:5 Input Value:3,
+Time Elapsed,01:02.5
+QNumS:6 Input Value:3,
+Time Elapsed,01:13.5
+QNumS:7 Input Value:4,
+Time Elapsed,01:25.1
+QNumS:8 Input Value:4,
+Time Elapsed,01:32.2
+QNumS:9 Input Value:4,
+Time Elapsed,01:42.6
+QNumS:9 Input Value:4,
+Time Elapsed,01:42.6
+11/3/2017 14:56,11/3/2017 14:58
+PARTICIPANT33,
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:40.0
+QNumT:1 Input Value:Movie: Iron Man 2 (2010),
+Time Elapsed,01:30.2
+QNumT:2 Input Value:Movie: Mystery Men (1999),
+Time Elapsed,01:44.5
+QNumT:3 Input Value:Movie: Avengers: Age of Ultron (2015),
+Time Elapsed,03:09.6
+QNumT:4 Input Value:Movie: Red 2 (2013)Movie: Red (2010)Movie: Superman Returns (2006)Movie: Sin City 2 (2013),
+Time Elapsed,18:23.8
+QNumS:0 Input Value:2,
+Time Elapsed,00:14.4
+QNumS:1 Input Value:4,
+Time Elapsed,00:27.8
+QNumS:2 Input Value:5,
+Time Elapsed,00:34.2
+QNumS:3 Input Value:5,
+Time Elapsed,00:44.0
+QNumS:4 Input Value:4,
+Time Elapsed,00:53.4
+QNumS:5 Input Value:4,
+Time Elapsed,01:04.3
+QNumS:6 Input Value:5,
+Time Elapsed,01:10.5
+QNumS:7 Input Value:5,
+Time Elapsed,01:22.3
+QNumS:8 Input Value:5,
+Time Elapsed,01:31.4
+QNumS:9 Input Value:4,
+Time Elapsed,01:39.8
+QNumS:9 Input Value:4,
+Time Elapsed,01:39.8
+11/5/2017 14:34,11/5/2017 14:36
+PARTICIPANT33
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,02:42.5
+QNumT:1 Input Value:X-Men: Days of Future Past 2014,
+Time Elapsed,04:14.8
+QNumT:2 Input Value:Red 2 2013Mystery Men 1999,
+Time Elapsed,10:38.4
+QNumT:3 Input Value:X-Men: Days of Future Past 2014,
+Time Elapsed,11:26.9
+QNumT:4 Input Value:Fantastic Four: Rise of the Silver Surfer 2007Kingsman: The Secret Service 2015,
+Time Elapsed,15:31.3
+QNumS:0 Input Value:2,
+Time Elapsed,00:04.6
+QNumS:1 Input Value:5,
+Time Elapsed,00:08.7
+QNumS:2 Input Value:4,
+Time Elapsed,00:14.3
+QNumS:3 Input Value:5,
+Time Elapsed,00:17.3
+QNumS:4 Input Value:3,
+Time Elapsed,00:21.5
+QNumS:5 Input Value:5,
+Time Elapsed,00:24.8
+QNumS:6 Input Value:5,
+Time Elapsed,00:27.3
+QNumS:7 Input Value:5,
+Time Elapsed,00:32.6
+QNumS:8 Input Value:1,
+Time Elapsed,00:39.2
+QNumS:9 Input Value:3,
+Time Elapsed,00:46.6
+QNumS:9 Input Value:3,
+Time Elapsed,00:46.6
+11/5/2017 15:01,11/5/2017 15:02
+PARTICIPANT34,
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:36.8
+QNumT:1 Input Value:Movie: X-Men: Days of Future Past (2014),
+Time Elapsed,03:00.2
+QNumT:2 Input Value:Movie: From Hell (2001)Movie: Mystery Men (1999),
+Time Elapsed,04:12.0
+QNumT:3 Input Value:Movie: X-Men: Days of Future Past (2014),
+Time Elapsed,05:19.5
+QNumT:4 Input Value:Movie: Man of Steel (2013)Movie: Fantastic Four: Rise of the Silver Surfer (2007)Movie: Green Lantern (2011)Movie: Kingsman: The Secret Service (2015),
+Time Elapsed,14:27.5
+QNumS:0 Input Value:4,
+Time Elapsed,00:17.2
+QNumS:1 Input Value:2,
+Time Elapsed,00:25.8
+QNumS:2 Input Value:5,
+Time Elapsed,00:29.5
+QNumS:3 Input Value:3,
+Time Elapsed,00:35.7
+QNumS:4 Input Value:1,
+Time Elapsed,00:41.1
+QNumS:5 Input Value:5,
+Time Elapsed,00:46.0
+QNumS:6 Input Value:3,
+Time Elapsed,00:51.1
+QNumS:7 Input Value:4,
+Time Elapsed,00:55.8
+QNumS:8 Input Value:3,
+Time Elapsed,01:02.8
+QNumS:9 Input Value:3,
+Time Elapsed,01:09.6
+QNumS:9 Input Value:3,
+Time Elapsed,01:09.6
+11/5/2017 16:28,11/5/2017 16:30
+PARTICIPANT34
+????
+QNumT:1 Input Value:X-Men: Days of Future Past 2014,
+Time Elapsed,02:08.6
+QNumT:2 Input Value:Fantastic Four 2015Punisher 1989Watchmen 2009Mystery Men 1999,
+Time Elapsed,05:20.2
+QNumT:3 Input Value:300 2006,
+Time Elapsed,06:13.2
+QNumT:4 Input Value:The Dark Knight Rises 2012The Dark Knight 2008Scott Pilgrim vs the World 2010Fantastic Four 2005Sin City 2 2013Batman Begins 2005Red 2010Wanted 2008Guardians of the Galaxy 2014,
+Time Elapsed,09:31.1
+QNumS:0 Input Value:5,
+Time Elapsed,00:07.6
+QNumS:1 Input Value:1,
+Time Elapsed,00:12.6
+QNumS:2 Input Value:5,
+Time Elapsed,00:16.3
+QNumS:3 Input Value:5,
+Time Elapsed,00:19.0
+QNumS:4 Input Value:1,
+Time Elapsed,00:26.0
+QNumS:5 Input Value:5,
+Time Elapsed,00:30.9
+QNumS:6 Input Value:6,
+Time Elapsed,00:34.4
+QNumS:7 Input Value:5,
+Time Elapsed,00:39.4
+QNumS:8 Input Value:5,
+Time Elapsed,00:44.3
+QNumS:9 Input Value:3,
+Time Elapsed,00:49.4
+QNumS:9 Input Value:3,
+Time Elapsed,00:49.4
+11/5/2017 16:40,11/5/2017 16:41
+PARTICIPANT34
+NodeGraphtrue,
+QNumT:0 Input Value:Aircell,
+Time Elapsed,04:06.6
+QNumT:1 Input Value:Iron Man 2 2010,
+Time Elapsed,05:50.3
+QNumT:2 Input Value:Punisher 2004,
+Time Elapsed,08:13.8
+QNumT:3 Input Value:Guardians of the Galaxy 2014,
+Time Elapsed,10:29.8
+QNumT:4 Input Value:The Dark Knight 2008Scott Pilgrim vs the World 2010Fantastic Four 2005,
+Time Elapsed,16:10.3
+QNumS:0 Input Value:2,
+Time Elapsed,00:10.8
+QNumS:1 Input Value:2,
+Time Elapsed,00:22.4
+QNumS:2 Input Value:4,
+Time Elapsed,00:35.0
+QNumS:3 Input Value:3,
+Time Elapsed,00:43.0
+QNumS:4 Input Value:4,
+Time Elapsed,00:48.6
+QNumS:5 Input Value:4,
+Time Elapsed,00:56.3
+QNumS:6 Input Value:2,
+Time Elapsed,01:07.4
+QNumS:7 Input Value:2,
+Time Elapsed,01:17.0
+QNumS:8 Input Value:3,
+Time Elapsed,01:28.3
+QNumS:9 Input Value:3,
+Time Elapsed,01:36.8
+QNumS:9 Input Value:3,
+Time Elapsed,01:36.8
+11/10/2017 14:46,11/10/2017 14:47
+PARTICIPANT35,
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:05.2
+QNumT:1 Input Value:Movie: Avengers (2012),
+Time Elapsed,01:55.2
+QNumT:2 Input Value:Movie: Watchmen (2009),
+Time Elapsed,02:13.9
+QNumT:3 Input Value:Movie: Sin City 2 (2013),
+Time Elapsed,02:35.1
+QNumT:4 Input Value:Movie: Red (2010)Movie: Captain America: the First Avenger (2011)Movie: Captain America: the Winter Soldier (2014),
+Time Elapsed,06:18.2
+QNumS:0 Input Value:5,
+Time Elapsed,00:08.2
+QNumS:1 Input Value:2,
+Time Elapsed,00:15.1
+QNumS:2 Input Value:4,
+Time Elapsed,00:17.8
+QNumS:3 Input Value:5,
+Time Elapsed,00:24.3
+QNumS:4 Input Value:2,
+Time Elapsed,00:27.9
+QNumS:5 Input Value:4,
+Time Elapsed,00:31.1
+QNumS:6 Input Value:5,
+Time Elapsed,00:33.6
+QNumS:7 Input Value:4,
+Time Elapsed,00:37.1
+QNumS:8 Input Value:5,
+Time Elapsed,00:41.4
+QNumS:9 Input Value:3,
+Time Elapsed,00:45.5
+QNumS:9 Input Value:3,
+Time Elapsed,00:45.5
+11/10/2017 14:55,11/10/2017 14:55
+PARTICIPANT35
+NodeGraphfalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:13.3
+QNumT:1 Input Value:Avengers 2012,
+Time Elapsed,02:02.9
+QNumT:2 Input Value:League of Extraordinary Gentlemen 2003From Hell 2001Mystery Men 1999Punisher 1989,
+Time Elapsed,04:24.6
+QNumT:3 Input Value:Sin City 2 2013,
+Time Elapsed,07:51.2
+QNumT:4 Input Value:Iron Man 2008,
+Time Elapsed,12:06.5
+QNumS:0 Input Value:0,
+Time Elapsed,00:12.0
+QNumS:1 Input Value:0,
+Time Elapsed,00:23.5
+QNumS:2 Input Value:0,
+Time Elapsed,00:32.0
+QNumS:3 Input Value:0,
+Time Elapsed,00:39.0
+QNumS:4 Input Value:0,
+Time Elapsed,00:46.2
+QNumS:5 Input Value:0,
+Time Elapsed,00:54.1
+QNumS:6 Input Value:0,
+Time Elapsed,00:58.8
+QNumS:7 Input Value:0,
+Time Elapsed,01:08.8
+QNumS:8 Input Value:0,
+Time Elapsed,01:21.6
+QNumS:9 Input Value:0,
+Time Elapsed,01:32.3
+QNumS:9 Input Value:0,
+Time Elapsed,01:32.3
+11/12/2017 16:53,11/12/2017 16:54
+PARTICIPANT36,
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,03:26.9
+QNumT:1 Input Value:Movie: Captain America: Civil War (2016),
+Time Elapsed,04:48.6
+QNumT:2 Input Value:Movie: Howard the Duck (1986)Movie: Fantastic Four (2015)Movie: Watchmen (2009)Movie: Mystery Men (1999)Movie: From Hell (2001),
+Time Elapsed,07:26.9
+QNumT:3 Input Value:Movie: Men In Black 3 (2012),
+Time Elapsed,09:16.3
+QNumT:4 Input Value:Movie: Kingsman: The Secret Service (2015),
+Time Elapsed,10:43.4
+QNumS:0 Input Value:0,
+Time Elapsed,00:05.7
+QNumS:1 Input Value:0,
+Time Elapsed,00:11.2
+QNumS:2 Input Value:0,
+Time Elapsed,00:15.8
+QNumS:3 Input Value:0,
+Time Elapsed,00:20.7
+QNumS:4 Input Value:0,
+Time Elapsed,00:28.1
+QNumS:5 Input Value:0,
+Time Elapsed,00:32.8
+QNumS:6 Input Value:0,
+Time Elapsed,00:38.0
+QNumS:7 Input Value:0,
+Time Elapsed,00:45.8
+QNumS:8 Input Value:0,
+Time Elapsed,00:56.2
+QNumS:9 Input Value:0,
+Time Elapsed,01:05.4
+QNumS:9 Input Value:0,
+Time Elapsed,01:05.4
+11/12/2017 17:06,11/12/2017 17:07
+PARTICIPANT36
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,04:22.6
+QNumT:1 Input Value:Movie: X-Men: First Class (2011),
+Time Elapsed,07:46.8
+QNumT:2 Input Value:Movie: Punisher (1989),
+Time Elapsed,08:09.9
+QNumT:3 Input Value:Movie: Blade (1998),
+Time Elapsed,11:12.7
+QNumT:4 Input Value:Movie: Superman Returns (2006),
+Time Elapsed,13:08.1
+QNumS:0 Input Value:0,
+Time Elapsed,00:30.0
+QNumS:1 Input Value:0,
+Time Elapsed,00:45.1
+QNumS:2 Input Value:0,
+Time Elapsed,00:55.6
+QNumS:3 Input Value:0,
+Time Elapsed,01:01.7
+QNumS:4 Input Value:0,
+Time Elapsed,01:10.6
+QNumS:5 Input Value:0,
+Time Elapsed,01:25.0
+QNumS:6 Input Value:0,
+Time Elapsed,01:30.8
+QNumS:7 Input Value:0,
+Time Elapsed,01:38.1
+QNumS:8 Input Value:0,
+Time Elapsed,02:00.6
+QNumS:9 Input Value:0,
+Time Elapsed,02:08.3
+QNumS:9 Input Value:0,
+Time Elapsed,02:08.3
+11/19/2017 14:37,11/19/2017 14:39
+PARTICIPANT37,
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:12.2
+QNumT:1 Input Value:Avengers: Age of Ultron 2015,
+Time Elapsed,01:48.6
+QNumT:2 Input Value:Hulk 2003,
+Time Elapsed,03:29.3
+QNumT:3 Input Value:The Dark Knight Rises 2012,
+Time Elapsed,05:28.0
+QNumT:4 Input Value:Batman Forever 1995,
+Time Elapsed,06:10.5
+QNumS:0 Input Value:0,
+Time Elapsed,00:10.5
+QNumS:1 Input Value:0,
+Time Elapsed,00:15.1
+QNumS:2 Input Value:0,
+Time Elapsed,00:24.0
+QNumS:3 Input Value:0,
+Time Elapsed,00:30.0
+QNumS:4 Input Value:0,
+Time Elapsed,00:39.0
+QNumS:5 Input Value:0,
+Time Elapsed,00:44.4
+QNumS:6 Input Value:0,
+Time Elapsed,00:49.0
+QNumS:7 Input Value:0,
+Time Elapsed,00:58.1
+QNumS:8 Input Value:0,
+Time Elapsed,01:10.2
+QNumS:9 Input Value:0,
+Time Elapsed,01:18.8
+QNumS:9 Input Value:0,
+Time Elapsed,01:18.8
+11/19/2017 14:46,11/19/2017 14:47
+PARTICIPANT37
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:31.6
+QNumT:1 Input Value:Movie: X-Men: Days of Future Past (2014),
+Time Elapsed,08:54.6
+QNumT:2 Input Value:Movie: Howard the Duck (1986)Movie: From Hell (2001)Movie: Mystery Men (1999)Movie: League of Extraordinary Gentlemen (2003),
+Time Elapsed,11:26.8
+QNumT:3 Input Value:Movie: Guardians of the Galaxy (2014),
+Time Elapsed,13:06.7
+QNumT:4 Input Value:Movie: Fantastic Four (2005),
+Time Elapsed,16:52.3
+QNumS:0 Input Value:0,
+Time Elapsed,00:07.6
+QNumS:1 Input Value:0,
+Time Elapsed,00:15.2
+QNumS:2 Input Value:0,
+Time Elapsed,00:21.6
+QNumS:3 Input Value:0,
+Time Elapsed,00:25.5
+QNumS:4 Input Value:0,
+Time Elapsed,00:31.3
+QNumS:5 Input Value:0,
+Time Elapsed,00:36.1
+QNumS:6 Input Value:0,
+Time Elapsed,00:42.7
+QNumS:7 Input Value:0,
+Time Elapsed,00:48.2
+QNumS:8 Input Value:0,
+Time Elapsed,01:00.8
+QNumS:9 Input Value:0,
+Time Elapsed,01:06.3
+QNumS:9 Input Value:0,
+Time Elapsed,01:06.3
+12/6/2017 14:50,12/6/2017 14:51
+PARTICIPANT38,
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:31.6
+QNumT:1 Input Value:Movie: X-Men: Days of Future Past (2014),
+Time Elapsed,08:54.6
+QNumT:2 Input Value:Movie: Howard the Duck (1986)Movie: From Hell (2001)Movie: Mystery Men (1999)Movie: League of Extraordinary Gentlemen (2003),
+Time Elapsed,11:26.8
+QNumT:3 Input Value:Movie: Guardians of the Galaxy (2014),
+Time Elapsed,13:06.7
+QNumT:4 Input Value:Movie: Fantastic Four (2005),
+Time Elapsed,16:52.3
+QNumS:0 Input Value:2,
+Time Elapsed,00:07.6
+QNumS:1 Input Value:5,
+Time Elapsed,00:15.2
+QNumS:2 Input Value:2,
+Time Elapsed,00:21.6
+QNumS:3 Input Value:1,
+Time Elapsed,00:25.5
+QNumS:4 Input Value:5,
+Time Elapsed,00:31.3
+QNumS:5 Input Value:1,
+Time Elapsed,00:36.1
+QNumS:6 Input Value:2,
+Time Elapsed,00:42.7
+QNumS:7 Input Value:2,
+Time Elapsed,00:48.2
+QNumS:8 Input Value:5,
+Time Elapsed,01:00.8
+QNumS:9 Input Value:1,
+Time Elapsed,01:06.3
+QNumS:9 Input Value:1,
+Time Elapsed,01:06.3
+12/6/2017 14:50,12/6/2017 14:51
+PARTICIPANT38
+NodeGraphfalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:15.9
+QNumT:1 Input Value:Avengers: Age of Ultron 2015,
+Time Elapsed,03:10.5
+QNumT:2 Input Value:From Hell 2001Punisher 1989,
+Time Elapsed,04:11.1
+QNumT:3 Input Value:Red 2 2013,
+Time Elapsed,05:01.6
+QNumT:4 Input Value:Superman Returns 2006,
+Time Elapsed,06:59.5
+QNumS:0 Input Value:2,
+Time Elapsed,00:04.2
+QNumS:1 Input Value:5,
+Time Elapsed,00:08.7
+QNumS:2 Input Value:3,
+Time Elapsed,00:13.2
+QNumS:3 Input Value:2,
+Time Elapsed,00:15.7
+QNumS:4 Input Value:5,
+Time Elapsed,00:20.8
+QNumS:5 Input Value:2,
+Time Elapsed,00:26.3
+QNumS:6 Input Value:2,
+Time Elapsed,00:31.2
+QNumS:7 Input Value:1,
+Time Elapsed,00:34.2
+QNumS:8 Input Value:4,
+Time Elapsed,00:41.2
+QNumS:9 Input Value:2,
+Time Elapsed,00:45.1
+QNumS:9 Input Value:2,
+Time Elapsed,00:45.1
+12/6/2017 14:59,12/6/2017 15:00
+PARTICIPANT39,
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:45.0
+QNumT:1 Input Value:Captain America: Civil War 2016,
+Time Elapsed,04:01.3
+QNumT:2 Input Value:From Hell 2001,
+Time Elapsed,04:08.8
+QNumT:3 Input Value:Men In Black 3 2012,
+Time Elapsed,06:23.2
+QNumT:4 Input Value:Kingsman: The Secret Service 2015Captain America: the First Avenger 2011Captain America: Civil War 2016,
+Time Elapsed,10:22.3
+QNumS:0 Input Value:2,
+Time Elapsed,00:14.4
+QNumS:1 Input Value:4,
+Time Elapsed,00:24.7
+QNumS:2 Input Value:2,
+Time Elapsed,00:47.0
+QNumS:3 Input Value:0,
+Time Elapsed,00:52.5
+QNumS:4 Input Value:6,
+Time Elapsed,00:57.6
+QNumS:5 Input Value:0,
+Time Elapsed,01:02.5
+QNumS:6 Input Value:0,
+Time Elapsed,01:07.1
+QNumS:7 Input Value:0,
+Time Elapsed,01:12.3
+QNumS:8 Input Value:0,
+Time Elapsed,01:20.6
+QNumS:9 Input Value:2,
+Time Elapsed,01:29.2
+QNumS:9 Input Value:2,
+Time Elapsed,01:29.2
+12/13/2017 15:52,12/13/2017 15:53
+PARTICIPANT39
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:11.7
+QNumT:1 Input Value:Movie: Avengers: Age of Ultron (2015),
+Time Elapsed,02:22.9
+QNumT:2 Input Value:Movie: League of Extraordinary Gentlemen (2003),
+Time Elapsed,02:48.9
+QNumT:3 Input Value:Movie: Fantastic Four: Rise of the Silver Surfer (2007),
+Time Elapsed,04:18.8
+QNumT:4 Input Value:Movie: Captain America: the First Avenger (2011)Movie: Wanted (2008),
+Time Elapsed,07:14.2
+QNumS:0 Input Value: 3,
+Time Elapsed,00:14.0
+QNumS:1 Input Value:3,
+Time Elapsed,00:22.2
+QNumS:2 Input Value:4,
+Time Elapsed,00:28.7
+QNumS:3 Input Value:6,
+Time Elapsed,00:35.2
+QNumS:4 Input Value:4,
+Time Elapsed,00:41.2
+QNumS:5 Input Value:4,
+Time Elapsed,00:48.3
+QNumS:6 Input Value:2,
+Time Elapsed,00:56.0
+QNumS:7 Input Value:4,
+Time Elapsed,01:12.7
+QNumS:8 Input Value:3,
+Time Elapsed,01:20.1
+QNumS:9 Input Value:4,
+Time Elapsed,01:23.8
+QNumS:9 Input Value:4,
+Time Elapsed,01:23.8
+12/13/2017 16:01,12/13/2017 16:03
+PARTICIPANT40,
+NodeGraphfalse,
+QNumT:0 Input Value:DC,
+Time Elapsed,01:30.6
+QNumT:1 Input Value:Captain America: Civil War 2016,
+Time Elapsed,03:29.3
+QNumT:2 Input Value:Punisher 1989Howard the Duck 1986Mystery Men 1999Fantastic Four 2015Watchmen 2009,
+Time Elapsed,05:56.5
+QNumT:3 Input Value:X-Men: First Class 2011,
+Time Elapsed,08:08.8
+QNumT:4 Input Value:The Dark Knight Rises 2012Sin City 2 2013Fantastic Four: Rise of the Silver Surfer 2007,
+Time Elapsed,13:40.7
+QNumS:0 Input Value:2,
+Time Elapsed,00:25.7
+QNumS:1 Input Value:5,
+Time Elapsed,00:50.7
+QNumS:2 Input Value:2,
+Time Elapsed,01:01.0
+QNumS:3 Input Value:1,
+Time Elapsed,01:07.0
+QNumS:4 Input Value:2,
+Time Elapsed,01:14.6
+QNumS:5 Input Value:1,
+Time Elapsed,01:21.9
+QNumS:6 Input Value:1,
+Time Elapsed,01:29.2
+QNumS:7 Input Value:2,
+Time Elapsed,01:38.1
+QNumS:8 Input Value:2,
+Time Elapsed,01:50.2
+QNumS:9 Input Value:1,
+Time Elapsed,02:08.3
+QNumS:9 Input Value:1,
+Time Elapsed,02:08.3
+12/13/2017 16:34,12/13/2017 16:37
+PARTICIPANT40
+SphereScenefalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:21.9
+QNumT:1 Input Value:Movie: Red 2 (2013),
+Time Elapsed,01:50.3
+QNumT:2 Input Value:Movie: Constantine (2005)Movie: From Hell (2001)Movie: Watchmen (2009),
+Time Elapsed,03:31.4
+QNumT:3 Input Value:Movie: Thor: the Dark World (2013),
+Time Elapsed,04:34.6
+QNumT:4 Input Value:Movie: Scott Pilgrim vs the World (2010)Movie: The Dark Knight (2008)Movie: The Dark Knight Rises (2012)Movie: Avengers (2012)Movie: Kingsman: The Secret Service (2015),
+Time Elapsed,06:30.9
+QNumS:0 Input Value:1,
+Time Elapsed,00:08.1
+QNumS:1 Input Value:5,
+Time Elapsed,00:15.1
+QNumS:2 Input Value:1,
+Time Elapsed,00:28.0
+QNumS:3 Input Value:1,
+Time Elapsed,00:37.5
+QNumS:4 Input Value:3,
+Time Elapsed,00:42.1
+QNumS:5 Input Value:1,
+Time Elapsed,00:55.6
+QNumS:6 Input Value:1,
+Time Elapsed,00:59.7
+QNumS:7 Input Value:1,
+Time Elapsed,01:07.5
+QNumS:8 Input Value:2,
+Time Elapsed,01:14.1
+QNumS:9 Input Value:2,
+Time Elapsed,01:23.4
+QNumS:9 Input Value:2,
+Time Elapsed,01:23.4
+12/13/2017 16:44,12/13/2017 16:45
+PARTICIPANT41,
+SphereScenetrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:33.0
+QNumT:1 Input Value:Movie: Howard the Duck (1986),
+Time Elapsed,04:52.3
+QNumT:2 Input Value:Movie: Punisher (1989)Movie: Mystery Men (1999)Movie: League of Extraordinary Gentlemen (2003)Movie: Howard the Duck (1986)Movie: Fantastic Four (2015)Movie: Watchmen (2009)Movie: From Hell (2001),
+Time Elapsed,06:39.3
+QNumT:3 Input Value:Movie: Howard the Duck (1986),
+Time Elapsed,09:19.4
+QNumT:4 Input Value:Movie: Superman Returns (2006)Movie: The Dark Knight (2008)Movie: The Dark Knight Rises (2012)Movie: Batman Begins (2005)Movie: Scott Pilgrim vs the World (2010)Movie: Captain America: Civil War (2016)Movie: Captain America: the Winter Soldier (2014)Movie: Captain America: the First Avenger (2011)Movie: Batman Forever (1995)Movie: Batman and Robin (1997)Movie: Batman Returns (1992),
+Time Elapsed,14:40.2
+QNumS:0 Input Value:3,
+Time Elapsed,00:44.5
+QNumS:1 Input Value:3,
+Time Elapsed,00:52.1
+QNumS:2 Input Value:4,
+Time Elapsed,00:56.0
+QNumS:3 Input Value:2,
+Time Elapsed,01:05.3
+QNumS:4 Input Value:5,
+Time Elapsed,01:11.4
+QNumS:5 Input Value:4,
+Time Elapsed,01:21.2
+QNumS:6 Input Value:2,
+Time Elapsed,01:25.8
+QNumS:7 Input Value:2,
+Time Elapsed,01:30.8
+QNumS:8 Input Value:1,
+Time Elapsed,01:35.0
+QNumS:9 Input Value:5,
+Time Elapsed,01:38.2
+QNumS:9 Input Value:5,
+Time Elapsed,01:38.2
+12/18/2017 11:16,12/18/2017 11:18
+PARTICIPANT41
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:45.0
+QNumT:1 Input Value:Iron Man 2008,
+Time Elapsed,03:06.9
+QNumT:2 Input Value:From Hell 2001Fantastic Four 2015Punisher 1989,
+Time Elapsed,05:00.3
+QNumT:3 Input Value:Fantastic Four: Rise of the Silver Surfer 2007,
+Time Elapsed,05:27.7
+QNumT:4 Input Value:Scott Pilgrim vs the World 2010The Dark Knight 2008Kingsman: The Secret Service 2015Avengers: Age of Ultron 2015Iron Man 2 2010,
+Time Elapsed,09:52.5
+QNumS:0 Input Value:3,
+Time Elapsed,00:13.2
+QNumS:1 Input Value:4,
+Time Elapsed,00:18.0
+QNumS:2 Input Value:3,
+Time Elapsed,00:30.7
+QNumS:3 Input Value:1,
+Time Elapsed,00:37.4
+QNumS:4 Input Value:2,
+Time Elapsed,00:44.2
+QNumS:5 Input Value:2,
+Time Elapsed,00:47.8
+QNumS:6 Input Value:1,
+Time Elapsed,00:52.8
+QNumS:7 Input Value:3,
+Time Elapsed,00:57.6
+QNumS:8 Input Value:1,
+Time Elapsed,01:03.8
+QNumS:9 Input Value:4,
+Time Elapsed,01:07.8
+QNumS:9 Input Value:4,
+Time Elapsed,01:07.8
+12/18/2017 11:28,12/18/2017 11:29
