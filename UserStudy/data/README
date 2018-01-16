@@ -1,0 +1,64 @@
+### Data description ###
+Description of data artifacts
+
+demographics.csv
+Pre-study demographics, previous VR experience, immersive tendancy survey
+
+performance.csv
+Graded task performance
+
+questionnaire.csv
+Post-test survey comparing Node vs. Link visualization
+
+responses.tsv
+Formatted task responses including task responses and post-block survey
+
+umdvr_performance.csv
+Raw, unformatted task responses from software
+
+### Performance Rating Instructions ###
+Instructions for how to grade task performance for performance.csv. 
+
+Tasks are organized by condition. First block are NODE responses, second block are SPHERE responess.
+
+QT1T_Score[NODE, SPHERE]
+1 MARVEL
+0 Any other answer
+
+QT2Best
+1 Avengers: Age of Ultron
+0 Any other answer
+
+QT2SecondBest
+1 One of the following: Avengers: Age of Ultron, Captain America: the First Avenger
+0 Any other answer
+
+QT2GoodNode
+1 One of the following: Avengers: Age of Ultron, Captain America: the First Avenger, Fantastic Four: Rise of the Silver Surfer, Avengers 2012
+0 Any other answer
+
+QT3Correct
+Count of any of the following movies: Mystery Men, Watchmen, Fantastic Four 2015, Howard the Duck, Punisher 1989, From Hell, league of Extraordinary Gentlemen
+Example: Mystery Men (1)
+Example: Mystery Men, Watchmen (2)
+
+QT3Errors
+Count of any movie not in the previous list.
+Example: Kick-ass, Dredd 2004, Punisher 2004, Hulk (4)
+
+QT3 Special Note
+Mixed example: Mystery Men, Hulk wold result in (1) Correct and (1) Errors
+
+QT4Best
+1 One of the following: Captain America: The First Aventer, Guardians of the Galaxy, Jonah Hex
+0 Any other answer
+
+QT4Good
+1 One of the following: Captain America: The First Aventer, Guardians of the Galaxy, Jonah Hex, Batman Forever, The Dark Knight Rises, Kick-ass 2, Men In Black 2, Red, Red 2, Sin City 2, X-Men: Days of Future Past, X-Men: Age of Apocalypse
+0 Any other answer
+
+QT5
+Note: We may need to think about how to best evaluate this question. For now, we'll take the simple route.
+1 Answer that contains Kingsman: The Secret Service
+0 Answer that do NOT include Kingsman: The Secret Service
+
