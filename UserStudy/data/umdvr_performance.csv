@@ -33,6 +33,9 @@ Time Elapsed,03:30.1
 QNumS:9 Input Value:6,
 Time Elapsed,03:30.1
 7/21/2017 13:09,7/21/2017 13:13
+NodeGraphtrue,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,00:12.7
 PARTICIPANT2,
 SphereScenefalse,
 QNumT:0 Input Value:Marvel,
@@ -68,7 +71,6 @@ Time Elapsed,01:13.5
 QNumS:9 Input Value:6,
 Time Elapsed,01:13.5
 7/21/2017 14:29,7/21/2017 14:30
-PARTICIPANT2
 NodeGraphfalse,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,00:37.7
@@ -138,7 +140,6 @@ Time Elapsed,01:25.9
 QNumS:9 Input Value:5,
 Time Elapsed,01:25.9
 7/24/2017 11:14,7/24/2017 11:15
-PARTICIPANT3
 SphereScenetrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,01:20.4
@@ -208,7 +209,6 @@ Time Elapsed,01:36.0
 QNumS:9 Input Value:5,
 Time Elapsed,01:36.0
 7/24/2017 12:54,7/24/2017 12:56
-PARTICIPANT4
 SphereScenefalse,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,01:45.3
@@ -280,7 +280,6 @@ Time Elapsed,01:50.0
 QNumS:9 Input Value:2,
 Time Elapsed,01:50.0
 7/25/2017 12:22,7/25/2017 12:24
-PARTICIPANT5
 NodeGraphtrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,00:11.1
@@ -350,7 +349,6 @@ Time Elapsed,02:49.8
 QNumS:9 Input Value:5,
 Time Elapsed,02:49.8
 7/25/2017 14:47,7/25/2017 14:50
-PARTICIPANT6
 NodeGraphfalse,
 QNumT:0 Input Value:DC,
 Time Elapsed,03:35.3
@@ -420,7 +418,6 @@ Time Elapsed,01:09.9
 QNumS:9 Input Value:3,
 Time Elapsed,01:09.9
 7/26/2017 10:27,7/26/2017 10:28
-PARTICIPANT7
 SphereScenetrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,00:09.4
@@ -490,7 +487,6 @@ Time Elapsed,01:10.8
 QNumS:9 Input Value:5,
 Time Elapsed,01:10.8
 7/26/2017 12:48,7/26/2017 12:49
-PARTICIPANT8
 SphereScenefalse,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,01:31.1
@@ -560,7 +556,6 @@ Time Elapsed,02:03.3
 QNumS:9 Input Value:5,
 Time Elapsed,02:03.3
 7/26/2017 14:38,7/26/2017 14:40
-PARTICIPANT9
 NodeGraphtrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,02:49.8
@@ -630,7 +625,6 @@ Time Elapsed,00:56.6
 QNumS:9 Input Value:4,
 Time Elapsed,00:56.6
 7/27/2017 12:47,7/27/2017 12:48
-PARTICIPANT10
 NodeGraphfalse,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,01:07.7
@@ -700,7 +694,6 @@ Time Elapsed,01:41.3
 QNumS:9 Input Value:4,
 Time Elapsed,01:41.3
 7/27/2017 14:27,7/27/2017 14:29
-PARTICIPANT11
 SphereScenetrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,01:23.9
@@ -770,7 +763,6 @@ Time Elapsed,02:26.5
 QNumS:9 Input Value:4,
 Time Elapsed,02:26.5
 7/28/2017 14:58,7/28/2017 15:01
-PARTICIPANT12
 SphereScenefalse,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,00:36.5
@@ -840,7 +832,6 @@ Time Elapsed,00:48.0
 QNumS:9 Input Value:4,
 Time Elapsed,00:48.0
 8/7/2017 10:33,8/7/2017 10:34
-PARTICIPANT13
 NodeGraphtrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,00:32.9
@@ -910,7 +901,6 @@ Time Elapsed,01:14.9
 QNumS:9 Input Value:5,
 Time Elapsed,01:14.9
 8/7/2017 12:35,8/7/2017 12:36
-PARTICIPANT14
 NodeGraphfalse,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,01:30.0
@@ -980,7 +970,6 @@ Time Elapsed,01:17.3
 QNumS:9 Input Value:2,
 Time Elapsed,01:17.3
 8/8/2017 12:28,8/8/2017 12:29
-PARTICIPANT15
 SphereScenetrue,
 QNumT:0 Input Value:Dark Horse,
 Time Elapsed,00:52.0
@@ -1050,7 +1039,6 @@ Time Elapsed,01:08.9
 QNumS:9 Input Value:5,
 Time Elapsed,01:08.9
 8/9/2017 10:36,8/9/2017 10:37
-PARTICIPANT16
 SphereScenefalse,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,00:12.4
@@ -1120,7 +1108,6 @@ Time Elapsed,01:35.0
 QNumS:9 Input Value:4,
 Time Elapsed,01:35.0
 8/9/2017 12:40,8/9/2017 12:42
-PARTICIPANT17
 NodeGraphtrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,01:31.6
@@ -1190,7 +1177,6 @@ Time Elapsed,01:31.1
 QNumS:9 Input Value:4,
 Time Elapsed,01:31.2
 8/10/2017 14:39,8/10/2017 14:41
-PARTICIPANT18
 NodeGraphfalse,
 QNumT:0 Input Value:Mirage,
 Time Elapsed,05:58.6
@@ -1260,7 +1246,6 @@ Time Elapsed,01:12.4
 QNumS:9 Input Value:4,
 Time Elapsed,01:12.4
 8/14/2017 14:27,8/14/2017 14:28
-PARTICIPANT19
 SphereScenetrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,00:47.7
@@ -1330,7 +1315,6 @@ Time Elapsed,01:28.2
 QNumS:9 Input Value:4,
 Time Elapsed,01:28.2
 8/22/2017 10:38,8/22/2017 10:39
-PARTICIPANT20
 SphereScenefalse,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,00:38.2
@@ -1400,7 +1384,6 @@ Time Elapsed,01:01.5
 QNumS:9 Input Value:2,
 Time Elapsed,01:01.5
 8/22/2017 14:38,8/22/2017 14:39
-PARTICIPANT21
 NodeGraphtrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,01:45.7
@@ -1470,7 +1453,6 @@ Time Elapsed,02:06.2
 QNumS:9 Input Value:4,
 Time Elapsed,02:06.2
 8/23/2017 10:47,8/23/2017 10:49
-PARTICIPANT22
 NodeGraphfalse,
 QNumT:0 Input Value:Wildstorm,
 Time Elapsed,05:49.6
@@ -1540,7 +1522,6 @@ Time Elapsed,01:34.7
 QNumS:9 Input Value:3,
 Time Elapsed,01:34.7
 8/23/2017 12:36,8/23/2017 12:38
-PARTICIPANT23
 SphereScenetrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,00:14.0
@@ -1612,7 +1593,6 @@ Time Elapsed,02:00.4
 QNumS:9 Input Value:4,
 Time Elapsed,02:00.4
 8/24/2017 10:39,8/24/2017 10:41
-PARTICIPANT24
 SphereScenefalse,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,00:15.4
@@ -1682,7 +1662,6 @@ Time Elapsed,01:15.2
 QNumS:9 Input Value:4,
 Time Elapsed,01:15.2
 8/24/2017 12:16,8/24/2017 12:18
-PARTICIPANT25
 NodeGraphtrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,01:53.9
@@ -1752,7 +1731,6 @@ Time Elapsed,01:12.2
 QNumS:9 Input Value:4,
 Time Elapsed,01:12.2
 8/24/2017 14:47,8/24/2017 14:48
-PARTICIPANT26
 NodeGraphfalse,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,00:43.7
@@ -1822,7 +1800,6 @@ Time Elapsed,01:34.2
 QNumS:9 Input Value:5,
 Time Elapsed,01:34.2
 8/25/2017 10:39,8/25/2017 10:41
-PARTICIPANT27
 SphereScenetrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,01:03.0
@@ -1894,7 +1871,6 @@ Time Elapsed,01:49.4
 QNumS:9 Input Value:6,
 Time Elapsed,01:49.4
 8/25/2017 14:50,8/25/2017 14:52
-PARTICIPANT28
 SphereScenefalse,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,00:29.3
@@ -1964,7 +1940,6 @@ Time Elapsed,01:01.6
 QNumS:9 Input Value:4,
 Time Elapsed,01:01.6
 9/1/2017 11:52,9/1/2017 11:53
-PARTICIPANT29
 NodeGraphtrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,01:30.3
@@ -2034,7 +2009,6 @@ Time Elapsed,01:05.1
 QNumS:9 Input Value:1,
 Time Elapsed,01:05.1
 9/1/2017 13:31,9/1/2017 13:32
-PARTICIPANT30
 NodeGraphfalse,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,01:05.3
@@ -2104,7 +2078,6 @@ Time Elapsed,01:09.4
 QNumS:9 Input Value:5,
 Time Elapsed,01:09.5
 11/1/2017 15:04,11/1/2017 15:06
-PARTICIPANT31
 SphereScenetrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,00:17.4
@@ -2174,7 +2147,6 @@ Time Elapsed,01:30.7
 QNumS:9 Input Value:4,
 Time Elapsed,01:30.7
 11/3/2017 14:44,11/3/2017 14:46
-PARTICIPANT32
 SphereScenefalse,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,01:50.2
@@ -2244,7 +2216,6 @@ Time Elapsed,01:39.8
 QNumS:9 Input Value:4,
 Time Elapsed,01:39.8
 11/5/2017 14:34,11/5/2017 14:36
-PARTICIPANT33
 NodeGraphtrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,02:42.5
@@ -2314,8 +2285,9 @@ Time Elapsed,01:09.6
 QNumS:9 Input Value:3,
 Time Elapsed,01:09.6
 11/5/2017 16:28,11/5/2017 16:30
-PARTICIPANT34
-????
+NodeGraphfalse,
+QNumT:0 Input Value:Marvel,
+Time Elapsed,01:01.8
 QNumT:1 Input Value:X-Men: Days of Future Past 2014,
 Time Elapsed,02:08.6
 QNumT:2 Input Value:Fantastic Four 2015Punisher 1989Watchmen 2009Mystery Men 1999,
@@ -2347,7 +2319,7 @@ Time Elapsed,00:49.4
 QNumS:9 Input Value:3,
 Time Elapsed,00:49.4
 11/5/2017 16:40,11/5/2017 16:41
-PARTICIPANT34
+PARTICIPANT35,
 NodeGraphtrue,
 QNumT:0 Input Value:Aircell,
 Time Elapsed,04:06.6
@@ -2382,7 +2354,6 @@ Time Elapsed,01:36.8
 QNumS:9 Input Value:3,
 Time Elapsed,01:36.8
 11/10/2017 14:46,11/10/2017 14:47
-PARTICIPANT35,
 SphereScenetrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,01:05.2
@@ -2417,7 +2388,7 @@ Time Elapsed,00:45.5
 QNumS:9 Input Value:3,
 Time Elapsed,00:45.5
 11/10/2017 14:55,11/10/2017 14:55
-PARTICIPANT35
+PARTICIPANT36,
 NodeGraphfalse,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,00:13.3
@@ -2429,33 +2400,32 @@ QNumT:3 Input Value:Sin City 2 2013,
 Time Elapsed,07:51.2
 QNumT:4 Input Value:Iron Man 2008,
 Time Elapsed,12:06.5
-QNumS:0 Input Value:0,
+QNumS:0 Input Value:2,
 Time Elapsed,00:12.0
-QNumS:1 Input Value:0,
+QNumS:1 Input Value:4,
 Time Elapsed,00:23.5
-QNumS:2 Input Value:0,
+QNumS:2 Input Value:4,
 Time Elapsed,00:32.0
-QNumS:3 Input Value:0,
+QNumS:3 Input Value:3,
 Time Elapsed,00:39.0
-QNumS:4 Input Value:0,
+QNumS:4 Input Value:6,
 Time Elapsed,00:46.2
-QNumS:5 Input Value:0,
+QNumS:5 Input Value:2,
 Time Elapsed,00:54.1
-QNumS:6 Input Value:0,
+QNumS:6 Input Value:2,
 Time Elapsed,00:58.8
-QNumS:7 Input Value:0,
+QNumS:7 Input Value:3,
 Time Elapsed,01:08.8
-QNumS:8 Input Value:0,
+QNumS:8 Input Value:5,
 Time Elapsed,01:21.6
-QNumS:9 Input Value:0,
+QNumS:9 Input Value:3,
 Time Elapsed,01:32.3
-QNumS:9 Input Value:0,
+QNumS:9 Input Value:3,
 Time Elapsed,01:32.3
 11/12/2017 16:53,11/12/2017 16:54
-PARTICIPANT36,
 SphereScenefalse,
 QNumT:0 Input Value:Marvel,
-Time Elapsed,03:26.9
+Time Elapsed,03:27.0
 QNumT:1 Input Value:Movie: Captain America: Civil War (2016),
 Time Elapsed,04:48.6
 QNumT:2 Input Value:Movie: Howard the Duck (1986)Movie: Fantastic Four (2015)Movie: Watchmen (2009)Movie: Mystery Men (1999)Movie: From Hell (2001),
@@ -2464,30 +2434,30 @@ QNumT:3 Input Value:Movie: Men In Black 3 (2012),
 Time Elapsed,09:16.3
 QNumT:4 Input Value:Movie: Kingsman: The Secret Service (2015),
 Time Elapsed,10:43.4
-QNumS:0 Input Value:0,
+QNumS:0 Input Value:2,
 Time Elapsed,00:05.7
-QNumS:1 Input Value:0,
+QNumS:1 Input Value:4,
 Time Elapsed,00:11.2
-QNumS:2 Input Value:0,
+QNumS:2 Input Value:3,
 Time Elapsed,00:15.8
-QNumS:3 Input Value:0,
+QNumS:3 Input Value:2,
 Time Elapsed,00:20.7
-QNumS:4 Input Value:0,
+QNumS:4 Input Value:3,
 Time Elapsed,00:28.1
-QNumS:5 Input Value:0,
+QNumS:5 Input Value:2,
 Time Elapsed,00:32.8
-QNumS:6 Input Value:0,
+QNumS:6 Input Value:2,
 Time Elapsed,00:38.0
-QNumS:7 Input Value:0,
+QNumS:7 Input Value:4,
 Time Elapsed,00:45.8
-QNumS:8 Input Value:0,
+QNumS:8 Input Value:5,
 Time Elapsed,00:56.2
-QNumS:9 Input Value:0,
+QNumS:9 Input Value:2,
 Time Elapsed,01:05.4
-QNumS:9 Input Value:0,
+QNumS:9 Input Value:2,
 Time Elapsed,01:05.4
 11/12/2017 17:06,11/12/2017 17:07
-PARTICIPANT36
+PARTICIPANT37,
 SphereScenetrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,04:22.6
@@ -2499,30 +2469,29 @@ QNumT:3 Input Value:Movie: Blade (1998),
 Time Elapsed,11:12.7
 QNumT:4 Input Value:Movie: Superman Returns (2006),
 Time Elapsed,13:08.1
-QNumS:0 Input Value:0,
+QNumS:0 Input Value:4,
 Time Elapsed,00:30.0
-QNumS:1 Input Value:0,
+QNumS:1 Input Value:7,
 Time Elapsed,00:45.1
-QNumS:2 Input Value:0,
+QNumS:2 Input Value:5,
 Time Elapsed,00:55.6
-QNumS:3 Input Value:0,
+QNumS:3 Input Value:2,
 Time Elapsed,01:01.7
-QNumS:4 Input Value:0,
+QNumS:4 Input Value:2,
 Time Elapsed,01:10.6
-QNumS:5 Input Value:0,
+QNumS:5 Input Value:2,
 Time Elapsed,01:25.0
-QNumS:6 Input Value:0,
+QNumS:6 Input Value:6,
 Time Elapsed,01:30.8
-QNumS:7 Input Value:0,
+QNumS:7 Input Value:3,
 Time Elapsed,01:38.1
-QNumS:8 Input Value:0,
+QNumS:8 Input Value:3,
 Time Elapsed,02:00.6
-QNumS:9 Input Value:0,
+QNumS:9 Input Value:2,
 Time Elapsed,02:08.3
-QNumS:9 Input Value:0,
+QNumS:9 Input Value:2,
 Time Elapsed,02:08.3
 11/19/2017 14:37,11/19/2017 14:39
-PARTICIPANT37,
 NodeGraphtrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,01:12.2
@@ -2534,64 +2503,29 @@ QNumT:3 Input Value:The Dark Knight Rises 2012,
 Time Elapsed,05:28.0
 QNumT:4 Input Value:Batman Forever 1995,
 Time Elapsed,06:10.5
-QNumS:0 Input Value:0,
+QNumS:0 Input Value:5,
 Time Elapsed,00:10.5
-QNumS:1 Input Value:0,
+QNumS:1 Input Value:7,
 Time Elapsed,00:15.1
-QNumS:2 Input Value:0,
+QNumS:2 Input Value:3,
 Time Elapsed,00:24.0
-QNumS:3 Input Value:0,
+QNumS:3 Input Value:5,
 Time Elapsed,00:30.0
-QNumS:4 Input Value:0,
+QNumS:4 Input Value:6,
 Time Elapsed,00:39.0
-QNumS:5 Input Value:0,
+QNumS:5 Input Value:2,
 Time Elapsed,00:44.4
-QNumS:6 Input Value:0,
+QNumS:6 Input Value:4,
 Time Elapsed,00:49.0
-QNumS:7 Input Value:0,
+QNumS:7 Input Value:2,
 Time Elapsed,00:58.1
-QNumS:8 Input Value:0,
+QNumS:8 Input Value:5,
 Time Elapsed,01:10.2
-QNumS:9 Input Value:0,
+QNumS:9 Input Value:2,
 Time Elapsed,01:18.8
-QNumS:9 Input Value:0,
+QNumS:9 Input Value:2,
 Time Elapsed,01:18.8
 11/19/2017 14:46,11/19/2017 14:47
-PARTICIPANT37
-SphereScenefalse,
-QNumT:0 Input Value:Marvel,
-Time Elapsed,00:31.6
-QNumT:1 Input Value:Movie: X-Men: Days of Future Past (2014),
-Time Elapsed,08:54.6
-QNumT:2 Input Value:Movie: Howard the Duck (1986)Movie: From Hell (2001)Movie: Mystery Men (1999)Movie: League of Extraordinary Gentlemen (2003),
-Time Elapsed,11:26.8
-QNumT:3 Input Value:Movie: Guardians of the Galaxy (2014),
-Time Elapsed,13:06.7
-QNumT:4 Input Value:Movie: Fantastic Four (2005),
-Time Elapsed,16:52.3
-QNumS:0 Input Value:0,
-Time Elapsed,00:07.6
-QNumS:1 Input Value:0,
-Time Elapsed,00:15.2
-QNumS:2 Input Value:0,
-Time Elapsed,00:21.6
-QNumS:3 Input Value:0,
-Time Elapsed,00:25.5
-QNumS:4 Input Value:0,
-Time Elapsed,00:31.3
-QNumS:5 Input Value:0,
-Time Elapsed,00:36.1
-QNumS:6 Input Value:0,
-Time Elapsed,00:42.7
-QNumS:7 Input Value:0,
-Time Elapsed,00:48.2
-QNumS:8 Input Value:0,
-Time Elapsed,01:00.8
-QNumS:9 Input Value:0,
-Time Elapsed,01:06.3
-QNumS:9 Input Value:0,
-Time Elapsed,01:06.3
-12/6/2017 14:50,12/6/2017 14:51
 PARTICIPANT38,
 SphereScenefalse,
 QNumT:0 Input Value:Marvel,
@@ -2604,30 +2538,29 @@ QNumT:3 Input Value:Movie: Guardians of the Galaxy (2014),
 Time Elapsed,13:06.7
 QNumT:4 Input Value:Movie: Fantastic Four (2005),
 Time Elapsed,16:52.3
-QNumS:0 Input Value:2,
+QNumS:0 Input Value:3,
 Time Elapsed,00:07.6
-QNumS:1 Input Value:5,
+QNumS:1 Input Value:6,
 Time Elapsed,00:15.2
-QNumS:2 Input Value:2,
+QNumS:2 Input Value:3,
 Time Elapsed,00:21.6
-QNumS:3 Input Value:1,
+QNumS:3 Input Value:2,
 Time Elapsed,00:25.5
-QNumS:4 Input Value:5,
+QNumS:4 Input Value:6,
 Time Elapsed,00:31.3
-QNumS:5 Input Value:1,
+QNumS:5 Input Value:2,
 Time Elapsed,00:36.1
-QNumS:6 Input Value:2,
+QNumS:6 Input Value:3,
 Time Elapsed,00:42.7
-QNumS:7 Input Value:2,
+QNumS:7 Input Value:3,
 Time Elapsed,00:48.2
-QNumS:8 Input Value:5,
+QNumS:8 Input Value:6,
 Time Elapsed,01:00.8
-QNumS:9 Input Value:1,
+QNumS:9 Input Value:2,
 Time Elapsed,01:06.3
-QNumS:9 Input Value:1,
+QNumS:9 Input Value:2,
 Time Elapsed,01:06.3
 12/6/2017 14:50,12/6/2017 14:51
-PARTICIPANT38
 NodeGraphfalse,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,01:15.9
@@ -2639,27 +2572,27 @@ QNumT:3 Input Value:Red 2 2013,
 Time Elapsed,05:01.6
 QNumT:4 Input Value:Superman Returns 2006,
 Time Elapsed,06:59.5
-QNumS:0 Input Value:2,
+QNumS:0 Input Value:3,
 Time Elapsed,00:04.2
-QNumS:1 Input Value:5,
+QNumS:1 Input Value:6,
 Time Elapsed,00:08.7
-QNumS:2 Input Value:3,
+QNumS:2 Input Value:4,
 Time Elapsed,00:13.2
-QNumS:3 Input Value:2,
+QNumS:3 Input Value:3,
 Time Elapsed,00:15.7
-QNumS:4 Input Value:5,
+QNumS:4 Input Value:6,
 Time Elapsed,00:20.8
-QNumS:5 Input Value:2,
+QNumS:5 Input Value:3,
 Time Elapsed,00:26.3
-QNumS:6 Input Value:2,
+QNumS:6 Input Value:3,
 Time Elapsed,00:31.2
-QNumS:7 Input Value:1,
+QNumS:7 Input Value:2,
 Time Elapsed,00:34.2
-QNumS:8 Input Value:4,
+QNumS:8 Input Value:5,
 Time Elapsed,00:41.2
-QNumS:9 Input Value:2,
+QNumS:9 Input Value:3,
 Time Elapsed,00:45.1
-QNumS:9 Input Value:2,
+QNumS:9 Input Value:3,
 Time Elapsed,00:45.1
 12/6/2017 14:59,12/6/2017 15:00
 PARTICIPANT39,
@@ -2674,30 +2607,29 @@ QNumT:3 Input Value:Men In Black 3 2012,
 Time Elapsed,06:23.2
 QNumT:4 Input Value:Kingsman: The Secret Service 2015Captain America: the First Avenger 2011Captain America: Civil War 2016,
 Time Elapsed,10:22.3
-QNumS:0 Input Value:2,
+QNumS:0 Input Value:3,
 Time Elapsed,00:14.4
-QNumS:1 Input Value:4,
+QNumS:1 Input Value:5,
 Time Elapsed,00:24.7
-QNumS:2 Input Value:2,
+QNumS:2 Input Value:3,
 Time Elapsed,00:47.0
-QNumS:3 Input Value:0,
+QNumS:3 Input Value:1,
 Time Elapsed,00:52.5
-QNumS:4 Input Value:6,
+QNumS:4 Input Value:7,
 Time Elapsed,00:57.6
-QNumS:5 Input Value:0,
+QNumS:5 Input Value:1,
 Time Elapsed,01:02.5
-QNumS:6 Input Value:0,
+QNumS:6 Input Value:1,
 Time Elapsed,01:07.1
-QNumS:7 Input Value:0,
+QNumS:7 Input Value:1,
 Time Elapsed,01:12.3
-QNumS:8 Input Value:0,
+QNumS:8 Input Value:1,
 Time Elapsed,01:20.6
-QNumS:9 Input Value:2,
+QNumS:9 Input Value:3,
 Time Elapsed,01:29.2
-QNumS:9 Input Value:2,
+QNumS:9 Input Value:3,
 Time Elapsed,01:29.2
 12/13/2017 15:52,12/13/2017 15:53
-PARTICIPANT39
 SphereScenetrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,00:11.7
@@ -2709,27 +2641,27 @@ QNumT:3 Input Value:Movie: Fantastic Four: Rise of the Silver Surfer (2007),
 Time Elapsed,04:18.8
 QNumT:4 Input Value:Movie: Captain America: the First Avenger (2011)Movie: Wanted (2008),
 Time Elapsed,07:14.2
-QNumS:0 Input Value: 3,
+QNumS:0 Input Value: 4,
 Time Elapsed,00:14.0
-QNumS:1 Input Value:3,
+QNumS:1 Input Value:4,
 Time Elapsed,00:22.2
-QNumS:2 Input Value:4,
+QNumS:2 Input Value:5,
 Time Elapsed,00:28.7
-QNumS:3 Input Value:6,
+QNumS:3 Input Value:7,
 Time Elapsed,00:35.2
-QNumS:4 Input Value:4,
+QNumS:4 Input Value:5,
 Time Elapsed,00:41.2
-QNumS:5 Input Value:4,
+QNumS:5 Input Value:5,
 Time Elapsed,00:48.3
-QNumS:6 Input Value:2,
+QNumS:6 Input Value:3,
 Time Elapsed,00:56.0
-QNumS:7 Input Value:4,
+QNumS:7 Input Value:5,
 Time Elapsed,01:12.7
 QNumS:8 Input Value:3,
 Time Elapsed,01:20.1
-QNumS:9 Input Value:4,
+QNumS:9 Input Value:5,
 Time Elapsed,01:23.8
-QNumS:9 Input Value:4,
+QNumS:9 Input Value:5,
 Time Elapsed,01:23.8
 12/13/2017 16:01,12/13/2017 16:03
 PARTICIPANT40,
@@ -2744,30 +2676,29 @@ QNumT:3 Input Value:X-Men: First Class 2011,
 Time Elapsed,08:08.8
 QNumT:4 Input Value:The Dark Knight Rises 2012Sin City 2 2013Fantastic Four: Rise of the Silver Surfer 2007,
 Time Elapsed,13:40.7
-QNumS:0 Input Value:2,
+QNumS:0 Input Value:3,
 Time Elapsed,00:25.7
-QNumS:1 Input Value:5,
+QNumS:1 Input Value:6,
 Time Elapsed,00:50.7
-QNumS:2 Input Value:2,
+QNumS:2 Input Value:3,
 Time Elapsed,01:01.0
-QNumS:3 Input Value:1,
+QNumS:3 Input Value:2,
 Time Elapsed,01:07.0
-QNumS:4 Input Value:2,
+QNumS:4 Input Value:3,
 Time Elapsed,01:14.6
-QNumS:5 Input Value:1,
+QNumS:5 Input Value:2,
 Time Elapsed,01:21.9
-QNumS:6 Input Value:1,
+QNumS:6 Input Value:2,
 Time Elapsed,01:29.2
-QNumS:7 Input Value:2,
+QNumS:7 Input Value:3,
 Time Elapsed,01:38.1
-QNumS:8 Input Value:2,
+QNumS:8 Input Value:3,
 Time Elapsed,01:50.2
-QNumS:9 Input Value:1,
+QNumS:9 Input Value:2,
 Time Elapsed,02:08.3
-QNumS:9 Input Value:1,
+QNumS:9 Input Value:2,
 Time Elapsed,02:08.3
 12/13/2017 16:34,12/13/2017 16:37
-PARTICIPANT40
 SphereScenefalse,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,00:21.9
@@ -2779,27 +2710,27 @@ QNumT:3 Input Value:Movie: Thor: the Dark World (2013),
 Time Elapsed,04:34.6
 QNumT:4 Input Value:Movie: Scott Pilgrim vs the World (2010)Movie: The Dark Knight (2008)Movie: The Dark Knight Rises (2012)Movie: Avengers (2012)Movie: Kingsman: The Secret Service (2015),
 Time Elapsed,06:30.9
-QNumS:0 Input Value:1,
+QNumS:0 Input Value:2,
 Time Elapsed,00:08.1
-QNumS:1 Input Value:5,
+QNumS:1 Input Value:6,
 Time Elapsed,00:15.1
-QNumS:2 Input Value:1,
+QNumS:2 Input Value:2,
 Time Elapsed,00:28.0
-QNumS:3 Input Value:1,
+QNumS:3 Input Value:2,
 Time Elapsed,00:37.5
-QNumS:4 Input Value:3,
+QNumS:4 Input Value:4,
 Time Elapsed,00:42.1
-QNumS:5 Input Value:1,
+QNumS:5 Input Value:2,
 Time Elapsed,00:55.6
-QNumS:6 Input Value:1,
+QNumS:6 Input Value:2,
 Time Elapsed,00:59.7
-QNumS:7 Input Value:1,
+QNumS:7 Input Value:2,
 Time Elapsed,01:07.5
-QNumS:8 Input Value:2,
+QNumS:8 Input Value:3,
 Time Elapsed,01:14.1
-QNumS:9 Input Value:2,
+QNumS:9 Input Value:3,
 Time Elapsed,01:23.4
-QNumS:9 Input Value:2,
+QNumS:9 Input Value:3,
 Time Elapsed,01:23.4
 12/13/2017 16:44,12/13/2017 16:45
 PARTICIPANT41,
@@ -2814,30 +2745,29 @@ QNumT:3 Input Value:Movie: Howard the Duck (1986),
 Time Elapsed,09:19.4
 QNumT:4 Input Value:Movie: Superman Returns (2006)Movie: The Dark Knight (2008)Movie: The Dark Knight Rises (2012)Movie: Batman Begins (2005)Movie: Scott Pilgrim vs the World (2010)Movie: Captain America: Civil War (2016)Movie: Captain America: the Winter Soldier (2014)Movie: Captain America: the First Avenger (2011)Movie: Batman Forever (1995)Movie: Batman and Robin (1997)Movie: Batman Returns (1992),
 Time Elapsed,14:40.2
-QNumS:0 Input Value:3,
+QNumS:0 Input Value:4,
 Time Elapsed,00:44.5
-QNumS:1 Input Value:3,
+QNumS:1 Input Value:4,
 Time Elapsed,00:52.1
-QNumS:2 Input Value:4,
+QNumS:2 Input Value:5,
 Time Elapsed,00:56.0
-QNumS:3 Input Value:2,
+QNumS:3 Input Value:3,
 Time Elapsed,01:05.3
-QNumS:4 Input Value:5,
+QNumS:4 Input Value:6,
 Time Elapsed,01:11.4
-QNumS:5 Input Value:4,
+QNumS:5 Input Value:5,
 Time Elapsed,01:21.2
-QNumS:6 Input Value:2,
+QNumS:6 Input Value:3,
 Time Elapsed,01:25.8
-QNumS:7 Input Value:2,
+QNumS:7 Input Value:3,
 Time Elapsed,01:30.8
-QNumS:8 Input Value:1,
+QNumS:8 Input Value:2,
 Time Elapsed,01:35.0
-QNumS:9 Input Value:5,
+QNumS:9 Input Value:6,
 Time Elapsed,01:38.2
-QNumS:9 Input Value:5,
+QNumS:9 Input Value:6,
 Time Elapsed,01:38.2
 12/18/2017 11:16,12/18/2017 11:18
-PARTICIPANT41
 NodeGraphtrue,
 QNumT:0 Input Value:Marvel,
 Time Elapsed,00:45.0
@@ -2849,26 +2779,26 @@ QNumT:3 Input Value:Fantastic Four: Rise of the Silver Surfer 2007,
 Time Elapsed,05:27.7
 QNumT:4 Input Value:Scott Pilgrim vs the World 2010The Dark Knight 2008Kingsman: The Secret Service 2015Avengers: Age of Ultron 2015Iron Man 2 2010,
 Time Elapsed,09:52.5
-QNumS:0 Input Value:3,
+QNumS:0 Input Value:4,
 Time Elapsed,00:13.2
-QNumS:1 Input Value:4,
+QNumS:1 Input Value:5,
 Time Elapsed,00:18.0
-QNumS:2 Input Value:3,
+QNumS:2 Input Value:4,
 Time Elapsed,00:30.7
-QNumS:3 Input Value:1,
+QNumS:3 Input Value:2,
 Time Elapsed,00:37.4
-QNumS:4 Input Value:2,
+QNumS:4 Input Value:3,
 Time Elapsed,00:44.2
-QNumS:5 Input Value:2,
+QNumS:5 Input Value:3,
 Time Elapsed,00:47.8
-QNumS:6 Input Value:1,
+QNumS:6 Input Value:2,
 Time Elapsed,00:52.8
-QNumS:7 Input Value:3,
+QNumS:7 Input Value:4,
 Time Elapsed,00:57.6
-QNumS:8 Input Value:1,
+QNumS:8 Input Value:2,
 Time Elapsed,01:03.8
-QNumS:9 Input Value:4,
+QNumS:9 Input Value:5,
 Time Elapsed,01:07.8
-QNumS:9 Input Value:4,
+QNumS:9 Input Value:5,
 Time Elapsed,01:07.8
 12/18/2017 11:28,12/18/2017 11:29
