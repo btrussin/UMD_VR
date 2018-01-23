@@ -1,4 +1,4 @@
-#requires pyhon2
+#requires python2
 
 import csv, os, sys
 
@@ -17,21 +17,29 @@ with open(sys.argv[1], 'rb') as myfile:
 
 		# Participant ID
 		if 'PARTICIPANT' in row[0]:
-			# Print the previous participant's record and reset for next participant
-			#print(record)
-			for x in range(23):
-				print record[x], '\t',
-
-				if x is 22:
-					print '\n',
-
-			# Start new participant
-			record[0] = row[0][11:]
+			# Track new participant
+                        pid = row[0][11:]
 		
 		# Condition
-		if 'Sphere' in row[0]: record[1] = 'Sphere'
+		if 'Sphere' in row[0]: 
+                    for x in range(23):
+                        print record[x], '\t',
+                        if x is 22:
+                            print '\n',
+                            for y in range(23):
+                                record[y] = ''
+                    record[0] = pid
+                    record[1] = 'Sphere'
 
-		elif 'Node' in row[0]: record[1] = 'Node'
+		elif 'Node' in row[0]: 
+                    for x in range(23):
+                        print record[x], '\t',
+                        if x is 22:
+                            print '\n',
+                            for y in range(23):
+                                record[y] = ''
+                    record[0] = pid
+                    record[1] = 'Node'
 
 		if 'true' in row[0]: record[2] = 'Links'	
 
@@ -95,3 +103,8 @@ with open(sys.argv[1], 'rb') as myfile:
 	
 		# Timestamp
 		if '2017' in row[0]: record[23] = row[0]
+
+for x in range(23):
+    print record[x], '\t',
+    if x is 22:
+        print '\n'
